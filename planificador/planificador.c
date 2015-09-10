@@ -13,6 +13,7 @@
 #include <netdb.h>
 #include <unistd.h>
 
+
 #define IP "127.0.0.1"
 #define PUERTO_EMISOR "6666"
 #define PACKAGESIZE 1024
@@ -26,13 +27,22 @@ int main(){
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 
-	getaddrinfo(IP, PUERTO_EMISOR, &hints, &serverInfo);
+	if (getaddrinfo(IP, PUERTO_EMISOR, &hints, &serverInfo) != 0){
+		printf("Error en la carga de informacion del servidor\n");
+		return -1;
+	}
 
 
 	int serverSocket;
 	serverSocket = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
-
-	connect(serverSocket, serverInfo->ai_addr, serverInfo->ai_addrlen);
+	if (serverSocket == -1){
+		printf("Error en la creacion del socket servidor de la cpu\n");
+		return -2;
+	}
+	if (connect(serverSocket, serverInfo->ai_addr, serverInfo->ai_addrlen) == -1){
+		printf("Error en la conexión con la cpu\n") ;
+		return -3;
+	}
 	freeaddrinfo(serverInfo);
 
 	int enviar = 1;

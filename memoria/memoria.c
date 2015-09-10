@@ -36,31 +36,55 @@ int main(int argc, char **argv) {
 	hintsB.ai_family = AF_UNSPEC;
 	hintsB.ai_socktype = SOCK_STREAM;
 
-	getaddrinfo(NULL, PUERTO_RECEPTOR, &hintsA, &serverInfoA);
+	if (getaddrinfo(NULL, PUERTO_RECEPTOR, &hintsA, &serverInfoA) != 0){
+		printf("Error en la carga de información");
+		return -1;
+	}
 	int listenningSocket;
 	listenningSocket = socket(serverInfoA->ai_family, serverInfoA->ai_socktype,
 			serverInfoA->ai_protocol);
-
-	bind(listenningSocket, serverInfoA->ai_addr, serverInfoA->ai_addrlen);
+	if (listenningSocket == -1){
+		printf("Error en la creacion del socket escucha");
+		return -2;
+	}
+	if (bind(listenningSocket, serverInfoA->ai_addr, serverInfoA->ai_addrlen) == -1){
+		printf("Error en el bind");
+		return -3;
+	}
 	freeaddrinfo(serverInfoA);
 
-	getaddrinfo(IP, PUERTO_EMISOR, &hintsB, &serverInfoB);
+	if (getaddrinfo(IP, PUERTO_EMISOR, &hintsB, &serverInfoB) != 0){
+		printf("Error en la carga de informacion");
+		return -4;
+	}
 
 	int serverSocket;
 	serverSocket = socket(serverInfoB->ai_family, serverInfoB->ai_socktype,
 			serverInfoB->ai_protocol);
-
-	connect(serverSocket, serverInfoB->ai_addr, serverInfoB->ai_addrlen);
+	if (serverSocket == -1){
+		printf("Error en la creacion del servidor");
+		return -5;
+	}
+	if (connect(serverSocket, serverInfoB->ai_addr, serverInfoB->ai_addrlen) == -1){
+		printf("Error en la conexion con el proceso swap");
+		return -6;
+	}
 	freeaddrinfo(serverInfoB);
 
-	listen(listenningSocket, BACKLOG);
+	if (listen(listenningSocket, BACKLOG) == -1){
+		printf("Error en la escucha");
+		return -7;
+	}
 
 	struct sockaddr_in addr;
 	socklen_t addrlen = sizeof(addr);
 
 	int socketCliente = accept(listenningSocket, (struct sockaddr *) &addr,
 			&addrlen);
-
+	if (socketCliente == -1){
+		printf("Error en aceptar la conexion");
+		return -8;
+	}
 	char package[PACKAGESIZE];
 	int status = 1;
 
@@ -68,7 +92,10 @@ int main(int argc, char **argv) {
 
 	while (status != 0) {
 		status = recv(socketCliente, (void*) package, PACKAGESIZE, 0);
-		if (status != 0) printf("%s \n", package);
+		if (status != 0){
+			printf("%s \n ", package);
+			printf("Mensaje Recibido\n");
+		}
 		send(serverSocket, package, PACKAGESIZE + 1, 0);
 	}
 

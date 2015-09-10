@@ -18,7 +18,7 @@
 #define PUERTO_EMISOR "6667"
 #define BACKLOG 5
 #define PACKAGESIZE 1024
-int main(int argc, char **argv){
+int main(int argc, char **argv) {
 
 	struct addrinfo hintsA;
 	struct addrinfo *serverInfoA;
@@ -32,44 +32,70 @@ int main(int argc, char **argv){
 	hintsA.ai_socktype = SOCK_STREAM;
 
 	memset(&hintsB, 0, sizeof(hintsB));
-		hintsB.ai_family = AF_UNSPEC;
-		hintsB.ai_socktype = SOCK_STREAM;
+	hintsB.ai_family = AF_UNSPEC;
+	hintsB.ai_socktype = SOCK_STREAM;
 
-	getaddrinfo(NULL, PUERTO_RECEPTOR, &hintsA, &serverInfoA);
+	if (getaddrinfo(NULL, PUERTO_RECEPTOR, &hintsA, &serverInfoA) != 0){
+		printf("Error en la carga de informacion\n");
+		return -1;
+	}
 	int listenningSocket;
-	listenningSocket = socket(serverInfoA->ai_family, serverInfoA->ai_socktype, serverInfoA->ai_protocol);
-
-	bind(listenningSocket,serverInfoA->ai_addr, serverInfoA->ai_addrlen);
+	listenningSocket = socket(serverInfoA->ai_family, serverInfoA->ai_socktype,
+			serverInfoA->ai_protocol);
+	if (listenningSocket == -1) {
+		printf("Error en la creacion de socket escucha\n");
+		return -2;
+	}
+	if (bind(listenningSocket, serverInfoA->ai_addr, serverInfoA->ai_addrlen) == -1){
+		printf("Error en el bind\n");
+		return -3;
+	}
 	freeaddrinfo(serverInfoA);
 
-	getaddrinfo(IP, PUERTO_EMISOR, &hintsB, &serverInfoB);
+	if (getaddrinfo(IP, PUERTO_EMISOR, &hintsB, &serverInfoB) != 0){
+		printf("Error en la carga de informacion\n");
+		return -4;
+	}
 
 	int serverSocket;
 	serverSocket = socket(serverInfoB->ai_family, serverInfoB->ai_socktype,
-				serverInfoB->ai_protocol);
-
-	connect(serverSocket, serverInfoB->ai_addr, serverInfoB->ai_addrlen);
+			serverInfoB->ai_protocol);
+	if (serverSocket == -1){
+		printf("Error en la creacion del socket servidor\n");
+		return -5;
+	}
+	if (connect(serverSocket, serverInfoB->ai_addr, serverInfoB->ai_addrlen) == -1){
+		printf("Error en la conexion\n");
+		return -6;
+	}
 	freeaddrinfo(serverInfoB);
 
-	listen(listenningSocket, BACKLOG);
+	if (listen(listenningSocket, BACKLOG) == -1){
+		printf("Error en la escucha\n");
+		return -7;
+	}
 
 	struct sockaddr_in addr;
 	socklen_t addrlen = sizeof(addr);
 
-	int socketCliente = accept(listenningSocket, (struct sockaddr *) &addr, &addrlen);
-
+	int socketCliente = accept(listenningSocket, (struct sockaddr *) &addr,
+			&addrlen);
+	if (socketCliente == -1){
+		printf("Error en aceptar la conexion\n");
+		return -8;
+	}
 	char package[PACKAGESIZE];
 	int status = 1;
 
-	while (status != 0){
+	while (status != 0) {
 		status = recv(socketCliente, (void*) package, PACKAGESIZE, 0);
-		if (status != 0) printf("%s \n", package);
+		if (status != 0){
+			printf("%s \n ", package);
+			printf("Mensaje Recibido\n");
+		}
 		send(serverSocket, package, PACKAGESIZE + 1, 0);
 
-
 	}
-
-
 
 	close(socketCliente);
 	close(listenningSocket);
