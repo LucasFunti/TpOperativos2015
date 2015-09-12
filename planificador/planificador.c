@@ -16,7 +16,7 @@
 
 #define IP "127.0.0.1"
 #define PUERTO_EMISOR "6666"
-#define PACKAGESIZE 1024
+#define PACKAGESIZE 32
 
 int main(){
 

@@ -16,7 +16,7 @@
 #define IP "127.0.0.1"
 #define PUERTO_RECEPTOR "6667"
 #define PUERTO_EMISOR "6668"
-#define PACKAGESIZE 1024
+#define PACKAGESIZE 32
 #define BACKLOG 5
 
 int main(int argc, char **argv) {
@@ -93,10 +93,11 @@ int main(int argc, char **argv) {
 	while (status != 0) {
 		status = recv(socketCliente, (void*) package, PACKAGESIZE, 0);
 		if (status != 0){
-			printf("%s \n ", package);
-			printf("Mensaje Recibido\n");
+
+			printf("Mensaje Recibido\n %s", package);
+
 		}
-		send(serverSocket, package, PACKAGESIZE + 1, 0);
+		send(serverSocket, package, sizeof(package), 0);
 	}
 
 	close(socketCliente);
