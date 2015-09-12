@@ -14,94 +14,85 @@
 #include <unistd.h>
 
 #define IP "127.0.0.1"
-#define PUERTO_RECEPTOR "6666"
-#define PUERTO_EMISOR "6667"
+#define PUERTO_PLANIFICADOR "6666"
+#define PUERTO_MEMORIA "6667"
 #define BACKLOG 5
 #define PACKAGESIZE 32
+
 int main(int argc, char **argv) {
 
-	struct addrinfo hintsA;
-	struct addrinfo *serverInfoA;
+	/* Informacion para el servidor Planificador*/
+	struct addrinfo hints;
+	struct addrinfo *serverInfo;
 
-	struct addrinfo hintsB;
-	struct addrinfo *serverInfoB;
+	/* Informacion para el servidor Memoria */
+	struct addrinfo hintsM;
+	struct addrinfo *serverInfoM;
 
-	memset(&hintsA, 0, sizeof(hintsA));
-	hintsA.ai_family = AF_UNSPEC;
-	hintsA.ai_flags = AI_PASSIVE;
-	hintsA.ai_socktype = SOCK_STREAM;
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
 
-	memset(&hintsB, 0, sizeof(hintsB));
-	hintsB.ai_family = AF_UNSPEC;
-	hintsB.ai_socktype = SOCK_STREAM;
+	memset(&hintsM, 0, sizeof(hintsM));
+	hintsM.ai_family = AF_UNSPEC;
+	hintsM.ai_socktype = SOCK_STREAM;
 
-	if (getaddrinfo(NULL, PUERTO_RECEPTOR, &hintsA, &serverInfoA) != 0) {
-		printf("Error en la carga de informacion\n");
-		return -1;
-	}
-	int listenningSocket;
-	listenningSocket = socket(serverInfoA->ai_family, serverInfoA->ai_socktype,
-			serverInfoA->ai_protocol);
-	if (listenningSocket == -1) {
-		printf("Error en la creacion de socket escucha\n");
-		return -2;
-	}
-	if (bind(listenningSocket, serverInfoA->ai_addr, serverInfoA->ai_addrlen)
-			== -1) {
-		printf("Error en el bind\n");
-		return -3;
-	}
-	freeaddrinfo(serverInfoA);
-
-	if (getaddrinfo(IP, PUERTO_EMISOR, &hintsB, &serverInfoB) != 0) {
+	if (getaddrinfo(IP, PUERTO_PLANIFICADOR, &hints, &serverInfo) != 0) {
 		printf("Error en la carga de informacion\n");
 		return -4;
 	}
 
-	int serverSocket;
-	serverSocket = socket(serverInfoB->ai_family, serverInfoB->ai_socktype,
-			serverInfoB->ai_protocol);
-	if (serverSocket == -1) {
+	if (getaddrinfo(IP, PUERTO_MEMORIA, &hintsM, &serverInfoM) != 0) {
+		printf("Error en la carga de informacion\n");
+		return -4;
+	}
+
+	int serverPlanificador;
+	serverPlanificador = socket(serverInfo->ai_family, serverInfo->ai_socktype,
+			serverInfo->ai_protocol);
+	if (serverPlanificador == -1) {
 		printf("Error en la creacion del socket servidor\n");
 		return -5;
 	}
-	if (connect(serverSocket, serverInfoB->ai_addr, serverInfoB->ai_addrlen)
+	int serverMemoria;
+	serverMemoria = socket(serverInfoM->ai_family, serverInfoM->ai_socktype,
+			serverInfoM->ai_protocol);
+	if (serverMemoria == -1) {
+		printf("Error en la creacion del socket servidor\n");
+		return -5;
+	}
+
+	if (connect(serverPlanificador, serverInfo->ai_addr, serverInfo->ai_addrlen)
 			== -1) {
 		printf("Error en la conexion\n");
 		return -6;
 	}
-	freeaddrinfo(serverInfoB);
+	freeaddrinfo(serverInfo);
 
-	if (listen(listenningSocket, BACKLOG) == -1) {
-		printf("Error en la escucha\n");
-		return -7;
+	if (connect(serverMemoria, serverInfoM->ai_addr, serverInfoM->ai_addrlen)
+			== -1) {
+		printf("Error en la conexion\n");
+		return -6;
 	}
-
 	struct sockaddr_in addr;
 	socklen_t addrlen = sizeof(addr);
 
-	int socketCliente = accept(listenningSocket, (struct sockaddr *) &addr,
-			&addrlen);
-	if (socketCliente == -1) {
-		printf("Error en aceptar la conexion\n");
-		return -8;
-	}
 	char package[PACKAGESIZE];
 	int status = 1;
 
 	while (status != 0) {
-		status = recv(socketCliente, (void*) package, PACKAGESIZE, 0);
+		status = recv(serverPlanificador, (void*) package, PACKAGESIZE, 0);
 		if (status != 0) {
 
 			printf("Mensaje Recibido\n %s", package);
 
-			}
-		send(serverSocket, package, sizeof(package), 0);
+		}
+		send(serverMemoria, package, sizeof(package), 0);
 
 	}
 
-	close(socketCliente);
-	close(listenningSocket);
+	close(serverPlanificador);
+	close(serverMemoria);
 
 	return 0;
 }
