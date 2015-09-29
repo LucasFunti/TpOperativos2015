@@ -1,0 +1,14 @@
+/*
+ * protocolo.h
+ *
+ *  Created on: 8/9/2015
+ *      Author: utnso
+ */
+
+#ifndef PROTOCOLO_H_
+#define PROTOCOLO_H_
+
+void leerMensaje(int socket, int *identificador, int **mensaje);
+
+
+#endif /* PROTOCOLO_H_ */

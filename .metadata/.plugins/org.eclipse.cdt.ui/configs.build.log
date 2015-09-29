@@ -1,0 +1,21 @@
+19:01:20 **** Incremental Build of configuration Debug for project configs ****
+make all 
+Building file: ../prueba.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"prueba.d" -MT"prueba.d" -o "prueba.o" "../prueba.c"
+../prueba.c: In function ‘main’:
+../prueba.c:17:12: warning: variable ‘config_swap’ set but not used [-Wunused-but-set-variable]
+  t_config *config_swap;
+            ^
+Finished building: ../prueba.c
+ 
+Building target: configs
+Invoking: GCC C Linker
+gcc  -o "configs"  ./prueba.o   
+./prueba.o: En la función `main':
+/home/utnso/workspace/configs/Debug/../prueba.c:18: referencia a `config_create' sin definir
+collect2: error: ld returned 1 exit status
+make: *** [configs] Error 1
+
+19:01:21 Build Finished (took 1s.218ms)
+

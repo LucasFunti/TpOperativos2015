@@ -1,0 +1,19 @@
+/*
+ * prueba.c
+ *
+ *  Created on: 15/9/2015
+ *      Author: utnso
+ */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <commons/config.h>
+
+
+
+int main(int argc, char **argv){
+
+	t_config *config_swap;
+	config_swap *config_create(char *path);
+}

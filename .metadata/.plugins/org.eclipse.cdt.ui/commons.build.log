@@ -1,0 +1,13 @@
+21:26:11 **** Build of configuration Debug for project commons ****
+make all 
+Building file: ../tests/unit-tests/test_bitarray.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"tests/unit-tests/test_bitarray.d" -MT"tests/unit-tests/test_bitarray.d" -o "tests/unit-tests/test_bitarray.o" "../tests/unit-tests/test_bitarray.c"
+../tests/unit-tests/test_bitarray.c:20:26: fatal error: cspecs/cspec.h: No existe el archivo o el directorio
+ #include <cspecs/cspec.h>
+                          ^
+compilation terminated.
+make: *** [tests/unit-tests/test_bitarray.o] Error 1
+
+21:26:12 Build Finished (took 1s.390ms)
+

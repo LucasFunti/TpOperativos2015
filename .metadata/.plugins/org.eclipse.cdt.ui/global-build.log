@@ -1,0 +1,274 @@
+23:26:09 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+make: No se hace nada para «all».
+23:30:05 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+make: No se hace nada para «all».
+23:30:05 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+make: No se hace nada para «all».
+23:30:05 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+Building target: memoria
+Invoking: GCC C Linker
+gcc  -o "memoria"  ./memoria.o   
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 0 tiene un índice de símbolo 11 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 1 tiene un índice de símbolo 12 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 2 tiene un índice de símbolo 2 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 3 tiene un índice de símbolo 2 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 4 tiene un índice de símbolo 11 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 5 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 6 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 7 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 8 tiene un índice de símbolo 12 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 9 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 10 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 11 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 12 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 13 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 14 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 15 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 16 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 17 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 18 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 19 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 20 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 21 tiene un índice de símbolo 22 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_line): la reubicación 0 tiene un índice de símbolo 2 inválido
+/usr/lib/gcc/i686-linux-gnu/4.8/../../../i386-linux-gnu/crt1.o: En la función `_start':
+(.text+0x18): referencia a `main' sin definir
+collect2: error: ld returned 1 exit status
+make: *** [memoria] Error 1
+23:30:06 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+Building file: ../planificador.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"planificador.d" -MT"planificador.d" -o "planificador.o" "../planificador.c"
+Finished building: ../planificador.c
+ 
+Building target: planificador
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo
+Finished building target: planificador
+ 
+23:30:07 **** Incremental Build of configuration Debug for project swap ****
+make all 
+Building target: swap
+Invoking: GCC C Linker
+gcc  -o "swap"  ./swap.o   
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 0 tiene un índice de símbolo 11 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 1 tiene un índice de símbolo 12 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 2 tiene un índice de símbolo 2 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 3 tiene un índice de símbolo 2 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 4 tiene un índice de símbolo 11 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 5 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 6 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 7 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 8 tiene un índice de símbolo 12 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 9 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 10 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 11 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 12 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 13 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 14 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 15 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 16 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 17 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 18 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 19 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 20 tiene un índice de símbolo 13 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_info): la reubicación 21 tiene un índice de símbolo 22 inválido
+/usr/bin/ld: /usr/lib/debug/usr/lib/i386-linux-gnu/crt1.o(.debug_line): la reubicación 0 tiene un índice de símbolo 2 inválido
+/usr/lib/gcc/i686-linux-gnu/4.8/../../../i386-linux-gnu/crt1.o: En la función `_start':
+(.text+0x18): referencia a `main' sin definir
+collect2: error: ld returned 1 exit status
+make: *** [swap] Error 1
+23:30:37 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+make: No se hace nada para «all».
+23:30:37 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+make: No se hace nada para «all».
+23:30:37 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+Building file: ../memoria.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"memoria.d" -MT"memoria.d" -o "memoria.o" "../memoria.c"
+../memoria.c: In function ‘main’:
+../memoria.c:11:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+Finished building: ../memoria.c
+ 
+Building target: memoria
+Invoking: GCC C Linker
+gcc  -o "memoria"  ./memoria.o   
+Finished building target: memoria
+ 
+23:30:39 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+make: No se hace nada para «all».
+23:30:39 **** Incremental Build of configuration Debug for project swap ****
+make all 
+Building file: ../swap.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"swap.d" -MT"swap.d" -o "swap.o" "../swap.c"
+../swap.c: In function ‘main’:
+../swap.c:12:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+Finished building: ../swap.c
+ 
+Building target: swap
+Invoking: GCC C Linker
+gcc  -o "swap"  ./swap.o   
+Finished building target: swap
+ 
+23:32:37 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+make: No se hace nada para «all».
+23:32:37 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+make: No se hace nada para «all».
+23:32:37 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+Building file: ../memoria.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"memoria.d" -MT"memoria.d" -o "memoria.o" "../memoria.c"
+Finished building: ../memoria.c
+ 
+Building target: memoria
+Invoking: GCC C Linker
+gcc  -o "memoria"  ./memoria.o   
+Finished building target: memoria
+ 
+23:32:39 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+make: No se hace nada para «all».
+23:32:40 **** Incremental Build of configuration Debug for project swap ****
+make all 
+Building file: ../swap.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"swap.d" -MT"swap.d" -o "swap.o" "../swap.c"
+Finished building: ../swap.c
+ 
+Building target: swap
+Invoking: GCC C Linker
+gcc  -o "swap"  ./swap.o   
+Finished building target: swap
+ 
+00:04:11 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+Building file: ../libSockets.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libSockets.d" -MT"libSockets.d" -o "libSockets.o" "../libSockets.c"
+Finished building: ../libSockets.c
+ 
+Building target: liblibreriaSigniorCodigo.so
+Invoking: GCC C Linker
+gcc -shared -o "liblibreriaSigniorCodigo.so"  ./libSockets.o   
+Finished building target: liblibreriaSigniorCodigo.so
+ 
+00:04:14 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+Building file: ../cpu.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"cpu.d" -MT"cpu.d" -o "cpu.o" "../cpu.c"
+Finished building: ../cpu.c
+ 
+Building target: cpu
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "cpu"  ./cpu.o   -llibreriaSigniorCodigo
+Finished building target: cpu
+ 
+00:04:15 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+Building file: ../memoria.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"memoria.d" -MT"memoria.d" -o "memoria.o" "../memoria.c"
+Finished building: ../memoria.c
+ 
+Building target: memoria
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "memoria"  ./memoria.o   -llibreriaSigniorCodigo
+Finished building target: memoria
+ 
+00:04:16 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+Building file: ../planificador.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"planificador.d" -MT"planificador.d" -o "planificador.o" "../planificador.c"
+Finished building: ../planificador.c
+ 
+Building target: planificador
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo
+Finished building target: planificador
+ 
+00:04:18 **** Incremental Build of configuration Debug for project swap ****
+make all 
+Building file: ../swap.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"swap.d" -MT"swap.d" -o "swap.o" "../swap.c"
+../swap.c: In function ‘main’:
+../swap.c:21:6: warning: variable ‘socketCliente’ set but not used [-Wunused-but-set-variable]
+  int socketCliente;
+      ^
+Finished building: ../swap.c
+ 
+Building target: swap
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "swap"  ./swap.o   -llibreriaSigniorCodigo
+Finished building target: swap
+ 
+00:08:54 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+make: No se hace nada para «all».
+00:08:54 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+Building file: ../cpu.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"cpu.d" -MT"cpu.d" -o "cpu.o" "../cpu.c"
+Finished building: ../cpu.c
+ 
+Building target: cpu
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "cpu"  ./cpu.o   -llibreriaSigniorCodigo
+Finished building target: cpu
+ 
+00:08:56 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+Building file: ../memoria.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"memoria.d" -MT"memoria.d" -o "memoria.o" "../memoria.c"
+Finished building: ../memoria.c
+ 
+Building target: memoria
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "memoria"  ./memoria.o   -llibreriaSigniorCodigo
+Finished building target: memoria
+ 
+00:08:57 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+Building file: ../planificador.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"planificador.d" -MT"planificador.d" -o "planificador.o" "../planificador.c"
+Finished building: ../planificador.c
+ 
+Building target: planificador
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo
+Finished building target: planificador
+ 
+00:08:59 **** Incremental Build of configuration Debug for project swap ****
+make all 
+Building file: ../swap.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"swap.d" -MT"swap.d" -o "swap.o" "../swap.c"
+Finished building: ../swap.c
+ 
+Building target: swap
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "swap"  ./swap.o   -llibreriaSigniorCodigo
+Finished building target: swap
+ 

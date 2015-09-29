@@ -1,0 +1,23 @@
+/*
+ * planificador.c
+ *
+ *  Created on: 28/9/2015
+ *      Author: utnso
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <libSockets.h>
+#include <commons/config.h>
+
+#define IP "127.0.0.1"
+#define PUERTO_EMISOR "6666"
+#define BACKLOG 5
+#define PACKAGESIZE 32
+
+int main(int argc, char **argv){
+	int serverSocket;
+	serverSocket = conectarServidor(IP,PUERTO_EMISOR,BACKLOG);
+	return 0;
+
+}

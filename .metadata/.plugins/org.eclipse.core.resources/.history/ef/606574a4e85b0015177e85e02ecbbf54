@@ -1,0 +1,13 @@
+/*
+ * libSockets.h
+ *
+ *  Created on: 15/9/2015
+ *      Author: utnso
+ */
+
+#ifndef LIBSOCKETS_H_
+#define LIBSOCKETS_H_
+
+void conectarSocketServidor(int puerto, int backlog)
+
+#endif /* LIBSOCKETS_H_ */
