@@ -1,4 +1,4 @@
 planificador.d: ../planificador.c \
- /home/utnso/workspace/libreriaSigniorCodigo/libSockets.h
+ /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/libSockets.h
 
-/home/utnso/workspace/libreriaSigniorCodigo/libSockets.h:
+/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/libSockets.h:

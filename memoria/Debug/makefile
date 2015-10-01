@@ -25,13 +25,13 @@ endif
 all: memoria
 
 dependents:
-	-cd /home/utnso/workspace/libreriaSigniorCodigo/Debug && $(MAKE) all
+	-cd /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug && $(MAKE) all
 
 # Tool invocations
-memoria: $(OBJS) $(USER_OBJS) /home/utnso/workspace/libreriaSigniorCodigo/Debug/liblibreriaSigniorCodigo.so
+memoria: $(OBJS) $(USER_OBJS) /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug/liblibreriaSigniorCodigo.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "memoria" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -o "memoria" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -42,6 +42,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/utnso/workspace/libreriaSigniorCodigo/Debug/liblibreriaSigniorCodigo.so:
+/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug/liblibreriaSigniorCodigo.so:
 
 -include ../makefile.targets

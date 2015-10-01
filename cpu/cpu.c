@@ -24,17 +24,23 @@ int main(int argc, char **argv) {
 	int serverPlanificador,serverMemoria;
 	serverPlanificador = conectarCliente(IP,PUERTO_PLANIFICADOR);
 	serverMemoria = conectarCliente(IP,PUERTO_MEMORIA);
-	char package[PACKAGESIZE];
+	/*char package[PACKAGESIZE];*/
 	int status = 1;
 
 	while (status != 0) {
-		status = recv(serverPlanificador, (void*) package, PACKAGESIZE, 0);
+		int identificador;
+		size_t tamMensaje;
+		status = recv(serverPlanificador, &identificador,sizeof(int), 0);
+		printf("identificador: %d \n",identificador);
 		if (status != 0) {
-
-			printf("Mensaje Recibido\n %s", package);
+			recv(serverPlanificador,&tamMensaje,sizeof(int),0);
+			printf("tamaño del mensaje a recibir: %d \n",tamMensaje);
+			char *mensaje = malloc(tamMensaje);
+			recv(serverPlanificador,mensaje,tamMensaje,0);
+			printf("Mensaje Recibido: %s \n", mensaje);
 
 		}
-		send(serverMemoria, package, sizeof(package), 0);
+		/*send(serverMemoria, package, sizeof(package), 0);*/
 
 	}
 	close(serverPlanificador);

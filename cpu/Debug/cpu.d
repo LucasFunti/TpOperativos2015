@@ -1,3 +1,4 @@
-cpu.d: ../cpu.c /home/utnso/workspace/libreriaSigniorCodigo/libSockets.h
+cpu.d: ../cpu.c \
+ /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/libSockets.h
 
-/home/utnso/workspace/libreriaSigniorCodigo/libSockets.h:
+/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/libSockets.h:
