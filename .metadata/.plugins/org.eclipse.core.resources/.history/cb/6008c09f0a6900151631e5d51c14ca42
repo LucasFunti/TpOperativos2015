@@ -1,0 +1,32 @@
+/*
+ * libreriaCPU.c
+ *
+ *  Created on: 1/10/2015
+ *      Author: utnso
+ */
+#include <commons/txt.h>
+#include <sys/socket.h>
+#include <libSockets.h>
+
+#define foreach(item, array) \
+    for(int keep = 1, \
+            count = 0,\
+            size = sizeof (array) / sizeof *(array); \
+        keep && count != size; \
+        keep = !keep, count++) \
+      for(item = (array) + count; keep; keep = !keep)
+
+int ejecutar(char *linea, serverMemoria) {
+
+	switch (linea) {
+		case "iniciar":
+			scanf("%s", linea);
+			send(serverMemoria, linea, sizeof(linea), 0);
+			break;
+		case "leer":
+			scanf("%s", linea);
+			break;
+		case "finalizar":
+			break;
+	}
+}

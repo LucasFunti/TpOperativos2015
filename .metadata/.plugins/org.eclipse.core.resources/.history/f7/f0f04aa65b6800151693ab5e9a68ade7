@@ -1,0 +1,21 @@
+/*
+ * libreriaCPU.c
+ *
+ *  Created on: 1/10/2015
+ *      Author: utnso
+ */
+#include <commons/txt.h>
+#include <sys/socket.h>
+#include <libSockets.h>
+
+int interpretar(char *linea, serverMemoria){
+
+	switch(linea){
+
+		break;
+	case "leer":
+		break;
+	case "finalizar":
+		break;
+	}
+}
