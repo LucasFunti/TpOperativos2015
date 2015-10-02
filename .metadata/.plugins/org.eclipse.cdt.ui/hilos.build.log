@@ -1,0 +1,17 @@
+10:19:26 **** Incremental Build of configuration Debug for project hilos ****
+make all 
+Building file: ../hilo.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"hilo.d" -MT"hilo.d" -o "hilo.o" "../hilo.c"
+Finished building: ../hilo.c
+ 
+Building target: hilos
+Invoking: GCC C Linker
+gcc  -o "hilos"  ./hilo.o   
+./hilo.o: En la función `main':
+/home/utnso/workspace/hilos/Debug/../hilo.c:37: referencia a `pthread_create' sin definir
+collect2: error: ld returned 1 exit status
+make: *** [hilos] Error 1
+
+10:19:27 Build Finished (took 996ms)
+

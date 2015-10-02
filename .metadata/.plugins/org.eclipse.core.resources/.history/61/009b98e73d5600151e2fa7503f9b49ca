@@ -1,0 +1,18 @@
+/*
+ * protocolo.c
+ *
+ *  Created on: 8/9/2015
+ *      Author: utnso
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct protocolo{
+	int identificador;
+	int cantidadBytes;
+}Protocolo;
+
+void leerMensaje(int socket, int *identificador, int **mensaje){
+
+}

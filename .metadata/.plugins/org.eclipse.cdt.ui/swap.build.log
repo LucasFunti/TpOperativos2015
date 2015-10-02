@@ -1,0 +1,15 @@
+00:08:59 **** Incremental Build of configuration Debug for project swap ****
+make all 
+Building file: ../swap.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"swap.d" -MT"swap.d" -o "swap.o" "../swap.c"
+Finished building: ../swap.c
+ 
+Building target: swap
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "swap"  ./swap.o   -llibreriaSigniorCodigo
+Finished building target: swap
+ 
+
+00:09:00 Build Finished (took 1s.80ms)
+

@@ -1,0 +1,52 @@
+20:33:37 **** Build of configuration Default for project tp-2015-2c-signiorcodigo ****
+make all 
+Building file: ../swap/swap.c
+Invoking: GCC C Compiler
+gcc -O2 -g -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"swap/swap.d" -MT"swap/swap.d" -o "swap/swap.o" "../swap/swap.c"
+Finished building: ../swap/swap.c
+ 
+Building file: ../planificador/planificador.c
+Invoking: GCC C Compiler
+gcc -O2 -g -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"planificador/planificador.d" -MT"planificador/planificador.d" -o "planificador/planificador.o" "../planificador/planificador.c"
+../planificador/planificador.c: In function ‘main’:
+../planificador/planificador.c:65:8: warning: ignoring return value of ‘fgets’, declared with attribute warn_unused_result [-Wunused-result]
+   fgets(message, PACKAGESIZE, stdin);
+        ^
+Finished building: ../planificador/planificador.c
+ 
+Building file: ../memoria/memoria.c
+Invoking: GCC C Compiler
+gcc -O2 -g -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"memoria/memoria.d" -MT"memoria/memoria.d" -o "memoria/memoria.o" "../memoria/memoria.c"
+../memoria/memoria.c: In function ‘main’:
+../memoria/memoria.c:106:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+Finished building: ../memoria/memoria.c
+ 
+Building file: ../cpu/cpu.c
+Invoking: GCC C Compiler
+gcc -O2 -g -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"cpu/cpu.d" -MT"cpu/cpu.d" -o "cpu/cpu.o" "../cpu/cpu.c"
+../cpu/cpu.c: In function ‘main’:
+../cpu/cpu.c:79:12: warning: unused variable ‘addrlen’ [-Wunused-variable]
+  socklen_t addrlen = sizeof(addr);
+            ^
+Finished building: ../cpu/cpu.c
+ 
+Building target: tp-2015-2c-signiorcodigo
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo" -o "tp-2015-2c-signiorcodigo"  ./swap/swap.o  ./planificador/planificador.o  ./memoria/memoria.o  ./cpu/cpu.o   -lcommons -lcspecs
+./planificador/planificador.o: En la función `main':
+/home/utnso/git/tp-2015-2c-signiorcodigo/Default/../planificador/planificador.c:21: definiciones múltiples de `main'
+./swap/swap.o:/home/utnso/git/tp-2015-2c-signiorcodigo/Default/../swap/swap.c:20: primero se definió aquí
+./memoria/memoria.o: En la función `printf':
+/home/utnso/git/tp-2015-2c-signiorcodigo/Default/../memoria/memoria.c:22: definiciones múltiples de `main'
+./swap/swap.o:/home/utnso/git/tp-2015-2c-signiorcodigo/Default/../swap/swap.c:20: primero se definió aquí
+./cpu/cpu.o: En la función `main':
+/home/utnso/git/tp-2015-2c-signiorcodigo/Default/../cpu/cpu.c:23: definiciones múltiples de `main'
+./swap/swap.o:/home/utnso/git/tp-2015-2c-signiorcodigo/Default/../swap/swap.c:20: primero se definió aquí
+/usr/bin/ld: no se puede encontrar -lcspecs
+collect2: error: ld returned 1 exit status
+make: *** [tp-2015-2c-signiorcodigo] Error 1
+
+20:33:40 Build Finished (took 3s.101ms)
+

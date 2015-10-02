@@ -1,0 +1,15 @@
+00:08:56 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+Building file: ../memoria.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/workspace/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"memoria.d" -MT"memoria.d" -o "memoria.o" "../memoria.c"
+Finished building: ../memoria.c
+ 
+Building target: memoria
+Invoking: GCC C Linker
+gcc -L"/home/utnso/workspace/libreriaSigniorCodigo/Debug" -o "memoria"  ./memoria.o   -llibreriaSigniorCodigo
+Finished building target: memoria
+ 
+
+00:08:57 Build Finished (took 1s.47ms)
+

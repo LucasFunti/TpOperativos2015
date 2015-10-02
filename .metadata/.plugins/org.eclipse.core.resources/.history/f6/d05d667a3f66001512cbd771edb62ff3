@@ -1,0 +1,14 @@
+/*
+ * planificador.c
+ *
+ *  Created on: 28/9/2015
+ *      Author: utnso
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <libSockets.h>
+
+int main(){
+
+}

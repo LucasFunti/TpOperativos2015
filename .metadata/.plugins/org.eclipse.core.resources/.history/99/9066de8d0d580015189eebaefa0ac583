@@ -1,0 +1,107 @@
+/*
+ * cliente.c
+ *
+ *  Created on: 5/9/2015
+ *      Author: utnso
+ */
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <unistd.h>
+
+#define IP "127.0.0.1"
+#define PUERTO "6667"
+#define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
+
+
+typedef struct CorrerPrograma{
+	char *instruccion[32];
+}correrPrograma;
+
+typedef enum Identificadores{
+	correr = 0
+}Identificadores;
+
+typedef struct Cabecera{
+	int identificador;
+	int cantidadBytes;
+}Protocolo;
+
+void escribeMensaje (int socket, int idMensaje, char *mensaje, int tamanio)
+{
+    /* Se declara y rellena la cabecera */
+    Protocolo protocolo;
+    protocolo.identificador = idMensaje;
+
+    /* Se envía la cabecera */
+    send(socket, &protocolo, sizeof(protocolo));
+
+    /* Si el mensaje no tiene cuerpo, hemos terminado */
+    if ((mensaje == NULL) || (tamanio == 0))
+        return;
+
+    /* Se envía el cuerpo */
+    send(socket, mensaje, tamanio);
+}
+
+
+int main() {
+	
+	struct addrinfo hints;
+	struct addrinfo *serverInfo;
+	
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC; 
+	hints.ai_socktype = SOCK_STREAM; 
+	
+	getaddrinfo(IP, PUERTO, &hints, &serverInfo);
+			
+	int serverSocket;
+	serverSocket = socket(serverInfo->ai_family, serverInfo->ai_socktype,
+			serverInfo->ai_protocol);
+	if (serverSocket == -1){
+		printf("Error en la solicitud de socket\n");
+		return -1;
+	}
+	if (connect(serverSocket, serverInfo->ai_addr, serverInfo->ai_addrlen) == -1){
+		printf("Error en la conexion\n");
+		return -2;
+	}
+	
+	freeaddrinfo(serverInfo);
+		
+	int enviar = 1;
+	char message[PACKAGESIZE];
+	char package[PACKAGESIZE];
+	printf("Conectado al servidor. Bienvenido al sistema, ya puede enviar mensajes. Escriba 'exit' para salir\n");
+
+	while(enviar){
+		correrPrograma mensaje;
+		fgets(mensaje, sizeof(mensaje), stdin);
+		if (!strcmp(message, "exit\n"))
+					enviar = 0;
+		if (enviar){
+			escribirMensaje(serverSocket, correr, (char *)&mensaje, sizeof(mensaje));
+		}
+
+
+	}
+	/*	while (enviar) {
+		fgets(message, PACKAGESIZE, stdin);
+		if (!strcmp(message, "exit\n"))
+			enviar = 0; 
+		if (enviar)
+			send(serverSocket, message, strlen(message) + 1, 0); 
+			if (recv(serverSocket, (void*) package, PACKAGESIZE, 0) != -1){
+				printf("%s", package);
+			}
+
+	}
+	*/
+	close(serverSocket);
+	return 0;
+	
+}

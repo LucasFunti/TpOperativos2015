@@ -1,11 +1,16 @@
 /*
  * swap.c
  *
+<<<<<<< HEAD
  *  Created on: 5/9/2015
+=======
+ *  Created on: 28/9/2015
+>>>>>>> e5bed079387090f438690c736e7ce6b16c1bb69c
  *      Author: utnso
  */
 
 #include <stdio.h>
+
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -13,11 +18,22 @@
 #include <netdb.h>
 #include <unistd.h>
 
+#include <stdlib.h>
+#include <sys/types.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <libSockets.h>
+#include <commons/config.h>
+
+
 #define PUERTO "6668"
 #define BACKLOG 5
 #define PACKAGESIZE 32
 
 int main() {
+
 
 	struct addrinfo hints;
 	struct addrinfo *serverInfo;
@@ -60,14 +76,22 @@ int main() {
 		printf("Error en aceptar la conexion");
 		return -5;
 	}
+
+	int socketCliente;
+	socketCliente = conectarServidor("localhost", PUERTO,BACKLOG);
+
 	char package[PACKAGESIZE];
 	int status = 1;
 
 	printf("Cliente conectado. Esperando mensajes:\n");
 
+
+
+
 	while (status != 0) {
 		status = recv(socketCliente, (void*) package, PACKAGESIZE, 0);
 		if (status != 0) {
+
 
 				printf("Mensaje Recibido\n %s", package);
 			}
