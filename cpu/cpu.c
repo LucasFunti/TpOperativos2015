@@ -1,7 +1,7 @@
 /*
  * cpu.c
  *
-*/
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -16,25 +16,36 @@
 #include <limits.h>
 #include <libreriaCPU.h>
 
-
-#define IP "127.0.0.1"
-#define PUERTO_PLANIFICADOR "4000"
-#define PUERTO_MEMORIA "6667"
 #define BACKLOG 5
 #define PACKAGESIZE 32
 
 typedef struct {
 	int codigoOperacion;
+	int punteroAInstruccion;
 	int tamanio;
 	char *mensaje;
-	int punteroAInstruccion;
 } t_tablaDeInstruccion;
 
 int main(int argc, char **argv) {
+	char * ipPlanificador;
+	char * puerto_planificador;
+	char * ipMemoria;
+	char * puerto_memoria;
+	//int cantidadHilos;
+	//int retardo;
+	t_config * cpuConfig;
+	cpuConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpu/cpuConfig");
+	ipPlanificador = config_get_string_value(cpuConfig, "IP_PLANIFICADOR");
+	puerto_planificador = config_get_string_value(cpuConfig,"PUERTO_PLANIFICADOR");
+	ipMemoria = config_get_string_value(cpuConfig,"IP_MEMORIA");
+	puerto_memoria = config_get_string_value(cpuConfig,"PUERTO_MEMORIA");
+	//cantidadHilos = config_get_int_value(cpuConfig,"CANTIDAD_HILOS");
+	//retardo = config_get_int_value(cpuConfig,"RETARDO");
 
-	int serverPlanificador,serverMemoria;
-	serverPlanificador = conectarCliente(IP,PUERTO_PLANIFICADOR);
-	serverMemoria = conectarCliente(IP,PUERTO_MEMORIA);
+	int serverPlanificador, serverMemoria;
+	serverPlanificador = conectarCliente(ipPlanificador, puerto_planificador);
+	serverMemoria = conectarCliente(ipMemoria, puerto_memoria);
 
 	/*char package[PACKAGESIZE];*/
 	int status = 1;
@@ -50,7 +61,7 @@ int main(int argc, char **argv) {
 			char *mensaje = malloc(tamMensaje);
 			recv(serverPlanificador, mensaje, tamMensaje, 0);
 			printf("Mensaje Recibido: %s \n", mensaje);
-
+			free(mensaje);
 			//Esto hay que delegarlo. <3
 //			void correrArchivo(mensaje) {
 //				FILE *archivo;
@@ -63,13 +74,13 @@ int main(int argc, char **argv) {
 //					}
 //				};
 
-			};
-
 		};
+
+	};
 	/*send(serverMemoria, package, sizeof(package), 0);*/
 
-		close(serverPlanificador);
-		close(serverMemoria);
+	close(serverPlanificador);
+	close(serverMemoria);
 
-		return 0;
-	}
+	return 0;
+}

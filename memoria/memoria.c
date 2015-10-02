@@ -19,16 +19,24 @@
 #include <libSockets.h>
 #include <commons/config.h>
 
-#define IP "127.0.0.1"
-#define PUERTO_RECEPTOR "6667"
-#define PUERTO_EMISOR "6668"
+
 #define PACKAGESIZE 32
 #define BACKLOG 5
 
 int main() {
+	char * puertoCpu;
+	char * ipSwap;
+	char * puertoSwap;
+	t_config *memoriaConfig;
+	memoriaConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/memoria/memoriaConfig");
+	puertoCpu = config_get_string_value(memoriaConfig,"PUERTO_ESCUCHA");
+	ipSwap = config_get_string_value(memoriaConfig,"IP_SWAP");
+	puertoSwap = config_get_string_value(memoriaConfig,"PUERTO_SWAP");
+
+
 	int socketCpu, socketSwap;
-	socketCpu = conectarServidor("localhost", PUERTO_RECEPTOR, BACKLOG);
-	socketSwap = conectarCliente(IP, PUERTO_EMISOR);
+	socketCpu = conectarServidor("localhost", puertoCpu, BACKLOG);
+	socketSwap = conectarCliente(ipSwap, puertoSwap);
 
 	char package[PACKAGESIZE];
 	int status = 1;
