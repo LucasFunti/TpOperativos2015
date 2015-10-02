@@ -1,7 +1,13 @@
 /*
  * cpu.c
  *
-*/
+<<<<<<< HEAD
+ *  Created on: 5/9/2015
+=======
+ *  Created on: 28/9/2015
+>>>>>>> e5bed079387090f438690c736e7ce6b16c1bb69c
+ *      Author: utnso
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -30,11 +36,16 @@ typedef struct {
 } t_tablaDeInstruccion;
 
 int main(int argc, char **argv) {
+<<<<<<< Updated upstream
 
 	int serverPlanificador,serverMemoria;
 	serverPlanificador = conectarCliente(IP,PUERTO_PLANIFICADOR);
 	serverMemoria = conectarCliente(IP,PUERTO_MEMORIA);
-
+=======
+	int serverPlanificador, serverMemoria;
+	serverPlanificador = conectarCliente(IP, PUERTO_PLANIFICADOR);
+	serverMemoria = conectarCliente(IP, PUERTO_MEMORIA);
+>>>>>>> Stashed changes
 	/*char package[PACKAGESIZE];*/
 	int status = 1;
 
@@ -72,3 +83,11 @@ int main(int argc, char **argv) {
 
 		return 0;
 	}
+<<<<<<< Updated upstream
+	close(serverPlanificador);
+	close(serverMemoria);
+
+	return 0;
+}
+=======
+>>>>>>> Stashed changes

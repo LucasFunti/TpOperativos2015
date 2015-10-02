@@ -1,5 +1,10 @@
-12:34:03 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+12:47:15 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
 make all 
+Building file: ../libSockets.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libSockets.d" -MT"libSockets.d" -o "libSockets.o" "../libSockets.c"
+Finished building: ../libSockets.c
+ 
 Building file: ../libreriaCPU.c
 Invoking: GCC C Compiler
 gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libreriaCPU.d" -MT"libreriaCPU.d" -o "libreriaCPU.o" "../libreriaCPU.c"
@@ -9,5 +14,5 @@ gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libreriaCPU.d" -MT"libreria
 compilation terminated.
 make: *** [libreriaCPU.o] Error 1
 
-12:34:04 Build Finished (took 110ms)
+12:47:16 Build Finished (took 214ms)
 
