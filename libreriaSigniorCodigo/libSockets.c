@@ -12,6 +12,8 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include "libSockets.h"
 
 struct addrinfo* cargarInfoSocket(char *IP, char* Port) {
@@ -35,11 +37,6 @@ struct addrinfo* cargarInfoSocket(char *IP, char* Port) {
 	return serverInfo;
 }
 
-/**	@NAME: connect_to
- * 	@DESC: Intenta establecer conexion con el servidor que deberia estar escuchando. Controla errores, vuelve cuando conecta
- * 	@RETURN: Devuelve EXIT_FAILURE (1) si fallo la conexion, en otro caso devuelve el socket.
- *
- */
 int conectarCliente(char *IP, char* Port) {
 	struct addrinfo* serverInfo = cargarInfoSocket(IP, Port);
 	if (serverInfo == NULL) {
@@ -61,15 +58,44 @@ int conectarCliente(char *IP, char* Port) {
 	return serverSocket;
 }
 
-int conectarServidor(char* IP,char* Port,int backlog)
-{
+/* Funcion que serializa una estructura paquete */
+char *serializar(Paquete *unPaquete) {
+	void *buffer = malloc(
+			sizeof(int) + sizeof(int) + sizeof(char) * unPaquete->tamanio);
+	memcpy(buffer, &unPaquete->codigoOperacion, sizeof(int));
+	memcpy(buffer + sizeof(int), &unPaquete->tamanio, sizeof(int));
+	memcpy(buffer + sizeof(int) + sizeof(int), unPaquete->mensaje,
+			unPaquete->tamanio);
+	return buffer;
+}
+
+/* Funcion que genera un paquete. agarra los valores correspondientes y
+ * los coloca dentro de la estructura Paquete */
+
+Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message) {
+	Paquete paquete;
+
+	paquete.codigoOperacion = codigoOperacion;
+	paquete.tamanio = tamMessage;
+	paquete.mensaje = malloc(tamMessage);
+	strcpy(paquete.mensaje, message);
+
+	return paquete;
+}
+
+/* funcion que representa el uso de la funcion select() para leer
+ * de diferentes problemas */
+
+int conectarServidor(char* IP, char* Port, int backlog) {
+
 	struct addrinfo* serverInfo = cargarInfoSocket(IP, Port);
-	if (serverInfo == NULL )
+	if (serverInfo == NULL)
 		return -1;
 	int socketEscucha;
 	socketEscucha = socket(serverInfo->ai_family, serverInfo->ai_socktype,
 			serverInfo->ai_protocol);
-	if(bind(socketEscucha, serverInfo->ai_addr, serverInfo->ai_addrlen)== -1){
+	if (bind(socketEscucha, serverInfo->ai_addr, serverInfo->ai_addrlen)
+			== -1) {
 		printf("Error en el Bind \n");
 	}
 	freeaddrinfo(serverInfo);
@@ -80,9 +106,46 @@ int conectarServidor(char* IP,char* Port,int backlog)
 
 	int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
 			&addrlen);
-	if (socketCliente == -1){
+	if (socketCliente == -1) {
 		printf("Error en la conexion, en la funcion accept\n");
 		return -2;
 	}
 	return socketCliente;
 }
+
+/* reconoce el identificador escrito por linea de comando */
+int reconocerIdentificador() {
+	int codigoOperacion;
+	char *identificador = malloc(sizeof(char) * 10);
+	scanf("%s", identificador);
+	if (!strcmp(identificador, "correr")) {
+		codigoOperacion = 1;
+	} else if (!strcmp(identificador, "finalizar")) {
+		codigoOperacion = 99;
+	} else if (!strcmp(identificador, "ps")) {
+		codigoOperacion = 2;
+	} else
+		codigoOperacion = 3;
+	if (!strcmp(identificador, "exit\n")) {
+		return -1;
+	}
+	return codigoOperacion;
+}
+
+/* genera id del pcb */
+int generarPID(int* pid) {
+	*pid = *pid + 1;
+	return *pid;
+}
+
+/* genera pcb */
+tipo_pcb generarPCB(int pid, char *path, int estado) {
+	tipo_pcb pcb;
+	pcb.id = pid;
+	pcb.dirProceso = path;
+	pcb.estado = estado;
+	return pcb;
+}
+
+/*  */
+

@@ -21,56 +21,9 @@
 #define BACKLOG 5
 #define PACKAGESIZE 32
 
-int reconocerIdentificador() {
-	int codigoOperacion;
-	char *identificador = malloc(sizeof(char) * 10);
-	scanf("%s", identificador);
-	if (!strcmp(identificador, "correr")) {
-		codigoOperacion = 1;
-	} else if (!strcmp(identificador, "finalizar")) {
-		codigoOperacion = 99;
-	} else if (!strcmp(identificador, "ps")) {
-		codigoOperacion = 2;
-	} else
-		codigoOperacion = 3;
-	if (!strcmp(identificador, "exit\n")) {
-		return -1;
-	}
-	return codigoOperacion;
-}
 
-typedef struct {
-	int id;
-	char *dirProceso;
-	int estado;
-} pcb;
 
-typedef struct {
-	int codigoOperacion;
-	int tamanio;
-	char *mensaje;
-} Paquete;
-
-char *serializar(Paquete *unPaquete) {
-	void *buffer = malloc(
-			sizeof(int) + sizeof(int) + sizeof(char) * unPaquete->tamanio);
-	memcpy(buffer, &unPaquete->codigoOperacion, sizeof(int));
-	memcpy(buffer + sizeof(int), &unPaquete->tamanio, sizeof(int));
-	memcpy(buffer + sizeof(int) + sizeof(int), unPaquete->mensaje,
-			unPaquete->tamanio);
-	return buffer;
-}
-
-Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message) {
-	Paquete paquete;
-
-	paquete.codigoOperacion = codigoOperacion;
-	paquete.tamanio = tamMessage;
-	paquete.mensaje = malloc(tamMessage);
-	strcpy(paquete.mensaje, message);
-
-	return paquete;
-}
+int p_last_id = 0;
 
 int main(int argc, char **argv) {
 	int socketCliente;
@@ -95,10 +48,21 @@ int main(int argc, char **argv) {
 			Paquete paquete;
 			paquete = generarPaquete(codigoOperacion, tamMessage, path);
 			char *buffer = serializar(&paquete);
+			int pid ;
+
+			pid = generarPID(&p_last_id);
+			printf("el pid del proceso es: %d\n", pid);
+
+			tipo_pcb currentPCB;
+			currentPCB = generarPCB(pid, path, listo);
+			printf("El estado del proceso %d es: %d \n", currentPCB.id,
+					currentPCB.estado);
 
 			send(socketCliente, buffer,
 					sizeof(int) + sizeof(int) + paquete.tamanio, 0);
+
 			free(buffer);
+			free(path);
 			break;
 		case 99:
 			break;
