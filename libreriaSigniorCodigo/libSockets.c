@@ -61,10 +61,12 @@ int conectarCliente(char *IP, char* Port) {
 /* Funcion que serializa una estructura paquete */
 char *serializar(Paquete *unPaquete) {
 	void *buffer = malloc(
-			sizeof(int) + sizeof(int) + sizeof(char) * unPaquete->tamanio);
+			sizeof(int)/*ID*/+ sizeof(int)/*ProgCounter*/+ sizeof(int)/*Tamañopath*/
+					+ sizeof(char) * unPaquete->tamanio);
 	memcpy(buffer, &unPaquete->codigoOperacion, sizeof(int));
-	memcpy(buffer + sizeof(int), &unPaquete->tamanio, sizeof(int));
-	memcpy(buffer + sizeof(int) + sizeof(int), unPaquete->mensaje,
+	memcpy(buffer + sizeof(int),&unPaquete->programCounter,sizeof(int));
+	memcpy(buffer + sizeof(int)+ sizeof(int), &unPaquete->tamanio, sizeof(int));
+	memcpy(buffer + sizeof(int)+ sizeof(int) + sizeof(int), unPaquete->mensaje,
 			unPaquete->tamanio);
 	return buffer;
 }
@@ -72,10 +74,12 @@ char *serializar(Paquete *unPaquete) {
 /* Funcion que genera un paquete. agarra los valores correspondientes y
  * los coloca dentro de la estructura Paquete */
 
-Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message) {
+Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message,
+		int programCounter) {
 	Paquete paquete;
 
 	paquete.codigoOperacion = codigoOperacion;
+	paquete.programCounter = programCounter;
 	paquete.tamanio = tamMessage;
 	paquete.mensaje = malloc(tamMessage);
 	strcpy(paquete.mensaje, message);
@@ -111,40 +115,6 @@ int conectarServidor(char* IP, char* Port, int backlog) {
 		return -2;
 	}
 	return socketCliente;
-}
-
-/* reconoce el identificador escrito por linea de comando */
-int reconocerIdentificador() {
-	int codigoOperacion;
-	char *identificador = malloc(sizeof(char) * 10);
-	scanf("%s", identificador);
-	if (!strcmp(identificador, "correr")) {
-		codigoOperacion = 1;
-	} else if (!strcmp(identificador, "finalizar")) {
-		codigoOperacion = 99;
-	} else if (!strcmp(identificador, "ps")) {
-		codigoOperacion = 2;
-	} else
-		codigoOperacion = 3;
-	if (!strcmp(identificador, "exit\n")) {
-		return -1;
-	}
-	return codigoOperacion;
-}
-
-/* genera id del pcb */
-int generarPID(int* pid) {
-	*pid = *pid + 1;
-	return *pid;
-}
-
-/* genera pcb */
-tipo_pcb generarPCB(int pid, char *path, int estado) {
-	tipo_pcb pcb;
-	pcb.id = pid;
-	pcb.dirProceso = path;
-	pcb.estado = estado;
-	return pcb;
 }
 
 /*  */

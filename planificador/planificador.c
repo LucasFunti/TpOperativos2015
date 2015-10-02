@@ -1,11 +1,11 @@
 /*
  * planificador.c
  *
-<<<<<<< HEAD
+ <<<<<<< HEAD
  *  Created on: 5/9/2015
-=======
+ =======
  *  Created on: 28/9/2015
->>>>>>> e5bed079387090f438690c736e7ce6b16c1bb69c
+ >>>>>>> e5bed079387090f438690c736e7ce6b16c1bb69c
  *      Author: utnso
  */
 
@@ -17,21 +17,30 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <libSockets.h>
+#include <planificadorFunctions.h>
 #include <commons/config.h>
 #include <commons/txt.h>
 
-
-#define IP "127.0.0.1"
-#define PUERTO_EMISOR "6666"
 #define BACKLOG 5
 #define PACKAGESIZE 32
 
 int p_last_id = 0;
 
 int main(int argc, char **argv) {
+	//genero el arhivo config y guardo los datos del mismo en variables
+	char *puerto;
+	char *algoritmo;
+	t_config *archivoConfiguracion;
+	archivoConfiguracion =
+			config_create(
+					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+	puerto = config_get_string_value(archivoConfiguracion, "PUERTO_ESCUCHA");
+	algoritmo = config_get_string_value(archivoConfiguracion,
+			"ALGORITMO_PLANIFICACION");
+
 	int socketCliente;
-	socketCliente = conectarServidor("localhost", PUERTO_EMISOR, BACKLOG);
-	char message[PACKAGESIZE];
+	socketCliente = conectarServidor("localhost", puerto, BACKLOG);
+	char proceso[PACKAGESIZE];
 
 	int enviar = 1;
 	while (enviar) {
@@ -42,27 +51,39 @@ int main(int argc, char **argv) {
 
 		switch (codigoOperacion) {
 		case 1:
-			scanf("%s", message);
-			size_t tamMessage;
-			char *path = malloc(80);
-			realpath(message, path);
-			printf("el path es: %s", path);
-			tamMessage = strlen(path);
-			Paquete paquete;
-			paquete = generarPaquete(codigoOperacion, tamMessage, path);
-			char *buffer = serializar(&paquete);
-			int pid ;
+			//leo el nombre del proceso
+			scanf("%s", proceso);
 
+			//busco el path del proceso y calculo el tamaño del path
+			char *path = malloc(80);
+			realpath(proceso, path);
+			printf("el path es: %s", path);
+			size_t tamMessage;
+			tamMessage = strlen(path);
+
+			//le genero un id al proceso
+			int pid;
 			pid = generarPID(&p_last_id);
 			printf("el pid del proceso es: %d\n", pid);
 
+			//genero el pcb del proceso
 			tipo_pcb currentPCB;
 			currentPCB = generarPCB(pid, path, listo);
 			printf("El estado del proceso %d es: %d \n", currentPCB.id,
 					currentPCB.estado);
 
+			//genero el paquete, para enviar a la cpu
+			//faltaria el puntero a instruccion
+			Paquete paquete;
+			paquete = generarPaquete(codigoOperacion, tamMessage, path,currentPCB.programCounter);
+			char *buffer = serializar(&paquete);
+
 			send(socketCliente, buffer,
-					sizeof(int) + sizeof(int) + paquete.tamanio, 0);
+					sizeof(int)+ sizeof(int) + sizeof(int) + paquete.tamanio, 0);
+
+			if (!strcmp(algoritmo, "FIFO")) {
+
+			}
 
 			free(buffer);
 			free(path);
@@ -77,6 +98,7 @@ int main(int argc, char **argv) {
 
 	}
 	close(socketCliente);
+	free(puerto);
 
 	return 0;
 

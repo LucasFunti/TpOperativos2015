@@ -25,7 +25,7 @@ endif
 all: swap
 
 dependents:
-	-cd /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug && $(MAKE) all
+	-cd /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug && $(MAKE) clean all
 
 # Tool invocations
 swap: $(OBJS) $(USER_OBJS) /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug/liblibreriaSigniorCodigo.so

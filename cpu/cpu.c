@@ -14,10 +14,11 @@
 #include <commons/config.h>
 #include <commons/txt.h>
 #include <limits.h>
+#include <libreriaCPU.h>
 
 
 #define IP "127.0.0.1"
-#define PUERTO_PLANIFICADOR "6666"
+#define PUERTO_PLANIFICADOR "4000"
 #define PUERTO_MEMORIA "6667"
 #define BACKLOG 5
 #define PACKAGESIZE 32
@@ -51,16 +52,16 @@ int main(int argc, char **argv) {
 			printf("Mensaje Recibido: %s \n", mensaje);
 
 			//Esto hay que delegarlo. <3
-			void correrArchivo(mensaje) {
-				FILE *archivo;
-				archivo = fopen(mensaje, "r");
-				char *linea;
-				while(!eof(archivo)){
-						linea = readline(archivo);
-						ejecutar(linea, serverMemoria, serverPlanificador);
-
-					}
-				};
+//			void correrArchivo(mensaje) {
+//				FILE *archivo;
+//				archivo = fopen(mensaje, "r");
+//				char *linea;
+//				while(!eof(archivo)){
+//						linea = readline(archivo);
+//						ejecutar(linea, serverMemoria, serverPlanificador);
+//
+//					}
+//				};
 
 			};
 
