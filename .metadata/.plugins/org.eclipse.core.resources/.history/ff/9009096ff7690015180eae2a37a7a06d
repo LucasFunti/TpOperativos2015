@@ -12,7 +12,6 @@
 #include <unistd.h>
 #include <commons/config.h>
 #include <commons/txt.h>
-#include <commons/string.h>
 #include <limits.h>
 #include "../libreriaSigniorCodigo/libreriaCPU.h"
 #include "../libreriaSigniorCodigo/libSockets.h"
@@ -66,20 +65,19 @@ int main(int argc, char **argv) {
 			free(mensaje);
 
 			//Esto hay que delegarlo. <3
-			/*void correrArchivo(char *mensaje) {
+			void correrArchivo(char *mensaje) {
 				FILE* file = fopen(mensaje, "r");
 
+				char *linea;
+				while (!eof(mensaje)) {
 					char* buffer = calloc(1, tamMensaje + 1);
 					fread(buffer, tamMensaje, 1, file);
-					char *listaInstrucciones[] = string_split(file, ";");
-					int n = 0;
-				while (listaInstrucciones[n] != NULL) {
-					ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
+					string_split(mensaje, ";");
+					ejecutar(linea, serverMemoria, serverPlanificador,
 							idProceso);
-					n++;
 
 				}
-			}*/
+			}
 			;
 		};
 

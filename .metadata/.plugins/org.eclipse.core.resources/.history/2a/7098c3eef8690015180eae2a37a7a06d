@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
 			free(mensaje);
 
 			//Esto hay que delegarlo. <3
-			/*void correrArchivo(char *mensaje) {
+			void correrArchivo(char *mensaje) {
 				FILE* file = fopen(mensaje, "r");
 
 					char* buffer = calloc(1, tamMensaje + 1);
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
 					n++;
 
 				}
-			}*/
+			}
 			;
 		};
 

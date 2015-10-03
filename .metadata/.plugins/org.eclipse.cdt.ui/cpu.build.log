@@ -1,10 +1,21 @@
-13:35:09 **** Incremental Build of configuration Debug for project cpu ****
+14:53:46 **** Incremental Build of configuration Debug for project cpu ****
 make all 
-Building target: cpu
-Invoking: GCC C Linker
-gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "cpu"  ./cpu.o   -llibreriaSigniorCodigo -lcommons
-Finished building target: cpu
- 
+Building file: ../cpu.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"cpu.d" -MT"cpu.d" -o "cpu.o" "../cpu.c"
+../cpu.c: In function ‘correrArchivo’:
+../cpu.c:74:6: warning: passing argument 1 of ‘string_split’ from incompatible pointer type [enabled by default]
+      char ** listaInstrucciones = string_split(file, ";");
+      ^
+In file included from ../cpu.c:15:0:
+/usr/include/commons/string.h:181:10: note: expected ‘char *’ but argument is of type ‘struct FILE *’
+  char**  string_split(char * text, char * separator);
+          ^
+../cpu.c:78:8: error: ‘idProceso’ undeclared (first use in this function)
+        idProceso);
+        ^
+../cpu.c:78:8: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [cpu.o] Error 1
 
-13:35:09 Build Finished (took 181ms)
+14:53:47 Build Finished (took 88ms)
 

@@ -1,4 +1,3 @@
-memoria.d: ../memoria.c \
- /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/libSockets.h
+memoria.d: ../memoria.c ../../libreriaSigniorCodigo/libSockets.h
 
-/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/libSockets.h:
+../../libreriaSigniorCodigo/libSockets.h:

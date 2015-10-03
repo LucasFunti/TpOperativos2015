@@ -12,7 +12,6 @@
 #include <unistd.h>
 #include <commons/config.h>
 #include <commons/txt.h>
-#include <commons/string.h>
 #include <limits.h>
 #include "../libreriaSigniorCodigo/libreriaCPU.h"
 #include "../libreriaSigniorCodigo/libSockets.h"
@@ -38,10 +37,9 @@ int main(int argc, char **argv) {
 	cpuConfig = config_create(
 			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpu/cpuConfig");
 	ipPlanificador = config_get_string_value(cpuConfig, "IP_PLANIFICADOR");
-	puerto_planificador = config_get_string_value(cpuConfig,
-			"PUERTO_PLANIFICADOR");
-	ipMemoria = config_get_string_value(cpuConfig, "IP_MEMORIA");
-	puerto_memoria = config_get_string_value(cpuConfig, "PUERTO_MEMORIA");
+	puerto_planificador = config_get_string_value(cpuConfig,"PUERTO_PLANIFICADOR");
+	ipMemoria = config_get_string_value(cpuConfig,"IP_MEMORIA");
+	puerto_memoria = config_get_string_value(cpuConfig,"PUERTO_MEMORIA");
 	//cantidadHilos = config_get_int_value(cpuConfig,"CANTIDAD_HILOS");
 	//retardo = config_get_int_value(cpuConfig,"RETARDO");
 
@@ -64,23 +62,18 @@ int main(int argc, char **argv) {
 			recv(serverPlanificador, mensaje, tamMensaje, 0);
 			printf("Mensaje Recibido: %s \n", mensaje);
 			free(mensaje);
-
 			//Esto hay que delegarlo. <3
-			/*void correrArchivo(char *mensaje) {
-				FILE* file = fopen(mensaje, "r");
+/*			void correrArchivo(char *mensaje) {
+				FILE *archivo;
+				archivo = fopen(mensaje, "r");
+				char *linea;
+				while(!eof(archivo)){
+						linea = readline(archivo);
+						ejecutar(linea, serverMemoria, serverPlanificador, idProceso);
 
-					char* buffer = calloc(1, tamMensaje + 1);
-					fread(buffer, tamMensaje, 1, file);
-					char *listaInstrucciones[] = string_split(file, ";");
-					int n = 0;
-				while (listaInstrucciones[n] != NULL) {
-					ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
-							idProceso);
-					n++;
-
-				}
-			}*/
-			;
+					}
+				};
+*/
 		};
 
 	};

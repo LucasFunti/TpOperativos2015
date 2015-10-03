@@ -16,8 +16,9 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
-#include <libSockets.h>
 #include <commons/config.h>
+
+#include "../libreriaSigniorCodigo/libSockets.h"
 
 
 #define PACKAGESIZE 32

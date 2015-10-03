@@ -12,10 +12,11 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
-#include <libSockets.h>
-#include <planificadorFunctions.h>
+#include "../libreriaSigniorCodigo/planificadorFunctions.h"
 #include <commons/config.h>
 #include <commons/txt.h>
+
+#include "../libreriaSigniorCodigo/libSockets.h"
 
 #define BACKLOG 5
 #define PACKAGESIZE 32

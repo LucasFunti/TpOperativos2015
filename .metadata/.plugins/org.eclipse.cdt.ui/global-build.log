@@ -1833,3 +1833,164 @@ Invoking: GCC C Linker
 gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "swap"  ./swap.o   -llibreriaSigniorCodigo -lcommons
 Finished building target: swap
  
+14:52:00 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+Building file: ../libSockets.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libSockets.d" -MT"libSockets.d" -o "libSockets.o" "../libSockets.c"
+../libSockets.c: In function ‘deserializar’:
+../libSockets.c:83:2: warning: return from incompatible pointer type [enabled by default]
+  return &unPaquete;
+  ^
+../libSockets.c:83:2: warning: function returns address of local variable [-Wreturn-local-addr]
+Finished building: ../libSockets.c
+ 
+Building file: ../libreriaCPU.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libreriaCPU.d" -MT"libreriaCPU.d" -o "libreriaCPU.o" "../libreriaCPU.c"
+../libreriaCPU.c: In function ‘serializarEmpaquetado’:
+../libreriaCPU.c:48:2: warning: passing argument 2 of ‘memcpy’ makes pointer from integer without a cast [enabled by default]
+  memcpy(buffer + tamanio, instruccionEmpaquetada.cantidadDePaginas, sizeof(int));
+  ^
+In file included from ../libreriaCPU.c:12:0:
+/usr/include/string.h:46:14: note: expected ‘const void * __restrict__’ but argument is of type ‘int’
+ extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+              ^
+../libreriaCPU.c: In function ‘ejecutar’:
+../libreriaCPU.c:61:14: warning: initialization makes integer from pointer without a cast [enabled by default]
+  int valor = array[1];
+              ^
+../libreriaCPU.c:73:3: warning: passing argument 2 of ‘recv’ makes pointer from integer without a cast [enabled by default]
+   recv(serverMemoria, estadoDeEjecucion, sizeof(int), 0);
+   ^
+In file included from ../libreriaCPU.c:9:0:
+/usr/include/i386-linux-gnu/sys/socket.h:156:16: note: expected ‘void *’ but argument is of type ‘int’
+ extern ssize_t recv (int __fd, void *__buf, size_t __n, int __flags);
+                ^
+../libreriaCPU.c:84:3: warning: passing argument 2 of ‘recv’ makes pointer from integer without a cast [enabled by default]
+   recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
+   ^
+In file included from ../libreriaCPU.c:9:0:
+/usr/include/i386-linux-gnu/sys/socket.h:156:16: note: expected ‘void *’ but argument is of type ‘int’
+ extern ssize_t recv (int __fd, void *__buf, size_t __n, int __flags);
+                ^
+../libreriaCPU.c:85:3: warning: too many arguments for format [-Wformat-extra-args]
+   printf("proceso %d", idProceso, "página %d", valor, "leida: %s", contenidoDePagina);
+   ^
+../libreriaCPU.c:90:3: warning: passing argument 2 of ‘recv’ makes pointer from integer without a cast [enabled by default]
+   recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
+   ^
+In file included from ../libreriaCPU.c:9:0:
+/usr/include/i386-linux-gnu/sys/socket.h:156:16: note: expected ‘void *’ but argument is of type ‘int’
+ extern ssize_t recv (int __fd, void *__buf, size_t __n, int __flags);
+                ^
+../libreriaCPU.c:91:3: warning: too many arguments for format [-Wformat-extra-args]
+   printf("proceso %d", idProceso, " -Página %d", valor, "escrita: %s", contenidoDePagina);
+   ^
+../libreriaCPU.c:100:3: warning: too many arguments for format [-Wformat-extra-args]
+   printf("proceso %d", idProceso, "finalizado.");
+   ^
+../libreriaCPU.c:73:7: warning: ‘estadoDeEjecucion’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   recv(serverMemoria, estadoDeEjecucion, sizeof(int), 0);
+       ^
+../libreriaCPU.c:84:7: warning: ‘contenidoDePagina’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
+       ^
+Finished building: ../libreriaCPU.c
+ 
+Building file: ../swapFunctions.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"swapFunctions.d" -MT"swapFunctions.d" -o "swapFunctions.o" "../swapFunctions.c"
+Finished building: ../swapFunctions.c
+ 
+Building target: liblibreriaSigniorCodigo.so
+Invoking: GCC C Linker
+gcc -shared -o "liblibreriaSigniorCodigo.so"  ./libSockets.o ./libreriaCPU.o ./planificadorFunctions.o ./swapFunctions.o   -lcommons
+Finished building target: liblibreriaSigniorCodigo.so
+ 
+14:52:01 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+Building file: ../cpu.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"cpu.d" -MT"cpu.d" -o "cpu.o" "../cpu.c"
+../cpu.c: In function ‘correrArchivo’:
+../cpu.c:74:6: warning: implicit declaration of function ‘string_split’ [-Wimplicit-function-declaration]
+      char ** listaInstrucciones = string_split(file, ";");
+      ^
+../cpu.c:74:35: warning: initialization makes pointer from integer without a cast [enabled by default]
+      char ** listaInstrucciones = string_split(file, ";");
+                                   ^
+../cpu.c:78:8: error: ‘idProceso’ undeclared (first use in this function)
+        idProceso);
+        ^
+../cpu.c:78:8: note: each undeclared identifier is reported only once for each function it appears in
+../cpu.c:71:11: warning: unused variable ‘linea’ [-Wunused-variable]
+     char *linea;
+           ^
+make: *** [cpu.o] Error 1
+14:52:01 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+Building file: ../memoria.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"memoria.d" -MT"memoria.d" -o "memoria.o" "../memoria.c"
+Finished building: ../memoria.c
+ 
+Building target: memoria
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "memoria"  ./memoria.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: memoria
+ 
+14:52:02 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+Building file: ../planificador.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"planificador.d" -MT"planificador.d" -o "planificador.o" "../planificador.c"
+Finished building: ../planificador.c
+ 
+Building target: planificador
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: planificador
+ 
+14:52:02 **** Incremental Build of configuration Debug for project swap ****
+make all 
+Building file: ../swap.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"swap.d" -MT"swap.d" -o "swap.o" "../swap.c"
+Finished building: ../swap.c
+ 
+Building target: swap
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "swap"  ./swap.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: swap
+ 
+14:53:46 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+make: No se hace nada para «all».
+14:53:46 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+Building file: ../cpu.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"cpu.d" -MT"cpu.d" -o "cpu.o" "../cpu.c"
+../cpu.c: In function ‘correrArchivo’:
+../cpu.c:74:6: warning: passing argument 1 of ‘string_split’ from incompatible pointer type [enabled by default]
+      char ** listaInstrucciones = string_split(file, ";");
+      ^
+In file included from ../cpu.c:15:0:
+/usr/include/commons/string.h:181:10: note: expected ‘char *’ but argument is of type ‘struct FILE *’
+  char**  string_split(char * text, char * separator);
+          ^
+../cpu.c:78:8: error: ‘idProceso’ undeclared (first use in this function)
+        idProceso);
+        ^
+../cpu.c:78:8: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [cpu.o] Error 1
+14:53:47 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+make: No se hace nada para «all».
+14:53:47 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+make: No se hace nada para «all».
+14:53:47 **** Incremental Build of configuration Debug for project swap ****
+make all 
+make: No se hace nada para «all».

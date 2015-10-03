@@ -1,1 +1,3 @@
-swapFunctions.d: ../swapFunctions.c
+swapFunctions.d: ../swapFunctions.c ../libSockets.h
+
+../libSockets.h:

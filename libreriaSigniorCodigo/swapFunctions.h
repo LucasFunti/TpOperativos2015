@@ -10,4 +10,6 @@
 
 void setupSwap();
 
+t_bitarray *readFile(char *file);
+
 #endif /* SWAPFUNCTIONS_H_ */
