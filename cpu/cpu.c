@@ -13,7 +13,7 @@
 #include <commons/config.h>
 #include <commons/txt.h>
 #include <limits.h>
-#include <libreriaCPU.h>
+#include "../libreriaSigniorCodigo/libreriaCPU.h"
 #include "../libreriaSigniorCodigo/libSockets.h"
 
 #define BACKLOG 5
