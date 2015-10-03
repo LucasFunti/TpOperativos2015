@@ -43,6 +43,25 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.1962096293.1293929547" name="/" resourcePath="swap">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.base.84132797" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base" unusedChildren="">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1829287813" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base.2004437580"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.984700022" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base.1998132364"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.480089922" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base.421166903">
+								<option id="gnu.c.compiler.option.include.paths.1049214927" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/libreriaSigniorCodigo"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.369859139" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.base.1309641705" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base.387881644"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.395120818" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base.609785444"/>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.base.778609160" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base.1376656768">
+								<option id="gnu.both.asm.option.include.paths.492467807" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1892083456" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
 						<entry excluding="swap|memoria|cpu|planificador" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="cpu"/>

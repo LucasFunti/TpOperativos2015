@@ -16,8 +16,11 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
-#include <libSockets.h>
 #include <commons/config.h>
+#include <commons/collections/list.h>
+#include <commons/bitarray.h>
+#include "../libreriaSigniorCodigo/swapFunctions.h"
+#include "../libreriaSigniorCodigo/libSockets.h"
 
 #define BACKLOG 5
 #define PACKAGESIZE 32

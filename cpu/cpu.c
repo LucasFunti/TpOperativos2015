@@ -10,11 +10,11 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
-#include <libSockets.h>
 #include <commons/config.h>
 #include <commons/txt.h>
 #include <limits.h>
 #include <libreriaCPU.h>
+#include "../libreriaSigniorCodigo/libSockets.h"
 
 #define BACKLOG 5
 #define PACKAGESIZE 32
