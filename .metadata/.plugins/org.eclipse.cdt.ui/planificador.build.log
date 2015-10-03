@@ -1,10 +1,10 @@
-12:47:17 **** Incremental Build of configuration Debug for project planificador ****
+13:35:09 **** Incremental Build of configuration Debug for project planificador ****
 make all 
 Building target: planificador
 Invoking: GCC C Linker
-gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo -lcommons
 Finished building target: planificador
  
 
-12:47:17 Build Finished (took 119ms)
+13:35:09 Build Finished (took 188ms)
 

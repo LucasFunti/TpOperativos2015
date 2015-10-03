@@ -1,1 +1,3 @@
-libreriaCPU.d: ../libreriaCPU.c
+libreriaCPU.d: ../libreriaCPU.c ../libreriaCPU.h
+
+../libreriaCPU.h:

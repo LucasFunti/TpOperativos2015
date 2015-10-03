@@ -15,6 +15,6 @@ typedef struct {
 int reconocerInstruccion(char *linea);
 t_instruccion empaquetar(char *instruccion, int cantidadDePaginas);
 char *serializarEmpaquetado( t_instruccion instruccionEmpaquetada);
-int ejecutar(char *linea, int serverMemoria,int serverPlanificador);
+int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
 
 #endif /* LIBRERIACPU_H_ */

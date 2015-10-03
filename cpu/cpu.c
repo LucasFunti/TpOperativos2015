@@ -63,17 +63,17 @@ int main(int argc, char **argv) {
 			printf("Mensaje Recibido: %s \n", mensaje);
 			free(mensaje);
 			//Esto hay que delegarlo. <3
-//			void correrArchivo(mensaje) {
-//				FILE *archivo;
-//				archivo = fopen(mensaje, "r");
-//				char *linea;
-//				while(!eof(archivo)){
-//						linea = readline(archivo);
-//						ejecutar(linea, serverMemoria, serverPlanificador);
-//
-//					}
-//				};
+/*			void correrArchivo(char *mensaje) {
+				FILE *archivo;
+				archivo = fopen(mensaje, "r");
+				char *linea;
+				while(!eof(archivo)){
+						linea = readline(archivo);
+						ejecutar(linea, serverMemoria, serverPlanificador, idProceso);
 
+					}
+				};
+*/
 		};
 
 	};
