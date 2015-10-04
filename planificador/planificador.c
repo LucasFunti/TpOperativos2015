@@ -14,8 +14,7 @@
 #include <unistd.h>
 #include "../libreriaSigniorCodigo/planificadorFunctions.h"
 #include <commons/config.h>
-#include <commons/txt.h>
-
+#include <commons/collections/queue.h>
 #include "../libreriaSigniorCodigo/libSockets.h"
 
 #define BACKLOG 5
@@ -24,19 +23,21 @@
 int p_last_id = 0;
 
 int main(int argc, char **argv) {
-	//genero el arhivo config y guardo los datos del mismo en variables
-	char *puerto;
-	char *algoritmo;
-	t_config *archivoConfiguracion;
-	archivoConfiguracion =
-			config_create(
-					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
-	puerto = config_get_string_value(archivoConfiguracion, "PUERTO_ESCUCHA");
-	algoritmo = config_get_string_value(archivoConfiguracion,
-			"ALGORITMO_PLANIFICACION");
+	//genero el arhivo config y guardo los datos del mismo en estructura
+	t_config_planificador config_planificador;
+	config_planificador = read_config_file();
+
+	//generar estructuras necesarias para el planificador (colas)
+	t_queue *ready;
+	ready = queue_create();
+//	t_queue *entrada_salida;
+//	entrada_salida = queue_create();
+//	t_queue *en_ejecucion;
+//	en_ejecucion = queue_create();
 
 	int socketCliente;
-	socketCliente = conectarServidor("localhost", puerto, BACKLOG);
+	socketCliente = conectarServidor("localhost", config_planificador.puerto,
+	BACKLOG);
 	char proceso[PACKAGESIZE];
 
 	int enviar = 1;
@@ -47,7 +48,8 @@ int main(int argc, char **argv) {
 		printf("el identificador es: %d \n", codigoOperacion);
 
 		switch (codigoOperacion) {
-		case 1:
+		case 1:/* correr */
+
 			//leo el nombre del proceso
 			scanf("%s", proceso);
 
@@ -69,23 +71,37 @@ int main(int argc, char **argv) {
 			printf("El estado del proceso %d es: %d \n", currentPCB.id,
 					currentPCB.estado);
 
-			//genero el paquete, para enviar a la cpu
-			//faltaria el puntero a instruccion
-			Paquete paquete;
-			paquete = generarPaquete(codigoOperacion, tamMessage, path,currentPCB.programCounter);
-			char *buffer = serializar(&paquete);
+			//colocarlo en la cola de readys
+			queue_push(ready, &currentPCB);
 
-			send(socketCliente, buffer,
-					sizeof(int)+ sizeof(int) + sizeof(int) + paquete.tamanio, 0);
+			if (!strcmp(config_planificador.algoritmo, "FIFO")) {
+				//me fijo si tengo algun proceso en la cola de listos
+				int colavacia;
+				colavacia = queue_is_empty(ready); //si da 1 = vacia, 0 = tiene
+				if (colavacia == 1) {
+					printf("No hay procesos en la cola de listos");
 
-			if (!strcmp(algoritmo, "FIFO")) {
+				} else {
+					//agarro el primer elemento y lo envio a la cpu
+					//genero el paquete, para enviar a la cpu
+					//faltaria el puntero a instruccion
+					Paquete paquete;
+					paquete = generarPaquete(codigoOperacion, tamMessage, path,
+							currentPCB.programCounter);
+					char *buffer = serializar(&paquete);
+
+					send(socketCliente, buffer,
+							sizeof(int) + sizeof(int) + sizeof(int)
+									+ paquete.tamanio, 0);
+					free(buffer);
+				}
 
 			}
 
-			free(buffer);
+
 			free(path);
 			break;
-		case 99:
+		case 99:/*finalizar*/
 			break;
 
 		}
@@ -95,7 +111,8 @@ int main(int argc, char **argv) {
 
 	}
 	close(socketCliente);
-	free(puerto);
+	free(config_planificador.puerto);
+	free(config_planificador.algoritmo);
 
 	return 0;
 

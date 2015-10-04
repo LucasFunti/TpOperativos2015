@@ -20,34 +20,14 @@
 #define BACKLOG 5
 #define PACKAGESIZE 32
 
-typedef struct {
-	int codigoOperacion;
-	int punteroAInstruccion;
-	int tamanio;
-	char *mensaje;
-} t_tablaDeInstruccion;
-
 int main(int argc, char **argv) {
-	char * ipPlanificador;
-	char * puerto_planificador;
-	char * ipMemoria;
-	char * puerto_memoria;
-	//int cantidadHilos;
-	//int retardo;
-	t_config * cpuConfig;
-	cpuConfig = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpu/cpuConfig");
-	ipPlanificador = config_get_string_value(cpuConfig, "IP_PLANIFICADOR");
-	puerto_planificador = config_get_string_value(cpuConfig,
-			"PUERTO_PLANIFICADOR");
-	ipMemoria = config_get_string_value(cpuConfig, "IP_MEMORIA");
-	puerto_memoria = config_get_string_value(cpuConfig, "PUERTO_MEMORIA");
-	//cantidadHilos = config_get_int_value(cpuConfig,"CANTIDAD_HILOS");
-	//retardo = config_get_int_value(cpuConfig,"RETARDO");
+	//invoco la funcion para leer los datos del file de config y los guardo en la estructura
+	t_config_cpu config_cpu;
+	config_cpu = read_config_cpu_file();
 
 	int serverPlanificador, serverMemoria;
-	serverPlanificador = conectarCliente(ipPlanificador, puerto_planificador);
-	serverMemoria = conectarCliente(ipMemoria, puerto_memoria);
+	serverPlanificador = conectarCliente(config_cpu.ipPlanificador, config_cpu.puerto_planificador);
+	serverMemoria = conectarCliente(config_cpu.ipMemoria, config_cpu.puerto_memoria);
 
 	/*char package[PACKAGESIZE];*/
 	int status = 1;
@@ -57,6 +37,7 @@ int main(int argc, char **argv) {
 		size_t tamMensaje;
 		status = recv(serverPlanificador, &identificador, sizeof(int), 0);
 		printf("identificador: %d \n", identificador);
+
 		if (status != 0) {
 			recv(serverPlanificador, &tamMensaje, sizeof(int), 0);
 			printf("tamaño del mensaje a recibir: %d \n", tamMensaje);
@@ -67,23 +48,23 @@ int main(int argc, char **argv) {
 
 			//Esto hay que delegarlo. <3
 			/*void correrArchivo(char *mensaje) {
-				FILE* file = fopen(mensaje, "r");
+			 FILE* file = fopen(mensaje, "r");
 
-					char* buffer = calloc(1, tamMensaje + 1);
-					fread(buffer, tamMensaje, 1, file);
-					char *listaInstrucciones[] = string_split(file, ";");
-					int n = 0;
-				while (listaInstrucciones[n] != NULL) {
-					ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
-							idProceso);
-					n++;
+			 char* buffer = calloc(1, tamMensaje + 1);
+			 fread(buffer, tamMensaje, 1, file);
+			 char *listaInstrucciones[] = string_split(file, ";");
+			 int n = 0;
+			 while (listaInstrucciones[n] != NULL) {
+			 ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
+			 idProceso);
+			 n++;
 
-				}
-			}*/
-			;
-		};
+			 }
+			 }*/
 
-	};
+		}
+
+	}
 	/*send(serverMemoria, package, sizeof(package), 0);*/
 
 	close(serverPlanificador);

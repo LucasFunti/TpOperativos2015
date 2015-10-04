@@ -6,6 +6,7 @@
  */
 #include <commons/txt.h>
 #include <commons/string.h>
+#include <commons/config.h>
 #include <sys/socket.h>
 #include "libreriaCPU.h"
 #include <stdlib.h>
@@ -45,7 +46,7 @@ char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada) {
 	tamanio = strlen(instruccionEmpaquetada.instruccion);
 	void *buffer = malloc((sizeof(char) * tamanio) + sizeof(int));
 	memcpy(buffer, instruccionEmpaquetada.instruccion, tamanio);
-	memcpy(buffer + tamanio, instruccionEmpaquetada.cantidadDePaginas, sizeof(int));
+	memcpy(buffer + tamanio, &instruccionEmpaquetada.cantidadDePaginas, sizeof(int));
 	return buffer;
 }
 
@@ -70,7 +71,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador, int idProce
 
 	case 4:
 		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
-		recv(serverMemoria, estadoDeEjecucion, sizeof(int), 0);
+		recv(serverMemoria, &estadoDeEjecucion, sizeof(int), 0);
 		if(estadoDeEjecucion == 0){
 			printf("error al iniciar el proceso %d\n", idProceso);
 		}
@@ -81,14 +82,18 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador, int idProce
 
 	case 5:
 		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
-		recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
-		printf("proceso %d", idProceso, "página %d", valor, "leida: %s", contenidoDePagina);
+		recv(serverMemoria, &contenidoDePagina, sizeof(int), 0);
+		//kevin fijate aca pusiste %s y eso es para un char* que se corresponderia
+		// con la variable contenidoDePagina, y esa variable la declaraste como int
+		//por ahora la pongo como %d para que ande despues cambialo como deberia ser
+		printf("proceso: %d, pagina: %d, leida: %d", idProceso, valor,contenidoDePagina);
 		break;
 
 	case 6:
 		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
-		recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
-		printf("proceso %d", idProceso, " -Página %d", valor, "escrita: %s", contenidoDePagina);
+		recv(serverMemoria, &contenidoDePagina, sizeof(int), 0);
+		// aca lo mismo q arriba
+		printf("proceso %d, -Página %d, escrita: %d ", idProceso,valor, contenidoDePagina);
 		break;
 
 	case 7:
@@ -97,9 +102,25 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador, int idProce
 
 	case 8:
 		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
-		printf("proceso %d", idProceso, "finalizado.");
+		printf("proceso %d finalizado.", idProceso);
 		break;
 
 	};
 	return 0;
+}
+
+/* genera una estructura para guardar todos los datos del archivo de config */
+t_config_cpu read_config_cpu_file(){
+	t_config_cpu config_cpu;
+	t_config * cpuConfig;
+	cpuConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	config_cpu.ipPlanificador= config_get_string_value(cpuConfig, "IP_PLANIFICADOR");
+	config_cpu.puerto_planificador = config_get_string_value(cpuConfig,
+			"PUERTO_PLANIFICADOR");
+	config_cpu.ipMemoria= config_get_string_value(cpuConfig, "IP_MEMORIA");
+	config_cpu.puerto_memoria = config_get_string_value(cpuConfig, "PUERTO_MEMORIA");
+//	config_cpu.cantidadHilos = config_get_int_value(cpuConfig,"CANTIDAD_HILOS");
+//	config_cpu.retardo = config_get_int_value(cpuConfig,"RETARDO");
+	return config_cpu;
 }

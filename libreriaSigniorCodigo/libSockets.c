@@ -63,7 +63,7 @@ int conectarCliente(char *IP, char* Port) {
 char *serializar(Paquete *unPaquete) {
 	void *buffer = malloc(
 			sizeof(int)/*ID*/+ sizeof(int)/*ProgCounter*/+ sizeof(int)/*Tamañopath*/
-			+ sizeof(char) * unPaquete->tamanio);
+			+ sizeof(char) * unPaquete->tamanio+1);
 	memcpy(buffer, &unPaquete->codigoOperacion, sizeof(int));
 	memcpy(buffer + sizeof(int), &unPaquete->programCounter, sizeof(int));
 	memcpy(buffer + sizeof(int) + sizeof(int), &unPaquete->tamanio,
@@ -72,15 +72,21 @@ char *serializar(Paquete *unPaquete) {
 			unPaquete->tamanio);
 	return buffer;
 }
-/*deserializar la estructura paquete - devuelve la direccion a la estructura Paquete */
-Paquete *deserializar(char *buffer) {
+/* deserializar elheader del buffer a la estructura paquete
+ *  devuelve la direccion a la estructura Paquete */
+Paquete *deserializar_header(char *buffer) {
 	Paquete *unPaquete = malloc(sizeof(Paquete));
 	memcpy(&unPaquete->codigoOperacion, buffer, sizeof(int));
 	memcpy(&unPaquete->programCounter, buffer + sizeof(int), sizeof(int));
 	memcpy(&unPaquete->tamanio, buffer + sizeof(int) + sizeof(int),
 			sizeof(int));
-	memcpy(&unPaquete->mensaje, buffer + (sizeof(int) * 3), unPaquete->tamanio);
+
 	return &unPaquete;
+}
+/* deserializa la data del buffer con los datos recibidos en el deserializar_header */
+void deserializar_data(Paquete *unPaquete, char *buffer){
+	unPaquete->mensaje = malloc(unPaquete->tamanio);
+	memcpy(&unPaquete->mensaje, buffer + (sizeof(int) * 3), unPaquete->tamanio);
 }
 /* Funcion que genera un paquete. agarra los valores correspondientes y
  * los coloca dentro de la estructura Paquete */

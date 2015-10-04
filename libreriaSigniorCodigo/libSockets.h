@@ -20,6 +20,6 @@ int conectarCliente(char *IP, char* Port);
 int conectarServidor(char* IP,char* Port,int backlog);
 Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message, int programCounter);
 char *serializar(Paquete *unPaquete);
-Paquete *deserializar(char *buffer);
-
+Paquete *deserializar_header(char *buffer);
+void deserializar_data(Paquete *unPaquete, char *buffer);
 #endif /* LIBSOCKETS_H_ */

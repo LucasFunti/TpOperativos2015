@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <commons/config.h>
 #include "planificadorFunctions.h"
 
 /* reconoce el identificador escrito por linea de comando */
@@ -45,3 +46,19 @@ tipo_pcb generarPCB(int pid, char *path, int estado) {
 
 	return pcb;
 }
+
+t_config_planificador read_config_file(){
+	t_config_planificador planificador_config;
+	t_config *archivoConfiguracion;
+	archivoConfiguracion =
+			config_create(
+					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+	planificador_config.puerto = config_get_string_value(archivoConfiguracion,
+			"PUERTO_ESCUCHA");
+	planificador_config.algoritmo = config_get_string_value(
+			archivoConfiguracion, "ALGORITMO_PLANIFICACION");
+
+	return planificador_config;
+}
+
+
