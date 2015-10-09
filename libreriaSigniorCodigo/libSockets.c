@@ -115,14 +115,6 @@ void destruirPaquete(Paquete * unPaquete){
  * de diferentes problemas */
 
 int conectarServidor(char* IP, char* Port, int backlog) {
-//	fd_set master;
-//	fd_set read_fds;
-//	int fdmax;
-//	int i;
-//	int addrlen;
-//	int newfd;
-//	FD_ZERO(&master);
-//	FD_ZERO(&read_fds);
 	struct addrinfo* serverInfo = cargarInfoSocket(IP, Port);
 	if (serverInfo == NULL)
 		return -1;
@@ -134,51 +126,21 @@ int conectarServidor(char* IP, char* Port, int backlog) {
 		printf("Error en el Bind \n");
 	}
 	freeaddrinfo(serverInfo);
-	if (listen(socketEscucha, backlog) == -1) {
-		printf("error en la escucha de un cliente");
-		return -5;
-	}
-
-//	FD_SET(socketEscucha, &master);
-//	fdmax = socketEscucha;
-//	for (;;) {
-//		read_fds = master;
-//		if (select(fdmax + 1, &read_fds, NULL, NULL, NULL) == -1) {
-//			perror("Error en el Select");
-//			exit(1);
-//		}
-//		for (i = 0; i <= fdmax; i++) {
-//			if (FD_ISSET(i, &read_fds)) {
-//				if (i == socketEscucha) {
-//					addrlen = sizeof(serverInfo);
-//					if ((newfd = accept(socketEscucha,
-//							(struct sockaddr *) &serverInfo, &addrlen)) == -1) {
-//						perror("accept");
-//					} else {
-//						FD_SET(newfd, &master);
-//						if (newfd > fdmax) {
-//							fdmax = newfd;
-//						}
-//
-//					}
-//				}else {
-//					//gestionar datos cliente
-//					//recivir datos de un cliente
-//				}
-//			}
-//		}
+//	if (listen(socketEscucha, backlog) == -1) {
+//		printf("error en la escucha de un cliente");
+//		return -5;
 //	}
-//
-	struct sockaddr_in addr;
-	socklen_t addrlen = sizeof(addr);
 
-	int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
-			&addrlen);
-	if (socketCliente == -1) {
-		printf("Error en la conexion, en la funcion accept\n");
-		return -2;
-	}
-	return socketCliente;
+//	struct sockaddr_in addr;
+//	socklen_t addrlen = sizeof(addr);
+//
+//	int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
+//			&addrlen);
+//	if (socketCliente == -1) {
+//		printf("Error en la conexion, en la funcion accept\n");
+//		return -2;
+//	}
+	return socketEscucha;
 }
 
 /*  */

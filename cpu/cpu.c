@@ -39,10 +39,7 @@ int main(int argc, char **argv) {
 		Paquete *contexto_ejecucion;
 		contexto_ejecucion = deserializar_header(buffer);
 		free(buffer);
-//		int identificador;
-//		size_t tamMensaje;
-//		status = recv(serverPlanificador, &identificador, sizeof(int), 0);
-//		printf("identificador: %d \n", identificador);
+		//estos printf son probar que ande nada mas
 		printf("El codigo de la operacion es:%d \n", contexto_ejecucion->codigoOperacion);
 		printf("El PC es:%d \n", contexto_ejecucion->programCounter);
 		printf("El tamanio a recivir es:%d\n", contexto_ejecucion->tamanio);
@@ -54,12 +51,7 @@ int main(int argc, char **argv) {
 			free(dataBuffer);
 			printf("el mensaje es:%s \n", contexto_ejecucion->mensaje);
 			destruirPaquete(contexto_ejecucion);
-//			recv(serverPlanificador, &tamMensaje, sizeof(int), 0);
-//			printf("tamaño del mensaje a recibir: %d \n", tamMensaje);
-//			char *mensaje = malloc(tamMensaje);
-//			recv(serverPlanificador, mensaje, tamMensaje, 0);
-//			printf("Mensaje Recibido: %s \n", mensaje);
-//			free(mensaje);
+
 
 			//Esto hay que delegarlo. <3
 			/*void correrArchivo(char *mensaje) {
