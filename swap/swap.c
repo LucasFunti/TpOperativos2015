@@ -37,24 +37,12 @@ int reconocerInstruccion() {
 
 
 int main(int argc, char **argv) {
-	char * puerto;
-//	char * nombreSwap;
-//	int cantidadPaginas;
-//	int tamanioPagina;
-//	int retardoSwap;
-//	int retardoCompactacion;
-	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
-	puerto = config_get_string_value(swapConfiguracion,"PUERTO_ESCUCHA");
-//	nombreSwap = config_get_string_value(swapConfiguracion,"NOMBRE_SWAP");
-//	cantidadPaginas = config_get_int_value(swapConfiguracion,"CANTIDAD_PAGINAS");
-//	tamanioPagina = config_get_int_value(swapConfiguracion,"TAMANIO_PAGINA");
-//	retardoSwap = config_get_int_value(swapConfiguracion,"RETARDO_SWAP");
-//	retardoCompactacion = config_get_int_value(swapConfiguracion,"RETARDO_COMPACTACION");
+	t_config_swap config_swap;
+	config_swap = read_config_swap();
 
 
 	int socketCliente;
-	socketCliente = conectarServidor("localhost", puerto, BACKLOG);
+	socketCliente = conectarServidor("localhost", config_swap.puerto, BACKLOG);
 	char package[PACKAGESIZE];
 	int status = 1;
 

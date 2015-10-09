@@ -34,4 +34,5 @@ t_instruccion empaquetar(char *instruccion, int cantidadDePaginas);
 char *serializarEmpaquetado( t_instruccion instruccionEmpaquetada);
 int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
 t_config_cpu read_config_cpu_file();
+
 #endif /* LIBRERIACPU_H_ */

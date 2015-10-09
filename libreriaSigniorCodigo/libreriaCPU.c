@@ -124,3 +124,8 @@ t_config_cpu read_config_cpu_file(){
 //	config_cpu.retardo = config_get_int_value(cpuConfig,"RETARDO");
 	return config_cpu;
 }
+
+
+
+
+

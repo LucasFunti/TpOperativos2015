@@ -22,4 +22,6 @@ Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message, int p
 char *serializar(Paquete *unPaquete);
 Paquete *deserializar_header(char *buffer);
 void deserializar_data(Paquete *unPaquete, char *buffer);
+void destruirPaquete(Paquete * unPaquete);
+
 #endif /* LIBSOCKETS_H_ */

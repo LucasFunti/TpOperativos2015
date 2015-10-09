@@ -15,6 +15,7 @@
 #include "../libreriaSigniorCodigo/planificadorFunctions.h"
 #include <commons/config.h>
 #include <commons/collections/queue.h>
+#include <commons/string.h>
 #include "../libreriaSigniorCodigo/libSockets.h"
 
 #define BACKLOG 5
@@ -25,7 +26,7 @@ int p_last_id = 0;
 int main(int argc, char **argv) {
 	//genero el arhivo config y guardo los datos del mismo en estructura
 	t_config_planificador config_planificador;
-	config_planificador = read_config_file();
+	config_planificador = read_config_planificador();
 
 	//generar estructuras necesarias para el planificador (colas)
 	t_queue *ready;
@@ -54,7 +55,7 @@ int main(int argc, char **argv) {
 			scanf("%s", proceso);
 
 			//busco el path del proceso y calculo el tamaño del path
-			char *path = malloc(80);
+			char *path = malloc(128);
 			realpath(proceso, path);
 			printf("el path es: %s", path);
 			size_t tamMessage;
@@ -84,22 +85,23 @@ int main(int argc, char **argv) {
 				} else {
 					//agarro el primer elemento y lo envio a la cpu
 					//genero el paquete, para enviar a la cpu
-					//faltaria el puntero a instruccion
 					Paquete paquete;
-					paquete = generarPaquete(codigoOperacion, tamMessage, path,
+					paquete = generarPaquete(codigoOperacion, tamMessage + 1, path,
 							currentPCB.programCounter);
+					printf("el mensaje a enviar es: %s\n",paquete.mensaje);
 					char *buffer = serializar(&paquete);
 
 					send(socketCliente, buffer,
 							sizeof(int) + sizeof(int) + sizeof(int)
 									+ paquete.tamanio, 0);
 					free(buffer);
+					free(path);
 				}
 
 			}
 
 
-			free(path);
+
 			break;
 		case 99:/*finalizar*/
 			break;
