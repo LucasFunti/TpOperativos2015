@@ -1,50 +1,43 @@
-08:33:02 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+13:22:40 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
 make all 
 Building file: ../libreriaCPU.c
 Invoking: GCC C Compiler
 gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libreriaCPU.d" -MT"libreriaCPU.d" -o "libreriaCPU.o" "../libreriaCPU.c"
-../libreriaCPU.c: In function ‘ejecutar’:
-../libreriaCPU.c:79:3: warning: passing argument 2 of ‘empaquetar’ makes integer from pointer without a cast [enabled by default]
-   paquete = empaquetar(array[0], array[1]);
-   ^
-../libreriaCPU.c:41:15: note: expected ‘int’ but argument is of type ‘char *’
- t_instruccion empaquetar(char *instruccionRecibida, int paginas){
-               ^
-../libreriaCPU.c:93:3: warning: passing argument 2 of ‘empaquetar’ makes integer from pointer without a cast [enabled by default]
-   paquete = empaquetar(array[0], array[1]);
-   ^
-../libreriaCPU.c:41:15: note: expected ‘int’ but argument is of type ‘char *’
- t_instruccion empaquetar(char *instruccionRecibida, int paginas){
-               ^
-../libreriaCPU.c:99:5: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘char *’ [-Wformat=]
-     contenidoDePagina);
-     ^
-../libreriaCPU.c:104:3: warning: passing argument 2 of ‘empaquetar_escritura’ makes integer from pointer without a cast [enabled by default]
-   paqueteEscritura = empaquetar_escritura(array[0], array[1], array[2]);
-   ^
-In file included from ../libreriaCPU.c:11:0:
-../libreriaCPU.h:40:24: note: expected ‘int’ but argument is of type ‘char *’
- t_instruccionEscritura empaquetar_escritura(char *instruccionRecibida, int paginas, char *texto);
-                        ^
-../libreriaCPU.c:109:5: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘char *’ [-Wformat=]
-     contenidoDePagina);
-     ^
-../libreriaCPU.c:120:3: warning: passing argument 2 of ‘empaquetar’ makes integer from pointer without a cast [enabled by default]
-   t_instruccion paquete = empaquetar(array[0], array[1]);
-   ^
-../libreriaCPU.c:41:15: note: expected ‘int’ but argument is of type ‘char *’
- t_instruccion empaquetar(char *instruccionRecibida, int paginas){
-               ^
-../libreriaCPU.c:71:25: warning: variable ‘paqueteEscritura’ set but not used [-Wunused-but-set-variable]
-  t_instruccionEscritura paqueteEscritura;
-                         ^
-../libreriaCPU.c:106:7: warning: ‘paqueteSerializado’ may be used uninitialized in this function [-Wmaybe-uninitialized]
-   send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
-       ^
 Finished building: ../libreriaCPU.c
  
 Building target: liblibreriaSigniorCodigo.so
 Invoking: GCC C Linker
-gcc -shared -o "liblibreriaSigniorCodigo.so"  ./libSockets.o ./libreriaCPU.o ./planificadorFunctions.o ./swapFunctions.o   -lcommons
+gcc -L/home/utnso/so-commons-library/src/build -shared -o "liblibreriaSigniorCodigo.so"  ./libSockets.o ./libreriaCPU.o ./planificadorFunctions.o ./swapFunctions.o   -lcommons
 Finished building target: liblibreriaSigniorCodigo.so
+ 
+13:22:56 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+make: No se hace nada para «all».
+13:22:56 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+Building target: cpu
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "cpu"  ./cpu.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: cpu
+ 
+13:22:56 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+Building target: memoria
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "memoria"  ./memoria.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: memoria
+ 
+13:22:56 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+Building target: planificador
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: planificador
+ 
+13:22:57 **** Incremental Build of configuration Debug for project swap ****
+make all 
+Building target: swap
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "swap"  ./swap.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: swap
  

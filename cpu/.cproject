@@ -35,10 +35,10 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.643111345" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
 								<option id="gnu.c.link.option.paths.786225427" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libreriaSigniorCodigo/Debug}&quot;"/>
-									<listOptionValue builtIn="false" value="/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons"/>
+									<listOptionValue builtIn="false" value="/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build"/>
 								</option>
 								<option id="gnu.c.link.option.libs.367748011" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="libreriaSigniorCodigo"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="libreriaSigniorCodigo"/>
 									<listOptionValue builtIn="false" value="commons"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1178674177" superClass="cdt.managedbuild.tool.gnu.c.linker.input">

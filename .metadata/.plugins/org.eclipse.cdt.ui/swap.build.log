@@ -1,11 +1,10 @@
-18:14:40 **** Incremental Build of configuration Debug for project swap ****
+13:22:57 **** Incremental Build of configuration Debug for project swap ****
 make all 
 Building target: swap
 Invoking: GCC C Linker
 gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "swap"  ./swap.o   -llibreriaSigniorCodigo -lcommons
-/usr/bin/ld: no se puede encontrar -llibreriaSigniorCodigo
-collect2: error: ld returned 1 exit status
-make: *** [swap] Error 1
+Finished building target: swap
+ 
 
-18:14:40 Build Finished (took 85ms)
+13:22:57 Build Finished (took 170ms)
 

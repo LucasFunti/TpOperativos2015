@@ -1,11 +1,10 @@
-18:14:39 **** Incremental Build of configuration Debug for project cpu ****
+13:22:56 **** Incremental Build of configuration Debug for project cpu ****
 make all 
 Building target: cpu
 Invoking: GCC C Linker
-gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "cpu"  ./cpu.o   -llibreriaSigniorCodigo -lcommons
-/usr/bin/ld: no se puede encontrar -llibreriaSigniorCodigo
-collect2: error: ld returned 1 exit status
-make: *** [cpu] Error 1
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "cpu"  ./cpu.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: cpu
+ 
 
-18:14:40 Build Finished (took 123ms)
+13:22:56 Build Finished (took 67ms)
 

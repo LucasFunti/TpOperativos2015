@@ -10,12 +10,14 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <pthread.h>
 #include <commons/config.h>
 #include <commons/txt.h>
 #include <commons/string.h>
 #include <limits.h>
 #include "../libreriaSigniorCodigo/libreriaCPU.h"
 #include "../libreriaSigniorCodigo/libSockets.h"
+
 
 #define BACKLOG 5
 #define PACKAGESIZE 32
@@ -33,18 +35,24 @@ int main(int argc, char **argv) {
 	int status = 1;
 
 	while (status != 0) {
-		int identificador;
-		size_t tamMensaje;
-		status = recv(serverPlanificador, &identificador, sizeof(int), 0);
-		printf("identificador: %d \n", identificador);
-
+		char * buffer = malloc(sizeof(int)*3);
+		status = recv(serverPlanificador,buffer,(sizeof(int)*3),0);
+		Paquete *contexto_ejecucion;
+		contexto_ejecucion = deserializar_header(buffer);
+		free(buffer);
+		//estos printf son probar que ande nada mas
+		printf("El codigo de la operacion es:%d \n", contexto_ejecucion->codigoOperacion);
+		printf("El PC es:%d \n", contexto_ejecucion->programCounter);
+		printf("El tamanio a recivir es:%d\n", contexto_ejecucion->tamanio);
 		if (status != 0) {
-			recv(serverPlanificador, &tamMensaje, sizeof(int), 0);
-			printf("tamaño del mensaje a recibir: %d \n", tamMensaje);
-			char *mensaje = malloc(tamMensaje);
-			recv(serverPlanificador, mensaje, tamMensaje, 0);
-			printf("Mensaje Recibido: %s \n", mensaje);
-			free(mensaje);
+			char * dataBuffer = malloc(contexto_ejecucion->tamanio);
+			recv(serverPlanificador,dataBuffer,contexto_ejecucion->tamanio,0);
+			contexto_ejecucion->mensaje = malloc(contexto_ejecucion->tamanio);
+			memcpy(contexto_ejecucion->mensaje,dataBuffer,contexto_ejecucion->tamanio);
+			free(dataBuffer);
+			printf("el mensaje es:%s \n", contexto_ejecucion->mensaje);
+			destruirPaquete(contexto_ejecucion);
+
 
 			//Esto hay que delegarlo. <3
 			/*void correrArchivo(char *mensaje) {
@@ -69,6 +77,9 @@ int main(int argc, char **argv) {
 
 	close(serverPlanificador);
 	close(serverMemoria);
-
+	free(config_cpu.ipMemoria);
+	free(config_cpu.ipPlanificador);
+	free(config_cpu.puerto_memoria);
+	free(config_cpu.puerto_planificador);
 	return 0;
 }

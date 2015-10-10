@@ -10,12 +10,12 @@
 
 typedef struct instruccion{
 	char *instruccion;
-	int cantidadDePaginas;
+	char *cantidadDePaginas;
 } t_instruccion;
 
 typedef struct instruccionEscritura{
 	char *instruccion;
-	int cantidadDePaginas;
+	char *cantidadDePaginas;
 	char *textoAEscribir;
 } t_instruccionEscritura;
 
@@ -36,9 +36,10 @@ typedef struct{
 } t_config_cpu;
 
 int reconocerInstruccion(char*);
-t_instruccion empaquetar(char *, int);
-t_instruccionEscritura empaquetar_escritura(char *instruccionRecibida, int paginas, char *texto);
+t_instruccion empaquetar(char *, char *);
+t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
 int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
 t_config_cpu read_config_cpu_file();
+
 #endif /* LIBRERIACPU_H_ */

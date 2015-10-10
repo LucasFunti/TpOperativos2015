@@ -16,6 +16,7 @@
 #include <arpa/inet.h>
 
 #include "libSockets.h"
+#define HEADER_PAQUETE (sizeof(int)*3)
 
 struct addrinfo* cargarInfoSocket(char *IP, char* Port) {
 	struct addrinfo hints;
@@ -63,30 +64,31 @@ int conectarCliente(char *IP, char* Port) {
 char *serializar(Paquete *unPaquete) {
 	void *buffer = malloc(
 			sizeof(int)/*ID*/+ sizeof(int)/*ProgCounter*/+ sizeof(int)/*Tamañopath*/
-			+ sizeof(char) * unPaquete->tamanio+1);
+			+ sizeof(char) * unPaquete->tamanio);
 	memcpy(buffer, &unPaquete->codigoOperacion, sizeof(int));
 	memcpy(buffer + sizeof(int), &unPaquete->programCounter, sizeof(int));
 	memcpy(buffer + sizeof(int) + sizeof(int), &unPaquete->tamanio,
 			sizeof(int));
-	memcpy(buffer + sizeof(int) + sizeof(int) + sizeof(int), unPaquete->mensaje,
+	memcpy(buffer + sizeof(int) + sizeof(int) + sizeof(int), &unPaquete->mensaje,
 			unPaquete->tamanio);
 	return buffer;
 }
 /* deserializar elheader del buffer a la estructura paquete
  *  devuelve la direccion a la estructura Paquete */
+
 Paquete *deserializar_header(char *buffer) {
-	Paquete *unPaquete = malloc(sizeof(Paquete));
-	memcpy(&unPaquete->codigoOperacion, buffer, sizeof(int));
-	memcpy(&unPaquete->programCounter, buffer + sizeof(int), sizeof(int));
-	memcpy(&unPaquete->tamanio, buffer + sizeof(int) + sizeof(int),
+	Paquete *contexto_ejecucion = malloc(sizeof(Paquete));
+	memcpy(&contexto_ejecucion->codigoOperacion, buffer, sizeof(int));
+	memcpy(&contexto_ejecucion->programCounter, buffer + sizeof(int), sizeof(int));
+	memcpy(&contexto_ejecucion->tamanio, buffer + sizeof(int) + sizeof(int),
 			sizeof(int));
 
-	return &unPaquete;
+	return contexto_ejecucion;
 }
 /* deserializa la data del buffer con los datos recibidos en el deserializar_header */
 void deserializar_data(Paquete *unPaquete, char *buffer){
 	unPaquete->mensaje = malloc(unPaquete->tamanio);
-	memcpy(&unPaquete->mensaje, buffer + (sizeof(int) * 3), unPaquete->tamanio);
+	memcpy(unPaquete->mensaje, buffer, unPaquete->tamanio);
 }
 /* Funcion que genera un paquete. agarra los valores correspondientes y
  * los coloca dentro de la estructura Paquete */
@@ -99,23 +101,20 @@ Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message,
 	paquete.programCounter = programCounter;
 	paquete.tamanio = tamMessage;
 	paquete.mensaje = malloc(tamMessage);
-	strcpy(paquete.mensaje, message);
-
+	memcpy(&paquete.mensaje, message, paquete.tamanio);
+	memset(paquete.mensaje,'\0',paquete.tamanio - 1 );
 	return paquete;
+}
+/* funcion para destruir paquete */
+void destruirPaquete(Paquete * unPaquete){
+	free(unPaquete->mensaje);
+	free(unPaquete);
 }
 
 /* funcion que representa el uso de la funcion select() para leer
  * de diferentes problemas */
 
 int conectarServidor(char* IP, char* Port, int backlog) {
-//	fd_set master;
-//	fd_set read_fds;
-//	int fdmax;
-//	int i;
-//	int addrlen;
-//	int newfd;
-//	FD_ZERO(&master);
-//	FD_ZERO(&read_fds);
 	struct addrinfo* serverInfo = cargarInfoSocket(IP, Port);
 	if (serverInfo == NULL)
 		return -1;
@@ -127,51 +126,21 @@ int conectarServidor(char* IP, char* Port, int backlog) {
 		printf("Error en el Bind \n");
 	}
 	freeaddrinfo(serverInfo);
-	if (listen(socketEscucha, backlog) == -1) {
-		printf("error en la escucha de un cliente");
-		return -5;
-	}
-
-//	FD_SET(socketEscucha, &master);
-//	fdmax = socketEscucha;
-//	for (;;) {
-//		read_fds = master;
-//		if (select(fdmax + 1, &read_fds, NULL, NULL, NULL) == -1) {
-//			perror("Error en el Select");
-//			exit(1);
-//		}
-//		for (i = 0; i <= fdmax; i++) {
-//			if (FD_ISSET(i, &read_fds)) {
-//				if (i == socketEscucha) {
-//					addrlen = sizeof(serverInfo);
-//					if ((newfd = accept(socketEscucha,
-//							(struct sockaddr *) &serverInfo, &addrlen)) == -1) {
-//						perror("accept");
-//					} else {
-//						FD_SET(newfd, &master);
-//						if (newfd > fdmax) {
-//							fdmax = newfd;
-//						}
-//
-//					}
-//				}else {
-//					//gestionar datos cliente
-//					//recivir datos de un cliente
-//				}
-//			}
-//		}
+//	if (listen(socketEscucha, backlog) == -1) {
+//		printf("error en la escucha de un cliente");
+//		return -5;
 //	}
-//
-	struct sockaddr_in addr;
-	socklen_t addrlen = sizeof(addr);
 
-	int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
-			&addrlen);
-	if (socketCliente == -1) {
-		printf("Error en la conexion, en la funcion accept\n");
-		return -2;
-	}
-	return socketCliente;
+//	struct sockaddr_in addr;
+//	socklen_t addrlen = sizeof(addr);
+//
+//	int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
+//			&addrlen);
+//	if (socketCliente == -1) {
+//		printf("Error en la conexion, en la funcion accept\n");
+//		return -2;
+//	}
+	return socketEscucha;
 }
 
 /*  */
