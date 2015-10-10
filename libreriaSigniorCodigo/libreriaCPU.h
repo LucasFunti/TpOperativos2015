@@ -8,10 +8,16 @@
 #ifndef LIBRERIACPU_H_
 #define LIBRERIACPU_H_
 
-typedef struct {
+typedef struct instruccion{
 	char *instruccion;
 	int cantidadDePaginas;
 } t_instruccion;
+
+typedef struct instruccionEscritura{
+	char *instruccion;
+	int cantidadDePaginas;
+	char *textoAEscribir;
+} t_instruccionEscritura;
 
 typedef struct {
 	int codigoOperacion;
@@ -29,9 +35,10 @@ typedef struct{
 	int retardo;
 } t_config_cpu;
 
-int reconocerInstruccion(char *linea);
-t_instruccion empaquetar(char *instruccion, int cantidadDePaginas);
-char *serializarEmpaquetado( t_instruccion instruccionEmpaquetada);
+int reconocerInstruccion(char*);
+t_instruccion empaquetar(char *, int);
+t_instruccionEscritura empaquetar_escritura(char *instruccionRecibida, int paginas, char *texto);
+char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
 int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
 t_config_cpu read_config_cpu_file();
 #endif /* LIBRERIACPU_H_ */

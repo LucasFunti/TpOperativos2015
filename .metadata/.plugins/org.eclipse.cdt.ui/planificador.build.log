@@ -1,6 +1,11 @@
-14:53:47 **** Incremental Build of configuration Debug for project planificador ****
+18:14:40 **** Incremental Build of configuration Debug for project planificador ****
 make all 
-make: No se hace nada para «all».
+Building target: planificador
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo -lcommons
+/usr/bin/ld: no se puede encontrar -llibreriaSigniorCodigo
+collect2: error: ld returned 1 exit status
+make: *** [planificador] Error 1
 
-14:53:47 Build Finished (took 77ms)
+18:14:40 Build Finished (took 180ms)
 
