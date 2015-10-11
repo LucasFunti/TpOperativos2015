@@ -8,18 +8,15 @@
 #ifndef SWAPFUNCTIONS_H_
 #define SWAPFUNCTIONS_H_
 
-typedef struct configuracionSwap{
-	char * puerto;
-	char * nombreSwap;
-	int cantidadPaginas;
-	int tamanioPagina;
-	int retardoSwap;
-	int retardoCompactacion;
-} t_config_swap;
-
 void setupSwap();
-t_bitarray *readFile(char *file);
 
-t_config_swap read_config_swap();
+int doesFileExist(const char *filename);
+
+t_list* getPages(int pagesAmount);
+
+typedef struct {
+	int numeroPagina;
+	char *nombreProceso;
+} t_nodo_swap;
 
 #endif /* SWAPFUNCTIONS_H_ */

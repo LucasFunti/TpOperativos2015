@@ -16,43 +16,42 @@
 #include <commons/config.h>
 #include <commons/collections/list.h>
 #include <commons/bitarray.h>
-
-#include "libSockets.h"
 #include "swapFunctions.h"
+#include "libSockets.h"
 
-void setupSwap() {
-
+int doesFileExist(const char *filename) {
+	FILE *fp = fopen (filename, "r");
+   if (fp!=NULL) fclose (fp);
+   return (fp!=NULL);
 }
 
-t_bitarray *readFile(char *file) {
-	FILE *fileptr;
-	char *buffer;
-	long filelen;
-
-	fileptr = fopen(file, "rb");  // Open the file in binary mode
-	fseek(fileptr, 0, SEEK_END);          // Jump to the end of the file
-	filelen = ftell(fileptr);         // Get the current byte offset in the file
-	rewind(fileptr);                   // Jump back to the beginning of the file
-
-	buffer = (char *) malloc((filelen + 1) * sizeof(char)); // Enough memory for file + \0
-	fread(buffer, filelen, 1, fileptr); // Read in the entire file
-	fclose(fileptr);
-	t_bitarray *array = bitarray_create(buffer, filelen);
-	return array;
-}
-
-/* leer y guardar en una estructura los datos del archivo de configuracion*/
-t_config_swap read_config_swap() {
-	t_config_swap swap_config;
+void setupSwap(){
+	//Traigo datos del archivo de configuracion de Swap y creo un archivo
+	//con las especificaciones de configuracion con /0
 	t_config *swapConfiguracion;
-	swapConfiguracion = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
-	swap_config.puerto = config_get_string_value(swapConfiguracion, "PUERTO_ESCUCHA");
-	swap_config.nombreSwap = config_get_string_value(swapConfiguracion,"NOMBRE_SWAP");
-	swap_config.cantidadPaginas = config_get_int_value(swapConfiguracion,"CANTIDAD_PAGINAS");
-	swap_config.tamanioPagina = config_get_int_value(swapConfiguracion,"TAMANIO_PAGINA");
-	swap_config.retardoSwap = config_get_int_value(swapConfiguracion,"RETARDO_SWAP");
-	swap_config.retardoCompactacion = config_get_int_value(swapConfiguracion,"RETARDO_COMPACTACION");
-
-	return swap_config;
+	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	int pages_amount = config_get_int_value(swapConfiguracion,"CANTIDAD_PAGINAS");
+	int page_size = config_get_int_value(swapConfiguracion,"TAMANIO_PAGINA");
+	char* file_name = config_get_string_value(swapConfiguracion,"NOMBRE_SWAP");
+	char command[100];
+	int total = pages_amount * page_size;
+	sprintf(command, "dd if=/dev/zero of=%s bs=%d count=1",file_name,total );
+	system(command);
+	printf("Archivo de swap creado bajo el nombre %s\n",file_name );
 }
+
+t_list* getPages(int pagesAmount){
+	t_list *paginas = list_create();
+	int i;
+	int top = pagesAmount+1;
+	for (i = 1; i < top ; i++){
+		t_nodo_swap *newItemPtr = malloc(sizeof(t_nodo_swap));
+		t_nodo_swap newItem;
+		newItemPtr = &newItem;
+		newItem.numeroPagina = i;
+		newItem.nombreProceso = "";
+	  	list_add(paginas,newItemPtr);
+	}
+	return paginas;
+}
+
