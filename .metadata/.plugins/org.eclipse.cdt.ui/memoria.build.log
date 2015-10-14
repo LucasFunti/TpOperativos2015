@@ -1,6 +1,10 @@
-14:53:47 **** Incremental Build of configuration Debug for project memoria ****
+13:22:56 **** Incremental Build of configuration Debug for project memoria ****
 make all 
-make: No se hace nada para «all».
+Building target: memoria
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "memoria"  ./memoria.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: memoria
+ 
 
-14:53:47 Build Finished (took 83ms)
+13:22:56 Build Finished (took 118ms)
 
