@@ -54,10 +54,24 @@ int main(int argc, char **argv) {
 			destruirPaquete(contexto_ejecucion);
 
 
+			//Esto hay que delegarlo. <3
+			/*void correrArchivo(char *mensaje) {
+			 FILE* file = fopen(mensaje, "r");
 
+			 char* buffer = calloc(1, tamMensaje + 1);
+			 fread(buffer, tamMensaje, 1, file);
+			 char *listaInstrucciones[] = string_split(file, ";");
+			 int n = 0;
+			 while (listaInstrucciones[n] != NULL) {
+			 ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
+			 idProceso);
+			 n++;
 
+			 }
+			 }*/
 
-	}
+		}
+
 	}
 	/*send(serverMemoria, package, sizeof(package), 0);*/
 

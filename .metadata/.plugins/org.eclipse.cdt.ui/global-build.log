@@ -1,8 +1,68 @@
-13:22:40 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+12:31:23 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
 make all 
 Building file: ../libreriaCPU.c
 Invoking: GCC C Compiler
 gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libreriaCPU.d" -MT"libreriaCPU.d" -o "libreriaCPU.o" "../libreriaCPU.c"
+../libreriaCPU.c: In function ‘serializarEmpaquetado’:
+../libreriaCPU.c:63:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(instruccion, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c:64:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(paginas, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c: In function ‘serializarEmpaquetadoEscritura’:
+../libreriaCPU.c:79:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(instruccion, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c:80:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(paginas, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c:81:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(texto, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c: In function ‘ejecutar’:
+../libreriaCPU.c:113:3: warning: passing argument 2 of ‘recv’ makes pointer from integer without a cast [enabled by default]
+   recv(serverMemoria, estadoDeEjecucion, sizeof(int), 0);
+   ^
+In file included from ../libreriaCPU.c:10:0:
+/usr/include/i386-linux-gnu/sys/socket.h:156:16: note: expected ‘void *’ but argument is of type ‘int’
+ extern ssize_t recv (int __fd, void *__buf, size_t __n, int __flags);
+                ^
+../libreriaCPU.c: In function ‘correrArchivo’:
+../libreriaCPU.c:169:2: warning: passing argument 1 of ‘string_split’ from incompatible pointer type [enabled by default]
+  listaInstrucciones = string_split(archivo, ";");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:181:10: note: expected ‘char *’ but argument is of type ‘struct FILE *’
+  char**  string_split(char * text, char * separator);
+          ^
+../libreriaCPU.c: In function ‘ejecutar’:
+../libreriaCPU.c:113:7: warning: ‘estadoDeEjecucion’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   recv(serverMemoria, estadoDeEjecucion, sizeof(int), 0);
+       ^
+../libreriaCPU.c:127:7: warning: ‘contenidoDePagina’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
+       ^
 Finished building: ../libreriaCPU.c
  
 Building target: liblibreriaSigniorCodigo.so
@@ -10,34 +70,134 @@ Invoking: GCC C Linker
 gcc -L/home/utnso/so-commons-library/src/build -shared -o "liblibreriaSigniorCodigo.so"  ./libSockets.o ./libreriaCPU.o ./planificadorFunctions.o ./swapFunctions.o   -lcommons
 Finished building target: liblibreriaSigniorCodigo.so
  
-13:22:56 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+14:41:48 **** Build of configuration Debug for project libreriaSigniorCodigo ****
 make all 
-make: No se hace nada para «all».
-13:22:56 **** Incremental Build of configuration Debug for project cpu ****
-make all 
-Building target: cpu
-Invoking: GCC C Linker
-gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "cpu"  ./cpu.o   -llibreriaSigniorCodigo -lcommons
-Finished building target: cpu
+Building file: ../libreriaCPU.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"libreriaCPU.d" -MT"libreriaCPU.d" -o "libreriaCPU.o" "../libreriaCPU.c"
+../libreriaCPU.c: In function ‘serializarEmpaquetado’:
+../libreriaCPU.c:61:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(instruccion, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c:62:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(paginas, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c: In function ‘serializarEmpaquetadoEscritura’:
+../libreriaCPU.c:79:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(instruccion, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c:80:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(paginas, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c:81:2: warning: passing argument 1 of ‘string_append’ from incompatible pointer type [enabled by default]
+  string_append(texto, "\0");
+  ^
+In file included from ../libreriaCPU.c:8:0:
+/usr/include/commons/string.h:74:8: note: expected ‘char **’ but argument is of type ‘char *’
+  void  string_append(char ** original, char * string_to_add);
+        ^
+../libreriaCPU.c: In function ‘ejecutar’:
+../libreriaCPU.c:133:3: warning: passing argument 2 of ‘recv’ makes pointer from integer without a cast [enabled by default]
+   recv(serverMemoria, estadoDeEjecucion, sizeof(int), 0);
+   ^
+In file included from ../libreriaCPU.c:10:0:
+/usr/include/i386-linux-gnu/sys/socket.h:156:16: note: expected ‘void *’ but argument is of type ‘int’
+ extern ssize_t recv (int __fd, void *__buf, size_t __n, int __flags);
+                ^
+../libreriaCPU.c: In function ‘correrArchivo’:
+../libreriaCPU.c:187:8: warning: unused variable ‘archivo’ [-Wunused-variable]
+  FILE *archivo;
+        ^
+../libreriaCPU.c: In function ‘ejecutar’:
+../libreriaCPU.c:133:7: warning: ‘estadoDeEjecucion’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   recv(serverMemoria, estadoDeEjecucion, sizeof(int), 0);
+       ^
+../libreriaCPU.c:148:7: warning: ‘contenidoDePagina’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
+       ^
+Finished building: ../libreriaCPU.c
  
-13:22:56 **** Incremental Build of configuration Debug for project memoria ****
+Building target: liblibreriaSigniorCodigo.so
+Invoking: GCC C Linker
+gcc -L/home/utnso/so-commons-library/src/build -shared -o "liblibreriaSigniorCodigo.so"  ./libSockets.o ./libreriaCPU.o ./planificadorFunctions.o ./swapFunctions.o   -lcommons
+Finished building target: liblibreriaSigniorCodigo.so
+ 
+14:41:49 **** Build of configuration Debug for project cpu ****
+make all 
+Building file: ../cpu.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"cpu.d" -MT"cpu.d" -o "cpu.o" "../cpu.c"
+../cpu.c: In function ‘main’:
+../cpu.c:70:1: error: expected declaration or statement at end of input
+ }
+ ^
+../cpu.c:70:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+make: *** [cpu.o] Error 1
+14:41:50 **** Build of configuration Debug for project memoria ****
 make all 
 Building target: memoria
 Invoking: GCC C Linker
 gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "memoria"  ./memoria.o   -llibreriaSigniorCodigo -lcommons
 Finished building target: memoria
  
-13:22:56 **** Incremental Build of configuration Debug for project planificador ****
+14:41:50 **** Build of configuration Debug for project planificador ****
 make all 
 Building target: planificador
 Invoking: GCC C Linker
 gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "planificador"  ./planificador.o   -llibreriaSigniorCodigo -lcommons
 Finished building target: planificador
  
-13:22:57 **** Incremental Build of configuration Debug for project swap ****
+14:41:50 **** Build of configuration Debug for project swap ****
 make all 
+Building file: ../swap.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"swap.d" -MT"swap.d" -o "swap.o" "../swap.c"
+Finished building: ../swap.c
+ 
 Building target: swap
 Invoking: GCC C Linker
 gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons -o "swap"  ./swap.o   -llibreriaSigniorCodigo -lcommons
 Finished building target: swap
  
+14:43:15 **** Incremental Build of configuration Debug for project libreriaSigniorCodigo ****
+make all 
+make: No se hace nada para «all».
+14:43:15 **** Incremental Build of configuration Debug for project cpu ****
+make all 
+Building file: ../cpu.c
+Invoking: GCC C Compiler
+gcc -I"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"cpu.d" -MT"cpu.d" -o "cpu.o" "../cpu.c"
+Finished building: ../cpu.c
+ 
+Building target: cpu
+Invoking: GCC C Linker
+gcc -L"/home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug" -L/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build -o "cpu"  ./cpu.o   -llibreriaSigniorCodigo -lcommons
+Finished building target: cpu
+ 
+14:43:16 **** Incremental Build of configuration Debug for project memoria ****
+make all 
+make: No se hace nada para «all».
+14:43:16 **** Incremental Build of configuration Debug for project planificador ****
+make all 
+make: No se hace nada para «all».
+14:43:16 **** Incremental Build of configuration Debug for project swap ****
+make all 
+make: No se hace nada para «all».
