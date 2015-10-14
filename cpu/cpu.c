@@ -10,6 +10,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <pthread.h>
 #include <commons/config.h>
 #include <commons/txt.h>
 #include <commons/string.h>
