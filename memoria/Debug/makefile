@@ -25,7 +25,7 @@ endif
 all: memoria
 
 dependents:
-	-cd /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug && $(MAKE) clean all
+	-cd /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug && $(MAKE) all
 
 # Tool invocations
 memoria: $(OBJS) $(USER_OBJS) /home/utnso/git/tp-2015-2c-signiorcodigo/libreriaSigniorCodigo/Debug/liblibreriaSigniorCodigo.so

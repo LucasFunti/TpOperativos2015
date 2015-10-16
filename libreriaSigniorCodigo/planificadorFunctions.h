@@ -24,6 +24,7 @@ typedef struct {
 	char *dirProceso;
 	int estado;
 	int programCounter;
+	char *nombrePrograma;
 } tipo_pcb;
 
 typedef struct {
@@ -49,10 +50,13 @@ typedef struct {
 
 int reconocerIdentificador();
 int generarPID(int* pid);
-tipo_pcb generarPCB(int pid, char *path, int estado);
+tipo_pcb generarPCB(int pid, char *path, int estado,char *nombre);
 t_config_planificador read_config_planificador();
 void inicializarColecciones(t_list *listaNuevos, t_queue *colaListos,
 		t_queue *colaFinalizados, t_queue*cola_cpu_libres,
 		t_list *listaEjecutando, t_list *entradaSalida);
+
+void mostrarEstadoDeLista(t_list *lista,char*estado);
+void mostrarEstadoDeCola(t_queue *cola,char*estado);
 
 #endif /* PLANIFICADORFUNCTIONS_H_ */

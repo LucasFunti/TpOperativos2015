@@ -54,7 +54,6 @@ int main(int argc, char **argv) {
 	int *pid_a_finalizar = malloc(sizeof(int));
 	int enviar = 1;
 
-
 	while (enviar) {
 		int codigoOperacion;
 
@@ -78,7 +77,7 @@ int main(int argc, char **argv) {
 
 			//genero el pcb del proceso
 			tipo_pcb currentPCB;
-			currentPCB = generarPCB(pid, path, listo);
+			currentPCB = generarPCB(pid, path, listo, proceso);
 
 			nodo_proceso proceso;
 			proceso.pcb = currentPCB;
@@ -117,21 +116,25 @@ int main(int argc, char **argv) {
 
 			scanf("%d", pid_a_finalizar);
 
-
 			bool encontrar_pid(void * nodo) {
 				return ((((nodo_en_ejecucion*) nodo)->proceso.pcb.id)
 						== *pid_a_finalizar);
 			}
 			nodo_en_ejecucion *procesoEnEjecucion = malloc(
-								sizeof(nodo_en_ejecucion));
+					sizeof(nodo_en_ejecucion));
 			procesoEnEjecucion = list_find(en_ejecucion, encontrar_pid);
-
 
 			free(procesoEnEjecucion);
 
+			break;
+		case 2: /* ps */
+
+			mostrarEstadoDeLista(en_ejecucion, "Ejecutando");
+			mostrarEstadoDeCola(colaListos, "Listo");
 
 			break;
-
+		case 3: /* cpu */
+			break;
 		}
 
 		/*if (enviar)
