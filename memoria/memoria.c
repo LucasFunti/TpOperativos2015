@@ -20,7 +20,6 @@
 
 #include "../libreriaSigniorCodigo/libSockets.h"
 
-
 #define PACKAGESIZE 32
 #define BACKLOG 5
 
@@ -29,11 +28,11 @@ int main() {
 	char * ipSwap;
 	char * puertoSwap;
 	t_config *memoriaConfig;
-	memoriaConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/memoria/memoriaConfig");
-	puertoCpu = config_get_string_value(memoriaConfig,"PUERTO_ESCUCHA");
-	ipSwap = config_get_string_value(memoriaConfig,"IP_SWAP");
-	puertoSwap = config_get_string_value(memoriaConfig,"PUERTO_SWAP");
-
+	memoriaConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/memoria/memoriaConfig");
+	puertoCpu = config_get_string_value(memoriaConfig, "PUERTO_ESCUCHA");
+	ipSwap = config_get_string_value(memoriaConfig, "IP_SWAP");
+	puertoSwap = config_get_string_value(memoriaConfig, "PUERTO_SWAP");
 
 	int socketCpu, socketSwap;
 	socketCpu = conectarServidor("localhost", puertoCpu, BACKLOG);

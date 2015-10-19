@@ -15,20 +15,48 @@ enum estado {
 };
 
 typedef struct {
-	int id;
-	char *dirProceso;
-	int estado;
-	int programCounter;
-} tipo_pcb;
-
-typedef struct {
 	char *puerto;
 	char *algoritmo;
 } t_config_planificador;
 
+typedef struct {
+	int id;
+	char *dirProceso;
+	int estado;
+	int programCounter;
+	char *nombrePrograma;
+} tipo_pcb;
+
+typedef struct {
+	tipo_pcb pcb;
+	int peso;
+	int socket_prog;
+} nodo_proceso;
+
+typedef struct {
+	int socket;
+	int pid;
+} tipo_cpu;
+
+typedef struct {
+	nodo_proceso proceso;
+	tipo_cpu cpu;
+} nodo_en_ejecucion;
+
+typedef struct {
+	nodo_proceso* proceso;
+	int espera;
+} nodo_entrada_salida;
+
 int reconocerIdentificador();
 int generarPID(int* pid);
-tipo_pcb generarPCB(int pid, char *path, int estado);
+tipo_pcb generarPCB(int pid, char *path, int estado,char *nombre);
 t_config_planificador read_config_planificador();
+void inicializarColecciones(t_list *listaNuevos, t_queue *colaListos,
+		t_queue *colaFinalizados, t_queue*cola_cpu_libres,
+		t_list *listaEjecutando, t_list *entradaSalida);
+
+void mostrarEstadoDeLista(t_list *lista,char*estado);
+void mostrarEstadoDeCola(t_queue *cola,char*estado);
 
 #endif /* PLANIFICADORFUNCTIONS_H_ */
