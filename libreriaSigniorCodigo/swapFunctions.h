@@ -35,7 +35,7 @@ char* getSwapFileName();
 
 void markPage(int pageNumber,char *processName, t_list *pages);
 
-void writePage(int pageNumber,char *processName,char *content,t_list *pages);
+void writePage(int pageNumber,char *content);
 
 char* readPage(int pageNumber);
 
@@ -48,5 +48,13 @@ int checkProcessSpace(char* name, t_list *pages);
 int checkSpaceAvailability(int amount, t_list *page);
 
 void freeSpace(char *name,t_list *pages);
+
+void compact(t_list *pages);
+
+void fillRemainingSpace(t_list *list, int from);
+
+void copyPage(int from, int to);
+
+void imprimir(t_list *list);
 
 #endif /* SWAPFUNCTIONS_H_ */

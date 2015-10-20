@@ -75,8 +75,8 @@ void listDestroy(t_list *pages){
 t_list* setPages(int pagesAmount){
 	t_list *paginas = list_create();
 	int i;
-	int top = pagesAmount+1;
-	for (i = 1; i < top ; i++){
+	int top = pagesAmount;
+	for (i = 0; i < top ; i++){
 		t_nodo_swap *newItemPtr = malloc(sizeof(t_nodo_swap));
 		newItemPtr->numeroPagina = i;
 		newItemPtr->nombreProceso = "";
@@ -90,8 +90,7 @@ void markPage(int pageNumber,char *processName, t_list *pages){
 	item->nombreProceso = processName;
 }
 
-void writePage(int pageNumber,char *processName,char *content,t_list *pages){
-	markPage(pageNumber,processName,pages);
+void writePage(int pageNumber,char *content){
 	int page_size = getSwapPagesSize();
 	char *file_name = getSwapFileName();
 	FILE *fp=fopen(file_name, "rb+");
@@ -130,7 +129,8 @@ void evaluateAction(char* action, t_list *pages){
 		if (hasReservedPages>=0){
 			char *text = "texto de prueba para signior funti";
 			int start = checkProcessSpace(process_name,pages);
-			writePage(start-1,process_name,text,pages);
+			writePage(start-1,text);
+			markPage(start-1,process_name,pages);
 		} else {
 			printf("El proceso no posee páginas reservadas\n");
 		}
@@ -140,13 +140,16 @@ void evaluateAction(char* action, t_list *pages){
 		scanf ("%d",&pagina_lectura);
 		char *retorno = readPage(pagina_lectura);
 		printf("%s\n",retorno);
-	}else if(strcmp(action,"recorrer")==0){
-		checkProcessSpace("prueba",pages);
+	}else if(strcmp(action,"compactar")==0){
+		compact(pages);
 	}else if(strcmp(action,"liberar")==0){
 		printf("Ingrese nombre de Proceso\n");
 		char *process_name = malloc(sizeof(char)*15);
 		scanf ("%s",process_name);
 		freeSpace(process_name,pages);
+	}else if(strcmp(action,"imprimir")==0){
+		printf("Paginas\n");
+		imprimir(pages);
 	}else{
 		printf("Accion desconocida\n");
 	}
@@ -164,7 +167,6 @@ int checkSpaceAvailability (int amount, t_list *pages){
 			} else {
 				count = 0;
 			}
-			printf("%d\n",count);
 			if (count == amount){
 				return (i-amount+1);
 			}
@@ -180,17 +182,15 @@ void freeSpace(char *name,t_list *pages){
 		t_nodo_swap *newItemPtr = (t_nodo_swap*)list_get(pages,i);
 		if (strcmp(newItemPtr->nombreProceso,name)==0){
 			newItemPtr->nombreProceso = "";
-			printf("%d pagina liberada\n",i);
 		}
 	}
 }
 
 void reserve(char* name, int amount, t_list *pages){
 	int result = checkSpaceAvailability(amount,pages);
-	printf("%d\n",result);
 	if (result>=0){
 		int i;
-		int top = result + amount + 1;
+		int top = result + amount;
 		for (i = result; i < top ; i++){
 			markPage(i,name,pages);
 		}
@@ -200,11 +200,12 @@ void reserve(char* name, int amount, t_list *pages){
 	}
 }
 
+//Retorna la primer pagina reservada para
+//el proceso o -1 si no tiene espacio reservado
 int checkProcessSpace(char* name, t_list *pages){
 	int i;
-	int pagesAmount = getSwapPagesAmount();
-	int top = pagesAmount;
-	t_nodo_swap *newItemPtr = malloc(sizeof(t_nodo_swap));
+	int top = getSwapPagesAmount();
+	t_nodo_swap *newItemPtr;
 	for (i = 0; i < top ; i++){
 		newItemPtr = (t_nodo_swap*)list_get(pages,i);
 		if (strcmp(newItemPtr->nombreProceso,name)==0){
@@ -214,4 +215,62 @@ int checkProcessSpace(char* name, t_list *pages){
 	return -1;
 }
 
+//Usando 2 listas voy copiando las posiciones en las listas
 
+void compact(t_list *pages){
+	int i;
+	int top = getSwapPagesAmount();
+	t_nodo_swap *newItemPtr;
+	int index = 0;
+	t_list *sortedPages = list_create();
+	for (i = 0; i < top ; i++){
+		newItemPtr = (t_nodo_swap*)list_get(pages,i);
+		if (strcmp(newItemPtr->nombreProceso,"")!=0){
+			t_nodo_swap *newListItemPtr = malloc(sizeof(t_nodo_swap));
+			newListItemPtr->numeroPagina = index;
+			newListItemPtr->nombreProceso = newItemPtr->nombreProceso;
+			list_add(sortedPages,newListItemPtr);
+			copyPage(i,index);
+			index++;
+		}
+	}
+	t_nodo_swap *anotherItemPtr;
+	top = list_size(sortedPages);
+	for (i = 0; i < top ; i++){
+		newItemPtr = (t_nodo_swap*)list_get(sortedPages,i);
+		anotherItemPtr = (t_nodo_swap*)list_get(pages,i);
+		anotherItemPtr->numeroPagina = newItemPtr->numeroPagina;
+		anotherItemPtr->nombreProceso = newItemPtr->nombreProceso;
+	}
+	fillRemainingSpace(pages, top);
+}
+
+//Leo una pagina y luego la muevo a la posicion deseada
+
+void copyPage(int from, int to){
+	char *page = readPage(from);
+	writePage(to,page);
+}
+
+void fillRemainingSpace(t_list *list, int from){
+	int top = getSwapPagesAmount();
+	int i;
+	for (i = from; i < top ; i++){
+		t_nodo_swap *newItemPtr = list_get(list,i);
+		newItemPtr->numeroPagina = i;
+		newItemPtr->nombreProceso = "";
+	}
+}
+
+//Imprime todas las paginas de la lista Indice,
+//Mostrando numero de pagina y nombre de proceso
+
+void imprimir(t_list *list){
+	int size = list_size(list);
+	int i;
+	for (i = 0; i < size ; i++){
+		t_nodo_swap *newItemPtr = list_get(list,i);
+		printf("%d ",newItemPtr->numeroPagina);
+		printf("%s\n",newItemPtr->nombreProceso);
+	}
+}
