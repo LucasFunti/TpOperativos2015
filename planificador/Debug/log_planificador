@@ -1,0 +1,7 @@
+[INFO] 16:16:20:746 PLANIFICADOR/(3100:3100): Colocado el proceso: programa.cod con pid = 1 en la cola de listos
+[INFO] 16:18:27:88 PLANIFICADOR/(3225:3225): Colocado el proceso: programa.cod con pid = 1 en la cola de listos
+[INFO] 16:18:44:865 PLANIFICADOR/(3225:3225): Colocado el proceso: hola.cod con pid = 2 en la cola de listos
+[INFO] 19:30:45:603 PLANIFICADOR/(7416:7416): Colocado el proceso: prog.cod con pid = 1 en la cola de listos
+[INFO] 19:33:35:610 PLANIFICADOR/(7646:7646): Colocado el proceso: prog.cod con pid = 1 en la cola de listos
+[INFO] 19:33:42:246 PLANIFICADOR/(7646:7646): Colocado el proceso: a.cod con pid = 2 en la cola de listos
+[INFO] 23:36:14:945 PLANIFICADOR/(2494:2494): Colocado el proceso: prog.cod con pid = 1 en la cola de listos

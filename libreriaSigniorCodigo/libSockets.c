@@ -126,20 +126,20 @@ int conectarServidor(char* IP, char* Port, int backlog) {
 		printf("Error en el Bind \n");
 	}
 	freeaddrinfo(serverInfo);
-//	if (listen(socketEscucha, backlog) == -1) {
-//		printf("error en la escucha de un cliente");
-//		return -5;
-//	}
+	if (listen(socketEscucha, backlog) == -1) {
+		printf("error en la escucha de un cliente");
+		return -5;
+	}
 
-//	struct sockaddr_in addr;
-//	socklen_t addrlen = sizeof(addr);
-//
-//	int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
-//			&addrlen);
-//	if (socketCliente == -1) {
-//		printf("Error en la conexion, en la funcion accept\n");
-//		return -2;
-//	}
+	struct sockaddr_in addr;
+	socklen_t addrlen = sizeof(addr);
+
+	int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
+			&addrlen);
+	if (socketCliente == -1) {
+		printf("Error en la conexion, en la funcion accept\n");
+		return -2;
+	}
 	return socketEscucha;
 }
 

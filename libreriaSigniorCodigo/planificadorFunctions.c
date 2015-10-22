@@ -46,8 +46,8 @@ tipo_pcb generarPCB(int pid, char *path, int estado) {
 
 	return pcb;
 }
-
-t_config_planificador read_config_planificador(){
+/* Leer el archivo de config y guardarla en una estructura */
+t_config_planificador read_config_planificador() {
 	t_config_planificador unConfig;
 	t_config *archivoConfiguracion;
 	archivoConfiguracion =
@@ -55,10 +55,21 @@ t_config_planificador read_config_planificador(){
 					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
 	unConfig.puerto = config_get_string_value(archivoConfiguracion,
 			"PUERTO_ESCUCHA");
-	unConfig.algoritmo = config_get_string_value(
-			archivoConfiguracion, "ALGORITMO_PLANIFICACION");
+	unConfig.algoritmo = config_get_string_value(archivoConfiguracion,
+			"ALGORITMO_PLANIFICACION");
 
 	return unConfig;
 }
 
-
+/* inicializar las estructuras para el planificador */
+void inicializarColecciones(t_list * listaNuevos, t_queue * colaListos,
+		t_queue * colaFinalizados, t_queue * cola_cpu_libres,
+		t_list * listaEjecutando,t_list * entradaSalida)
+{
+	listaNuevos = list_create();
+	colaListos = queue_create();
+	colaFinalizados = queue_create();
+	cola_cpu_libres = queue_create();
+	listaEjecutando = list_create();
+	entradaSalida = list_create();
+}
