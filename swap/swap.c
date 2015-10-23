@@ -32,10 +32,8 @@ int reconocerInstruccion() {
 
 
 int main(int argc, char **argv) {
-	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
-	char* file_name = config_get_string_value(swapConfiguracion,"NOMBRE_SWAP");
-	int pagesAmount = config_get_int_value(swapConfiguracion,"CANTIDAD_PAGINAS");
+	char* file_name = getSwapFileName();
+	int pagesAmount = getSwapPagesAmount();
 	char str[100];
 	strcpy(str,"/home/utnso/git/tp-2015-2c-signiorcodigo/swap/Debug/");
 	strcpy(str,file_name);
@@ -45,15 +43,23 @@ int main(int argc, char **argv) {
 	} else {
 	    printf("El archivo de Swap ya existe. Continuamos...\n");
 	}
-	t_list *pages = getPages(pagesAmount);
-	int i;
-	int top = pagesAmount+1;
-	t_nodo_swap* item = NULL;
-	for (i = 1; i < top ; i++){
-		item = (t_nodo_swap*) list_get(pages,i);
-		printf("el valor es %d \n",item->numeroPagina);
-		printf("%d\n",i);
+	t_list *pages = setPages(pagesAmount);
+	printf("Ingrese Accion\n");
+	char *action = malloc(sizeof(char)*15);
+	scanf ("%s",action);
+	while(strcmp(action,"exit")!=0){
+		evaluateAction(action, pages);
+		printf("Ingrese Accion\n");
+		scanf ("%s",action);
 	}
+
+
+//	t_nodo_swap* item = NULL;
+//	for (i = 0; i < top ; i++){
+//		item = (t_nodo_swap*) list_get(pages,i);
+//		printf("el valor es %d \n",item->numeroPagina);
+//		printf("%d\n",i);
+//	}
 //	char * puerto;
 //	char * nombreSwap;
 //	int cantidadPaginas;
@@ -107,7 +113,7 @@ int main(int argc, char **argv) {
 //	}
 //
 //	close(socketCliente);
-
+	listDestroy(pages);
 	return 0;
 }
 

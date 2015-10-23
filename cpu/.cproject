@@ -38,7 +38,8 @@
 									<listOptionValue builtIn="false" value="/home/utnso/git/tp-2015-2c-signiorcodigo/so-commons-library/src/commons/build"/>
 								</option>
 								<option id="gnu.c.link.option.libs.367748011" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="libreriaSigniorCodigo"/>
+									<listOptionValue builtIn="false" value="libreriaSigniorCodigo"/>
+									<listOptionValue builtIn="false" value="pthread"/>
 									<listOptionValue builtIn="false" value="commons"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1178674177" superClass="cdt.managedbuild.tool.gnu.c.linker.input">

@@ -41,5 +41,6 @@ t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
 int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
 t_config_cpu read_config_cpu_file();
+void *iniciarcpu();
 
 #endif /* LIBRERIACPU_H_ */

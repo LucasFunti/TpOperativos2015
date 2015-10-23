@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -llibreriaSigniorCodigo -lcommons
+LIBS := -llibreriaSigniorCodigo -lpthread -lcommons
 
