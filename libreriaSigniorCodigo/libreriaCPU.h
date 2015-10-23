@@ -40,7 +40,13 @@ t_instruccion empaquetar(char *, char *);
 t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
 int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
-t_config_cpu read_config_cpu_file();
+char *getIpPlanificador();
 void *iniciarcpu();
+char *getIpPlanificador();
+char *getPuertoPlanificador();
+char *getIpMemoria();
+char *getPuertoMemoria();
+int getHilos();
+int getRetardo();
 
 #endif /* LIBRERIACPU_H_ */

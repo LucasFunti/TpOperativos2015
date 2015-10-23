@@ -141,7 +141,8 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		paqueteSerializado = serializarEmpaquetado(paquete);
 		send(serverMemoria, &clave, sizeof(int), 0);
 		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
-		recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
+
+		recv(serverMemoria, contenidoDePagina, 256, 0);  /*que el administrador sólo envíe el contenido!!! */
 		printf("proceso: %d, pagina: %s, leida: %s", idProceso, array[1],
 				contenidoDePagina);
 		break;
@@ -158,9 +159,13 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		break;
 
 	case 7:
+		array = string_split(linea, " ");
+		paqueteEscritura = empaquetarEscritura(array[0], array[1], array[2]);
+		paqueteSerializado = serializarEmpaquetadoEscritura(paqueteEscritura);
+		send(serverPlanificador, &clave, sizeof(int), 0);
+		send(serverPlanificador, paqueteSerializado, sizeof(paqueteSerializado), 0);
 
-		/*send(serverPlanificador, paqueteSerializado, sizeof(paqueteSerializado),
-		 0); */
+
 		break;
 
 	case 8:
@@ -192,32 +197,60 @@ void correrArchivo(char *rutaDelArchivo, int contadorDePrograma,
 
 }
 
-/* genera una estructura para guardar todos los datos del archivo de config */
-t_config_cpu read_config_cpu_file() {
-	t_config_cpu config_cpu;
-	t_config * cpuConfig;
-	cpuConfig = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
-	config_cpu.ipPlanificador = config_get_string_value(cpuConfig,
-			"IP_PLANIFICADOR");
-	config_cpu.puerto_planificador = config_get_string_value(cpuConfig,
-			"PUERTO_PLANIFICADOR");
-	config_cpu.ipMemoria = config_get_string_value(cpuConfig, "IP_MEMORIA");
-	config_cpu.puerto_memoria = config_get_string_value(cpuConfig,
-			"PUERTO_MEMORIA");
-//	config_cpu.cantidadHilos = config_get_int_value(cpuConfig,"CANTIDAD_HILOS");
-//	config_cpu.retardo = config_get_int_value(cpuConfig,"RETARDO");
-	return config_cpu;
+
+
+char *getIpPlanificador(){
+	t_config *cpuConfig;
+	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	char * ip = config_get_string_value(cpuConfig,"IP_PLANIFICADOR");
+	return ip;
+}
+
+char *getPuertoPlanificador(){
+	t_config *cpuConfig;
+	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	char * puerto = config_get_string_value(cpuConfig,"PUERTO_PLANIFICADOR");
+	return puerto;
+}
+
+char *getIpMemoria(){
+	t_config *cpuConfig;
+	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	char * ip = config_get_string_value(cpuConfig,"IP_MEMORIA");
+	return ip;
+}
+
+char *getPuertoMemoria(){
+	t_config *cpuConfig;
+	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	char * puerto = config_get_string_value(cpuConfig,"PUERTO_MEMORIA");
+	return puerto;
+}
+int getHilos(){
+	t_config *cpuConfig;
+	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	int hilos = config_get_int_value(cpuConfig,"CANTIDAD_HILOS");
+	return hilos;
+}
+
+int getRetardo(){
+	t_config *cpuConfig;
+	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	int retardo = config_get_int_value(cpuConfig,"RETARDO");
+	return retardo;
 }
 
 /* funcion para pasarle al pthread_create. */
 void *iniciarcpu() {
-	t_config_cpu config_cpu;
+	char *ip_Planificador, ip_Memoria, puerto_Planificador, puerto_Memoria;
 	int serverPlanificador, serverMemoria;
+	ip_Planificador = getIpPlanificador();
+	ip_Memoria = getIpMemoria();
+	puerto_Planificador = getPuertoPlanificador();
+	puerto_Memoria = getPuertoMemoria();
 
-	serverPlanificador = conectarCliente(config_cpu.ipPlanificador, config_cpu.puerto_planificador);
-	serverMemoria = conectarCliente(config_cpu.ipMemoria,
-			config_cpu.puerto_memoria);
+	serverPlanificador = conectarCliente(ip_Planificador, puerto_Planificador);
+	serverMemoria = conectarCliente(ip_Memoria, puerto_Memoria);
 
 	/*char package[PACKAGESIZE];*/
 	int status = 1;
@@ -259,10 +292,6 @@ void *iniciarcpu() {
 
 	close(serverPlanificador);
 	close(serverMemoria);
-	free(config_cpu.ipMemoria);
-	free(config_cpu.ipPlanificador);
-	free(config_cpu.puerto_memoria);
-	free(config_cpu.puerto_planificador);
 
 	return NULL;
 }

@@ -18,20 +18,17 @@
 #include "../libreriaSigniorCodigo/libreriaCPU.h"
 #include "../libreriaSigniorCodigo/libSockets.h"
 
-
 #define BACKLOG 5
 #define PACKAGESIZE 32
 
 int main(int argc, char **argv) {
 	//invoco la funcion para leer los datos del file de config y los guardo en la estructura
-	t_config_cpu config_cpu;
-	config_cpu = read_config_cpu_file();
-	pthread_t hilo0;
-	pthread_create(&hilo0, NULL, iniciarcpu, NULL);
+	int cantHilos, i;
+	cantHilos = getHilos();
+	pthread_t hilos[cantHilos];
+	for (i = 0; i > cantHilos; i++) {
+		pthread_create(&hilos[i], NULL, iniciarcpu, NULL);
+	}
 
-	free(config_cpu.ipMemoria);
-	free(config_cpu.ipPlanificador);
-	free(config_cpu.puerto_memoria);
-	free(config_cpu.puerto_planificador);
 	return 0;
 }
