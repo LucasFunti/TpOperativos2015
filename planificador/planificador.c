@@ -26,16 +26,12 @@
 int p_last_id = 0;
 
 int main(int argc, char **argv) {
-	//genero el arhivo config y guardo los datos del mismo en estructura
-	t_config_planificador config_planificador;
-	config_planificador = read_config_planificador();
 
 	//genero el archivo log
-	t_log* log_planificador = log_create("log_planificador", "PLANIFICADOR",
+	t_log *log_planificador = log_create("log_planificador", "PLANIFICADOR",
 	true, LOG_LEVEL_INFO);
 
 	//generar estructuras necesarias para el planificador (colas)
-//	t_list *listaNuevos;
 	t_queue *colaListos;
 //	t_list *entrada_salida;
 	t_list *en_ejecucion;
@@ -44,17 +40,21 @@ int main(int argc, char **argv) {
 	colaListos = queue_create();
 	en_ejecucion = list_create();
 
-//	inicializarColecciones(listaNuevos, colaListos, colaFinalizados,cpu_libres,
+//	inicializarColecciones(colaListos, colaFinalizados,cpu_libres,
 //			en_ejecucion, entrada_salida);
+	char* port = getPuerto();
+//	char *algoritmo = getAlgoritmo();
 
 	int socketCliente;
-	socketCliente = conectarServidor("localhost", config_planificador.puerto,
+	socketCliente = conectarServidor("localhost", port,
 	BACKLOG);
 	char proceso[PACKAGESIZE];
 	int *pid_a_finalizar = malloc(sizeof(int));
 	int enviar = 1;
 
+
 	while (enviar) {
+
 		int codigoOperacion;
 
 		codigoOperacion = reconocerIdentificador();
@@ -76,64 +76,56 @@ int main(int argc, char **argv) {
 			pid = generarPID(&p_last_id);
 
 			//genero el pcb del proceso
-			tipo_pcb currentPCB;
+			tipo_pcb *currentPCB=malloc(sizeof(tipo_pcb));
 			currentPCB = generarPCB(pid, path, listo, proceso);
 
-			nodo_proceso proceso;
-			proceso.pcb = currentPCB;
+			nodo_proceso *proceso =malloc(sizeof(nodo_proceso));
+			proceso->pcb = *currentPCB;
 			//colocarlo en la cola de readys
-			queue_push(colaListos, &proceso);
-			log_info(log_planificador,
-					"Colocado el proceso: %s con pid = %d en la cola de listos",
-					proceso, currentPCB.id);
+			agregarEnColaDeListos(proceso);
 
-			if (!strcmp(config_planificador.algoritmo, "FIFO")) {
-				//me fijo si tengo algun proceso en la cola de listos
+			//ver que haya alguna cpu disponible - select()
 
-				if (queue_is_empty(colaListos)) {
-					printf("No hay procesos en la cola de listos");
-
-				} else {
-					//ver que haya alguna cpu disponible - select()
-
-					//agarro el primer elemento y lo envio a la cpu
-					//genero el paquete, para enviar a la cpu
-					Paquete paquete;
-					paquete = generarPaquete(codigoOperacion, tamMessage + 1,
-							path, currentPCB.programCounter);
-					char *buffer = serializar(&paquete);
-					send(socketCliente, buffer,
-							sizeof(int) + sizeof(int) + sizeof(int)
-									+ paquete.tamanio, 0);
-					free(buffer);
-					free(path);
-				}
-
-			}
+			//agarro el primer elemento y lo envio a la cpu
+			//genero el paquete, para enviar a la cpu
+			Paquete paquete;
+			paquete = generarPaquete(codigoOperacion, tamMessage + 1, path,
+					currentPCB->programCounter);
+			char *buffer = serializar(&paquete);
+			send(socketCliente, buffer,
+					sizeof(int) + sizeof(int) + sizeof(int) + paquete.tamanio,
+					0);
+			free(buffer);
+			free(path);
 
 			break;
-		case 99:/*finalizar*/
+		case 99:
+			/*finalizar*/
 
 			scanf("%d", pid_a_finalizar);
-
 			bool encontrar_pid(void * nodo) {
 				return ((((nodo_en_ejecucion*) nodo)->proceso.pcb.id)
 						== *pid_a_finalizar);
 			}
 			nodo_en_ejecucion *procesoEnEjecucion = malloc(
-					sizeof(nodo_en_ejecucion));
+								sizeof(nodo_en_ejecucion));
 			procesoEnEjecucion = list_find(en_ejecucion, encontrar_pid);
+//			int PC = -1;
+//			PC = setProgramCounter(procesoEnEjecucion->proceso.pcb.dirProceso);
+			//enviar el proceso a la cpu con el programCounter obtenido
 
 			free(procesoEnEjecucion);
 
 			break;
-		case 2: /* ps */
+		case 2:
+			/* ps */
 
 			mostrarEstadoDeLista(en_ejecucion, "Ejecutando");
 			mostrarEstadoDeCola(colaListos, "Listo");
 
 			break;
-		case 3: /* cpu */
+		case 3:
+			/* cpu */
 			break;
 		}
 
@@ -142,8 +134,6 @@ int main(int argc, char **argv) {
 
 	}
 	close(socketCliente);
-	free(config_planificador.puerto);
-	free(config_planificador.algoritmo);
 	free(pid_a_finalizar);
 	log_destroy(log_planificador);
 
