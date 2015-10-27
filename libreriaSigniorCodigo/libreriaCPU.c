@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/select.h>
 
 /* recibe la instrucción y devuelve un identificador para poder usar en el switch. */
 
@@ -34,8 +35,9 @@ int reconocerInstruccion(char *linea) {
 		codigoInstruccion = 6;
 	} else if (!strcmp(palabraClave, "entrada-salida")) {
 		codigoInstruccion = 7;
-	} else
+	} else if (!strcmp(palabraClave, "finalizar")) {
 		codigoInstruccion = 8;
+	}
 	return codigoInstruccion;
 }
 
@@ -45,9 +47,11 @@ t_instruccion empaquetar(char *instruccionRecibida, char *paginas) {
 	instruccionEmpaquetada.instruccion = instruccionRecibida;
 	instruccionEmpaquetada.cantidadDePaginas = paginas;
 
+
 	return instruccionEmpaquetada;
 }
 
+/* empaquetado para la instruccion de escritura. */
 t_instruccionEscritura empaquetarEscritura(char *instruccionRecibida,
 		char *paginas, char *texto) {
 	t_instruccionEscritura escrituraEmpaquetada;
@@ -70,8 +74,7 @@ char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada) {
 }
 
 /* serializacion para la escritura */
-char *serializarEmpaquetadoEscritura(
-		t_instruccionEscritura instruccionEmpaquetada) {
+char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaquetada) {
 	size_t numeroDePaginas, tamanioTexto;
 	char *paginas = instruccionEmpaquetada.cantidadDePaginas;
 	char *texto = instruccionEmpaquetada.textoAEscribir;
@@ -79,7 +82,8 @@ char *serializarEmpaquetadoEscritura(
 	string_append(&texto, "\0");
 	numeroDePaginas = strlen(paginas);
 	tamanioTexto = strlen(texto);
-	void *buffer = malloc((sizeof(char) * numeroDePaginas) + (sizeof(char) * tamanioTexto));
+	void *buffer = malloc(
+			(sizeof(char) * numeroDePaginas) + (sizeof(char) * tamanioTexto));
 	memcpy(buffer, paginas, numeroDePaginas);
 	memcpy(buffer + numeroDePaginas, texto, tamanioTexto);
 	return buffer;
@@ -87,7 +91,6 @@ char *serializarEmpaquetadoEscritura(
 
 /* Función para pasar un archivo .txt a un string. */
 char *txtAString(char *rutaDelArchivo) {
-	char *textoConvertido;
 	char * buffer = 0;
 	long length;
 	FILE * f = fopen(rutaDelArchivo, "rb");
@@ -101,16 +104,14 @@ char *txtAString(char *rutaDelArchivo) {
 		}
 		fclose(f);
 	}
-	textoConvertido = buffer;
-	free(buffer);
-	return textoConvertido;
+	return buffer;
 }
 
 /* funcion para ejecutar las instrucciones */
 int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		int idProceso) {
 
-	int estadoDeEjecucion;
+	char *estadoDeEjecucion;
 	char *contenidoDePagina = malloc(256); /* ver tamañano real mas adelante. */
 	char **array;
 	t_instruccion paquete;
@@ -124,54 +125,65 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		array = string_split(linea, " ");
 		paquete = empaquetar(array[0], array[1]);
 		paqueteSerializado = serializarEmpaquetado(paquete);
-		send(serverMemoria, &clave, sizeof(int), 0);
-		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
-		recv(serverMemoria, &estadoDeEjecucion, sizeof(int), 0);
-		if (estadoDeEjecucion == 0) {
+//		send(serverMemoria, &clave, sizeof(int), 0);
+//		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
+//		recv(serverMemoria, &estadoDeEjecucion, sizeof(int), 0);
+
+		printf("ingrese el estado de la ejecucion:\n"); /* unicamente para testear */
+		estadoDeEjecucion = malloc (sizeof(char) * 3);	/* unicamente para testear */
+		scanf("%s", estadoDeEjecucion);					/* unicamente para testear */
+
+		if (strcmp(estadoDeEjecucion, "0") == 0) {
 			printf("error al iniciar el proceso %d\n", idProceso);
-		} else {
+		} else if (strcmp(estadoDeEjecucion, "1") == 0){
 			printf("proceso %d iniciado correctamente!\n", idProceso);
-		}
-		;
+		};
 		break;
 
 	case 5:
 		array = string_split(linea, " ");
 		paquete = empaquetar(array[0], array[1]);
 		paqueteSerializado = serializarEmpaquetado(paquete);
-		send(serverMemoria, &clave, sizeof(int), 0);
-		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
+//		send(serverMemoria, &clave, sizeof(int), 0);
+//		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
+//		recv(serverMemoria, contenidoDePagina, 256, 0); /*que el administrador sólo envíe el contenido!!! */
 
-		recv(serverMemoria, contenidoDePagina, 256, 0);  /*que el administrador sólo envíe el contenido!!! */
-		printf("proceso: %d, pagina: %s, leida: %s", idProceso, array[1],
+		contenidoDePagina = "texto de prueba"; /* únicamente para testear */
+
+		printf("proceso: %d, pagina: %s, leida: %s\n", idProceso, array[1],
 				contenidoDePagina);
 		break;
 
 	case 6:
-		array = string_split(linea, " ");
+		array = string_n_split(linea, 3, " ");
 		paqueteEscritura = empaquetarEscritura(array[0], array[1], array[2]);
 		paqueteSerializado = serializarEmpaquetadoEscritura(paqueteEscritura);
-		send(serverMemoria, &clave, sizeof(int), 0);
-		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
-		recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
-		printf("proceso %d, -Página %s, escrita: %s ", idProceso, array[1],
+//		send(serverMemoria, &clave, sizeof(int), 0);
+//		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
+//		recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
+
+		contenidoDePagina = array[2]; /* unicamente para testear */
+
+		printf("proceso %d, Página %s, escrita: %s\n", idProceso, array[1],
 				contenidoDePagina);
 		break;
 
 	case 7:
 		array = string_split(linea, " ");
-		paqueteEscritura = empaquetarEscritura(array[0], array[1], array[2]);
-		paqueteSerializado = serializarEmpaquetadoEscritura(paqueteEscritura);
+		paquete = empaquetar(array[0], array[1]);
+		paqueteSerializado = serializarEmpaquetado(paquete);
 		send(serverPlanificador, &clave, sizeof(int), 0);
-		send(serverPlanificador, paqueteSerializado, sizeof(paqueteSerializado), 0);
+		send(serverPlanificador, paqueteSerializado, sizeof(paqueteSerializado),
+				0);
 
+		printf("proceso %d en entrada-salida de tiempo %s\n", idProceso, array[1]);
 
 		break;
 
 	case 8:
 		send(serverMemoria, &clave, sizeof(int), 0);
 		send(serverMemoria, &idProceso, sizeof(int), 0);
-		printf("proceso %d finalizado.", idProceso);
+		printf("proceso %d finalizado.\n", idProceso);
 		break;
 
 	};
@@ -181,13 +193,12 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 /* The real deal. Esta función va a ser la que reciba la ruta y el contador de programa, y
  * la que ejecute línea por línea las instrucciones desde donde lo indique el contador.*/
 
-void correrArchivo(char *rutaDelArchivo, int contadorDePrograma,
-		int serverMemoria, int serverPlanificador, int idProceso) {
+void correrArchivo(char *rutaDelArchivo, int contadorDePrograma, int serverMemoria, int serverPlanificador, int idProceso) {
 	char **listaInstrucciones;
 	int n;
 	char *archivoEnStrings;
 	archivoEnStrings = txtAString(rutaDelArchivo);
-	listaInstrucciones = string_split(archivoEnStrings, ";");
+	listaInstrucciones = string_split(archivoEnStrings, ";\n");
 	n = contadorDePrograma;
 	while (listaInstrucciones[n] != NULL) {
 		ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
@@ -197,46 +208,50 @@ void correrArchivo(char *rutaDelArchivo, int contadorDePrograma,
 
 }
 
-
-
-char *getIpPlanificador(){
+char *getIpPlanificador() {
 	t_config *cpuConfig;
-	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
-	char * ip = config_get_string_value(cpuConfig,"IP_PLANIFICADOR");
+	cpuConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	char * ip = config_get_string_value(cpuConfig, "IP_PLANIFICADOR");
 	return ip;
 }
 
-char *getPuertoPlanificador(){
+char *getPuertoPlanificador() {
 	t_config *cpuConfig;
-	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
-	char * puerto = config_get_string_value(cpuConfig,"PUERTO_PLANIFICADOR");
+	cpuConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	char * puerto = config_get_string_value(cpuConfig, "PUERTO_PLANIFICADOR");
 	return puerto;
 }
 
-char *getIpMemoria(){
+char *getIpMemoria() {
 	t_config *cpuConfig;
-	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
-	char * ip = config_get_string_value(cpuConfig,"IP_MEMORIA");
+	cpuConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	char * ip = config_get_string_value(cpuConfig, "IP_MEMORIA");
 	return ip;
 }
 
-char *getPuertoMemoria(){
+char *getPuertoMemoria() {
 	t_config *cpuConfig;
-	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
-	char * puerto = config_get_string_value(cpuConfig,"PUERTO_MEMORIA");
+	cpuConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	char * puerto = config_get_string_value(cpuConfig, "PUERTO_MEMORIA");
 	return puerto;
 }
-int getHilos(){
+int getHilos() {
 	t_config *cpuConfig;
-	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
-	int hilos = config_get_int_value(cpuConfig,"CANTIDAD_HILOS");
+	cpuConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	int hilos = config_get_int_value(cpuConfig, "CANTIDAD_HILOS");
 	return hilos;
 }
 
-int getRetardo(){
+int getRetardo() {
 	t_config *cpuConfig;
-	cpuConfig = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
-	int retardo = config_get_int_value(cpuConfig,"RETARDO");
+	cpuConfig = config_create(
+			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+	int retardo = config_get_int_value(cpuConfig, "RETARDO");
 	return retardo;
 }
 
@@ -268,22 +283,25 @@ void *iniciarcpu() {
 		printf("El tamanio a recivir es:%d\n", contexto_ejecucion->tamanio);
 		if (status != 0) {
 			char * dataBuffer = malloc(contexto_ejecucion->tamanio);
-			recv(serverPlanificador, dataBuffer, contexto_ejecucion->tamanio,0);
+			recv(serverPlanificador, dataBuffer, contexto_ejecucion->tamanio,
+					0);
 			contexto_ejecucion->mensaje = malloc(contexto_ejecucion->tamanio);
-			memcpy(contexto_ejecucion->mensaje, dataBuffer, contexto_ejecucion->tamanio);
+			memcpy(contexto_ejecucion->mensaje, dataBuffer,
+					contexto_ejecucion->tamanio);
 			free(dataBuffer);
 			printf("el mensaje es:%s \n", contexto_ejecucion->mensaje);
 			destruirPaquete(contexto_ejecucion);
 
 			char *rutaDelArchivo;
-							int contadorDePrograma;
-							int idProceso;
-							char **array = string_split(contexto_ejecucion->mensaje, " ");
-							rutaDelArchivo = array[0];
-							contadorDePrograma = atoi(array[1]);
-							idProceso = atoi(array[2]);
+			int contadorDePrograma;
+			int idProceso;
+			char **array = string_split(contexto_ejecucion->mensaje, " ");
+			rutaDelArchivo = array[0];
+			contadorDePrograma = atoi(array[1]);
+			idProceso = atoi(array[2]);
 
-			correrArchivo(rutaDelArchivo,contadorDePrograma, serverMemoria, serverPlanificador, idProceso);
+			correrArchivo(rutaDelArchivo, contadorDePrograma, serverMemoria,
+					serverPlanificador, idProceso);
 
 		}
 
@@ -294,4 +312,10 @@ void *iniciarcpu() {
 	close(serverMemoria);
 
 	return NULL;
+}
+
+// funcion auxiliar únicamente para testeos.
+
+void testearFuncion(char *accion) {
+
 }

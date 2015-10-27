@@ -35,11 +35,18 @@ typedef struct{
 	int retardo;
 } t_config_cpu;
 
+typedef struct{
+	int idHilo;
+	char *hilo;
+} t_tcb;
+
 int reconocerInstruccion(char*);
 t_instruccion empaquetar(char *, char *);
 t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
+char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaquetada);
 int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
+void correrArchivo(char *rutaDelArchivo, int contadorDePrograma, int serverMemoria, int serverPlanificador, int idProceso);
 char *getIpPlanificador();
 void *iniciarcpu();
 char *getIpPlanificador();
@@ -48,5 +55,7 @@ char *getIpMemoria();
 char *getPuertoMemoria();
 int getHilos();
 int getRetardo();
+void testearFuncion(char *accion);
+char *txtAString(char *rutaDelArchivo);
 
 #endif /* LIBRERIACPU_H_ */
