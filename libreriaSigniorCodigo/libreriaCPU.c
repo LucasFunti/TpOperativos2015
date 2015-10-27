@@ -9,6 +9,7 @@
 #include <commons/config.h>
 #include <sys/socket.h>
 #include "libreriaCPU.h"
+#include "planificadorFunctions.h"
 #include <stdlib.h>
 #include <string.h>
 #include "libSockets.h"
@@ -40,6 +41,7 @@ int reconocerInstruccion(char *linea) {
 	}
 	return codigoInstruccion;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* empaquetado para todas las instrucciones salvo la escritura. */
 t_instruccion empaquetar(char *instruccionRecibida, char *paginas) {
@@ -50,6 +52,7 @@ t_instruccion empaquetar(char *instruccionRecibida, char *paginas) {
 
 	return instruccionEmpaquetada;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* empaquetado para la instruccion de escritura. */
 t_instruccionEscritura empaquetarEscritura(char *instruccionRecibida,
@@ -61,6 +64,7 @@ t_instruccionEscritura empaquetarEscritura(char *instruccionRecibida,
 
 	return escrituraEmpaquetada;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* serializacion para todas las instrucciones salvo la de escritura.*/
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada) {
@@ -72,6 +76,7 @@ char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada) {
 	memcpy(buffer, paginas, numeroDePaginas);
 	return buffer;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* serializacion para la escritura */
 char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaquetada) {
@@ -88,6 +93,7 @@ char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaqueta
 	memcpy(buffer + numeroDePaginas, texto, tamanioTexto);
 	return buffer;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* Función para pasar un archivo .txt a un string. */
 char *txtAString(char *rutaDelArchivo) {
@@ -106,6 +112,7 @@ char *txtAString(char *rutaDelArchivo) {
 	}
 	return buffer;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* funcion para ejecutar las instrucciones */
 int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
@@ -125,8 +132,8 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		array = string_split(linea, " ");
 		paquete = empaquetar(array[0], array[1]);
 		paqueteSerializado = serializarEmpaquetado(paquete);
-//		send(serverMemoria, &clave, sizeof(int), 0);
-//		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
+		send(serverMemoria, &clave, sizeof(int), 0);
+		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
 //		recv(serverMemoria, &estadoDeEjecucion, sizeof(int), 0);
 
 		printf("ingrese el estado de la ejecucion:\n"); /* unicamente para testear */
@@ -144,8 +151,8 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		array = string_split(linea, " ");
 		paquete = empaquetar(array[0], array[1]);
 		paqueteSerializado = serializarEmpaquetado(paquete);
-//		send(serverMemoria, &clave, sizeof(int), 0);
-//		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
+		send(serverMemoria, &clave, sizeof(int), 0);
+		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
 //		recv(serverMemoria, contenidoDePagina, 256, 0); /*que el administrador sólo envíe el contenido!!! */
 
 		contenidoDePagina = "texto de prueba"; /* únicamente para testear */
@@ -158,8 +165,8 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		array = string_n_split(linea, 3, " ");
 		paqueteEscritura = empaquetarEscritura(array[0], array[1], array[2]);
 		paqueteSerializado = serializarEmpaquetadoEscritura(paqueteEscritura);
-//		send(serverMemoria, &clave, sizeof(int), 0);
-//		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
+		send(serverMemoria, &clave, sizeof(int), 0);
+		send(serverMemoria, paqueteSerializado, sizeof(paqueteSerializado), 0);
 //		recv(serverMemoria, contenidoDePagina, sizeof(int), 0);
 
 		contenidoDePagina = array[2]; /* unicamente para testear */
@@ -189,25 +196,34 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 	};
 	return 0;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* The real deal. Esta función va a ser la que reciba la ruta y el contador de programa, y
  * la que ejecute línea por línea las instrucciones desde donde lo indique el contador.*/
 
-void correrArchivo(char *rutaDelArchivo, int contadorDePrograma, int serverMemoria, int serverPlanificador, int idProceso) {
+void correrArchivo(tipo_pcb pcb, int serverMemoria, int serverPlanificador) {
+	t_resultadoEjecucion resultado;
 	char **listaInstrucciones;
-	int n;
+	int n, retardo;
 	char *archivoEnStrings;
-	archivoEnStrings = txtAString(rutaDelArchivo);
+	archivoEnStrings = txtAString(pcb.nombrePrograma);
 	listaInstrucciones = string_split(archivoEnStrings, ";\n");
-	n = contadorDePrograma;
+	n = pcb.programCounter;
+	retardo = getRetardo();
 	while (listaInstrucciones[n] != NULL) {
 		ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
-				idProceso);
+				pcb.id);
 		n++;
-	}
+		sleep(retardo);
+		}
+	resultado.nombrePrograma = pcb.nombrePrograma;
+	resultado.programCounter = n;
+	enviarResultado(resultado, serverPlanificador);
 
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*getters para cada campo del archivo de configuración. */
 char *getIpPlanificador() {
 	t_config *cpuConfig;
 	cpuConfig = config_create(
@@ -254,6 +270,7 @@ int getRetardo() {
 	int retardo = config_get_int_value(cpuConfig, "RETARDO");
 	return retardo;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* funcion para pasarle al pthread_create. */
 void *iniciarcpu() {
@@ -277,10 +294,10 @@ void *iniciarcpu() {
 		contexto_ejecucion = deserializar_header(buffer);
 		free(buffer);
 		//estos printf son probar que ande nada mas
-		printf("El codigo de la operacion es:%d \n",
-				contexto_ejecucion->codigoOperacion);
-		printf("El PC es:%d \n", contexto_ejecucion->programCounter);
-		printf("El tamanio a recivir es:%d\n", contexto_ejecucion->tamanio);
+//		printf("El codigo de la operacion es:%d \n",
+//				contexto_ejecucion->codigoOperacion);
+//		printf("El PC es:%d \n", contexto_ejecucion->programCounter);
+//		printf("El tamanio a recivir es:%d\n", contexto_ejecucion->tamanio);
 		if (status != 0) {
 			char * dataBuffer = malloc(contexto_ejecucion->tamanio);
 			recv(serverPlanificador, dataBuffer, contexto_ejecucion->tamanio,
@@ -300,8 +317,9 @@ void *iniciarcpu() {
 			contadorDePrograma = atoi(array[1]);
 			idProceso = atoi(array[2]);
 
-			correrArchivo(rutaDelArchivo, contadorDePrograma, serverMemoria,
-					serverPlanificador, idProceso);
+//			correrArchivo(pcb, serverMemoria,
+//					serverPlanificador, idProceso); /* la dejo en stand-by hasta que definamos si mandamos un contexto, la pcb o
+//														ambas cosas. */
 
 		}
 
@@ -313,9 +331,25 @@ void *iniciarcpu() {
 
 	return NULL;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// funcion auxiliar únicamente para testeos.
-
-void testearFuncion(char *accion) {
-
+void enviarResultado(t_resultadoEjecucion resultado, int serverMemoria){
+	char *resultadoSerializado = serializarResultado(resultado);
+	send(serverMemoria, resultadoSerializado, sizeof(resultadoSerializado), 0);
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+char *serializarResultado(t_resultadoEjecucion resultado){
+	size_t tamanioContador, tamanioTexto;
+	char* contadorDePrograma = string_itoa(resultado.programCounter);
+	char* programa = resultado.nombrePrograma;
+	string_append(contadorDePrograma, "\0");
+	string_append(programa, "\0");
+	tamanioContador = strlen(contadorDePrograma);
+	tamanioTexto = strlen(programa);
+	void *buffer = malloc((sizeof(char) * tamanioContador) + (sizeof(char) * tamanioTexto));
+	memcpy(buffer, programa, tamanioTexto);
+	memcpy(buffer + tamanioTexto, contadorDePrograma, tamanioContador);
+	return buffer;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

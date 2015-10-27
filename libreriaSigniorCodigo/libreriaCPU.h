@@ -7,6 +7,7 @@
 
 #ifndef LIBRERIACPU_H_
 #define LIBRERIACPU_H_
+#include "planificadorFunctions.h"
 
 typedef struct instruccion{
 	char *instruccion;
@@ -40,13 +41,19 @@ typedef struct{
 	char *hilo;
 } t_tcb;
 
+typedef struct{
+	char *nombrePrograma;
+	int programCounter;
+} t_resultadoEjecucion;
+
+
 int reconocerInstruccion(char*);
 t_instruccion empaquetar(char *, char *);
 t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
 char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaquetada);
 int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
-void correrArchivo(char *rutaDelArchivo, int contadorDePrograma, int serverMemoria, int serverPlanificador, int idProceso);
+void correrArchivo(tipo_pcb pcb, int serverMemoria, int serverPlanificador);
 char *getIpPlanificador();
 void *iniciarcpu();
 char *getIpPlanificador();
@@ -57,5 +64,7 @@ int getHilos();
 int getRetardo();
 void testearFuncion(char *accion);
 char *txtAString(char *rutaDelArchivo);
+void enviarResultado(t_resultadoEjecucion resultado, int serverMemoria);
+char *serializarResultado(t_resultadoEjecucion resultado);
 
 #endif /* LIBRERIACPU_H_ */

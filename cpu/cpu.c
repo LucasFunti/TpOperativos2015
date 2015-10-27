@@ -18,6 +18,7 @@
 #include <limits.h>
 #include "../libreriaSigniorCodigo/libreriaCPU.h"
 #include "../libreriaSigniorCodigo/libSockets.h"
+#include "../libreriaSigniorCodigo/planificadorFunctions.h"
 
 #define BACKLOG 5
 #define PACKAGESIZE 32
@@ -114,12 +115,27 @@ int main(int argc, char **argv) {
 
 	}
 	else if(strcmp(accion, "correr archivo") == 0){
+		tipo_pcb pcb;
 		printf("ingrese una ruta de archivo válida:\n");
 		char *dataAdicional = malloc(sizeof(char) * 64);
 		scanf ("%[^\n]%*c", dataAdicional);
-		int contadorDePrograma = 0;
-		int  id = 1;
-		correrArchivo(dataAdicional, contadorDePrograma, 123, 456, id);
+		pcb.nombrePrograma = dataAdicional;
+		printf("desea especificar los demás valores de la PCB?(ingrese 'si' o 'no')\n");
+		char *siOno = malloc(sizeof(char) * 2);
+		scanf ("%[^\n]%*c", siOno);
+		if(strcmp(siOno, "no") == 0){
+			pcb.programCounter = 0;
+			pcb.id = 1;
+			}
+		else if (strcmp(siOno, "si") == 0){
+			printf("ingrese los valores a utilizar, en el siguiente orden: contadorDePrograma idProceso\n");
+			char * valores = malloc(sizeof(char) *12);
+			scanf ("%[^\n]%*c", valores);
+			char **array = string_split(valores, " ");
+			pcb.programCounter = atoi(array[0]);
+			pcb.id = atoi(array[1]);
+			}
+		correrArchivo(pcb, 123, 456);
 	}
 	else if(strcmp(accion, "ayuda") == 0){
 				printf("lista de comandos disponibles:\nreconocer instruccion\nempaquetado normal\nempaquetado de escritura\n"
