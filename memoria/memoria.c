@@ -30,6 +30,7 @@ t_config * memoriaConfig;
 
 pthread_t hiloConexiones;
 
+
 void main() {
 
 	iniciarLogger();
@@ -51,10 +52,9 @@ void atenderConexiones() {
 
 }
 
-void atenderSignals(){
+void atenderSignals() {
 	loggearInfo("Se levanta el hilo que atienden signals");
 }
-
 
 void levantarConfiguracion() {
 
