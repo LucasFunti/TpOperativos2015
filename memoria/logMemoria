@@ -1,0 +1,6 @@
+[INFO] 02:42:50:133 PAM /(5879:5879): Iniciado el proceso administrador de memoria
+[INFO] 02:42:50:133 PAM /(5879:5879): Configurado con IP_SWAP: 127.0.0.1,PUERTO_CPU: 5000, PUERTO_SWAP: 6000
+[INFO] 02:42:50:133 PAM /(5879:5879): Se levanta el hilo de conexiones
+[INFO] 02:42:50:133 PAM /(5879:5879): Se levanta el hilo que atienden signals
+[INFO] 02:42:50:133 PAM /(5879:5879): Se cierra el hilo de conexiones
+[INFO] 02:42:50:133 PAM /(5879:5879): Se cierra exitosamente PAM

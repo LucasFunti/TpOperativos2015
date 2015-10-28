@@ -80,13 +80,20 @@ char *getAlgoritmo() {
 }
 
 /* inicializar las estructuras para el planificador */
+<<<<<<< HEAD
 void inicializarColecciones() {
+=======
+void inicializarColecciones(t_list * listaNuevos, t_queue * colaListos,
+	t_queue * colaFinalizados, t_queue * cola_cpu_libres, t_list * listaEjecutando, t_list * entradaSalida) {
+	listaNuevos = list_create();
+>>>>>>> b49e770e571f7b349561922e05d0e270911eed9b
 	colaListos = queue_create();
 	colaFinalizados = queue_create();
 	cola_cpu_libres = queue_create();
 	listaEjecutando = list_create();
 	entradaSalida = queue_create();
 }
+
 
 /* recorro la lissta mostrando los estado de los procesos para la instruccion ps */
 void mostrarEstadoDeLista(t_list *lista, char*estado) {

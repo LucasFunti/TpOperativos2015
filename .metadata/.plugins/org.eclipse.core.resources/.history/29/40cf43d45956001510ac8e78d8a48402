@@ -1,8 +1,0 @@
-#makefile
-
-gcc = CC
-
-gcc -c -fPIC protocolo.c -o protocolo.o
-gcc -shared -Wl,-soname,libpro.so.1 -o libpro.so.1.0.1  protocolo.o
-
-gcc main.c -o dynamically_linked -L. -lpi

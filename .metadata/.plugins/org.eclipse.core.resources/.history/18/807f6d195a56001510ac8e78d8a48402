@@ -1,4 +1,0 @@
-#makefile
-
-gcc -c -fPIC protocolo.c -o protocolo.o
-gcc -shared -Wl,-soname,libproto.so.1 -o lobproto.so.1.0.1 protocolo.o
