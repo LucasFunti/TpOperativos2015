@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;libreriaSockets/ejemplo.c&apos;" deleteContents="false" description="Delete resource &apos;libreriaSockets/ejemplo.c&apos;" element1="/libreriaSockets/ejemplo.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1442352023346"/>&#x0A;<refactoring comment="Delete resource &apos;configs&apos;" deleteContents="true" description="Delete resource &apos;configs&apos;" element1="/configs" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1442366404560"/>
-</session>
