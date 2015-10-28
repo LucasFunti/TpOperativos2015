@@ -1,3 +1,3 @@
-memoria.d: ../memoria.c ../../libreriaSigniorCodigo/libSockets.h
+memoria.d: ../memoria.c ../memoria.h
 
-../../libreriaSigniorCodigo/libSockets.h:
+../memoria.h:
