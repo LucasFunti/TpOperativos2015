@@ -38,27 +38,27 @@
 .cproject
 .project
 
-/cpu/.settings
-/cpu/Debug
-/cpu/.cproject
-/cpu/.project
-/cpu/cpu
+cpu/.settings
+cpu/Debug
+cpu/.cproject
+cpu/.project
+cpu/cpu
 
-/libreriaSigniorCodigo/.cproject
-/libreriaSigniorCodigo/Debug
-/libreriaSigniorCodigo/.project
+libreriaSigniorCodigo/.cproject
+libreriaSigniorCodigo/Debug
+libreriaSigniorCodigo/.project
 
-/memoria/Debug
-/memoria/.cproject
-/memoria/.project
-/memoria/memoria
+memoria/Debug
+memoria/.cproject
+memoria/.project
+memoria/memoria
 
-/planificador/Debug
-/planificador/.cproject
-/planificador/.project
-/planificador/planificador
+planificador/Debug
+planificador/.cproject
+planificador/.project
+planificador/planificador
 
-/swap/Debug
-/swap/.cproject
-/swap/.project
-/swap/swap
+swap/Debug
+swap/.cproject
+swap/.project
+swap/swap
