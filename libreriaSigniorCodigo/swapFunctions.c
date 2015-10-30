@@ -61,17 +61,6 @@ void setupSwap(){
 	printf("Archivo de swap creado bajo el nombre %s\n",file_name );
 }
 
-void listDestroy(t_list *pages){
-	int size = list_size(pages);
-	t_nodo_swap* item = NULL;
-	int i;
-	for (i = 0; i < size ; i++){
-		item = (t_nodo_swap*) list_get(pages,i);
-		free(item);
-	}
-	list_destroy(pages);
-}
-
 t_list* setPages(int pagesAmount){
 	t_list *paginas = list_create();
 	int i;
@@ -129,8 +118,8 @@ void evaluateAction(char* action, t_list *pages){
 		if (hasReservedPages>=0){
 			char *text = "texto de prueba para signior funti";
 			int start = checkProcessSpace(process_name,pages);
-			writePage(start-1,text);
-			markPage(start-1,process_name,pages);
+			writePage(start,text);
+			markPage(start,process_name,pages);
 		} else {
 			printf("El proceso no posee páginas reservadas\n");
 		}
@@ -223,6 +212,7 @@ void compact(t_list *pages){
 	t_nodo_swap *newItemPtr;
 	int index = 0;
 	t_list *sortedPages = list_create();
+	printf("1\n" );
 	for (i = 0; i < top ; i++){
 		newItemPtr = (t_nodo_swap*)list_get(pages,i);
 		if (strcmp(newItemPtr->nombreProceso,"")!=0){
@@ -234,6 +224,7 @@ void compact(t_list *pages){
 			index++;
 		}
 	}
+	printf("ACA\n" );
 	t_nodo_swap *anotherItemPtr;
 	top = list_size(sortedPages);
 	for (i = 0; i < top ; i++){
@@ -242,6 +233,7 @@ void compact(t_list *pages){
 		anotherItemPtr->numeroPagina = newItemPtr->numeroPagina;
 		anotherItemPtr->nombreProceso = newItemPtr->nombreProceso;
 	}
+	list_destroy(sortedPages);
 	fillRemainingSpace(pages, top);
 }
 
