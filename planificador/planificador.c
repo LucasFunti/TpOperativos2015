@@ -31,71 +31,64 @@ int main(int argc, char **argv) {
 	t_log *log_planificador = log_create("log_planificador", "PLANIFICADOR",
 	true, LOG_LEVEL_INFO);
 
+	pthread_mutex_t mutex_readys;
+	pthread_mutex_t mutex_ejecucion;
+	pthread_mutex_t mutex_bloqueado;
+	inicializarMutex(mutex_readys, mutex_ejecucion, mutex_bloqueado);
 	//generar estructuras necesarias para el planificador (colas)
-	t_queue *colaListos;
-//	t_list *entrada_salida;
-	t_list *en_ejecucion;
-//	t_queue *colaFinalizados;
-//	t_queue *cpu_libres;
-	colaListos = queue_create();
-	en_ejecucion = list_create();
+	t_queue *colaListos = queue_create();
+	t_queue *entrada_salida = queue_create();
+	t_list *en_ejecucion = list_create();
+//	t_queue *colaFinalizados=queue_create();
 
-//	inicializarColecciones(colaListos, colaFinalizados,cpu_libres,
-//			en_ejecucion, entrada_salida);
-	char* port = getPuerto();
+//	char* port = getPuerto();
 //	char *algoritmo = getAlgoritmo();
 
-	int socketCliente;
-	socketCliente = conectarServidor("localhost", port,
-	BACKLOG);
-	char proceso[PACKAGESIZE];
+//	int socketCliente;
+//	socketCliente = conectarServidor("localhost", port,
+//	BACKLOG);
 	int *pid_a_finalizar = malloc(sizeof(int));
 	int enviar = 1;
-
 
 	while (enviar) {
 
 		int codigoOperacion;
 
 		codigoOperacion = reconocerIdentificador();
-
+		char *nombreProceso = malloc(64 * sizeof(char));
 		switch (codigoOperacion) {
 		case 1:/* correr */
 
 			//leo el nombre del proceso
-			scanf("%s", proceso);
+			scanf("%s", nombreProceso);
 
 			//busco el path del proceso y calculo el tamaño del path
 			char *path = malloc(128);
-			realpath(proceso, path);
-			size_t tamMessage;
-			tamMessage = strlen(path);
+			realpath(nombreProceso, path);
 
 			//le genero un id al proceso
 			int pid;
 			pid = generarPID(&p_last_id);
 
 			//genero el pcb del proceso
-			tipo_pcb *currentPCB=malloc(sizeof(tipo_pcb));
-			currentPCB = generarPCB(pid, path, listo, proceso);
-
-			nodo_proceso *proceso =malloc(sizeof(nodo_proceso));
-			proceso->pcb = *currentPCB;
-			//colocarlo en la cola de readys
-			agregarEnColaDeListos(proceso);
-
+			tipo_pcb *proceso = malloc(sizeof(tipo_pcb));
+			proceso = generarPCB(pid, path, listo, nombreProceso);
+			agregarEnColaDeListos(proceso, mutex_readys, colaListos,
+					log_planificador, entrada_salida, en_ejecucion);
+			cambiarAEstadoDeEjecucion(mutex_readys, colaListos, mutex_ejecucion,
+					en_ejecucion, entrada_salida);
 			//ver que haya alguna cpu disponible - select()
 
 			//agarro el primer elemento y lo envio a la cpu
 			//genero el paquete, para enviar a la cpu
-			Paquete paquete;
-			paquete = generarPaquete(codigoOperacion, tamMessage + 1, path,
-					currentPCB->programCounter);
-			char *buffer = serializar(&paquete);
-			send(socketCliente, buffer,
-					sizeof(int) + sizeof(int) + sizeof(int) + paquete.tamanio,
-					0);
-			free(buffer);
+//			Paquete paquete;
+//			paquete = generarPaquete(codigoOperacion, tamMessage + 1, path,
+//					proceso->programCounter);
+//			char *buffer = serializar(&paquete);
+//			send(socketCliente, buffer,
+//					sizeof(int) + sizeof(int) + sizeof(int) + paquete.tamanio,
+//					0);
+//			free(buffer);
 			free(path);
 
 			break;
@@ -104,11 +97,11 @@ int main(int argc, char **argv) {
 
 			scanf("%d", pid_a_finalizar);
 			bool encontrar_pid(void * nodo) {
-				return ((((nodo_en_ejecucion*) nodo)->proceso.pcb.id)
+				return ((((nodo_en_ejecucion*) nodo)->proceso->id)
 						== *pid_a_finalizar);
 			}
 			nodo_en_ejecucion *procesoEnEjecucion = malloc(
-								sizeof(nodo_en_ejecucion));
+					sizeof(nodo_en_ejecucion));
 			procesoEnEjecucion = list_find(en_ejecucion, encontrar_pid);
 //			int PC = -1;
 //			PC = setProgramCounter(procesoEnEjecucion->proceso.pcb.dirProceso);
@@ -133,9 +126,9 @@ int main(int argc, char **argv) {
 		 send(socketCliente, message, sizeof(int), 0);*/
 
 	}
-	close(socketCliente);
+//	close(socketCliente);
 	free(pid_a_finalizar);
-	log_destroy(log_planificador);
+	destruirMutex(mutex_readys, mutex_ejecucion, mutex_bloqueado);
 
 	return 0;
 

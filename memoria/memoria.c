@@ -39,7 +39,7 @@ void main() {
 	atenderConexiones();
 	atenderSignals();
 
-	pthread_join(hiloConexiones, NULL);
+	//pthread_join(hiloConexiones, NULL);
 
 	loggearInfo("Se cierra el hilo de conexiones");
 	loggearInfo("Se cierra exitosamente PAM");

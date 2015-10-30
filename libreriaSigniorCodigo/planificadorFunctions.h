@@ -10,16 +10,6 @@
 #include <commons/log.h>
 #include <commons/collections/queue.h>
 
-extern t_queue * colaListos;
-extern t_queue * colaFinalizados;
-extern t_queue * cola_cpu_libres;
-extern t_list * listaEjecutando;
-extern t_queue * entradaSalida;
-extern pthread_mutex_t mutex_readys;
-extern pthread_mutex_t mutex_ejecucion;
-extern pthread_mutex_t mutex_bloqueados;
-extern t_log *log_planificador;
-
 enum estado {
 	listo = 98, ejecucion, bloqueado, finalizado
 };
@@ -38,64 +28,65 @@ typedef struct {
 } tipo_pcb;
 
 typedef struct {
-	tipo_pcb pcb;
-	int peso;
-	int socket_prog;
-} nodo_proceso;
-
-typedef struct {
+	tipo_pcb * proceso;
 	int socket;
 	int pid;
-} tipo_cpu;
-
-typedef struct {
-	nodo_proceso proceso;
-	tipo_cpu cpu;
 } nodo_en_ejecucion;
 
 typedef struct {
-	nodo_proceso* proceso;
+	tipo_pcb * proceso;
 	int espera;
 } nodo_entrada_salida;
+
+void inicializarMutex(pthread_mutex_t mutex_readys,
+		pthread_mutex_t mutex_ejecucion, pthread_mutex_t mutex_bloqueados);
+
+void destruirMutex(pthread_mutex_t mutex_readys,
+		pthread_mutex_t mutex_ejecucion, pthread_mutex_t mutex_bloqueados);
 
 int reconocerIdentificador();
 
 int generarPID(int* pid);
-<<<<<<< HEAD
+
 tipo_pcb *generarPCB(int pid, char *path, int estado, char *nombre);
 
 char *getPuerto();
 
 char *getAlgoritmo();
 
-void inicializarColecciones();
+void inicializarColecciones(t_queue * colaListos, t_queue * colaFinalizados,
+		t_list * listaEjecutando, t_queue * entradaSalida);
 
 void mostrarEstadoDeLista(t_list *lista, char*estado);
 
 void mostrarEstadoDeCola(t_queue *cola, char*estado);
 
-void agregarEnColaDeListos(nodo_proceso *proceso) ;
+void agregarAListaDeEjecucion(pthread_mutex_t mutex_ejecucion,
+		t_list *listaEjecutando, nodo_en_ejecucion *proceso, t_queue*colaListos,
+		t_queue*entrada_salida);
 
-void cambiarAEstadoDeEjecucion() ;
+tipo_pcb * removerDeColaDeListos(pthread_mutex_t mutex_readys,
+		t_queue*colaListos);
 
-void agregarEnColaDeBloqueados(tipo_pcb pcb, int espera) ;
+void agregarEnColaDeListos(tipo_pcb *proceso, pthread_mutex_t mutex_readys,
+		t_queue *colaListos, t_log*log_planificador, t_queue*entrada_salida,
+		t_list*en_ejecucion);
 
-void agregarDeBloqueadoAListo(t_queue *entrada_salida, t_queue *readys,
-		t_log *log_planificador);
+void cambiarAEstadoDeEjecucion(pthread_mutex_t mutex_readys, t_queue*colaListos,
+		pthread_mutex_t mutex_ejecucion, t_list *listaEjecutando,
+		t_queue*entrada_salida);
 
-void cambiarEstado(nodo_proceso *proceso, int estado);
+void removerDeListaDeEjecucion(tipo_pcb *pcb, pthread_mutex_t mutex_ejecucion,
+		t_list*listaEjecutando);
 
-void finalizarProceso(int pid);
+void agregarEnColaDeBloqueados(tipo_pcb *pcb, pthread_mutex_t mutex_bloqueados,
+		t_queue*entradaSalida, pthread_mutex_t mutex_ejecucion,
+		t_list*listaEjecutando, pthread_mutex_t mutex_readys,
+		t_queue*colaListos, t_log*log_planificador, t_queue*entrada_salida);
+
+void cambiarEstado(tipo_pcb *proceso, int estado, t_queue*colaListos,
+		t_queue*entrada_salida, t_list*en_ejecucion);
 
 int setProgramCounter(char *dirProceso);
-=======
-tipo_pcb generarPCB(int pid, char *path, int estado,char *nombre);
-t_config_planificador read_config_planificador();
-void inicializarColecciones(t_list *listaNuevos, t_queue *colaListos,
-		t_queue *colaFinalizados, t_queue*cola_cpu_libres,
-		t_list *listaEjecutando, t_list *entradaSalida);
-void mostrarEstadoDeLista(t_list *lista,char*estado);
-void mostrarEstadoDeCola(t_queue *cola,char*estado);
->>>>>>> b49e770e571f7b349561922e05d0e270911eed9b
 
 #endif /* PLANIFICADORFUNCTIONS_H_ */
