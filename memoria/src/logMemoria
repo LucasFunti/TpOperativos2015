@@ -1,0 +1,14 @@
+[INFO] 20:11:50:919 PAM/(10934:10934): Iniciado el proceso administrador de memoria
+[INFO] 20:11:50:920 PAM/(10934:10934): Se crea el diccionario de variables de configuracion
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con PUERTO_ESCUCHA: 5000
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con IP_SWAP: 127.0.0.1
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con PUERTO_SWAP: 6000
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con MAXIMO_MARCOS_POR_PROCESO: 0
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con CANTIDAD_MARCOS: 0
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con TAMANIO_MARCO: 0
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con ENTRADAS_TLB: 0
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con TLB_HABILITADA: NO
+[INFO] 20:11:50:920 PAM/(10934:10934): Configurado con ALGORITMO_REMPLAZO: CLOCK-M
+[INFO] 20:11:50:920 PAM/(10934:10934): Se levanta el hilo de conexiones
+[INFO] 20:11:50:921 PAM/(10934:10934): Se levanta el hilo de signals
+[INFO] 20:11:50:921 PAM/(10934:10939): Escuchando conexiones en el socket 4
