@@ -284,7 +284,6 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma, char* idPro
 	while (listaInstrucciones[n] != NULL) {
 		resultado.data[resultado.m] = ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
 				idProceso);
-		logearEjecucion(listaInstrucciones[n], idProceso, resultado.data[resultado.m]);
 		n++;
 		resultado.m++;
 		sleep(retardo);
