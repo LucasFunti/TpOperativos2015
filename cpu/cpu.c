@@ -15,6 +15,7 @@
 #include <commons/config.h>
 #include <commons/txt.h>
 #include <commons/string.h>
+#include <commons/log.h>
 #include <limits.h>
 #include "../libreriaSigniorCodigo/libreriaCPU.h"
 #include "../libreriaSigniorCodigo/libSockets.h"
@@ -23,128 +24,44 @@
 #define BACKLOG 5
 #define PACKAGESIZE 32
 
-int main(int argc, char **argv) {
-	//invoco la funcion para leer los datos del file de config y los guardo en la estructura
 
-	/*	int cantHilos, i;
-	cantHilos = getHilos();
+
+int main(int argc, char **argv){
+	// Inicio el archivo log
+	t_hilo infoHilo;
+	remove("log_cpu");
+	t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
+
+	//invoco la funcion para leer los datos del file de config y los guardo en la estructura
+/*	int i;
+	int cantHilos = getHilos();
 	pthread_t hilos[cantHilos];
 	for (i = 0; i > cantHilos; i++) {
-		pthread_create(&hilos[i], NULL, iniciarcpu, NULL);
-	} */
 
+		pthread_create(&hilos[i], NULL, iniciarcpu, (void *) infoHilo);
+		}; */
+
+	printf("ingrese la accion a testear, o escriba 'ayuda' para ver comandos disponibles:\n");
 	char *accion = malloc(sizeof(char) * 32);
-
+	scanf("%[^\n]%*c", accion);
 	while(strcmp(accion,"exit")!=0){
+		testCpuFunction(accion);
 		printf("ingrese la accion a testear, o escriba 'ayuda' para ver comandos disponibles:\n");
-		scanf ("%[^\n]%*c", accion);
-	if (strcmp(accion, "reconocer instruccion") == 0) {
-				int respuesta;
-				printf("ingrese la instruccion a reconocer\n");
-				char *dataAdicional = malloc(sizeof(char) * 32);
-				scanf ("%[^\n]%*c", dataAdicional);
-				respuesta = reconocerInstruccion(dataAdicional);
-				printf("el header correspondiente a la instruccion es: %d\n", respuesta);
-			}
-	else if(strcmp(accion, "empaquetado normal") == 0){
-				printf("ingrese la instruccion a empaquetar(formato aceptado: instruccion paginas):\n");
-				char *dataAdicional = malloc(sizeof(char) * 64);
-				scanf ("%[^\n]%*c", dataAdicional);
-				t_instruccion paquete;
-				char **algo;
-				algo = string_split(dataAdicional," ");
-				paquete = empaquetar(algo[0], algo[1]);
-				printf("la instruccion es: %s\n", paquete.instruccion);
-				printf("el número de página/proceso es: %s\n", paquete.cantidadDePaginas);
-			}
-	else if(strcmp(accion, "empaquetado de escritura")== 0){
-				printf("ingrese la instruccion a empaquetar(formato aceptado: instruccion pagina contenido):\n");
-				char *dataAdicional = malloc(sizeof(char) * 64);
-				fgets(dataAdicional, 64, stdin);
-				t_instruccionEscritura paquete;
-				char **algo;
-				algo = string_n_split(dataAdicional,3, " ");
-				paquete = empaquetarEscritura(algo[0], algo[1], algo[2]);
-				printf("la instruccion es: %s\n", paquete.instruccion);
-				printf("el número de página es: %s\n", paquete.cantidadDePaginas);
-				printf("el contenido a escribir es: %s\n", paquete.textoAEscribir);
-			}
-	else if (strcmp(accion, "archivo a texto")== 0){
-				printf("ingrese una ruta de archivo válida:\n");
-				char *dataAdicional = malloc(sizeof(char) * 64);
-				scanf ("%[^\n]%*c", dataAdicional);
-				char *texto = txtAString(dataAdicional);
-				printf("el contenido del archivo es: %s\n", texto);
-			}
-	else if (strcmp(accion, "serializacion normal") == 0){
-		printf("ingrese una linea de código que desee serializar (formato válido: instruccion página):\n");
-				char *paqueteSerializado;
-				char *dataAdicional = malloc(sizeof(char) * 64);
-				t_instruccion paquete;
-				scanf ("%[^\n]%*c", dataAdicional);
-				char **algo;
-				algo = string_split(dataAdicional," ");
-				paquete = empaquetar(algo[0], algo[1]);
-				paqueteSerializado = serializarEmpaquetado(paquete);
-				printf("serializacion exitosa. contenido a enviar: %s\n", paqueteSerializado);
+		scanf("%[^\n]%*c", accion);
 
-	}
-	else if(strcmp(accion, "serializacion con escritura") == 0){
-				printf("ingrese una linea de código que desee serializar (formato válido: "
-						"instruccion página contenidoAEscribir):\n");
-				char *paqueteSerializado;
-				char *dataAdicional = malloc(sizeof(char) * 64);
-				t_instruccionEscritura paquete;
-				scanf ("%[^\n]%*c", dataAdicional);
-				char **algo;
-				algo = string_n_split(dataAdicional,3, " ");
-				paquete = empaquetarEscritura(algo[0], algo[1], algo[2]);
-				paqueteSerializado = serializarEmpaquetadoEscritura(paquete);
-				printf("serializacion exitosa. contenido a enviar: %s\n", paqueteSerializado);
-	}
-	else if(strcmp(accion, "ejecutar instruccion") == 0){
-				printf("ingrese la instruccion a ejecutar:\n");
-				char *dataAdicional = malloc(sizeof(char) * 64);
-				char *idProceso = malloc(sizeof(int));
-				int  id;
-				scanf ("%[^\n]%*c", dataAdicional);
-				printf("ingrese una id de proceso:\n");
-				scanf ("%[^\n]%*c", idProceso);
-				id = atoi(idProceso);
-				ejecutar(dataAdicional, 123, 456, id);
+	};
 
-	}
-	else if(strcmp(accion, "correr archivo") == 0){
-		tipo_pcb pcb;
-		printf("ingrese una ruta de archivo válida:\n");
-		char *dataAdicional = malloc(sizeof(char) * 64);
-		scanf ("%[^\n]%*c", dataAdicional);
-		pcb.nombrePrograma = dataAdicional;
-		printf("desea especificar los demás valores de la PCB?(ingrese 'si' o 'no')\n");
-		char *siOno = malloc(sizeof(char) * 2);
-		scanf ("%[^\n]%*c", siOno);
-		if(strcmp(siOno, "no") == 0){
-			pcb.programCounter = 0;
-			pcb.id = 1;
-			}
-		else if (strcmp(siOno, "si") == 0){
-			printf("ingrese los valores a utilizar, en el siguiente orden: contadorDePrograma idProceso\n");
-			char * valores = malloc(sizeof(char) *12);
-			scanf ("%[^\n]%*c", valores);
-			char **array = string_split(valores, " ");
-			pcb.programCounter = atoi(array[0]);
-			pcb.id = atoi(array[1]);
-			}
-		correrArchivo(pcb, 123, 456);
-	}
-	else if(strcmp(accion, "ayuda") == 0){
-				printf("lista de comandos disponibles:\nreconocer instruccion\nempaquetado normal\nempaquetado de escritura\n"
-						"archivo a texto\nserializacion normal\nserializacion con escritura\nejecutar instruccion\n"
-						"correr archivo\n\n");
-				printf("para las opciones 'reconocer instruccion' y 'ejecutar instrucción' utilice las siguientes instrucciones:\n"
-						"iniciar N\nleer N\n\escribir N contenidoAEscribir\nentrada-salida Tiempo\nfinalizar\n");
-	}
-	else printf("comando desconocido. por favor, intente de nuevo.\n");
-	}
+
+/*	pthread_t hilo1;
+	pthread_t hilo2;
+	pthread_create(&hilo1, NULL, iniciarcpu, NULL);
+	pthread_create(&hilo2, NULL, iniciarcpu, NULL);
+	pthread_join(hilo1, NULL);
+	pthread_join(hilo2, NULL);*/
+
+
+
+
+
 	return 0;
 }

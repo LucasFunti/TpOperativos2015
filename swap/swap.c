@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
 //	}
 //
 //	close(socketCliente);
-	listDestroy(pages);
+	list_destroy(pages);
 	return 0;
 }
 

@@ -38,13 +38,27 @@ typedef struct{
 
 typedef struct{
 	int idHilo;
-	char *hilo;
-} t_tcb;
+	t_log *logger;
+} t_hilo;
 
 typedef struct{
 	char *nombrePrograma;
 	int programCounter;
+	char *resultadosSerializados;
 } t_resultadoEjecucion;
+
+typedef struct{
+	int header;
+	int tamanio;
+	char * mensaje;
+} t_mensaje;
+
+typedef struct{
+	int m; 				// slots del array usados hasta ahora
+	int maximo; 		// capacidad máxima del array
+	int contador;		// posición actualizada del contador de programa
+	int *data;			// el array de resultados de las ejecuciones de cada instrucción
+} t_resultadoOperacion;
 
 
 int reconocerInstruccion(char*);
@@ -52,19 +66,25 @@ t_instruccion empaquetar(char *, char *);
 t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
 char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaquetada);
-int ejecutar(char *linea, int serverMemoria,int serverPlanificador, int idProceso);
-void correrArchivo(tipo_pcb pcb, int serverMemoria, int serverPlanificador);
+int ejecutar(char *linea, int serverMemoria,int serverPlanificador, char *idProceso);
+t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma, char* idProceso, int serverMemoria, int serverPlanificador);
 char *getIpPlanificador();
-void *iniciarcpu();
+void *iniciarcpu(t_hilo);
 char *getIpPlanificador();
 char *getPuertoPlanificador();
 char *getIpMemoria();
 char *getPuertoMemoria();
 int getHilos();
 int getRetardo();
-void testearFuncion(char *accion);
+void testCpuFunction(char *accion);
 char *txtAString(char *rutaDelArchivo);
-void enviarResultado(t_resultadoEjecucion resultado, int serverMemoria);
+void enviarResultado(t_resultadoEjecucion resultado, int serverPlanificador);
 char *serializarResultado(t_resultadoEjecucion resultado);
+t_resultadoEjecucion empaquetarResultado(char *ruta, int contadorPrograma);
+char *generarHeader(int clave, int tamanio);
+int concatenar(int valorA,int valorB);
+int cantidadElementos(char **lista);
+char *eventoDeLogeo(char *mensaje, int id);
+char *logeoDeEjecucion(char *mensaje, char *ruta, int contador, char *idProceso);
 
 #endif /* LIBRERIACPU_H_ */

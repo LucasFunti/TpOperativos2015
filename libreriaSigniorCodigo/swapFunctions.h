@@ -21,8 +21,6 @@ typedef struct {
 
 void setupSwap();
 
-void listDestroy(t_list *pages);
-
 int doesFileExist(const char *filename);
 
 t_list* setPages(int pagesAmount);
