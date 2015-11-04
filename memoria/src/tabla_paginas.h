@@ -14,8 +14,29 @@
 #include "estructuras.h"
 #include "globals.h"
 
+/**
+ * Variables
+ */
+int pagina_para_matchear_tabla_paginas, pid_para_matchear_tabla_paginas;
 
+/**
+ * Principales
+ */
+void tabla_paginas_agregar_entrada(t_tabla_paginas * tabla, int pid, int pagina,
+		int marco);
 void tabla_paginas_anadir_par_pagina_marco(t_tabla_paginas *, int, int, int);
+void tabla_paginas_remover_par(t_tabla_paginas * tabla,int pid, int pagina);
+/**
+ * Secundarias
+ */
+void tabla_paginas_add(t_tabla_paginas *, t_tabla_paginas_item *);
+t_par_pagina_marco * new_par_pagina_marco(int, int);
+t_tabla_paginas_item * new_tabla_paginas_item(int, int, int);
+
+/**
+ * Auxiliares para usar en listas
+ */
+
 t_tabla_paginas_item * tabla_paginas_buscar_pid(t_tabla_paginas *, int);
 void tabla_paginas_anadir_pagina(int, int, int);
 void tabla_paginas_remover(t_tabla_paginas *, int);
@@ -25,8 +46,6 @@ void funcion_tabla_paginas_liberar_item(void *);
  * @DESC: Acá se guardan las variables que va
  * usar la función que le pasamos a list_find
  */
-int pagina_para_buscar_tabla_paginas, pid_para_buscar_tabla_paginas;
-int pid_para_remover_tabla_paginas;
 
 /**
  * @NAME: tabla_paginas_buscar
@@ -51,19 +70,16 @@ bool funcion_tabla_paginas_buscar_por_pid(void *);
  * @NAME: tabla_paginas_add
  * @DESC: Agrega un elemento a la tabla de páginas
  */
-void tabla_paginas_add(t_tabla_paginas *, t_tabla_paginas_item *);
 
 /**
  * @NAME: new_par_pagina_marco
  * @DESC: Constructor de un par pagina-marco
  */
-t_par_pagina_marco * new_par_pagina_marco(int, int);
 
 /**
  * @NAME: new_tabla_paginas_item
  * @DESC: constructor de una fila de la tabla de páginas.
  */
-t_tabla_paginas_item * new_tabla_paginas_item(int, int, int);
 
 /**
  * @NAME: marco_para_pagina

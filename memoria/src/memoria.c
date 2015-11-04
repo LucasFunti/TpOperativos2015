@@ -10,18 +10,13 @@
  */
 #include "memoria.h"
 
-//#include "../libreriaSigniorCodigo/libSockets.h"
+#define CERRAR_CONEXION -3
 
-#define PACKAGESIZE 32
-#define BACKLOG 7
+#define INICIAR 4
+#define LEER 5
+#define ESCRIBIR 6
+#define FINALIZAR 8
 
-#define INICIAR = 4
-#define LEER = 5
-#define ESCRIBIR = 6
-#define ENTRADA-SALIDA = 7
-#define FINALIZAR = 8
-
-/*
 int main() {
 
 	iniciarLogger();
@@ -40,7 +35,7 @@ int main() {
 	loggearInfo("Se cierra exitosamente PAM");
 
 	return 1;
-}*/
+}
 
 void lanzarHilos() {
 	pthread_create(&hiloSignals, NULL, (void*) atenderSignals, NULL);
@@ -49,55 +44,79 @@ void lanzarHilos() {
 	loggearInfo("Se levanta el hilo de signals");
 }
 
-void atenderConexiones() {
-/*
-	socketEscucha = setup_listen_con_log("localhost",
-			dictionary_get(diccionarioConfiguraciones, "PUERTO_ESCUCHA"),
-			logger);
+void atenderConexion(int socket, fd_set sockets_activos) {
 
-	while (1) {
+	t_data * data_entrante = leer_paquete(socket);
 
-		socketCliente = esperarConexionEntrante(socketEscucha, BACKLOG, logger);
-		atenderCliente(socketCliente);
+	switch (data_entrante->header->codigo_operacion) {
 
-	}*/
-}
+	case INICIAR:
+		log_info(logger,
+				string_from_format(
+						"Realizando una operación INICIAR para el socket %d",
+						socket));
 
-void atenderCliente(int socketConexion) {
-	loggearInfo(
-			string_from_format("Atendiendo cliente en el socket %d",
-					socketConexion));
+		break;
 
-}
-/*
-char * leer_n(int pid, int numero_pagina) {
+	case LEER:
+		log_info(logger,
+				string_from_format(
+						"Realizando una operación LEER para el socket %d",
+						socket));
+		break;
 
-	if (tlb_encendida()) {
+	case ESCRIBIR:
+		log_info(logger,
+				string_from_format(
+						"Realizando una operación ESCRIBIR para el socket %d",
+						socket));
+		break;
 
-		return usar_tlb(pid, numero_pagina);
+	case FINALIZAR:
+		log_info(logger,
+				string_from_format(
+						"Realizando una operación FINALIZAR para el socket %d",
+						socket));
+		close(socket);
+		FD_CLR(socket, &sockets_activos);
+		break;
 
-	} else {
+	case CERRAR_CONEXION:
+		log_info(logger,
+				string_from_format("Cerrando conexion en el socket %d",
+						socket));
 
-		return usar_tabla(pid, numero_pagina);
+		break;
+
+	default:
+		log_info(logger,
+				string_from_format(
+						"Codigo de operación (%d) no reconocido enviado por el socket %d",
+						data_entrante->header->codigo_operacion, socket));
+		break;
+
 	}
-}*/
+
+}
+
 void atenderSignals() {
 }
 
 void levantarConfiguracion() {
 
-	memoriaConfig = config_create("./memoriaConfig");
+	memoriaConfig = config_create(
+			"/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/src/memoriaConfig");
 
 	diccionario_configuraciones = dictionary_create();
 
 	loggearInfo("Se crea el diccionario de variables de configuracion");
 
-	char variablesConfiguracion[9][30] = { "PUERTO_ESCUCHA", "IP_SWAP",
+	char variablesConfiguracion[10][50] = { "PUERTO_ESCUCHA", "IP_SWAP",
 			"PUERTO_SWAP", "MAXIMO_MARCOS_POR_PROCESO", "CANTIDAD_MARCOS",
 			"TAMANIO_MARCO", "ENTRADAS_TLB", "TLB_HABILITADA",
-			"ALGORITMO_REMPLAZO" };
+			"RETARDO_MEMORIA", "ALGORITMO_REMPLAZO" };
 	int i;
-	for (i = 0; i < 9; i++) {
+	for (i = 0; i < 10; i++) {
 
 		dictionary_put(diccionario_configuraciones, variablesConfiguracion[i],
 				config_get_string_value(memoriaConfig,
@@ -109,30 +128,5 @@ void levantarConfiguracion() {
 								variablesConfiguracion[i])));
 
 	}
-}
-
-void loggearWarning(char * info) {
-
-	log_warning(logger, info);
-}
-
-void loggearError(char * info) {
-
-	log_error(logger, info);
-}
-
-void loggearInfo(char * info) {
-
-	log_info(logger, info);
-}
-
-void iniciarLogger() {
-
-//Si existe el archivo lo elimina
-	remove("logMemoria");
-
-	logger = log_create("logMemoria", "PAM", true, LOG_LEVEL_DEBUG);
-	loggearInfo("Iniciado el proceso administrador de memoria");
-
 }
 

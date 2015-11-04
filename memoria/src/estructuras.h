@@ -10,6 +10,19 @@
 
 #include <commons/collections/list.h>
 
+typedef struct {
+	int codigo_operacion;
+	int tamanio_data;
+
+} t_header;
+
+typedef struct {
+
+	t_header * header;
+	void * data;
+
+} t_data;
+
 /**
  * @NAME: t_tabla_paginas_item
  * @DESC: La tabla de páginas es una lista

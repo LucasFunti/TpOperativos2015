@@ -10,18 +10,36 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <commons/collections/dictionary.h>
 #include "constantes.h"
 #include "globals.h"
 #include "tlb.h"
 #include "tabla_paginas.h"
 
+/**
+ * Variables
+ */
 int encontrado;
 
 void remover(int);
 
-void remover_tlb(int);
-void remover_tabla_paginas(int);
+void remover_tlb(t_tlb * tabla, int pid);
+void remover_tabla_paginas(t_tabla_paginas * tabla_paginas,int pid);
 void remover_swap(int);
+
+/**
+ * Principales
+ */
+
+int iniciar_n(int pid,int cantidad_paginas);
+char * leer_n(int pid, int pagina);
+void escribir_n(char * texto_para_escribir);
+void finalizar(int pid,t_dictionary * diccionario);
+
+/**
+ * Secundarios
+ */
+int buscar_tlb(t_tlb * tabla,t_tabla_paginas * tabla_pags,int pid, int pagina);
 
 /**
  * @NAME: buscar_tlb
@@ -30,7 +48,6 @@ void remover_swap(int);
  * por último en swap. Devuelve
  * el numero de marco
  */
-int buscar_tlb(int, int);
 
 /**
  * @NAME: buscar_tabla
@@ -39,7 +56,7 @@ int buscar_tlb(int, int);
  * por último en swap. Devuelve
  * el numero de marco
  */
-int buscar_tabla(int, int);
+int buscar_tabla(t_tabla_paginas * tabla_pags,int pid, int pagina);
 
 /**
  * @NAME: buscar_swap
@@ -48,17 +65,18 @@ int buscar_tabla(int, int);
 int buscar_swap(int pid, int pagina);
 
 /**
- * @NAME: leer_n
+ * @NAME: marco_pagina
  * @DESC: Devuelve el numero de marco donde está
  * la página del proceso pedido
  */
-int leer_n(int, int);
+int marco_pagina(t_tlb * tabla_tlb ,t_tabla_paginas * tabla_pags,t_dictionary * diccionario,int pid, int pagina);
 
 /**
  * @NAME: tlb_habilitada
  * @DESC: devuelve true si la el archivo de configuración
  * dice algo distinto a NO
  */
-bool tlb_habilitada();
+bool tlb_habilitada(t_dictionary * diccionario);
+
 
 #endif /* PEDIDOS_H_ */

@@ -9,10 +9,12 @@
 #define GLOBALS_H_
 
 #include <commons/config.h>
-#include <commons/collections/dictionary.h>
 #include <commons/log.h>
+#include <commons/collections/dictionary.h>
 #include <stdbool.h>
 #include "estructuras.h"
+
+t_log * logger;
 
 /**
  * @DESC: Archivo de configuración
