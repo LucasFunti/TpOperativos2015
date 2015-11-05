@@ -51,7 +51,7 @@ Secuencia de pedidos al administrador de memoria:
 <h3>ESCRIBIR-N</h3>
     Me llega: (del cpu)
       Código: 6 
-      Data: Dos enteros y un String, primero el pid, luego la página y por ultimo el string
+      Data: Tres enteros y un String, primero el pid, luego la página, después el largo del string y por ultimo el string
       
     (No le respondo nada al cpu)
   
