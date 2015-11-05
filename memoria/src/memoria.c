@@ -21,27 +21,13 @@ int main() {
 
 	iniciarLogger();
 	levantarConfiguracion();
+	registrarSeniales();
 
-	//TODO: Conectarse al swap
+	conectarseAlSwap();
 
-	lanzarHilos();
-
-	pthread_join(hiloConexiones, NULL);
-	loggearInfo("Se cierra el hilo de conexiones");
-
-	pthread_join(hiloSignals, NULL);
-	loggearInfo("Se cierra el hilo de signals");
-
-	loggearInfo("Se cierra exitosamente PAM");
+	atenderConexiones();
 
 	return 1;
-}
-
-void lanzarHilos() {
-	pthread_create(&hiloSignals, NULL, (void*) atenderSignals, NULL);
-	loggearInfo("Se levanta el hilo de conexiones");
-	pthread_create(&hiloConexiones, NULL, (void*) atenderConexiones, NULL);
-	loggearInfo("Se levanta el hilo de signals");
 }
 
 void atenderConexion(int socket, fd_set sockets_activos) {
@@ -99,8 +85,6 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 
 }
 
-void atenderSignals() {
-}
 
 void levantarConfiguracion() {
 

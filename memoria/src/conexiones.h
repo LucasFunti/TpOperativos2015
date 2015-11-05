@@ -18,10 +18,14 @@
 #include "loggear.h"
 #include "memoria.h"
 
-int socketEscucha;
+int socketEscucha, socketSwap;
+fd_set sockets_para_revisar, sockets_activos;
 
-
+char* serializar(t_data * unPaquete);
+void common_send(int socket, t_data * paquete);
+void conectarseAlSwap();
 void atenderConexiones();
+int connect_to(char *IP, char* Port);
 struct addrinfo* common_setup(char *IP, char* Port);
 int setup_listen(char* IP, char* Port);
 t_data * leer_paquete(int socket);

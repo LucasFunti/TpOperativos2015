@@ -11,18 +11,15 @@
 #include <pthread.h>
 #include <commons/config.h>
 #include <commons/string.h>
-#include "conexiones.h"
 #include <commons/log.h>
 #include <unistd.h>
+#include "signals.h"
+#include "conexiones.h"
 #include "globals.h"
 
 char * puertoCpu;
 char * ipSwap;
 char * puertoSwap;
-
-t_config * memoriaConfig;
-
-pthread_t hiloConexiones, hiloSignals;
 
 void atenderConexion(int socket, fd_set sockets_activos);
 
@@ -30,7 +27,5 @@ void funcion_imprimir_elemento(char * key, void * value);
 void levantarConfiguracion();
 
 void atenderConexiones();
-void atenderSignals();
-void lanzarHilos();
 
 #endif /* MEMORIA_H_ */

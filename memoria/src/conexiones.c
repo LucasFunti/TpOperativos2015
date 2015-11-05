@@ -17,12 +17,11 @@ void atenderConexiones() {
 			string_from_format("Se escuchan conexiones en el socket %d",
 					socketEscucha));
 
-	fd_set sockets_para_revisar, sockets_activos;
-
 	int socketMasGrande = socketEscucha;
 
 	FD_ZERO(&sockets_activos);
 	FD_SET(socketEscucha, &sockets_activos);
+	FD_SET(socketSwap, &sockets_activos);
 
 	while (1) {
 
@@ -126,6 +125,7 @@ struct addrinfo* common_setup(char *IP, char* Port) {
 }
 
 int setup_listen(char* IP, char* Port) {
+
 	struct addrinfo* serverInfo = common_setup(IP, Port);
 	if (serverInfo == NULL)
 		return -1;
@@ -135,4 +135,83 @@ int setup_listen(char* IP, char* Port) {
 	bind(socketEscucha, serverInfo->ai_addr, serverInfo->ai_addrlen);
 	freeaddrinfo(serverInfo);
 	return socketEscucha;
+}
+
+int connect_to(char *IP, char* Port) {
+	struct addrinfo* serverInfo = common_setup(IP, Port);
+	if (serverInfo == NULL) {
+		return -1;
+	}
+	int serverSocket = socket(serverInfo->ai_family, serverInfo->ai_socktype,
+			serverInfo->ai_protocol);
+	if (serverSocket == -1) {
+		return -1;
+	}
+	if (connect(serverSocket, serverInfo->ai_addr, serverInfo->ai_addrlen)
+			== -1) {
+
+		close(serverSocket);
+		return -1;
+	}
+
+	freeaddrinfo(serverInfo);
+	return serverSocket;
+}
+
+t_data * pedirPaquete(int codigoOp, int tamanio, void * data) {
+
+	t_data * paquete = malloc(sizeof(t_data));
+	paquete->header = malloc(sizeof(t_header));
+
+	paquete->header->codigo_operacion = codigoOp;
+	paquete->header->tamanio_data = tamanio;
+	paquete->data = data;
+
+	return paquete;
+}
+
+char* serializar(t_data * unPaquete) {
+	void * stream = malloc(sizeof(t_header) + unPaquete->header->tamanio_data);
+
+	memcpy(stream, unPaquete->header, sizeof(t_header));
+	memcpy(stream + sizeof(t_header), unPaquete->data,
+			unPaquete->header->tamanio_data);
+	return stream;
+}
+
+void common_send(int socket, t_data * paquete) {
+	char* buffer;
+	int tamanio_total;
+	buffer = serializar(paquete);
+	tamanio_total = paquete->header->tamanio_data + sizeof(t_header);
+
+	send(socket, buffer, tamanio_total, MSG_WAITALL);
+
+	free(buffer);
+}
+
+void conectarseAlSwap() {
+
+	socketSwap = connect_to(
+			dictionary_get(diccionario_configuraciones, "IP_SWAP"),
+			dictionary_get(diccionario_configuraciones, "PUERTO_SWAP"));
+
+	int null_data = 0;
+
+	t_data * paquete = pedirPaquete(1, sizeof(int), &null_data);
+
+	common_send(socketSwap, paquete);
+
+	paquete = leer_paquete(socketSwap);
+
+	if (paquete->header->codigo_operacion == 2) {
+		loggearInfo(
+				string_from_format(
+						"Conexión con el swap exitosa, se le registra el socket %d",
+						socketSwap));
+	} else {
+		loggearError("No se pudo encontral al swap, se cierra todo");
+		exit(EXIT_FAILURE);
+	}
+
 }
