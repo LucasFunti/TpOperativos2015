@@ -9,8 +9,23 @@
 /**
  * Principales
  */
-int iniciar_n(int pid, int cantidad_paginas) {
-	return 1;
+bool iniciar_n(int pid, int cantidad_paginas) {
+
+	bool swap_puede = swap_iniciar(pid, cantidad_paginas);
+
+	int cantidad_maxima_marcos_proceso = atoi(
+			dictionary_get(diccionario_configuraciones,
+					"MAXIMO_MARCOS_POR_PROCESO"));
+
+	if (swap_puede && cantidad_maxima_marcos_proceso <= cantidad_paginas) {
+
+		crear_estructura_para_proceso(pid, cantidad_paginas);
+		return true;
+
+	} else {
+		return false;
+	}
+
 }
 
 char * leer_n(int pid, int pagina) {
@@ -37,6 +52,42 @@ void finalizar(int pid, t_dictionary * diccionario) {
 /**
  * Secundarios
  */
+
+void crear_estructura_para_proceso(int pid, int cantidad_paginas) {
+
+	tabla_paginas_add(tabla_paginas, new_tabla_paginas_items(pid));
+	int i;
+	for (i = 0; i < cantidad_paginas; i++) {
+		tabla_paginas_anadir_par_pagina_marco(tabla_paginas, pid, i,
+				marco_libre());
+	}
+
+}
+
+int marco_libre() {
+
+	t_marco * marco;
+
+	if (cantidad_marcos_libres()) {
+
+		marco = list_find(marcos_disponibles, esta_libre);
+
+		marco->disponible = false;
+		queue_push(marcos_asignados, marco);
+		return marco->numero_marco;
+
+	} else {
+
+		//Delegar al algoritmo
+
+		marco = queue_pop(marcos_asignados);
+
+		//Le dice que dejó de estár en memoria y si está modificada la lleva al swap
+		tabla_paginas_actualizar_marco(tabla_paginas, marco->numero_marco);
+
+	}
+
+}
 
 int marco_pagina(t_tlb * tabla_tlb, t_tabla_paginas * tabla_pags,
 		t_dictionary * diccionario, int pid, int pagina) {

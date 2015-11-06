@@ -21,6 +21,7 @@
 int socketEscucha, socketSwap;
 fd_set sockets_para_revisar, sockets_activos;
 
+t_data * pedirPaquete(int codigoOp, int tamanio, void * data);
 char* serializar(t_data * unPaquete);
 void common_send(int socket, t_data * paquete);
 void conectarseAlSwap();

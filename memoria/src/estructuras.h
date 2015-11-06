@@ -40,6 +40,8 @@ typedef struct {
 typedef struct {
 	int pagina;
 	int marco;
+	bool en_memoria;
+	bool modificado;
 } t_par_pagina_marco;
 
 /**

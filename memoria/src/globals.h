@@ -14,6 +14,8 @@
 #include <stdbool.h>
 #include "estructuras.h"
 
+void * memoria;
+
 t_log * logger;
 
 /**

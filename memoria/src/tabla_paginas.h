@@ -1,6 +1,6 @@
 /*
- * tabla_paginas.h
  *
+ * tabla_paginas.h
  *  Created on: 29/10/2015
  *      Author: utnso
  */
@@ -17,7 +17,8 @@
 /**
  * Variables
  */
-int pagina_para_matchear_tabla_paginas, pid_para_matchear_tabla_paginas;
+int pagina_para_matchear_tabla_paginas, pid_para_matchear_tabla_paginas,
+		marco_para_matchear_tabla_paginas;
 
 /**
  * Principales
@@ -25,23 +26,28 @@ int pagina_para_matchear_tabla_paginas, pid_para_matchear_tabla_paginas;
 void tabla_paginas_agregar_entrada(t_tabla_paginas * tabla, int pid, int pagina,
 		int marco);
 void tabla_paginas_anadir_par_pagina_marco(t_tabla_paginas *, int, int, int);
-void tabla_paginas_remover_par(t_tabla_paginas * tabla,int pid, int pagina);
+void tabla_paginas_remover_par(t_tabla_paginas * tabla, int pid, int pagina);
 /**
  * Secundarias
  */
 void tabla_paginas_add(t_tabla_paginas *, t_tabla_paginas_item *);
 t_par_pagina_marco * new_par_pagina_marco(int, int);
-t_tabla_paginas_item * new_tabla_paginas_item(int, int, int);
+t_tabla_paginas_item * new_tabla_paginas_items(int pid);
+t_tabla_paginas_item * new_tabla_paginas_item_con_pagina(int, int, int);
 
 /**
  * Auxiliares para usar en listas
  */
-
+void tabla_paginas_actualizar_marco(t_tabla_paginas * tabla, int marco);
+bool funcion_par_pagina_marco_buscar_por_marco(void * data);
 t_tabla_paginas_item * tabla_paginas_buscar_pid(t_tabla_paginas *, int);
 void tabla_paginas_anadir_pagina(int, int, int);
 void tabla_paginas_remover(t_tabla_paginas *, int);
 bool funcion_tabla_paginas_coincide_pid_remover(void *);
 void funcion_tabla_paginas_liberar_item(void *);
+
+bool funcion_tabla_paginas_buscar_por_marco(void * data);
+bool funcion_par_pagina_marco_buscar_por_marco(void * data);
 /**
  * @DESC: Acá se guardan las variables que va
  * usar la función que le pasamos a list_find

@@ -77,7 +77,7 @@ context(test_admin_memoria) {
 
 		it("crea la estructura de un proceso para la tabla de páginas") {
 
-			t_tabla_paginas_item * item1 = new_tabla_paginas_item(2,1,2);
+			t_tabla_paginas_item * item1 = new_tabla_paginas_item_con_pagina(2,1,2);
 
 			assert_tabla_paginas_item(item1,2,1,2);
 
@@ -93,7 +93,7 @@ context(test_admin_memoria) {
 
 		it("agrega un par pagina-marco de un proceso") {
 
-			t_tabla_paginas_item * item = new_tabla_paginas_item(1,1,5);
+			t_tabla_paginas_item * item = new_tabla_paginas_item_con_pagina(1,1,5);
 			tabla_paginas_add(tabla_paginas_test,item);
 			tabla_paginas_anadir_par_pagina_marco(tabla_paginas_test,1,2,1);
 
@@ -105,7 +105,7 @@ context(test_admin_memoria) {
 
 			tabla_paginas_agregar_entrada(tabla_paginas_test,1,1,1);
 
-			t_tabla_paginas_item * item = new_tabla_paginas_item(2,1,2);
+			t_tabla_paginas_item * item = new_tabla_paginas_item_con_pagina(2,1,2);
 			list_add(item->pares_pagina_marco,new_par_pagina_marco(2,3));
 			list_add(tabla_paginas_test,item);
 

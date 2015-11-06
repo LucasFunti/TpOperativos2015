@@ -16,6 +16,7 @@
 #include "signals.h"
 #include "conexiones.h"
 #include "globals.h"
+#include "constantes.h"
 
 char * puertoCpu;
 char * ipSwap;

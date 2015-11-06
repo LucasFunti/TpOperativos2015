@@ -12,7 +12,8 @@
 
 void tabla_paginas_agregar_entrada(t_tabla_paginas * tabla, int pid, int pagina,
 		int marco) {
-	tabla_paginas_add(tabla, new_tabla_paginas_item(pid, pagina, marco));
+	tabla_paginas_add(tabla,
+			new_tabla_paginas_item_con_pagina(pid, pagina, marco));
 }
 
 void tabla_paginas_anadir_par_pagina_marco(t_tabla_paginas * tabla, int pid,
@@ -51,16 +52,26 @@ t_par_pagina_marco * new_par_pagina_marco(int pagina, int marco) {
 	t_par_pagina_marco * nuevo_item = malloc(sizeof(t_par_pagina_marco));
 	nuevo_item->pagina = pagina;
 	nuevo_item->marco = marco;
+	nuevo_item->modificado = false;
+	nuevo_item->en_memoria = true;
 
 	return nuevo_item;
 }
 
-t_tabla_paginas_item * new_tabla_paginas_item(int pid, int pagina_inicial,
-		int marco_pagina_inicial) {
+t_tabla_paginas_item * new_tabla_paginas_items(int pid) {
 
 	t_tabla_paginas_item * nuevo_item = malloc(sizeof(t_tabla_paginas_item));
 	nuevo_item->pid = pid;
 	nuevo_item->pares_pagina_marco = list_create();
+
+	return nuevo_item;
+
+}
+
+t_tabla_paginas_item * new_tabla_paginas_item_con_pagina(int pid,
+		int pagina_inicial, int marco_pagina_inicial) {
+
+	t_tabla_paginas_item * nuevo_item = new_tabla_paginas_items(pid);
 
 	t_list * lista_pares = nuevo_item->pares_pagina_marco;
 
@@ -76,6 +87,24 @@ t_tabla_paginas_item * tabla_paginas_buscar_pid(t_tabla_paginas * tabla,
 
 	pid_para_matchear_tabla_paginas = pid;
 	return (list_find(tabla, funcion_tabla_paginas_buscar_por_pid));
+}
+
+void tabla_paginas_actualizar_marco(t_tabla_paginas * tabla, int marco
+		) {
+
+	marco_para_matchear_tabla_paginas = marco;
+
+	t_tabla_paginas_item * proceso = list_find(tabla, funcion_tabla_paginas_buscar_por_marco);
+
+	t_par_pagina_marco * par = list_find(proceso->pares_pagina_marco,
+			funcion_par_pagina_marco_buscar_por_marco);
+
+	par->en_memoria= false;
+
+	if(par->modificado){
+		swap_escribir(proceso->pid,par->pagina,marco);
+	}
+
 }
 
 /**
@@ -137,6 +166,22 @@ bool funcion_tabla_paginas_buscar_por_pid(void * data) {
 	t_tabla_paginas_item * fila = data;
 
 	return (fila->pid == pid_para_matchear_tabla_paginas);
+}
+
+bool funcion_tabla_paginas_buscar_por_marco(void * data) {
+
+	t_tabla_paginas_item * fila = data;
+
+	return (list_find(fila->pares_pagina_marco,
+			funcion_par_pagina_marco_buscar_por_marco) != NULL);
+}
+
+bool funcion_par_pagina_marco_buscar_por_marco(void * data) {
+
+	t_par_pagina_marco * marco = data;
+
+	return (marco->marco == marco_para_matchear_tabla_paginas
+			&& marco->en_memoria);
 }
 
 int marco_para_pagina(t_tabla_paginas_item * item_tabla_paginas, int pagina) {
