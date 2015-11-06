@@ -104,7 +104,7 @@ void mostrarEstadoDeLista(t_list *lista, char*estado) {
 	} else {
 
 		for (j = 0; j < list_size(lista); j++) {
-			nodo_en_ejecucion *procesoEnEjecucion= list_get(lista, j);
+			nodo_en_ejecucion *procesoEnEjecucion = list_get(lista, j);
 			printf("mProc %d: %s -> %s \n", procesoEnEjecucion->proceso->id,
 					procesoEnEjecucion->proceso->nombrePrograma, estado);
 		}
@@ -112,26 +112,39 @@ void mostrarEstadoDeLista(t_list *lista, char*estado) {
 	}
 }
 
-void mostrarEstadoDeCola(t_queue *cola, char*estado) {
+void mostrarEstadoDeListos(t_queue *cola, char*estado) {
 	int j;
 	if (queue_size(cola) == 0) {
 		printf("La cola de planificacion ,%s, esta vacia\n", estado);
 	} else {
 		for (j = 0; j < queue_size(cola); j++) {
-			tipo_pcb *proceso= list_get(cola->elements, j);
+			tipo_pcb *proceso = list_get(cola->elements, j);
 			printf("mProc %d: %s -> %s \n", proceso->id,
 					proceso->nombrePrograma, estado);
 		}
 	}
 }
+void mostrarEstadoDeBloqueados(t_queue *cola, char*estado) {
+	int j;
+	if (queue_size(cola) == 0) {
+		printf("La cola de planificacion ,%s, esta vacia\n", estado);
+	} else {
+		for (j = 0; j < queue_size(cola); j++) {
+			nodo_en_ejecucion *proceso = list_get(cola->elements, j);
+			printf("mProc %d: %s -> %s \n", proceso->proceso->id,
+					proceso->proceso->nombrePrograma, estado);
+		}
+	}
+}
+
 
 /* cambiar estado del proceso */
 void cambiarEstado(tipo_pcb *proceso, int estado, t_queue*colaListos,
 		t_queue*entrada_salida, t_list*en_ejecucion) {
 	proceso->estado = estado;
-	mostrarEstadoDeCola(colaListos, "Listos");
+	mostrarEstadoDeListos(colaListos, "Listos");
 	mostrarEstadoDeLista(en_ejecucion, "Ejecucion");
-	mostrarEstadoDeCola(entrada_salida, "Bolqueados");
+	mostrarEstadoDeBloqueados(entrada_salida, "Bolqueados");
 }
 
 /*agrega un proceso a la cola de listos */
@@ -143,8 +156,9 @@ void agregarEnColaDeListos(tipo_pcb *proceso, pthread_mutex_t mutex_readys,
 	log_info(log_planificador,
 			"Colocado el proceso: %s con pid = %d en la cola de listos",
 			proceso->nombrePrograma, proceso->id);
-	pthread_mutex_unlock(&mutex_readys);
 	cambiarEstado(proceso, listo, colaListos, entrada_salida, en_ejecucion);
+	pthread_mutex_unlock(&mutex_readys);
+
 }
 
 tipo_pcb * removerDeColaDeListos(pthread_mutex_t mutex_readys,
@@ -156,49 +170,71 @@ tipo_pcb * removerDeColaDeListos(pthread_mutex_t mutex_readys,
 	return proceso;
 }
 void agregarAListaDeEjecucion(pthread_mutex_t mutex_ejecucion,
-		t_list *listaEjecutando, nodo_en_ejecucion *proceso,t_queue*colaListos,t_queue*entrada_salida) {
+		t_list *listaEjecutando, nodo_en_ejecucion *proceso, t_queue*colaListos,
+		t_queue*entrada_salida, t_log*log_planificador) {
 	pthread_mutex_lock(&mutex_ejecucion);
 	list_add(listaEjecutando, proceso);
-	cambiarEstado(proceso->proceso, ejecucion,colaListos,entrada_salida,listaEjecutando);
+	log_info(log_planificador,
+			"Colocado el proceso: %s con pid = %d en la cola de ejecucion",
+			proceso->proceso->nombrePrograma, proceso->proceso->id);
+	cambiarEstado(proceso->proceso, ejecucion, colaListos, entrada_salida,
+			listaEjecutando);
 	pthread_mutex_unlock(&mutex_ejecucion);
 
 }
 /* saca un proceso de la cola de listos y lo coloca en la lista de ejecucion*/
 void cambiarAEstadoDeEjecucion(pthread_mutex_t mutex_readys, t_queue*colaListos,
-		pthread_mutex_t mutex_ejecucion, t_list *listaEjecutando,t_queue*entrada_salida) {
+		pthread_mutex_t mutex_ejecucion, t_list *listaEjecutando,
+		t_queue*entrada_salida, t_log*log_planificador,int socketEnEjecucion) {
 	tipo_pcb *proceso = malloc(sizeof(tipo_pcb));
 	proceso = removerDeColaDeListos(mutex_readys, colaListos);
-	nodo_en_ejecucion*procesoEjecutando=malloc(sizeof(nodo_en_ejecucion));
-	procesoEjecutando->proceso=proceso;
-	agregarAListaDeEjecucion(mutex_ejecucion, listaEjecutando, procesoEjecutando,colaListos,entrada_salida);
+	nodo_en_ejecucion*procesoEjecutando = malloc(sizeof(nodo_en_ejecucion));
+	procesoEjecutando->proceso = proceso;
+	procesoEjecutando->socket = socketEnEjecucion;
+	agregarAListaDeEjecucion(mutex_ejecucion, listaEjecutando,
+			procesoEjecutando, colaListos, entrada_salida,log_planificador);
 }
 
-void removerDeListaDeEjecucion(tipo_pcb *pcb, pthread_mutex_t mutex_ejecucion,
-		t_list*listaEjecutando) {
+nodo_en_ejecucion * removerDeListaDeEjecucion(tipo_pcb *pcb,
+		pthread_mutex_t mutex_ejecucion, t_list*listaEjecutando) {
+	nodo_en_ejecucion * proceso = malloc(sizeof(nodo_en_ejecucion));
 	bool encontrar_pid(void * nodo) {
 		return ((((nodo_en_ejecucion*) nodo)->proceso->id) == pcb->id);
 	}
 	pthread_mutex_lock(&mutex_ejecucion);
-	list_remove_by_condition(listaEjecutando, encontrar_pid);
+	proceso = list_remove_by_condition(listaEjecutando, encontrar_pid);
 	pthread_mutex_unlock(&mutex_ejecucion);
+	return proceso;
+
+}
+void agregarAColaDeBloqueados(pthread_mutex_t mutex_bloqueados,
+		t_queue *entradaSalida, nodo_entrada_salida*io, t_queue*colaListos,
+		t_list*listaEjecutando,t_log*log_planificador) {
+	pthread_mutex_lock(&mutex_bloqueados);
+	queue_push(entradaSalida, io);
+	log_info(log_planificador,
+			"Colocado el proceso: %s con pid = %d en la cola de bloqueados",
+			io->proceso->nombrePrograma, io->proceso->id);
+	cambiarEstado(io->proceso, bloqueado, colaListos, entradaSalida,
+			listaEjecutando);
+	pthread_mutex_unlock(&mutex_bloqueados);
 
 }
 /* saca un proceso de la lista de ejecucion y lo coloca en la cola de entrada salida */
-void agregarEnColaDeBloqueados(tipo_pcb *pcb, pthread_mutex_t mutex_bloqueados,
+void cambiarEstadoABloqueado(tipo_pcb *pcb, pthread_mutex_t mutex_bloqueados,
 		t_queue*entradaSalida, pthread_mutex_t mutex_ejecucion,
 		t_list*listaEjecutando, pthread_mutex_t mutex_readys,
-		t_queue*colaListos, t_log*log_planificador,t_queue*entrada_salida) {
-	removerDeListaDeEjecucion(pcb, mutex_ejecucion, listaEjecutando);
+		t_queue*colaListos, t_log*log_planificador) {
+	nodo_en_ejecucion * proceso = malloc(sizeof(nodo_en_ejecucion));
+	proceso = removerDeListaDeEjecucion(pcb, mutex_ejecucion, listaEjecutando);
 	nodo_entrada_salida * io = malloc(sizeof(nodo_entrada_salida));
-	io->proceso = pcb;
-	pthread_mutex_lock(&mutex_bloqueados);
-	queue_push(entradaSalida, io);
-	cambiarEstado(io->proceso, bloqueado,colaListos,entrada_salida,listaEjecutando);
-	pthread_mutex_unlock(&mutex_bloqueados);
+	io->proceso = proceso->proceso;
+	agregarAColaDeBloqueados(mutex_bloqueados, entradaSalida, io, colaListos,
+			listaEjecutando,log_planificador);
 	//manejo de la espera de la entrada salida
 
-	agregarEnColaDeListos(io->proceso, mutex_readys, colaListos,
-			log_planificador,entrada_salida,listaEjecutando);
+	//	agregarEnColaDeListos(io->proceso, mutex_readys, colaListos,
+	//			log_planificador, entradaSalida, listaEjecutando);
 
 }
 
@@ -216,9 +252,11 @@ int setProgramCounter(char *dirProceso) {
 	while (!feof(archivo)) {
 		j = fgetc(archivo);
 		if (j == ';') {
-			pc++;
+
 		} else if (j == 'f') {
-			pc++;
+
+			pc = ftell(archivo);
+			pc--;
 			return pc;
 			break;
 		}

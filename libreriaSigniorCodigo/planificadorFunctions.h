@@ -30,7 +30,6 @@ typedef struct {
 typedef struct {
 	tipo_pcb * proceso;
 	int socket;
-	int pid;
 } nodo_en_ejecucion;
 
 typedef struct {
@@ -59,11 +58,13 @@ void inicializarColecciones(t_queue * colaListos, t_queue * colaFinalizados,
 
 void mostrarEstadoDeLista(t_list *lista, char*estado);
 
-void mostrarEstadoDeCola(t_queue *cola, char*estado);
+void mostrarEstadoDeListos(t_queue *cola, char*estado);
+
+void mostrarEstadoDeBloqueados(t_queue *cola, char*estado) ;
 
 void agregarAListaDeEjecucion(pthread_mutex_t mutex_ejecucion,
 		t_list *listaEjecutando, nodo_en_ejecucion *proceso, t_queue*colaListos,
-		t_queue*entrada_salida);
+		t_queue*entrada_salida, t_log*log_planificador) ;
 
 tipo_pcb * removerDeColaDeListos(pthread_mutex_t mutex_readys,
 		t_queue*colaListos);
@@ -74,15 +75,19 @@ void agregarEnColaDeListos(tipo_pcb *proceso, pthread_mutex_t mutex_readys,
 
 void cambiarAEstadoDeEjecucion(pthread_mutex_t mutex_readys, t_queue*colaListos,
 		pthread_mutex_t mutex_ejecucion, t_list *listaEjecutando,
-		t_queue*entrada_salida);
+		t_queue*entrada_salida, t_log*log_planificador,int socketEnEjecucion);
 
-void removerDeListaDeEjecucion(tipo_pcb *pcb, pthread_mutex_t mutex_ejecucion,
-		t_list*listaEjecutando);
+nodo_en_ejecucion * removerDeListaDeEjecucion(tipo_pcb *pcb, pthread_mutex_t mutex_ejecucion,
+		t_list*listaEjecutando) ;
 
-void agregarEnColaDeBloqueados(tipo_pcb *pcb, pthread_mutex_t mutex_bloqueados,
+void agregarAColaDeBloqueados(pthread_mutex_t mutex_bloqueados,
+		t_queue *entradaSalida, nodo_entrada_salida*io, t_queue*colaListos,
+		t_list*listaEjecutando,t_log*log_planificador) ;
+
+void cambiarEstadoABloqueado(tipo_pcb *pcb, pthread_mutex_t mutex_bloqueados,
 		t_queue*entradaSalida, pthread_mutex_t mutex_ejecucion,
 		t_list*listaEjecutando, pthread_mutex_t mutex_readys,
-		t_queue*colaListos, t_log*log_planificador, t_queue*entrada_salida);
+		t_queue*colaListos, t_log*log_planificador);
 
 void cambiarEstado(tipo_pcb *proceso, int estado, t_queue*colaListos,
 		t_queue*entrada_salida, t_list*en_ejecucion);
