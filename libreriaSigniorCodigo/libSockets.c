@@ -140,7 +140,7 @@ int conectarServidor(char* IP, char* Port, int backlog) {
 		printf("Error en la conexion, en la funcion accept\n");
 		return -2;
 	}
-	return socketEscucha;
+	return socketCliente;
 }
 
 /* Funcion que serializa una estructura paquete */
@@ -153,7 +153,7 @@ char *serializar(Paquete *unPaquete) {
 	memcpy(buffer + sizeof(int) + sizeof(int), &unPaquete->tamanio,
 			sizeof(int));
 	memcpy(buffer + sizeof(int) + sizeof(int) + sizeof(int),
-			&unPaquete->mensaje, unPaquete->tamanio);
+			&unPaquete->path, unPaquete->tamanio);
 	return buffer;
 }
 /* deserializar elheader del buffer a la estructura paquete
@@ -171,32 +171,28 @@ Paquete *deserializar_header(char *buffer) {
 }
 /* deserializa la data del buffer con los datos recibidos en el deserializar_header */
 void deserializar_data(Paquete *unPaquete, char *buffer) {
-	unPaquete->mensaje = malloc(unPaquete->tamanio);
-	memcpy(unPaquete->mensaje, buffer, unPaquete->tamanio);
+	unPaquete->path = malloc(unPaquete->tamanio);
+	memcpy(unPaquete->path, buffer, unPaquete->tamanio);
 }
 /* Funcion que genera un paquete. agarra los valores correspondientes y
  * los coloca dentro de la estructura Paquete */
 
-Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message,
+Paquete *generarPaquete(int codigoOperacion, int tamMessage, char *message,
 		int programCounter) {
-	Paquete paquete;
+	Paquete *paquete=malloc(sizeof(Paquete));
 
-	paquete.codigoOperacion = codigoOperacion;
-	paquete.programCounter = programCounter;
-	paquete.tamanio = tamMessage;
-	paquete.mensaje = malloc(tamMessage);
-	memcpy(&paquete.mensaje, message, paquete.tamanio);
-	memset(paquete.mensaje, '\0', paquete.tamanio - 1);
+	paquete->codigoOperacion = codigoOperacion;
+	paquete->programCounter = programCounter;
+	paquete->tamanio = tamMessage;
+	paquete->path = malloc(tamMessage);
+	memcpy(&paquete->path, message, paquete->tamanio);
+	memset(paquete->path, '\0', paquete->tamanio - 1);
 	return paquete;
 }
 /* funcion para destruir paquete */
 void destruirPaquete(Paquete * unPaquete) {
-	free(unPaquete->mensaje);
+	free(unPaquete->path);
 	free(unPaquete);
 }
 
-/* funcion que representa el uso de la funcion select() para leer
- * de diferentes problemas */
-
-/*  */
 

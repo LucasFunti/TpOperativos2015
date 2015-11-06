@@ -45,12 +45,13 @@ int main(int argc, char **argv) {
 	char * port = getPuerto();
 //	char *algoritmo = getAlgoritmo();
 
-	int cliente_len, socketCliente, socketEscucha, retornoPoll, fd_index;
+	int  socketCliente, socketEscucha, retornoPoll, fd_index;
 	struct sockaddr_in client_address;
 
 	struct pollfd fileDescriptors[4];
 	int cantfds = 0;
-	socketEscucha = conectarServidor("localhost", port, 100);
+	socketEscucha = setup_listen("localhost",port);
+
 	fileDescriptors[0].fd = socketEscucha;
 	fileDescriptors[0].events = POLLIN;
 	printf("SOCKET = %d\n", fileDescriptors[0].fd);
@@ -94,10 +95,8 @@ int main(int argc, char **argv) {
 			for (fd_index = 0; fd_index < cantfds; fd_index++) {
 				if (fileDescriptors[fd_index].revents & POLLIN) {
 					if (fileDescriptors[fd_index].fd == socketEscucha) {
-						cliente_len = sizeof(client_address);
-						socketCliente = accept(socketEscucha,
-								(struct sockaddr *) &client_address,
-								(socklen_t *) &cliente_len);
+
+						socketCliente = esperarConexionEntrante(socketEscucha,BACKLOG,log_planificador);
 
 						fileDescriptors[cantfds].fd = socketCliente;
 						fileDescriptors[cantfds].events = POLLIN;
@@ -108,7 +107,7 @@ int main(int argc, char **argv) {
 								proceso->programCounter);
 						printf(
 								"El paquete a enviar contiene:\nCod= %d -- mensaje= %s\n",
-								paquete->codigoOperacion, paquete->mensaje);
+								paquete->codigoOperacion, paquete->path);
 						void *buffer = serializar(paquete);
 						send(socketCliente, buffer,
 								sizeof(int) + sizeof(int) + sizeof(int)
