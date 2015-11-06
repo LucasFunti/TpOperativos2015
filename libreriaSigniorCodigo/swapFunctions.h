@@ -18,12 +18,15 @@ typedef struct {
 
 //Metodos
 
+void swapInit(t_list *pages);
 
 void setupSwap();
 
 int doesFileExist(const char *filename);
 
 t_list* setPages(int pagesAmount);
+
+int getSwapListenPort();
 
 int getSwapPagesAmount();
 
@@ -54,5 +57,9 @@ void fillRemainingSpace(t_list *list, int from);
 void copyPage(int from, int to);
 
 void imprimir(t_list *list);
+
+void deSerialize(void* element,void* buffer, size_t size);
+
+void serialize(void* element,void* buffer, size_t size);
 
 #endif /* SWAPFUNCTIONS_H_ */
