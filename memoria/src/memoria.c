@@ -10,12 +10,7 @@
  */
 #include "memoria.h"
 
-#define CERRAR_CONEXION -3
 
-#define INICIAR 4
-#define LEER 5
-#define ESCRIBIR 6
-#define FINALIZAR 8
 
 int main() {
 

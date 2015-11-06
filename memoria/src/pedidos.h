@@ -15,11 +15,16 @@
 #include "globals.h"
 #include "tlb.h"
 #include "tabla_paginas.h"
+#include "marcos.h"
+#include "spawn.h"
+
 
 /**
  * Variables
  */
 int encontrado;
+
+void crear_estructura_para_proceso(int pid, int cantidad_paginas);
 
 void remover(int);
 
@@ -31,7 +36,7 @@ void remover_swap(int);
  * Principales
  */
 
-int iniciar_n(int pid,int cantidad_paginas);
+bool iniciar_n(int pid,int cantidad_paginas);
 char * leer_n(int pid, int pagina);
 void escribir_n(char * texto_para_escribir);
 void finalizar(int pid,t_dictionary * diccionario);
