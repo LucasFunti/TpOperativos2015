@@ -23,8 +23,10 @@
 typedef struct Paquete {
 	int codigoOperacion;
 	int programCounter;
+	int pid;
+	int quantum;
 	int tamanio;
-	char *mensaje;
+	char *path;
 } Paquete;
 
 /* setup_listen(IP,PORT) *
@@ -77,7 +79,7 @@ int conectarCliente_con_log(char *IP, char* Port, t_log *);
 int esperarConexionEntrante(int, int, t_log *);
 
 int conectarServidor(char* IP, char* Port, int backlog);
-Paquete generarPaquete(int codigoOperacion, int tamMessage, char *message,
+Paquete *generarPaquete(int codigoOperacion, int tamMessage, char *message,
 		int programCounter);
 char *serializar(Paquete *unPaquete);
 Paquete *deserializar_header(char *buffer);

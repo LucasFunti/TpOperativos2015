@@ -15,8 +15,8 @@ typedef struct instruccion{
 } t_instruccion;
 
 typedef struct instruccionEscritura{
-	char *instruccion;
-	char *cantidadDePaginas;
+	int idProceso;
+	int paginas;
 	char *textoAEscribir;
 } t_instruccionEscritura;
 
@@ -60,14 +60,20 @@ typedef struct{
 	int *data;			// el array de resultados de las ejecuciones de cada instrucción
 } t_resultadoOperacion;
 
+typedef struct {
+	int codigo_operacion;
+	int tamanio_data;
+} t_headersCpu;
+
 
 int reconocerInstruccion(char*);
 t_instruccion empaquetar(char *, char *);
 t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
 char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaquetada);
-int ejecutar(char *linea, int serverMemoria,int serverPlanificador, char *idProceso);
-t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma, char* idProceso, int serverMemoria, int serverPlanificador);
+int ejecutar(char *linea, int serverMemoria, int serverPlanificador, char *idProceso, t_hilo infoHilo);
+t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma, char* idProceso, int serverMemoria, int serverPlanificador,
+		t_hilo infoDelHilo);
 char *getIpPlanificador();
 void *iniciarcpu(t_hilo);
 char *getIpPlanificador();
@@ -82,9 +88,13 @@ void enviarResultado(t_resultadoEjecucion resultado, int serverPlanificador);
 char *serializarResultado(t_resultadoEjecucion resultado);
 t_resultadoEjecucion empaquetarResultado(char *ruta, int contadorPrograma);
 char *generarHeader(int clave, int tamanio);
-int concatenar(int valorA,int valorB);
 int cantidadElementos(char **lista);
 char *eventoDeLogeo(char *mensaje, int id);
 char *logeoDeEjecucion(char *mensaje, char *ruta, int contador, char *idProceso);
+void logearIniciar(t_hilo infoHilo, int estadoDeEjecucion, char *idProceso);
+void logearLectura(t_hilo infoHilo, char *idProceso, int estadoDeEjecucion, char *pagina, char *contenidoDePagina);
+void logearEscritura(t_hilo infoHilo, char *idProceso, int estadoDeEjecucion, char *pagina, char *texto);
+void logearEntradaSalida(t_hilo infoHilo, char *idProceso, char *tiempo);
+void logearFinalizacion(t_hilo infoHilo, char *idProceso);
 
 #endif /* LIBRERIACPU_H_ */

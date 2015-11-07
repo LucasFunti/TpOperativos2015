@@ -32,14 +32,16 @@ int main(int argc, char **argv){
 	remove("log_cpu");
 	t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
 
-	//invoco la funcion para leer los datos del file de config y los guardo en la estructura
 /*	int i;
 	int cantHilos = getHilos();
 	pthread_t hilos[cantHilos];
-	for (i = 0; i > cantHilos; i++) {
-
-		pthread_create(&hilos[i], NULL, iniciarcpu, (void *) infoHilo);
-		}; */
+	for (i = 0; i < cantHilos; i++) {
+		infoHilo.idHilo = &hilos[i];
+		pthread_create(&hilos[i], NULL, iniciarcpu, (void *) &infoHilo);
+		};
+	for (i = 0; i < cantHilos; i++) {
+		pthread_join(hilos[i], NULL);
+	} */
 
 	printf("ingrese la accion a testear, o escriba 'ayuda' para ver comandos disponibles:\n");
 	char *accion = malloc(sizeof(char) * 32);
@@ -50,14 +52,6 @@ int main(int argc, char **argv){
 		scanf("%[^\n]%*c", accion);
 
 	};
-
-
-/*	pthread_t hilo1;
-	pthread_t hilo2;
-	pthread_create(&hilo1, NULL, iniciarcpu, NULL);
-	pthread_create(&hilo2, NULL, iniciarcpu, NULL);
-	pthread_join(hilo1, NULL);
-	pthread_join(hilo2, NULL);*/
 
 
 
