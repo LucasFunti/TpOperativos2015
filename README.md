@@ -26,12 +26,12 @@ Secuencia de pedidos al administrador de memoria:
         Data: Dos enteros, primero el pid y luego la cantidad de páginas
       
     Me llega: (del swap)
-        Código: 1 (a definir?) la pude ubicar
-        Código: -1 (a definir?) no lo pude ubicar
+        Código: 1 la pude ubicar
+        Código: -1 no lo pude ubicar
       
     Envio: (Al cpu)
-        Código: 1 (a definir?) fué exitoso
-        Código: 0 (a definir?) no se pudo ubicar
+        Código: 1 fué exitoso
+        Código: 0 no se pudo ubicar
   
   
 <h3>LEER-N</h3>
@@ -43,9 +43,9 @@ Secuencia de pedidos al administrador de memoria:
         Código: 5 
         Data: Un string con el contenido
       
-    Envio: (al swap en caso de no tenerlo) ??
-        Código: ??
-        Data:??
+    Envio: (al swap en caso de no tenerlo) 
+        Código: 5
+        Data: Dos enteros, el pid y luego la página
       
       
 <h3>ESCRIBIR-N</h3>
@@ -55,9 +55,9 @@ Secuencia de pedidos al administrador de memoria:
       
     (No le respondo nada al cpu)
   
-    Envio: (al swap en caso de no tenerlo) ??
-      Código: ??
-      Data: Dos enteros, el pid y la página
+    Envio: (al swap en caso de tener que escribir)
+      Código: 6
+      Data: El pid, la página y el tamaño del string y el string
  
 <h3>TERMINAR</h3>
  
