@@ -6,13 +6,10 @@
  */
 #include "tabla_paginas.h"
 
-t_config * configs_tabla_paginas;
-
-void tabla_paginas_remover_pid(int pid, t_config * configuraciones) {
+void tabla_paginas_remover_pid(int pid, t_config * configuraciones,
+		bool es_test) {
 
 	pid_matchear_tabla_paginas = pid;
-
-	configs_tabla_paginas = configuraciones;
 
 	int cantidad_restante = list_count_satisfying(tabla_paginas,
 			coincide_pid_tabla_paginas);
@@ -23,26 +20,27 @@ void tabla_paginas_remover_pid(int pid, t_config * configuraciones) {
 		retardo(configuraciones);
 
 		list_remove_and_destroy_by_condition(tabla_paginas,
-				coincide_pid_tabla_paginas_y_actualiza_marcos_disponibles,
-				free);
+				coincide_pid_tabla_paginas_y_libera_marcos, free);
 
 		cantidad_restante--;
 	}
 
+	if (!es_test) {
+		swap_finalizar(pid);
+	}
+
 }
 
-bool coincide_pid_tabla_paginas_y_actualiza_marcos_disponibles(void * data) {
+bool coincide_pid_tabla_paginas_y_libera_marcos(void * data) {
 
 	t_tabla_paginas_item * item = data;
 
-	if (item->pid == pid_matchear_tabla_paginas && item->modificado) {
+	if (item->pid == pid_matchear_tabla_paginas) {
 
-		swap_escribir(item->pid, item->pagina, item->marco,
-				configs_tabla_paginas);
+		t_marco * marco = list_get(marcos_disponibles, item->marco);
+		marco->disponible = true;
 
 	}
-	t_marco * marco = list_get(marcos_disponibles, item->marco);
-	marco->disponible = true;
 
 	return (item->pid == pid_matchear_tabla_paginas);
 

@@ -14,13 +14,8 @@
 #include "../src/estructuras.h"
 #include "../src/globals.h"
 
-
-
-
-
-
-
-void assert_tabla_paginas_item(t_tabla_paginas_item * item, int pid, int pagina, int marco,bool modificado) {
+void assert_tabla_paginas_item(t_tabla_paginas_item * item, int pid, int pagina,
+		int marco, bool modificado) {
 
 	should_ptr(item) not be null;
 	should_int(item->pid) be equal to(pid);
@@ -28,6 +23,5 @@ void assert_tabla_paginas_item(t_tabla_paginas_item * item, int pid, int pagina,
 	should_int(item->marco) be equal to(marco);
 	should_bool(item->modificado) be equal to(modificado);
 }
-
 
 #endif /* TESTS_UTILS_H_ */

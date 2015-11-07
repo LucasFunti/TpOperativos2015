@@ -18,7 +18,7 @@ int pid_matchear_tlb, pagina_matchear_tlb;
 /**
  * tlb_remover_pid
  */
-void tlb_remover_pid(int pid, t_config * configuraciones);
+void tlb_remover_pid(int pid, t_config * configuraciones,bool es_test);
 
 bool coincide_pid_tlb(void * data);
 

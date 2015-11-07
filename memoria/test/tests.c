@@ -192,19 +192,20 @@ context(test_admin_memoria) {
 			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
 			iniciar_marcos(configuracion);
 
-			iniciar_n(1,2,configuracion,true);
+			iniciar_n(1,1,configuracion,true);
+			iniciar_n(2,1,configuracion,true);
 
 			tlb_agregar_entrada(1,1,0,configuracion,false);
-			tlb_agregar_entrada(1,2,1,configuracion,false);
+			tlb_agregar_entrada(2,1,1,configuracion,false);
 
-			finalizar(1,configuracion);
+			finalizar(1,configuracion,true);
 
-			should_int(list_size(tlb)) be equal to(0);
-			should_int(list_size(tabla_paginas)) be equal to(0);
+			should_int(list_size(tlb)) be equal to(1);
+			should_int(list_size(tabla_paginas)) be equal to(1);
 
 		}end
 
-		it("remueve procesos de la tlb y la tabla liberando marcos") {
+		it("con un pid que no existe no remueve nada de ningún lado") {
 
 			tabla_paginas = list_create();
 			tlb = list_create();
@@ -217,7 +218,7 @@ context(test_admin_memoria) {
 			tlb_agregar_entrada(1,1,0,configuracion,false);
 			tlb_agregar_entrada(1,2,1,configuracion,false);
 
-			finalizar(2,configuracion);
+			finalizar(2,configuracion,true);
 
 			should_int(list_size(tlb)) be equal to(2);
 			should_int(list_size(tabla_paginas)) be equal to(2);
@@ -270,7 +271,6 @@ context(test_admin_memoria) {
 
 			vaciar_tlb(configuracion);
 
-
 			should_int(list_size(tlb)) be equal to(0);
 			should_int(list_size(tabla_paginas)) be equal to(2);
 		}end
@@ -286,7 +286,6 @@ context(test_admin_memoria) {
 			iniciar_n(1,2,configuracion,true);
 
 			vaciar_tabla_paginas(configuracion);
-
 
 			should_int(list_size(tlb)) be equal to(0);
 			should_int(list_size(tabla_paginas)) be equal to(0);

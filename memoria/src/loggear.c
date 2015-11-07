@@ -25,9 +25,13 @@ void loggearInfo(char * info) {
 void iniciarLogger() {
 
 //Si existe el archivo lo elimina
-	remove("logMemoria");
+	remove(
+			"/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/src/logMemoria");
 
-	logger = log_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/src/logMemoria", "PAM", true, LOG_LEVEL_DEBUG);
+	logger =
+			log_create(
+					"/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/src/logMemoria",
+					"PAM", true, LOG_LEVEL_DEBUG);
 	loggearInfo("Iniciado el proceso administrador de memoria");
 
 }

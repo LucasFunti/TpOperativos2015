@@ -2,7 +2,7 @@
 
 t_config * configs;
 
-void tlb_remover_pid(int pid, t_config * configuraciones) {
+void tlb_remover_pid(int pid, t_config * configuraciones,bool es_test) {
 
 	configs = configuraciones;
 
@@ -18,7 +18,7 @@ void tlb_remover_pid(int pid, t_config * configuraciones) {
 		cantidad_restante--;
 	}
 
-	tabla_paginas_remover_pid(pid, configuraciones);
+	tabla_paginas_remover_pid(pid, configuraciones,es_test);
 
 }
 

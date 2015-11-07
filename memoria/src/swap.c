@@ -41,9 +41,24 @@ void swap_escribir(int pid, int pagina, int marco, t_config * configuraciones) {
 
 	int tamanio_marco = config_get_int_value(configuraciones, "TAMANIO_MARCO");
 
+	void * data = malloc(3 * sizeof(int) + tamanio_marco);
+
+	memcpy(data, &pid, sizeof(int));
+	memcpy(data + sizeof(int), &pagina, sizeof(int));
+	memcpy(data + 2 * sizeof(int), &tamanio_marco, sizeof(int));
+	memcpy(data + 3 * sizeof(int), memoria + tamanio_marco * marco,
+			tamanio_marco);
+
 	common_send(socketSwap,
-			pedirPaquete(ESCRIBIR, tamanio_marco,
-					memoria + marco * tamanio_marco));
+			pedirPaquete(ESCRIBIR, 3 * sizeof(int) + tamanio_marco, data));
+
+}
+
+void swap_finalizar(int pid) {
+
+	t_data * paquete = pedirPaquete(FINALIZAR, sizeof(int), &pid);
+	common_send(socketSwap, paquete);
+	free(paquete);
 
 }
 

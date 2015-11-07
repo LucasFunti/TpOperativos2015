@@ -20,9 +20,9 @@ int pid_matchear_tabla_paginas, pagina_matchear_tabla_paginas;
 /**
  * tlb_remover_pid
  */
-void tabla_paginas_remover_pid(int pid, t_config * configuraciones);
+void tabla_paginas_remover_pid(int pid, t_config * configuraciones,bool es_test);
 
-bool coincide_pid_tabla_paginas_y_actualiza_marcos_disponibles(void * data);
+bool coincide_pid_tabla_paginas_y_libera_marcos(void * data);
 
 bool coincide_pid_tabla_paginas(void * data);
 

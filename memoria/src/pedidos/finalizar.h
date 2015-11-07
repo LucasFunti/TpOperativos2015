@@ -10,6 +10,6 @@
 
 #include <commons/config.h>
 
-void finalizar(int pid, t_config * configuraciones);
+void finalizar(int pid, t_config * configuraciones,bool es_test);
 
 #endif /* SRC_PEDIDOS_FINALIZAR_H_ */

@@ -140,7 +140,8 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 
 		memcpy(&pid_para_finalizar, data_entrante->data, sizeof(int));
 
-		finalizar(pid, memoriaConfig);
+		//False porque no es test
+		finalizar(pid, memoriaConfig, false);
 
 		log_info(logger,
 				string_from_format("Se finalizó el pid %d",
