@@ -1,15 +1,16 @@
 /*
- * pedidos.h
+ * iniciar_n.h
  *
- *  Created on: 29/10/2015
+ *  Created on: 6/11/2015
  *      Author: utnso
  */
-
-#ifndef PEDIDOS_H_
-#define PEDIDOS_H_
-
 #include <commons/config.h>
 #include <stdbool.h>
+#include "../tlb.h"
+#include "../tabla_paginas.h"
+#include "../marcos.h"
+
+t_config * configuraciones_iniciar_n;
 
 /**
  * Te encuentra un marco
@@ -22,5 +23,3 @@ int marco_libre();
 bool iniciar_n(int pid, int cantidad_paginas, t_config * configuraciones);
 void crear_estructura_para_proceso(int pid, int cantidad_paginas);
 
-
-#endif /* PEDIDOS_H_ */

@@ -1,101 +1,64 @@
 #include "tlb.h"
 
-/**
- * Principales
- */
+void tlb_sacar_entrada(int pid, int pagina, t_config * configuraciones) {
 
-void tlb_agregar_entrada(t_tlb * tabla, int pid, int pagina, int marco) {
+	if (tlb_habilitada(configuraciones)) {
 
-	tlb_add(tabla, new_tlb_item(pid, pagina, marco));
-}
+		pid_matchear_tlb = pid;
+		pagina_matchear_tlb = pagina;
 
-void tlb_remover_entrada(t_tlb * tabla, int pid, int pagina) {
+		list_remove_and_destroy_by_condition(tlb, coincide_pid_y_pagina, free);
 
-	pid_para_matchear_tlb = pid;
-	pagina_para_matchear_tlb = pagina;
-	list_remove_and_destroy_by_condition(tabla,
-			funcion_tlb_buscar_por_pid_y_pagina, funcion_tlb_liberar_item);
-
-}
-
-void tlb_remover_entradas_para(t_tlb * tabla, int pid) {
-
-	pid_para_matchear_tlb = pid;
-
-	int cantidad_entradas;
-
-	while (cantidad_entradas != 0) {
-
-		list_remove_and_destroy_by_condition(tabla, funcion_tlb_coincide_pid,
-				funcion_tlb_liberar_item);
-
-		cantidad_entradas = list_count_satisfying(tabla,
-				funcion_tlb_coincide_pid);
 	}
 
 }
 
-hit_miss tlb_buscar(t_tlb * tabla, int pid_a_buscar, int pagina_a_buscar) {
+bool tlb_habilitada(t_config * configuraciones) {
 
-	pid_para_matchear_tlb = pid_a_buscar;
-	pagina_para_matchear_tlb = pagina_a_buscar;
+	char * valor = malloc(4);
 
-	t_tlb_item * fila_encontrada = list_find(tabla,
-			funcion_tlb_buscar_por_pid_y_pagina);
+	valor = config_get_string_value(configuraciones, "TLB_HABILITADA");
 
-	if (fila_encontrada != NULL) {
-		tlb_match = fila_encontrada->par_pagina_marco;
-		return HIT;
+	return (!strcmp(valor, "SI"));
+
+}
+
+bool coincide_pid_y_pagina(void * data) {
+
+	t_tlb_item * item = data;
+	return (item->pid == pid_matchear_tlb && item->pagina == pagina_matchear_tlb);
+}
+
+marco tlb_buscar(int pid, int pagina, t_config * configuraciones) {
+
+	if (tlb_habilitada(configuraciones)) {
+
+		t_tlb_item * item_encontrado = list_find(tlb, coincide_pid_y_pagina);
+
+		if (item_encontrado == NULL) {
+
+			marco marco_encontrado_para_agregar_tlb = tabla_paginas_buscar(pid, pagina,
+					configuraciones);
+
+			tlb_agregar_entrada(pid, pagina, marco_encontrado_para_agregar_tlb,
+					configuraciones);
+
+			return marco_encontrado_para_agregar_tlb;
+
+		} else {
+			return item_encontrado->marco;
+		}
+
 	} else {
-		return MISS;
+
+		return tabla_paginas_buscar(pid, pagina, configuraciones);
+
 	}
+
 }
 
-/**
- * Secundarios
- */
+void tlb_agregar_entrada(int pid, int pagina, int marco, t_config * configuraciones){
 
-void tlb_add(t_tlb * tabla, t_tlb_item * item_para_agregar) {
-	list_add(tabla, item_para_agregar);
+	//TODO
+
 }
-
-t_tlb_item * new_tlb_item(int pid, int pagina, int marco) {
-
-	t_tlb_item * new_tlb_item = malloc(sizeof(t_tlb_item));
-	t_par_pagina_marco * par = malloc(sizeof(t_par_pagina_marco));
-
-	new_tlb_item->pid = pid;
-
-	par->pagina = pagina;
-	par->marco = marco;
-
-	new_tlb_item->par_pagina_marco = par;
-
-	return new_tlb_item;
-}
-
-/**
- * Auxiliares para operar sobre listas
- */
-
-void funcion_tlb_liberar_item(void * data) {
-	t_tlb_item * fila = data;
-	free(fila->par_pagina_marco);
-	free(fila);
-}
-
-bool funcion_tlb_buscar_por_pid_y_pagina(void * data) {
-
-	return (funcion_tlb_coincide_pid(data) && funcion_tlb_coincide_pagina(data));
-}
-
-bool funcion_tlb_coincide_pid(void * data) {
-	t_tlb_item * fila = data;
-	return (fila->pid == pid_para_matchear_tlb);
-}
-
-bool funcion_tlb_coincide_pagina(void * data) {
-	t_tlb_item * fila = data;
-	return (fila->par_pagina_marco->pagina == pagina_para_matchear_tlb);
-}
-

@@ -23,7 +23,6 @@ typedef struct {
 } t_marco;
 
 t_list * marcos_disponibles;
-int cantidad_marcos,tamanio_marcos;
 
 bool esta_libre(void * data);
 int cantidad_marcos_libres();

@@ -30,7 +30,9 @@ typedef struct {
  */
 typedef struct {
 	int pid;
-	t_list * pares_pagina_marco;
+	int pagina;
+	int marco;
+	bool modificado;
 } t_tabla_paginas_item;
 
 /**
@@ -50,13 +52,11 @@ typedef struct {
  */
 typedef struct {
 	int pid;
-	t_par_pagina_marco * par_pagina_marco;
+	int pagina;
+	int marco;
 } t_tlb_item;
 
-/**
- * @DESC: Me ayuda a ver que es un HIT/MISS
- */
-typedef int hit_miss;
+typedef int marco;
 
 /**
  * @DESC: Me ayuda para ver poder pedir punteros de tlb o

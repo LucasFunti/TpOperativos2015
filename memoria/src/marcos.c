@@ -1,11 +1,11 @@
 #include "marcos.h"
 
-void iniciar_marcos(t_dictionary * diccionario_confgs) {
+void iniciar_marcos(t_config * configuraciones) {
 
-	cantidad_marcos = atoi(
-			dictionary_get(diccionario_confgs, "CANTIDAD_MARCOS"));
+	int cantidad_marcos = config_get_int_value(configuraciones,
+			"CANTIDAD_MARCOS");
 
-	tamanio_marcos = atoi(dictionary_get(diccionario_confgs, "TAMANIO_MARCO"));
+	int tamanio_marcos = config_get_int_value(configuraciones, "TAMANIO_MARCO");
 
 	memoria = malloc(tamanio_marcos * cantidad_marcos);
 
