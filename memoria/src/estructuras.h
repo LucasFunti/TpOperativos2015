@@ -35,26 +35,9 @@ typedef struct {
 	bool modificado;
 } t_tabla_paginas_item;
 
-/**
- * @NAME: t_par_pagina_marco
- * @DESC: Es un par pagina-marco
- */
-typedef struct {
-	int pagina;
-	int marco;
-	bool en_memoria;
-	bool modificado;
-} t_par_pagina_marco;
 
-/**
- * @NAME: t_tlb_item
- * @DESC: El TLB es una lista de estas
- */
-typedef struct {
-	int pid;
-	int pagina;
-	int marco;
-} t_tlb_item;
+typedef t_tabla_paginas_item t_tlb_item;
+
 
 typedef int marco;
 

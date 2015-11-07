@@ -20,6 +20,7 @@ int marco_libre();
 /**
  * Iniciar-N
  */
-bool iniciar_n(int pid, int cantidad_paginas, t_config * configuraciones);
+bool iniciar_n(int pid, int cantidad_paginas, t_config * configuraciones,
+		bool test);
 void crear_estructura_para_proceso(int pid, int cantidad_paginas);
 

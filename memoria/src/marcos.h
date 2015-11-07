@@ -13,8 +13,6 @@
 #include <stdlib.h>
 #include "globals.h"
 
-t_queue * marcos_asignados;
-
 typedef struct {
 
 	int numero_marco;
@@ -26,5 +24,6 @@ t_list * marcos_disponibles;
 
 bool esta_libre(void * data);
 int cantidad_marcos_libres();
+void iniciar_marcos(t_config * configuraciones);
 
 #endif /* MARCOS_H_ */

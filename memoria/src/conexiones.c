@@ -9,7 +9,7 @@
 void atenderConexiones() {
 
 	socketEscucha = setup_listen("localhost",
-			dictionary_get(diccionario_configuraciones, "PUERTO_ESCUCHA"));
+			config_get_string_value(memoriaConfig,"PUERTO_ESCUCHA"));
 
 	listen(socketEscucha, 15);
 
@@ -193,8 +193,8 @@ void common_send(int socket, t_data * paquete) {
 void conectarseAlSwap() {
 
 	socketSwap = connect_to(
-			dictionary_get(diccionario_configuraciones, "IP_SWAP"),
-			dictionary_get(diccionario_configuraciones, "PUERTO_SWAP"));
+			config_get_string_value(memoriaConfig,"IP_SWAP"),
+			config_get_string_value(memoriaConfig,"PUERTO_SWAP"));
 
 	int null_data = 0;
 

@@ -9,8 +9,9 @@
 #define SRC_PEDIDOS_ESCRIBIR_N_H_
 
 #include <commons/config.h>
+#include "../globals.h"
 
-void escribir_n(int pid, int pagina, t_config * configuraciones );
-
+void escribir_n(int pid, int pagina, char * contenido,
+		t_config * configuraciones);
 
 #endif /* SRC_PEDIDOS_ESCRIBIR_N_H_ */

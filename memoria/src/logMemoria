@@ -1,63 +1,30 @@
-[INFO] 20:37:08:108 PAM/(12714:12714): Iniciado el proceso administrador de memoria
-[INFO] 20:37:08:108 PAM/(12714:12714): Se crea el diccionario de variables de configuracion
-[INFO] 20:37:08:108 PAM/(12714:12714): Configurado con PUERTO_ESCUCHA: 5000
-[INFO] 20:37:08:108 PAM/(12714:12714): Configurado con IP_SWAP: 127.0.0.1
-[INFO] 20:37:08:108 PAM/(12714:12714): Configurado con PUERTO_SWAP: 6000
-[INFO] 20:37:08:109 PAM/(12714:12714): Configurado con MAXIMO_MARCOS_POR_PROCESO: 0
-[INFO] 20:37:08:109 PAM/(12714:12714): Configurado con CANTIDAD_MARCOS: 0
-[INFO] 20:37:08:109 PAM/(12714:12714): Configurado con TAMANIO_MARCO: 0
-[INFO] 20:37:08:109 PAM/(12714:12714): Configurado con ENTRADAS_TLB: 0
-[INFO] 20:37:08:109 PAM/(12714:12714): Configurado con TLB_HABILITADA: NO
-[INFO] 20:37:08:109 PAM/(12714:12714): Configurado con RETARDO_MEMORIA: 10
-[INFO] 20:37:08:109 PAM/(12714:12714): Configurado con ALGORITMO_REMPLAZO: CLOCK-M
-[INFO] 20:37:08:109 PAM/(12714:12714): Se levanta el hilo de conexiones
-[INFO] 20:37:08:109 PAM/(12714:12714): Se levanta el hilo de signals
-[INFO] 20:37:08:109 PAM/(12714:12718): Se escuchan conexiones en el socket 5
-[INFO] 21:10:59:465 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:10:59:465 PAM/(12714:12718): Se asigna el socket 6
-[INFO] 21:10:59:465 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:10:59:465 PAM/(12714:12718): Codigo de operación (2) no reconocido enviado por el socket 6
-[INFO] 21:11:08:952 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:08:952 PAM/(12714:12718): Se asigna el socket 7
-[INFO] 21:11:08:952 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:08:952 PAM/(12714:12718): Codigo de operación (2) no reconocido enviado por el socket 7
-[INFO] 21:11:10:857 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:10:857 PAM/(12714:12718): Se asigna el socket 8
-[INFO] 21:11:10:857 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:10:857 PAM/(12714:12718): Codigo de operación (2) no reconocido enviado por el socket 8
-[INFO] 21:11:11:740 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:11:740 PAM/(12714:12718): Se asigna el socket 9
-[INFO] 21:11:11:740 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:11:740 PAM/(12714:12718): Codigo de operación (2) no reconocido enviado por el socket 9
-[INFO] 21:11:33:911 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:33:911 PAM/(12714:12718): Se asigna el socket 10
-[INFO] 21:11:33:911 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:33:911 PAM/(12714:12718): Cerrando conexion en el socket 10
-[INFO] 21:11:37:655 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:37:655 PAM/(12714:12718): Se asigna el socket 11
-[INFO] 21:11:37:655 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:37:655 PAM/(12714:12718): Cerrando conexion en el socket 11
-[INFO] 21:11:38:527 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:38:527 PAM/(12714:12718): Se asigna el socket 12
-[INFO] 21:11:38:527 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:38:527 PAM/(12714:12718): Cerrando conexion en el socket 12
-[INFO] 21:11:39:204 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:39:205 PAM/(12714:12718): Se asigna el socket 13
-[INFO] 21:11:39:205 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:39:205 PAM/(12714:12718): Cerrando conexion en el socket 13
-[INFO] 21:11:39:640 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:39:640 PAM/(12714:12718): Se asigna el socket 14
-[INFO] 21:11:39:640 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:39:640 PAM/(12714:12718): Cerrando conexion en el socket 14
-[INFO] 21:11:39:991 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:39:991 PAM/(12714:12718): Se asigna el socket 15
-[INFO] 21:11:39:991 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:39:991 PAM/(12714:12718): Cerrando conexion en el socket 15
-[INFO] 21:11:40:337 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:40:337 PAM/(12714:12718): Se asigna el socket 16
-[INFO] 21:11:40:337 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:40:337 PAM/(12714:12718): Cerrando conexion en el socket 16
-[INFO] 21:11:41:299 PAM/(12714:12718): Es una conexión entrante al puerto de escucha
-[INFO] 21:11:41:300 PAM/(12714:12718): Se asigna el socket 17
-[INFO] 21:11:41:300 PAM/(12714:12718): Es una conexión existente que tiene un pedido
-[INFO] 21:11:41:300 PAM/(12714:12718): Cerrando conexion en el socket 17
+[INFO] 03:30:44:228 PAM/(31553:31553): Iniciado el proceso administrador de memoria
+[INFO] 03:30:44:228 PAM/(31553:31553): Levantan las configuraciones
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con PUERTO_ESCUCHA: 5000
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con IP_SWAP: localhost
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con PUERTO_SWAP: 6000
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con MAXIMO_MARCOS_POR_PROCESO: 5
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con CANTIDAD_MARCOS: 10
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con TAMANIO_MARCO: 15
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con ENTRADAS_TLB: 2
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con TLB_HABILITADA: NO
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con RETARDO_MEMORIA: 0
+[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con ALGORITMO_REMPLAZO: FIFO
+[INFO] 03:30:44:228 PAM/(31553:31553): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y **** 
+[INFO] 03:30:44:229 PAM/(31553:31553): Conexión con el swap exitosa, se le registra el socket 6
+[INFO] 03:30:44:229 PAM/(31553:31553): Se escuchan conexiones en el socket 7
+[INFO] 03:31:14:128 PAM/(31563:31563): Iniciado el proceso administrador de memoria
+[INFO] 03:31:14:128 PAM/(31563:31563): Levantan las configuraciones
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con PUERTO_ESCUCHA: 5000
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con IP_SWAP: localhost
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con PUERTO_SWAP: 6000
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con MAXIMO_MARCOS_POR_PROCESO: 5
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con CANTIDAD_MARCOS: 10
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con TAMANIO_MARCO: 15
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con ENTRADAS_TLB: 2
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con TLB_HABILITADA: NO
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con RETARDO_MEMORIA: 0
+[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con ALGORITMO_REMPLAZO: FIFO
+[INFO] 03:31:14:128 PAM/(31563:31563): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y **** 
+[INFO] 03:31:14:129 PAM/(31563:31563): Conexión con el swap exitosa, se le registra el socket 6
+[INFO] 03:31:14:129 PAM/(31563:31563): Se escuchan conexiones en el socket 7

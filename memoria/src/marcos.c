@@ -24,7 +24,7 @@ void iniciar_marcos(t_config * configuraciones) {
 		marco->numero_marco = i;
 		marco->disponible = true;
 
-		list_add(marcos_disponibles, true);
+		list_add(marcos_disponibles, marco);
 	}
 }
 

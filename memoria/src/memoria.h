@@ -17,6 +17,13 @@
 #include "conexiones.h"
 #include "globals.h"
 #include "constantes.h"
+#include "marcos.h"
+#include "pedidos/escribir_n.h"
+#include "pedidos/leer_n.h"
+#include "pedidos/finalizar.h"
+#include "pedidos/iniciar_n.h"
+
+pthread_mutex_t semaforo_memoria;
 
 char * puertoCpu;
 char * ipSwap;
