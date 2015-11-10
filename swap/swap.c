@@ -32,35 +32,26 @@ int reconocerInstruccion() {
 
 
 int main(int argc, char **argv) {
-	int a = 5;
-	char *caca= "caca";
-	void *buffer = malloc(sizeof(int) + sizeof(char)*5);
-	serialize((void *)a,buffer,sizeof(a));
-	serialize(caca,buffer,sizeof(a)+sizeof(caca));
-	int retorno = 0;
-	char *string = NULL;
-	deSerialize((void *)retorno,buffer,sizeof(retorno));
-	deSerialize(string,buffer,sizeof(retorno) + sizeof(char)*5);
-	printf("retorno %d",retorno);
-	printf("string %s",string);
-
-//	t_list *pages = swapInit();
-//	int swapListenPort = getSwapListenPort();
-//	int memoriaSocket = conectarServidor("localhost",swapListenPort,BACKLOG);
-//	int packageHead;
-//	while(1){
-//		recv(memoriaSocket, &packageHead, sizeof(int),0);
-//		evaluateAction(memoriaSocket,pages);
-//	}
-
-//	printf("Ingrese Accion\n");
-//	char *action = malloc(sizeof(char)*15);
-//	scanf ("%s",action);
-//	while(strcmp(action,"exit")!=0){
-//		evaluateAction(action, pages);
-//		printf("Ingrese Accion\n");
-//		scanf ("%s",action);
-//	}
+	char* file_name = getSwapFileName();
+	int pagesAmount = getSwapPagesAmount();
+	char str[100];
+	strcpy(str,"/home/utnso/git/tp-2015-2c-signiorcodigo/swap/Debug/");
+	strcpy(str,file_name);
+	int result = doesFileExist( str);
+	if(!result) {
+		setupSwap();
+	} else {
+	    printf("El archivo de Swap ya existe. Continuamos...\n");
+	}
+	t_list *pages = setPages(pagesAmount);
+	printf("Ingrese Accion\n");
+	char *action = malloc(sizeof(char)*15);
+	scanf ("%s",action);
+	while(strcmp(action,"exit")!=0){
+		evaluateAction(action, pages);
+		printf("Ingrese Accion\n");
+		scanf ("%s",action);
+	}
 
 
 //	t_nodo_swap* item = NULL;
@@ -122,7 +113,7 @@ int main(int argc, char **argv) {
 //	}
 //
 //	close(socketCliente);
-//	list_destroy(pages);
+	list_destroy(pages);
 	return 0;
 }
 

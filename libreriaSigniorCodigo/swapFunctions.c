@@ -20,29 +20,6 @@
 #include "swapFunctions.h"
 #include "libSockets.h"
 
-void swapInit(t_list *pages){
-	char* file_name = getSwapFileName();
-	int pagesAmount = getSwapPagesAmount();
-	char str[100];
-	strcpy(str,"/home/utnso/git/tp-2015-2c-signiorcodigo/swap/Debug/");
-	strcpy(str,file_name);
-	int result = doesFileExist( str);
-	if(!result) {
-		setupSwap();
-	} else {
-	    printf("El archivo de Swap ya existe. Continuamos...\n");
-	}
-	pages = setPages(pagesAmount);
-}
-
-void deSerialize(void* element,void* buffer, size_t size){
-	memcpy(element,buffer,size);
-}
-
-void serialize(void* element, void* buffer, size_t size){
-	memcpy(buffer, element, size);
-}
-
 
 int doesFileExist(const char *filename) {
 	FILE *fp = fopen (filename, "r");
@@ -62,13 +39,6 @@ int getSwapPagesSize(){
 	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
 	int page_size = config_get_int_value(swapConfiguracion,"TAMANIO_PAGINA");
 	return page_size;
-}
-
-int getSwapListenPort(){
-	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
-	int port = config_get_int_value(swapConfiguracion,"PUERTO_ESCUCHA");
-	return port;
 }
 
 char* getSwapFileName(){
