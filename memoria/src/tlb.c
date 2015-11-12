@@ -2,7 +2,7 @@
 
 t_config * configs;
 
-void tlb_remover_pid(int pid, t_config * configuraciones,bool es_test) {
+void tlb_remover_pid(int pid, t_config * configuraciones, bool es_test) {
 
 	configs = configuraciones;
 
@@ -18,7 +18,7 @@ void tlb_remover_pid(int pid, t_config * configuraciones,bool es_test) {
 		cantidad_restante--;
 	}
 
-	tabla_paginas_remover_pid(pid, configuraciones,es_test);
+	tabla_paginas_remover_pid(pid, configuraciones, es_test);
 
 }
 
@@ -125,6 +125,7 @@ void tlb_agregar_entrada(int pid, int pagina, int marco,
 		item->pagina = pagina;
 		item->marco = marco;
 		item->modificado = es_escritura;
+		item->numero_operacion = 0;
 
 		list_add(tlb, item);
 
@@ -144,6 +145,7 @@ void tlb_agregar_entrada(int pid, int pagina, int marco,
 		item->pagina = pagina;
 		item->marco = marco;
 		item->modificado = es_escritura;
+		item->numero_operacion = 0;
 
 		//Agrego el nuevo
 		list_add(tlb, item);

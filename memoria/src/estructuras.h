@@ -33,6 +33,7 @@ typedef struct {
 	int pagina;
 	int marco;
 	bool modificado;
+	int numero_operacion;
 } t_tabla_paginas_item;
 
 

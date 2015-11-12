@@ -7,7 +7,7 @@
 #include "tabla_paginas.h"
 
 void tabla_paginas_remover_pid(int pid, t_config * configuraciones,
-		bool es_test) {
+bool es_test) {
 
 	pid_matchear_tabla_paginas = pid;
 
@@ -63,6 +63,9 @@ bool es_modificado) {
 	nuevo->pagina = pagina;
 	nuevo->marco = marco;
 	nuevo->modificado = false;
+	nuevo->numero_operacion = numero_operacion;
+
+	numero_operacion++;
 
 	list_add(tabla_paginas, nuevo);
 
@@ -99,6 +102,9 @@ bool es_escritura) {
 	}
 
 	else {
+
+		item_encontrado->numero_operacion = numero_operacion;
+		numero_operacion++;
 
 		return item_encontrado->marco;
 

@@ -1,30 +1,14 @@
-[INFO] 03:30:44:228 PAM/(31553:31553): Iniciado el proceso administrador de memoria
-[INFO] 03:30:44:228 PAM/(31553:31553): Levantan las configuraciones
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con PUERTO_ESCUCHA: 5000
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con IP_SWAP: localhost
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con PUERTO_SWAP: 6000
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con MAXIMO_MARCOS_POR_PROCESO: 5
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con CANTIDAD_MARCOS: 10
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con TAMANIO_MARCO: 15
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con ENTRADAS_TLB: 2
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con TLB_HABILITADA: NO
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con RETARDO_MEMORIA: 0
-[INFO] 03:30:44:228 PAM/(31553:31553): Configurado con ALGORITMO_REMPLAZO: FIFO
-[INFO] 03:30:44:228 PAM/(31553:31553): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y **** 
-[INFO] 03:30:44:229 PAM/(31553:31553): Conexión con el swap exitosa, se le registra el socket 6
-[INFO] 03:30:44:229 PAM/(31553:31553): Se escuchan conexiones en el socket 7
-[INFO] 03:31:14:128 PAM/(31563:31563): Iniciado el proceso administrador de memoria
-[INFO] 03:31:14:128 PAM/(31563:31563): Levantan las configuraciones
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con PUERTO_ESCUCHA: 5000
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con IP_SWAP: localhost
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con PUERTO_SWAP: 6000
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con MAXIMO_MARCOS_POR_PROCESO: 5
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con CANTIDAD_MARCOS: 10
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con TAMANIO_MARCO: 15
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con ENTRADAS_TLB: 2
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con TLB_HABILITADA: NO
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con RETARDO_MEMORIA: 0
-[INFO] 03:31:14:128 PAM/(31563:31563): Configurado con ALGORITMO_REMPLAZO: FIFO
-[INFO] 03:31:14:128 PAM/(31563:31563): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y **** 
-[INFO] 03:31:14:129 PAM/(31563:31563): Conexión con el swap exitosa, se le registra el socket 6
-[INFO] 03:31:14:129 PAM/(31563:31563): Se escuchan conexiones en el socket 7
+[INFO] 22:47:29:963 PAM/(6228:6228): Iniciado el proceso administrador de memoria
+[INFO] 22:47:29:963 PAM/(6228:6228): Levantan las configuraciones
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con PUERTO_ESCUCHA: 5000
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con IP_SWAP: localhost
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con PUERTO_SWAP: 6000
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con MAXIMO_MARCOS_POR_PROCESO: 5
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con CANTIDAD_MARCOS: 10
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con TAMANIO_MARCO: 15
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con ENTRADAS_TLB: 2
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con TLB_HABILITADA: NO
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con RETARDO_MEMORIA: 0
+[INFO] 22:47:29:963 PAM/(6228:6228): Configurado con ALGORITMO_REMPLAZO: FIFO
+[INFO] 22:47:29:963 PAM/(6228:6228): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
+[ERROR] 22:47:29:964 PAM/(6228:6228): No se pudo encontral al swap, se cierra todo

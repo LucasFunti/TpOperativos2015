@@ -25,9 +25,7 @@
 
 pthread_mutex_t semaforo_memoria;
 
-char * puertoCpu;
-char * ipSwap;
-char * puertoSwap;
+void iniciarEstructuras();
 
 void atenderConexion(int socket, fd_set sockets_activos);
 

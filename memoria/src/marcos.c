@@ -2,6 +2,8 @@
 
 void iniciar_marcos(t_config * configuraciones) {
 
+	numero_operacion = 0;
+
 	int cantidad_marcos = config_get_int_value(configuraciones,
 			"CANTIDAD_MARCOS");
 

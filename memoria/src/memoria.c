@@ -21,12 +21,22 @@ int main() {
 
 	conectarseAlSwap();
 
+	iniciarEstructuras();
+
 	//Inicio el semáforo que blockea todas las operaciones de la memoria
 	pthread_mutex_init(&semaforo_memoria, NULL);
 
 	atenderConexiones();
 
 	return 1;
+}
+
+void iniciarEstructuras() {
+
+	tlb = list_create();
+	tabla_paginas = list_create();
+	numero_operacion = 0;
+
 }
 
 void atenderConexion(int socket, fd_set sockets_activos) {

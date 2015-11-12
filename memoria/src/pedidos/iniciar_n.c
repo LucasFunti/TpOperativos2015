@@ -57,8 +57,23 @@ int marco_libre() {
 
 	} else {
 
-		//Swapea el primero asignado (FIFO)
 		int indice_para_swappear = 0;
+		//Swapea según algoritmo
+
+		char * algoritmo = config_get_string_value(configuraciones_iniciar_n,
+				"ALGORITMO_REMPLAZO");
+
+		if (es_fifo(algoritmo)) {
+			indice_para_swappear = fifo();
+		}
+
+		if (es_lru(algoritmo)) {
+			indice_para_swappear = lru();
+		}
+
+		if (es_clock_modificado(algoritmo)) {
+			indice_para_swappear = clock_m();
+		}
 
 		t_tabla_paginas_item * entrada_a_swappear = list_remove(tabla_paginas,
 				indice_para_swappear);
@@ -75,5 +90,17 @@ int marco_libre() {
 		return entrada_a_swappear->marco;
 
 	}
+}
+
+bool es_fifo(char * algoritmo){
+	return !strcmp(algoritmo,"FIFO");
+}
+
+bool es_lru(char * algoritmo){
+	return !strcmp(algoritmo,"LRU");
+}
+
+bool es_clock_modificado(char * algoritmo){
+	return !strcmp(algoritmo,"CLOCK-M");
 }
 

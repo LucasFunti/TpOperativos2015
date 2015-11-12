@@ -14,6 +14,8 @@
 #include <stdbool.h>
 #include "estructuras.h"
 
+int numero_operacion;
+
 void * memoria;
 
 t_log * logger;
