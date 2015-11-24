@@ -58,6 +58,7 @@ typedef struct{
 	int maximo; 		// capacidad máxima del array
 	int contador;		// posición actualizada del contador de programa
 	int *data;			// el array de resultados de las ejecuciones de cada instrucción
+	int usoDeCpu;		// porcentaje de CPU utilizada en el ultimo minuto;
 } t_resultadoOperacion;
 
 typedef struct {
@@ -96,5 +97,7 @@ void logearLectura(t_hilo infoHilo, char *idProceso, int estadoDeEjecucion, char
 void logearEscritura(t_hilo infoHilo, char *idProceso, int estadoDeEjecucion, char *pagina, char *texto);
 void logearEntradaSalida(t_hilo infoHilo, char *idProceso, char *tiempo);
 void logearFinalizacion(t_hilo infoHilo, char *idProceso);
+void reiniciarContador(int contador);
+void removeChar(char *string, char basura);
 
 #endif /* LIBRERIACPU_H_ */

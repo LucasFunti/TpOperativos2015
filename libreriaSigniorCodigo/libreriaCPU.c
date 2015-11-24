@@ -20,6 +20,8 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <pthread.h>
+#include <sys/time.h>
+#include <signal.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -63,12 +65,24 @@ t_instruccionEscritura empaquetarEscritura(char *idProceso,
 	t_instruccionEscritura escrituraEmpaquetada;
 	escrituraEmpaquetada.idProceso = atoi(idProceso);
 	escrituraEmpaquetada.paginas = atoi(paginas);
-	escrituraEmpaquetada.textoAEscribir = texto;
+	char *textoSinComillas = texto;
+	removeChar(textoSinComillas, '"');
+	escrituraEmpaquetada.textoAEscribir = textoSinComillas;
 
 	return escrituraEmpaquetada;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void removeChar(char *string, char basura) {
+	char *src, *dst;
+    for (src = dst = string; *src != '\0'; src++) {
+        *dst = *src;
+        if (*dst != basura) dst++;
+    }
+    *dst = '\0';
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Empaquetado para los resultados de ejecución de los procesos. */
 t_resultadoEjecucion empaquetarResultado(char *ruta, int contadorDePrograma) {
 	t_resultadoEjecucion paquete;
@@ -355,6 +369,7 @@ void logearFinalizacion(t_hilo infoHilo, char *idProceso){
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* The real deal. Esta función va a ser la que reciba la ruta y el contador de programa, y
  * la que ejecute línea por línea las instrucciones desde donde lo indique el contador.*/
 
@@ -369,9 +384,29 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma, char* idPro
 	resultado.maximo = cantidadElementos(listaInstrucciones);
 	resultado.m = 0;
 	resultado.data = malloc(sizeof(int) * resultado.maximo);
+	int consumoDeCpu = 0;
+	int instruccionesEjecutadas = 0;
+
+	/* Estructura con el contador de tiempo */
+		struct itimerval contador;
+		struct timeval duracionDelContador, primerSignal;
+
+		duracionDelContador.tv_sec = 60;
+		duracionDelContador.tv_usec = 0;
+
+		primerSignal.tv_sec = 0;
+		primerSignal.tv_usec = 0;
+
+		contador.it_interval = duracionDelContador;
+		contador.it_value = primerSignal;
+
+	signal (SIGALRM, reiniciarContador);
+
+	setitimer (ITIMER_REAL, &contador, NULL);
 
 	int operacion = reconocerInstruccion(listaInstrucciones[n]);
 	while ((listaInstrucciones[n] != NULL) && (operacion != 7)) {
+
 		operacion = reconocerInstruccion(listaInstrucciones[n]);
 		resultado.data[resultado.m] = ejecutar(listaInstrucciones[n], serverMemoria, serverPlanificador,
 				idProceso, infoDelHilo);
@@ -382,12 +417,19 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma, char* idPro
 				}
 		n++;
 		resultado.m++;
-		sleep(retardo);
+		usleep(retardo * 1000000);
+		instruccionesEjecutadas++;
+		consumoDeCpu = consumoDeCpu + ((instruccionesEjecutadas * 100)  / (60 / retardo));
+
 	}
 	resultado.m = resultado.m - 1;
 	resultado.contador = n;
+	resultado.usoDeCpu = consumoDeCpu;
 	return resultado;
 
+	void reiniciarContador(int contador){
+			consumoDeCpu = 0;
+		}
 
 }
 /* Algo como esto va a ser la modificación a realizar una vez que le agreguemos el campo quantum a la pcb. */
@@ -521,45 +563,53 @@ void *iniciarcpu(t_hilo threadInfo) {
 		 free(buffer);
 		 if (status != 0) {
 		 char * dataBuffer = malloc(contexto_ejecucion->tamanio);
-		 recv(serverPlanificador, dataBuffer, contexto_ejecucion->tamanio,
-		 0);
-		 contexto_ejecucion->mensaje = malloc(contexto_ejecucion->tamanio);
-		 memcpy(contexto_ejecucion->mensaje, dataBuffer,
-		 contexto_ejecucion->tamanio);
+		 recv(serverPlanificador, dataBuffer, contexto_ejecucion->tamanio, 0);
+		 contexto_ejecucion->path = malloc(contexto_ejecucion->tamanio);
+		 memcpy(contexto_ejecucion->path, dataBuffer,contexto_ejecucion->tamanio);
 		 free(dataBuffer);
-		 printf("el mensaje es:%s \n", contexto_ejecucion->mensaje);
 		 destruirPaquete(contexto_ejecucion);
 
+		 if(contexto_ejecucion->codigoOperacion == 0){		// caso Correr Archivo
+			 char *rutaDelArchivo = contexto_ejecucion->path;
+			 int contadorDePrograma = contexto_ejecucion->programCounter;
+			 char *idProceso = string_itoa(contexto_ejecucion->pid);
+			 t_resultadoOperacion resultado = correrArchivo(rutaDelArchivo, contadorDePrograma, idProceso, serverMemoria,
+			 serverPlanificador,	threadInfo);
+			 char *contextoRecibido = logeoDeEjecucion("Contexto de ejecución recibido. Ruta del archivo:| ; Posicion del contador de Programa:| ;Id de proceso:|",
+						rutaDelArchivo, contadorDePrograma, idProceso);
+			log_info(threadInfo.logger, contextoRecibido);
 
-		char **array = string_split(contexto_ejecucion->mensaje, " ");
-		char *rutaDelArchivo = array[0];
-		int contadorDePrograma = atoi(array[1]);
-		char *idProceso = array[2];
+			int i = 0;
+			printf("\noperación exitosa. El resultado de la ejecución fue el siguiente:\nposición actual del contador: %d\n",
+							resultado.contador);
+			printf("resultado de las ejecuciones:\n");
+			for(i = 0; i < resultado.maximo; i++){
+				printf("%d\n", resultado.data[i]);
+					};
+		 }
 
+		 else if(contexto_ejecucion->codigoOperacion == 1){	// caso Finalizar PID
+			 int cantidadInstrucciones = cantidadElementos(contexto_ejecucion->path);
+			 contexto_ejecucion->programCounter = cantidadInstrucciones - 1;
+		 }
+
+		 else if(contexto_ejecucion->codigoOperacion == 2){ // caso Consumo de CPU
+
+		 };
 
 
 	/*	char *rutaDelArchivo = "/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/Debug/largoVersion3";
 		int contadorDePrograma = 0;
 		char *idProceso = "1";
 
-		char *contextoRecibido = logeoDeEjecucion("Contexto de ejecución recibido. Ruta del archivo:| ; Posicion del contador de Programa:| ;Id de proceso:|",
-				rutaDelArchivo, contadorDePrograma, idProceso);
-		log_info(threadInfo.logger, contextoRecibido);
+
 		printf("\n"); */
 
 
-		t_resultadoOperacion resultado = correrArchivo(rutaDelArchivo, contadorDePrograma, idProceso, serverMemoria,
-		serverPlanificador,	threadInfo);
+
 //		t_resultadoOperacion resultado = correrArchivo(rutaDelArchivo, contadorDePrograma, idProceso, 123, 456,
 //				threadInfo);
-		int i = 0;
 
-		printf("\noperación exitosa. El resultado de la ejecución fue el siguiente:\nposición actual del contador: %d\n",
-				resultado.contador);
-		printf("resultado de las ejecuciones:\n");
-		for(i = 0; i > resultado.maximo; i++){
-			printf("%d\n", resultado.data[i]);
-		};
 		printf("\n");
 		char *disponible = eventoDeLogeo("liberada la CPU ", threadInfo.idHilo);
 		log_info(threadInfo.logger, disponible);
