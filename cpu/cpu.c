@@ -17,9 +17,12 @@
 #include <commons/string.h>
 #include <commons/log.h>
 #include <limits.h>
-#include "../libreriaSigniorCodigo/libreriaCPU.h"
-#include "../libreriaSigniorCodigo/libSockets.h"
-#include "../libreriaSigniorCodigo/planificadorFunctions.h"
+#include <libreriaCPU.h>
+#include <libSockets.h>
+#include <planificadorFunctions.h>
+//#include "../libreriaSigniorCodigo/libreriaCPU.h"
+//#include "../libreriaSigniorCodigo/libSockets.h"
+//#include "../libreriaSigniorCodigo/planificadorFunctions.h"
 
 #define BACKLOG 5
 #define PACKAGESIZE 32

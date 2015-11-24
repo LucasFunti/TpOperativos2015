@@ -12,13 +12,13 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
-#include "../libreriaSigniorCodigo/planificadorFunctions.h"
+#include <planificadorFunctions.h>
 #include <commons/config.h>
 #include <commons/collections/queue.h>
 #include <commons/collections/list.h>
 #include <commons/string.h>
 #include <commons/log.h>
-#include "../libreriaSigniorCodigo/libSockets.h"
+#include <libSockets.h>
 #include <poll.h>
 
 #define BACKLOG 100
@@ -46,7 +46,6 @@ int main(int argc, char **argv) {
 //	char *algoritmo = getAlgoritmo();
 
 	int  socketCliente, socketEscucha, retornoPoll, fd_index;
-	struct sockaddr_in client_address;
 
 	struct pollfd fileDescriptors[4];
 	int cantfds = 0;

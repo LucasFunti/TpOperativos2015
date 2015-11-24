@@ -523,15 +523,15 @@ void *iniciarcpu(t_hilo threadInfo) {
 		 char * dataBuffer = malloc(contexto_ejecucion->tamanio);
 		 recv(serverPlanificador, dataBuffer, contexto_ejecucion->tamanio,
 		 0);
-		 contexto_ejecucion->mensaje = malloc(contexto_ejecucion->tamanio);
-		 memcpy(contexto_ejecucion->mensaje, dataBuffer,
+		 contexto_ejecucion->path = malloc(contexto_ejecucion->tamanio);
+		 memcpy(contexto_ejecucion->path, dataBuffer,
 		 contexto_ejecucion->tamanio);
 		 free(dataBuffer);
-		 printf("el mensaje es:%s \n", contexto_ejecucion->mensaje);
+		 printf("el mensaje es:%s \n", contexto_ejecucion->path);
 		 destruirPaquete(contexto_ejecucion);
 
 
-		char **array = string_split(contexto_ejecucion->mensaje, " ");
+		char **array = string_split(contexto_ejecucion->path, " ");
 		char *rutaDelArchivo = array[0];
 		int contadorDePrograma = atoi(array[1]);
 		char *idProceso = array[2];
