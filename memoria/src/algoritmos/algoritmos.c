@@ -8,7 +8,24 @@
 
 int fifo() {
 
-	return 0;
+	elemento_fifo_matchear = list_remove(cola_llegada, 0); //El primero
+	posicion_auxiliar = -1;
+	list_iterate(tabla_paginas, encontrar_elemento_fifo);
+	return posicion_fifo;
+}
+
+void encontrar_elemento_fifo(void * data) {
+
+	t_tabla_paginas_item * entrada = data;
+
+	posicion_auxiliar++;
+
+	if (entrada == elemento_fifo_matchear) {
+
+		posicion_fifo = posicion_auxiliar;
+
+	}
+
 }
 
 int lru() {
@@ -52,7 +69,7 @@ int clock_m() {
 		//Busco alguno sin modificar
 
 		t_tabla_paginas_item * elemento_para_swappear = list_find(tabla_paginas,
-				no_esta_modificado);
+				no_esta_modificado_y_esta_presente);
 
 		if (elemento_para_swappear == NULL) {
 
@@ -154,15 +171,15 @@ bool es_el_del_puntero_o_posterior_y_no_modificado(void * data) {
 	}
 
 	if (analizar) {
-		return !item->modificado;
+		return !item->modificado && item->presencia;
 	}
 	return false;
 }
 
-bool no_esta_modificado(void * data) {
+bool no_esta_modificado_y_esta_presente(void * data) {
 
 	t_tabla_paginas_item * item = data;
 	contador_auxiliar_indice_clock_m++;
 
-	return (!item->modificado);
+	return (!item->modificado && item->presencia);
 }

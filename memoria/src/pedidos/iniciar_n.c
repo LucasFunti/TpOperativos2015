@@ -37,8 +37,8 @@ void crear_estructura_para_proceso(int pid, int cantidad_paginas) {
 
 	int i;
 	for (i = 0; i < cantidad_paginas; i++) {
-		//False porque recién se crean y no tienen datos, entonces no están modificados
-		tabla_paginas_aniadir_item(pid, i + 1, marco_libre(), false);
+		//False porque recién se crean y no tienen datos, entonces no están modificados y están en memoria
+		tabla_paginas_aniadir_item(pid, i + 1, marco_libre(), false, true);
 	}
 
 }
@@ -73,7 +73,10 @@ int marco_libre() {
 			indice_para_swappear = clock_m();
 		}
 
-		t_tabla_paginas_item * entrada_a_swappear = list_remove(tabla_paginas,
+		//t_tabla_paginas_item * entrada_a_swappear = list_remove(tabla_paginas,
+		//		indice_para_swappear);
+
+		t_tabla_paginas_item * entrada_a_swappear = list_get(tabla_paginas,
 				indice_para_swappear);
 
 		//Si está modificado (el swap está atrasado, le pido que escriba el contenido)
@@ -82,9 +85,13 @@ int marco_libre() {
 					entrada_a_swappear->marco);
 		}
 
-		tlb_sacar_entrada(entrada_a_swappear->pid, entrada_a_swappear->pagina,
-				memoriaConfig);
+		entrada_a_swappear->presencia = false;
+		entrada_a_swappear->numero_operacion = numero_operacion;
+		numero_operacion++;
 
+		if(tlb_habilitada(memoriaConfig)){
+			tlb_sacar_presencia(entrada_a_swappear->pid,entrada_a_swappear->pagina,memoriaConfig);
+		}
 		return entrada_a_swappear->marco;
 
 	}

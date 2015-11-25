@@ -16,6 +16,9 @@
 
 int pid_matchear_tlb, pagina_matchear_tlb;
 
+void coincide_pid_y_pagina_iterador(void * data);
+void tlb_sacar_presencia(int pid, int pagina, t_config * configuraciones);
+
 /**
  * tlb_remover_pid
  */
