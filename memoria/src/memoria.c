@@ -60,7 +60,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&cant_paginas, data_entrante->data + sizeof(int), sizeof(int));
 
 		//El false indica que no es un test
-		bool exito = iniciar_n(pid, cant_paginas, memoriaConfig, false);
+		bool exito = iniciar_n(pid, cant_paginas, false);
 
 		t_data * paquete;
 
@@ -98,7 +98,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid_leer, data_entrante->data, sizeof(int));
 		memcpy(&pagina_leer, data_entrante->data + sizeof(int), sizeof(int));
 
-		char * contenido = leer_n(pid_leer, pagina_leer, memoriaConfig);
+		char * contenido = leer_n(pid_leer, pagina_leer);
 
 		log_info(logger,
 				string_from_format("Leer el pid %d y página %d retorna %s",
@@ -130,7 +130,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		char * texto = malloc(tamanio_texto);
 		memcpy(texto, data_entrante + 3 * sizeof(int), tamanio_texto);
 
-		escribir_n(pid_escribir, pagina_escribir, texto, memoriaConfig);
+		escribir_n(pid_escribir, pagina_escribir, texto);
 
 		log_info(logger,
 				string_from_format(
@@ -151,7 +151,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid_para_finalizar, data_entrante->data, sizeof(int));
 
 		//False porque no es test
-		finalizar(pid, memoriaConfig, false);
+		finalizar(pid, false);
 
 		log_info(logger,
 				string_from_format("Se finalizó el pid %d",

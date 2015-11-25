@@ -6,10 +6,8 @@
  */
 #include "iniciar_n.h"
 
-bool iniciar_n(int pid, int cantidad_paginas, t_config * configuraciones,
-bool test) {
+bool iniciar_n(int pid, int cantidad_paginas, bool test) {
 
-	configuraciones_iniciar_n = configuraciones;
 	bool swap_puede;
 
 	if (test) {
@@ -18,7 +16,7 @@ bool test) {
 		swap_puede = swap_iniciar(pid, cantidad_paginas);
 	}
 
-	int cantidad_maxima_marcos_proceso = config_get_int_value(configuraciones,
+	int cantidad_maxima_marcos_proceso = config_get_int_value(memoriaConfig,
 			"MAXIMO_MARCOS_POR_PROCESO");
 
 	if (swap_puede && cantidad_maxima_marcos_proceso >= cantidad_paginas) {
@@ -60,7 +58,7 @@ int marco_libre() {
 		int indice_para_swappear = 0;
 		//Swapea según algoritmo
 
-		char * algoritmo = config_get_string_value(configuraciones_iniciar_n,
+		char * algoritmo = config_get_string_value(memoriaConfig,
 				"ALGORITMO_REMPLAZO");
 
 		if (es_fifo(algoritmo)) {
@@ -81,26 +79,26 @@ int marco_libre() {
 		//Si está modificado (el swap está atrasado, le pido que escriba el contenido)
 		if (entrada_a_swappear->modificado) {
 			swap_escribir(entrada_a_swappear->pid, entrada_a_swappear->pagina,
-					entrada_a_swappear->marco, configuraciones_iniciar_n);
+					entrada_a_swappear->marco);
 		}
 
 		tlb_sacar_entrada(entrada_a_swappear->pid, entrada_a_swappear->pagina,
-				configuraciones_iniciar_n);
+				memoriaConfig);
 
 		return entrada_a_swappear->marco;
 
 	}
 }
 
-bool es_fifo(char * algoritmo){
-	return !strcmp(algoritmo,"FIFO");
+bool es_fifo(char * algoritmo) {
+	return !strcmp(algoritmo, "FIFO");
 }
 
-bool es_lru(char * algoritmo){
-	return !strcmp(algoritmo,"LRU");
+bool es_lru(char * algoritmo) {
+	return !strcmp(algoritmo, "LRU");
 }
 
-bool es_clock_modificado(char * algoritmo){
-	return !strcmp(algoritmo,"CLOCK-M");
+bool es_clock_modificado(char * algoritmo) {
+	return !strcmp(algoritmo, "CLOCK-M");
 }
 

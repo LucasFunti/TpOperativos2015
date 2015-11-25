@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include "../src/estructuras.h"
 #include "../src/globals.h"
+#include "../src/loggear.h"
+#include <string.h>
 
 void assert_tabla_paginas_item(t_tabla_paginas_item * item, int pid, int pagina,
 		int marco, bool modificado) {

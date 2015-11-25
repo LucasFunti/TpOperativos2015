@@ -8,10 +8,12 @@
 #ifndef SRC_PEDIDOS_ESCRIBIR_N_H_
 #define SRC_PEDIDOS_ESCRIBIR_N_H_
 
-#include <commons/config.h>
+#include <stdlib.h>
+#include <string.h>
 #include "../globals.h"
+#include "../retardo.h"
+#include "../tlb.h"
 
-void escribir_n(int pid, int pagina, char * contenido,
-		t_config * configuraciones);
+void escribir_n(int pid, int pagina, char * contenido);
 
 #endif /* SRC_PEDIDOS_ESCRIBIR_N_H_ */

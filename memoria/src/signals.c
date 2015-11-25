@@ -26,7 +26,7 @@ void atender_seniales(int signal) {
 
 		pthread_mutex_lock(&semaforo_memoria);
 		loggearInfo("Se registró la señal para vaciar la TLB");
-		vaciar_tlb(memoriaConfig);
+		vaciar_tlb();
 		pthread_mutex_unlock(&semaforo_memoria);
 
 		break;
@@ -34,7 +34,7 @@ void atender_seniales(int signal) {
 	case SIGUSR2:
 		pthread_mutex_lock(&semaforo_memoria);
 		loggearInfo("Se registró la señal para vaciar la tabla de páginas");
-		vaciar_tabla_paginas(memoriaConfig);
+		vaciar_tabla_paginas();
 		pthread_mutex_unlock(&semaforo_memoria);
 
 		break;
@@ -43,7 +43,7 @@ void atender_seniales(int signal) {
 
 		pthread_mutex_lock(&semaforo_memoria);
 		loggearInfo("Se registró la señal para vaciar la tabla de páginas");
-		volcar_memoria_principal(memoriaConfig);
+		volcar_memoria_principal();
 		pthread_mutex_unlock(&semaforo_memoria);
 
 		break;
@@ -52,7 +52,7 @@ void atender_seniales(int signal) {
 
 }
 
-void vaciar_tlb(t_config * configuracion_vaciar_tlb) {
+void vaciar_tlb() {
 
 	int cantidad_elementos = list_size(tlb);
 	t_tlb_item * item;
@@ -62,7 +62,7 @@ void vaciar_tlb(t_config * configuracion_vaciar_tlb) {
 		item = list_remove(tlb, 0);
 		if (item->modificado) {
 			tabla_paginas_buscar(item->pid, item->pagina,
-					configuracion_vaciar_tlb, true);
+					memoriaConfig, true);
 		}
 		free(item);
 
@@ -71,7 +71,7 @@ void vaciar_tlb(t_config * configuracion_vaciar_tlb) {
 
 }
 
-void vaciar_tabla_paginas(t_config * configuracion_vaciar_tabla_paginas) {
+void vaciar_tabla_paginas() {
 
 	int cantidad_elementos = list_size(tabla_paginas);
 	t_tabla_paginas_item * item;
@@ -80,8 +80,7 @@ void vaciar_tabla_paginas(t_config * configuracion_vaciar_tabla_paginas) {
 
 		item = list_remove(tabla_paginas, 0);
 		if (item->modificado) {
-			swap_escribir(item->pid, item->pagina, item->marco,
-					configuracion_vaciar_tabla_paginas);
+			swap_escribir(item->pid, item->pagina, item->marco);
 		}
 		free(item);
 
@@ -90,11 +89,11 @@ void vaciar_tabla_paginas(t_config * configuracion_vaciar_tabla_paginas) {
 
 }
 
-void volcar_memoria_principal(t_config * configuracion_volcar) {
+void volcar_memoria_principal() {
 
-	int tamanio_marco = config_get_int_value(configuracion_volcar,
+	int tamanio_marco = config_get_int_value(memoriaConfig,
 			"TAMANIO_MARCO");
-	int cantidad_marcos = config_get_int_value(configuracion_volcar,
+	int cantidad_marcos = config_get_int_value(memoriaConfig,
 			"CANTIDAD_MARCOS");
 
 	loggearInfo("INICIO DEL CONTENIDO");

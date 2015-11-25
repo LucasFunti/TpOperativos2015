@@ -1,13 +1,13 @@
 #include "marcos.h"
 
-void iniciar_marcos(t_config * configuraciones) {
+void iniciar_marcos() {
 
 	numero_operacion = 0;
 
-	int cantidad_marcos = config_get_int_value(configuraciones,
+	int cantidad_marcos = config_get_int_value(memoriaConfig,
 			"CANTIDAD_MARCOS");
 
-	int tamanio_marcos = config_get_int_value(configuraciones, "TAMANIO_MARCO");
+	int tamanio_marcos = config_get_int_value(memoriaConfig, "TAMANIO_MARCO");
 
 	memoria = malloc(tamanio_marcos * cantidad_marcos);
 

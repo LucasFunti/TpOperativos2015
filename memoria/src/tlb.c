@@ -89,8 +89,7 @@ bool es_escritura) {
 			marco marco_encontrado_para_agregar_tlb = tabla_paginas_buscar(pid,
 					pagina, configuraciones, es_escritura);
 
-			tlb_agregar_entrada(pid, pagina, marco_encontrado_para_agregar_tlb,
-					configuraciones, es_escritura);
+			tlb_agregar_entrada(pid, pagina, marco_encontrado_para_agregar_tlb, es_escritura);
 
 			return marco_encontrado_para_agregar_tlb;
 
@@ -111,10 +110,9 @@ bool es_escritura) {
 
 }
 
-void tlb_agregar_entrada(int pid, int pagina, int marco,
-		t_config * configuraciones, bool es_escritura) {
+void tlb_agregar_entrada(int pid, int pagina, int marco, bool es_escritura) {
 
-	int cantidad_entradas = config_get_int_value(configuraciones,
+	int cantidad_entradas = config_get_int_value(memoriaConfig,
 			"ENTRADAS_TLB");
 
 	if (list_size(tlb) <= cantidad_entradas) {
@@ -134,7 +132,7 @@ void tlb_agregar_entrada(int pid, int pagina, int marco,
 		t_tlb_item * item = list_get(tlb, 0);
 		if (item->modificado) {
 			//Actualiza el modificado en la tabla de páginas
-			tabla_paginas_buscar(pid, pagina, configuraciones, true);
+			tabla_paginas_buscar(pid, pagina, memoriaConfig, true);
 		}
 		//Lo saco
 		list_remove_and_destroy_element(tlb, 0, free);

@@ -6,15 +6,15 @@
  */
 #include "finalizar.h"
 
-void finalizar(int pid, t_config * configuraciones,bool es_test) {
+void finalizar(int pid, bool es_test) {
 
-	if (tlb_habilitada(configuraciones)) {
+	if (tlb_habilitada(memoriaConfig)) {
 
-		tlb_remover_pid(pid, configuraciones,es_test);
+		tlb_remover_pid(pid, memoriaConfig, es_test);
 
 	} else {
 
-		tabla_paginas_remover_pid(pid, configuraciones,es_test);
+		tabla_paginas_remover_pid(pid, memoriaConfig, es_test);
 
 	}
 
