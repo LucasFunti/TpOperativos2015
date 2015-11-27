@@ -80,7 +80,7 @@ int esperarConexionEntrante(int, int, t_log *);
 
 int conectarServidor(char* IP, char* Port, int backlog);
 Paquete *generarPaquete(int codigoOperacion, int tamMessage, char *message,
-		int programCounter);
+		int programCounter, int quantum, int pid);
 char *serializar(Paquete *unPaquete);
 Paquete *deserializar_header(char *buffer);
 void deserializar_data(Paquete *unPaquete, char *buffer);

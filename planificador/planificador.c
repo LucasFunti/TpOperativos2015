@@ -27,97 +27,77 @@
 int p_last_id = 0;
 
 int main(int argc, char **argv) {
-
-	//genero el archivo log
 	t_log *log_planificador = log_create("log_planificador", "PLANIFICADOR",
-	true, LOG_LEVEL_INFO);
+	false, LOG_LEVEL_INFO);
 
 	pthread_mutex_t mutex_readys;
 	pthread_mutex_t mutex_ejecucion;
 	pthread_mutex_t mutex_bloqueados;
 	inicializarMutex(mutex_readys, mutex_ejecucion, mutex_bloqueados);
-	//generar estructuras necesarias para el planificador (colas)
 	t_queue *colaListos = queue_create();
 	t_queue *entrada_salida = queue_create();
 	t_list *en_ejecucion = list_create();
-//	t_queue *colaFinalizados=queue_create();
+	t_queue *colaFinalizados = queue_create();
 
 	char * port = getPuerto();
-//	char *algoritmo = getAlgoritmo();
+	char * algoritmo = getAlgoritmo();
+	int quantum = getQuantum();
 
-	int  socketCliente, socketEscucha, retornoPoll, fd_index;
+	int socketCliente, socketEscucha, retornoPoll, fd_index;
 
 	struct pollfd fileDescriptors[4];
 	int cantfds = 0;
-	socketEscucha = setup_listen("localhost",port);
+	socketEscucha = setup_listen("localhost", port);
+	listen(socketEscucha, BACKLOG);
 
 	fileDescriptors[0].fd = socketEscucha;
 	fileDescriptors[0].events = POLLIN;
-	printf("SOCKET = %d\n", fileDescriptors[0].fd);
+	printf("SOCKET = %d\n", socketEscucha);
 
 	int pid_a_finalizar;
 	int enviar = 1;
 
 	while (enviar) {
-
 		int codigoOperacion;
-
 		codigoOperacion = reconocerIdentificador();
 		char *nombreProceso = malloc(64 * sizeof(char));
 		switch (codigoOperacion) {
 		case 1:/* correr */
-			//leo el nombre del proceso
 			scanf("%s", nombreProceso);
-			//busco el path del proceso y calculo el tamaño del path
-			char *path = malloc(128);
+			char *path = malloc(256);
 			realpath(nombreProceso, path);
 
-			//le genero un id al proceso
 			int pid;
 			pid = generarPID(&p_last_id);
 
-			//genero el pcb del proceso
 			tipo_pcb *proceso = malloc(sizeof(tipo_pcb));
 			proceso = generarPCB(pid, path, listo, nombreProceso);
+
 			agregarEnColaDeListos(proceso, mutex_readys, colaListos,
 					log_planificador, entrada_salida, en_ejecucion);
-
-//			cambiarEstadoABloqueado(proceso, mutex_bloqueados, entrada_salida,
-//					mutex_ejecucion, en_ejecucion, mutex_readys, colaListos,
-//					log_planificador);
 
 			retornoPoll = poll(fileDescriptors, cantfds, 100000);
 			printf("retorno del poll = %d\n", retornoPoll);
 			if (retornoPoll == -1) {
 				printf("Error en la funcion poll\n");
 			}
-			for (fd_index = 0; fd_index < cantfds; fd_index++) {
-				if (fileDescriptors[fd_index].revents & POLLIN) {
-					if (fileDescriptors[fd_index].fd == socketEscucha) {
+			if (fileDescriptors[fd_index].revents & POLLIN) {
+				if (fileDescriptors[fd_index].fd == socketEscucha) {
 
-						socketCliente = esperarConexionEntrante(socketEscucha,BACKLOG,log_planificador);
+					socketCliente = esperarConexionEntrante(socketEscucha,
+					BACKLOG, log_planificador);
 
-						fileDescriptors[cantfds].fd = socketCliente;
-						fileDescriptors[cantfds].events = POLLIN;
-						cantfds++;
-						Paquete *paquete = malloc(sizeof(Paquete));
-						paquete = generarPaquete(codigoOperacion,
-								strlen(proceso->dirProceso) + 1, path,
-								proceso->programCounter);
-						printf(
-								"El paquete a enviar contiene:\nCod= %d -- mensaje= %s\n",
-								paquete->codigoOperacion, paquete->path);
-						void *buffer = serializar(paquete);
-						send(socketCliente, buffer,
-								sizeof(int) + sizeof(int) + sizeof(int)
-										+ paquete->tamanio, 0);
-						cambiarAEstadoDeEjecucion(mutex_readys, colaListos,
-								mutex_ejecucion, en_ejecucion, entrada_salida,
-								log_planificador, socketCliente);
-						free(buffer);
-						free(path);
+					fileDescriptors[cantfds].fd = socketCliente;
+					fileDescriptors[cantfds].events = POLLIN;
+					cantfds++;
 
-					}
+					enviarContextoEjecucion(socketCliente, codigoOperacion,
+							proceso, path,algoritmo, quantum);
+
+					cambiarAEstadoDeEjecucion(mutex_readys, colaListos,
+							mutex_ejecucion, en_ejecucion, entrada_salida,
+							log_planificador, fileDescriptors[cantfds].fd);
+
 				}
 			}
 
@@ -136,10 +116,12 @@ int main(int argc, char **argv) {
 					encontrar_pid);
 			printf("VAMOS A FINALIZAR AL PROCESO CON PID: %d\n",
 					procesoEnEjecucion->proceso->id);
-//			int PC = -1;
-//			PC = setProgramCounter(procesoEnEjecucion->proceso->dirProceso);
-			//enviar el proceso a la cpu con el programCounter obtenido
+			int PC = -1;
+			PC = setProgramCounter(procesoEnEjecucion->proceso->dirProceso);
 
+			procesoEnEjecucion->proceso->programCounter = PC;
+			agregarEnColaDeListos(procesoEnEjecucion->proceso, mutex_readys, colaListos,
+					log_planificador, entrada_salida, en_ejecucion);
 			free(procesoEnEjecucion);
 
 			break;
@@ -153,6 +135,7 @@ int main(int argc, char **argv) {
 			break;
 		case 3:
 			/* cpu */
+			peticionPorcentajeUsoCpu(en_ejecucion,3);
 			break;
 		}
 
@@ -161,12 +144,24 @@ int main(int argc, char **argv) {
 			printf("Error en la funcion poll\n");
 			exit(0);
 		}
+		for (fd_index = 0; fd_index < cantfds; fd_index++) {
+			if (fileDescriptors[fd_index].revents & POLLIN) {
+				if (fileDescriptors[fd_index].fd == socketEscucha) {
 
-		/*if (enviar)
-		 send(socketCliente, message, sizeof(int), 0);*/
+					int instruccion;
+					recv(fileDescriptors[fd_index].fd, &instruccion,
+							sizeof(int), 0);
+					interpretarInstruccion(instruccion,
+							fileDescriptors[fd_index].fd, mutex_readys,
+							colaListos, log_planificador, entrada_salida,
+							en_ejecucion, colaFinalizados, mutex_bloqueados,
+							mutex_ejecucion);
 
+				}
+			}
+		}
 	}
-//	close(socketCliente);
+	close(socketCliente);
 	destruirMutex(mutex_readys, mutex_ejecucion, mutex_bloqueados);
 
 	return 0;
