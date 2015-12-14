@@ -19,8 +19,8 @@
 #include <commons/config.h>
 #include <commons/collections/list.h>
 #include <commons/bitarray.h>
-#include "../libreriaSigniorCodigo/swapFunctions.h"
-#include "../libreriaSigniorCodigo/libSockets.h"
+#include <swapFunctions.h>
+#include <libSockets.h>
 
 #define BACKLOG 5
 #define PACKAGESIZE 32

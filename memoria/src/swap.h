@@ -15,5 +15,6 @@
 bool swap_iniciar(int pid, int cantidad_paginas);
 void swap_escribir(int pid, int pagina, int marco, t_config * configuraciones);
 char * swap_leer(int pid, int pagina);
+void swap_finalizar(int pid);
 
 #endif /* SWAP_H_ */

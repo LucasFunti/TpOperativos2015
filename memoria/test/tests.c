@@ -16,7 +16,7 @@ context(test_admin_memoria) {
 
 			before {
 
-				configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion1");
+				configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 				iniciar_marcos(configuracion);
 
 			}end
@@ -55,7 +55,7 @@ context(test_admin_memoria) {
 
 			before {
 
-				configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
+				configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 				iniciar_marcos(configuracion);
 				tlb = list_create();
 
@@ -81,7 +81,7 @@ context(test_admin_memoria) {
 
 		before {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion1");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 			iniciar_marcos(configuracion);
 			tabla_paginas = list_create();
 
@@ -121,7 +121,7 @@ context(test_admin_memoria) {
 
 		it("escribe estando en la tlb") {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos(configuracion);
 
 			iniciar_n(1,2,configuracion,true);
@@ -150,7 +150,7 @@ context(test_admin_memoria) {
 
 		it("lee estando en memoria") {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion1");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 			iniciar_marcos(configuracion);
 
 			iniciar_n(1,2,configuracion,true);
@@ -165,7 +165,7 @@ context(test_admin_memoria) {
 
 		it("lee estando en tlb") {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos(configuracion);
 
 			iniciar_n(1,2,configuracion,true);
@@ -189,7 +189,7 @@ context(test_admin_memoria) {
 			tabla_paginas = list_create();
 			tlb = list_create();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos(configuracion);
 
 			iniciar_n(1,1,configuracion,true);
@@ -210,7 +210,7 @@ context(test_admin_memoria) {
 			tabla_paginas = list_create();
 			tlb = list_create();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos(configuracion);
 
 			iniciar_n(1,2,configuracion,true);
@@ -236,7 +236,7 @@ context(test_admin_memoria) {
 			tabla_paginas = list_create();
 			tlb = list_create();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos(configuracion);
 
 			remove("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/log_test_volcado_memoria");
@@ -261,7 +261,7 @@ context(test_admin_memoria) {
 			tabla_paginas = list_create();
 			tlb = list_create();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos(configuracion);
 
 			iniciar_n(1,2,configuracion,true);
@@ -280,7 +280,7 @@ context(test_admin_memoria) {
 			tabla_paginas = list_create();
 			tlb = list_create();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracion2");
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos(configuracion);
 
 			iniciar_n(1,2,configuracion,true);
@@ -289,6 +289,85 @@ context(test_admin_memoria) {
 
 			should_int(list_size(tlb)) be equal to(0);
 			should_int(list_size(tabla_paginas)) be equal to(0);
+		}end
+
+	}end
+
+	describe("fifo") {
+
+		t_config * configuracion;
+
+		before {
+
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionFifo");
+			iniciar_marcos(configuracion);
+			tabla_paginas = list_create();
+
+		}end
+
+		it("swappea paginas por fifo") {
+
+			iniciar_n(1,5,configuracion,true);
+
+			//Es el anteultimo (el primero con el que usa fifo)
+			t_tlb_item * item = list_get(tabla_paginas,1);
+
+			assert_tabla_paginas_item(item, 1, 4,0, false);
+
+			//Es el ultimo (el segundo con el que usa fifo)
+			item = list_get(tabla_paginas,2);
+
+			assert_tabla_paginas_item(item, 1, 5,1, false);
+
+		}end
+
+	}end
+
+	describe("lru") {
+		t_config * configuracion;
+
+		before {
+
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionLru");
+			iniciar_marcos(configuracion);
+			tabla_paginas = list_create();
+
+		}end
+
+		it("swappea usando lru") {
+
+			//Tiene 3 entradas la tabla de páginas
+			iniciar_n(1,3,configuracion,true);
+
+			//Tendria que volar esta ya que fué la ultima utilizada
+			leer_n(1,3,configuracion);
+			leer_n(1,1,configuracion);
+			leer_n(1,2,configuracion);
+
+			//No tiene lugar y usa lru
+			iniciar_n(2,1,configuracion,true);
+
+			t_tlb_item * item = list_get(tabla_paginas,2);
+
+			assert_tabla_paginas_item(item, 2, 1,2, false);
+
+		}end
+
+	}end
+
+	describe("clock_m") {
+		t_config * configuracion;
+
+		before {
+
+			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionClock-M");
+			iniciar_marcos(configuracion);
+			tabla_paginas = list_create();
+
+		}end
+
+		it("agrega una entrada a la tabla de páginas swapeando intentando remover la entrada swapeada de la tlb") {
+
 		}end
 
 	}end

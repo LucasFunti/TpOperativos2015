@@ -10,11 +10,11 @@ void registrarSeniales() {
 
 	signal(SIGUSR1, atender_seniales);
 	signal(SIGUSR2, atender_seniales);
-	//Falta la tercer señal
+	signal(SIGPOLL, atender_seniales);
 	loggearInfo(
 			string_from_format(
-					"Ya se atiende la señal SIGUSR1 (%d), SIGUSR2 (%d) y **** ",
-					SIGUSR1, SIGUSR2));
+					"Ya se atiende la señal SIGUSR1 (%d), SIGUSR2 (%d) y SIGPOLL (%d) ",
+					SIGUSR1, SIGUSR2, SIGPOLL));
 
 }
 
@@ -39,7 +39,7 @@ void atender_seniales(int signal) {
 
 		break;
 
-	case 99: //Preguntar Gastón D:
+	case SIGPOLL:
 
 		pthread_mutex_lock(&semaforo_memoria);
 		loggearInfo("Se registró la señal para vaciar la tabla de páginas");
@@ -90,7 +90,6 @@ void vaciar_tabla_paginas(t_config * configuracion_vaciar_tabla_paginas) {
 
 }
 
-//Definir D:
 void volcar_memoria_principal(t_config * configuracion_volcar) {
 
 	int tamanio_marco = config_get_int_value(configuracion_volcar,
