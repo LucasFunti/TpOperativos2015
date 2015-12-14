@@ -25,7 +25,10 @@ void atender_seniales(int signal) {
 	case SIGUSR1:
 
 		pthread_mutex_lock(&semaforo_memoria);
-		loggearInfo("Se registró la señal para vaciar la TLB");
+		if (!test) {
+
+			loggearInfo("Se registró la señal para vaciar la TLB");
+		}
 		vaciar_tlb();
 		pthread_mutex_unlock(&semaforo_memoria);
 
@@ -33,7 +36,9 @@ void atender_seniales(int signal) {
 
 	case SIGUSR2:
 		pthread_mutex_lock(&semaforo_memoria);
-		loggearInfo("Se registró la señal para vaciar la tabla de páginas");
+		if (!test) {
+			loggearInfo("Se registró la señal para vaciar la tabla de páginas");
+		}
 		vaciar_tabla_paginas();
 		pthread_mutex_unlock(&semaforo_memoria);
 
@@ -42,7 +47,9 @@ void atender_seniales(int signal) {
 	case SIGPOLL:
 
 		pthread_mutex_lock(&semaforo_memoria);
-		loggearInfo("Se registró la señal para vaciar la tabla de páginas");
+		if (!test) {
+			loggearInfo("Se registró la señal para vaciar la tabla de páginas");
+		}
 		volcar_memoria_principal();
 		pthread_mutex_unlock(&semaforo_memoria);
 
@@ -55,15 +62,11 @@ void atender_seniales(int signal) {
 void vaciar_tlb() {
 
 	int cantidad_elementos = list_size(tlb);
-	t_tlb_item * item;
+	t_item * item;
 
 	while (cantidad_elementos) {
 
 		item = list_remove(tlb, 0);
-		if (item->modificado) {
-			tabla_paginas_buscar(item->pid, item->pagina, memoriaConfig, true);
-		}
-		free(item);
 
 		cantidad_elementos--;
 	}
@@ -73,18 +76,16 @@ void vaciar_tlb() {
 void vaciar_tabla_paginas() {
 
 	int cantidad_elementos = list_size(tabla_paginas);
-	t_tabla_paginas_item * item;
+	t_item * item;
 
 	while (cantidad_elementos) {
 
 		item = list_remove(tabla_paginas, 0);
-		if (item->modificado) {
+		if (item->modificado && !test) {
 			swap_escribir(item->pid, item->pagina, item->marco);
 
-			free(item);
-
-			cantidad_elementos--;
 		}
+		cantidad_elementos--;
 
 	}
 }

@@ -14,9 +14,10 @@
 #include "../src/estructuras.h"
 #include "../src/globals.h"
 #include "../src/loggear.h"
+
 #include <string.h>
 
-void assert_tabla_paginas_item(t_tabla_paginas_item * item, int pid, int pagina,
+void assert_tabla_paginas_item(t_item * item, int pid, int pagina,
 		int marco, bool modificado,bool presencia) {
 
 	should_ptr(item) not be null;
@@ -26,5 +27,6 @@ void assert_tabla_paginas_item(t_tabla_paginas_item * item, int pid, int pagina,
 	should_bool(item->modificado) be equal to(modificado);
 	should_bool(item->presencia) be equal to(presencia);
 }
+
 
 #endif /* TESTS_UTILS_H_ */

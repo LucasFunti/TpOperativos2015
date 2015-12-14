@@ -15,12 +15,12 @@
 /**
  * Te encuentra un marco
  */
-int marco_libre();
+int marco_libre(int pid);
 
 /**
  * Iniciar-N
  */
-bool iniciar_n(int pid, int cantidad_paginas, bool test);
+bool iniciar_n(int pid, int cantidad_paginas);
 void crear_estructura_para_proceso(int pid, int cantidad_paginas);
 
 bool es_fifo(char * algoritmo);

@@ -10,8 +10,6 @@
  */
 #include "memoria.h"
 
-//TODO: Rellenar con /0 cuando escribo escribo una página
-
 int main() {
 
 	test = true;
@@ -62,27 +60,25 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&cant_paginas, data_entrante->data + sizeof(int), sizeof(int));
 
 		//El false indica que no es un test
-		bool exito = iniciar_n(pid, cant_paginas, false);
+
+		bool exito1 = iniciar_n(pid, cant_paginas);
 
 		t_data * paquete;
 
-		if (exito) {
+		if (exito1) {
 
 			log_info(logger,
 					string_from_format("Se inicia el programa %d con %d marcos",
 							pid, cant_paginas));
 
-			//Data basura le mando, total no tengo nada que mandar
-			paquete = pedirPaquete(SE_INICIO, sizeof(int), &pid);
-
 		} else {
 
 			log_info(logger, "No se pudo iniciar el programa pedido");
 
-			//Data basura le mando, total no tengo nada que mandar
-			paquete = pedirPaquete(NO_SE_INICIO, sizeof(int), &pid);
-
 		}
+
+		//Data basura le mando, total no tengo nada que mandar
+		paquete = pedirPaquete(exito1, sizeof(int), &pid);
 		common_send(socket, paquete);
 
 		free(paquete);
@@ -100,16 +96,27 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid_leer, data_entrante->data, sizeof(int));
 		memcpy(&pagina_leer, data_entrante->data + sizeof(int), sizeof(int));
 
-		char * contenido = leer_n(pid_leer, pagina_leer+1);
+		bool exito = leer_n(pid_leer, pagina_leer + 1);
 
-		log_info(logger,
-				string_from_format("Leer el pid %d y página %d retorna %s",
-						pid_leer, pagina_leer, contenido));
+		if (exito) {
+
+			log_info(logger,
+					string_from_format("Leer el pid %d y página %d retorna %s.",
+							pid_leer, pagina_leer, contenido_lectura));
+		} else {
+			log_info(logger,
+					string_from_format(
+							"No se disponian marcos para el proceso %d, se finaliza.",
+							pid_leer));
+
+			contenido_lectura = NULL;
+
+		}
 
 		int tamanio_marco = config_get_int_value(memoriaConfig,
 				"TAMANIO_MARCO");
 
-		paquete = pedirPaquete(LEER, tamanio_marco, contenido);
+		paquete = pedirPaquete(exito, tamanio_marco, contenido_lectura);
 		common_send(socket, paquete);
 
 		free(paquete);
@@ -118,7 +125,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 	case ESCRIBIR:
 		log_info(logger,
 				string_from_format(
-						"Realizando una operación ESCRIBIR para el socket %d",
+						"Realizando una operación ESCRIBIR para el socket %d.",
 						socket));
 
 		int pid_escribir, pagina_escribir, tamanio_texto;
@@ -132,12 +139,24 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		char * texto = malloc(tamanio_texto);
 		memcpy(texto, data_entrante->data + 3 * sizeof(int), tamanio_texto);
 
-		escribir_n(pid_escribir, pagina_escribir+1, texto);
+		exito = escribir_n(pid_escribir, pagina_escribir + 1, texto);
 
-		log_info(logger,
-				string_from_format(
-						"Se escribío en la página %d del pid %d el texto %s",
-						pagina_escribir, pid_escribir, texto));
+		if (exito) {
+			log_info(logger,
+					string_from_format(
+							"Se escribío en la página %d del pid %d el texto %s.",
+							pagina_escribir, pid_escribir, texto));
+
+		} else {
+			log_error(logger,
+					string_from_format(
+							"No se disponian marcos para el proceso %d, se finaliza.",
+							pid_escribir));
+			finalizar(pid);
+		}
+
+		paquete = pedirPaquete(ESCRIBIR, 4, &exito);
+		common_send(socket, paquete);
 
 		break;
 
@@ -153,7 +172,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid_para_finalizar, data_entrante->data, sizeof(int));
 
 		//False porque no es test
-		finalizar(pid_para_finalizar, false);
+		finalizar(pid_para_finalizar);
 
 		log_info(logger,
 				string_from_format("Se finalizó el pid %d",

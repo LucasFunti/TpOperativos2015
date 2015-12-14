@@ -13,42 +13,25 @@
 #include "tabla_paginas.h"
 #include "estructuras.h"
 #include "globals.h"
-
-int pid_matchear_tlb, pagina_matchear_tlb;
-
-void coincide_pid_y_pagina_iterador(void * data);
-void tlb_sacar_presencia(int pid, int pagina, t_config * configuraciones);
+#include "funciones_listas.h"
 
 /**
  * tlb_remover_pid
  */
-void tlb_remover_pid(int pid, t_config * configuraciones,bool es_test);
+void tlb_remover_pid(int pid);
 
-bool coincide_pid_tlb(void * data);
-
-bool coincide_pid_tlb_y_actualiza_tabla_paginas_modificado(void * data);
-
-/**
- * tlb_sacar_entrada
- */
-
-void tlb_sacar_entrada(int pid, int pagina, t_config * configuraciones);
-
-bool tlb_habilitada(t_config * configuraciones);
-
-bool coincide_pid_y_pagina(void * data);
+bool tlb_habilitada();
 
 /**
  * tlb_buscar
  */
 
-marco tlb_buscar(int pid, int pagina, t_config * configuraciones,
-bool es_escritura);
+t_item * tlb_buscar(int pid, int pagina);
 
 /**
  * tlb_agregar_entrada
  */
 
-void tlb_agregar_entrada(int pid, int pagina, int marco,bool es_escritura);
+void tlb_agregar_item(t_item * item);
 
 #endif /* TLB_H_ */

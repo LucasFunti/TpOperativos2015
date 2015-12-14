@@ -6,21 +6,51 @@
  */
 #include "leer_n.h"
 
-char * leer_n(int pid, int pagina) {
+bool leer_n(int pid, int pagina) {
 
 	int tamanio_marco = config_get_int_value(memoriaConfig, "TAMANIO_MARCO");
 
-	char * contenido = malloc(tamanio_marco);
+	t_item * item = tlb_buscar(pid, pagina);
 
-	marco marco_encontrado = tlb_buscar(pid, pagina, memoriaConfig, false);
+	if (item == NULL) {
 
-	//Lee memoria principal, va con retardo
-	retardo(memoriaConfig);
+		return false;
 
-	memcpy(contenido, memoria + marco_encontrado * tamanio_marco,
-			tamanio_marco);
+	} else {
 
-	return contenido;
+		if (!item->presencia) {
 
+			int marco = marco_libre(pid);
+
+			if (marco == -1) {
+
+				contenido_lectura = NULL;
+				return false;
+
+			} else {
+
+				if(!test){
+					contenido_lectura = swap_leer(pid, pagina);
+				}else{
+					contenido_lectura = malloc(2);
+					contenido_lectura = "T";
+				}
+
+				item->marco = marco;
+				item->presencia = true;
+				return true;
+				list_add(cola_llegada,item);
+			}
+		} else {
+
+			contenido_lectura = malloc(tamanio_marco);
+			retardo(memoriaConfig);
+
+			memcpy(contenido_lectura, memoria + item->marco * tamanio_marco,
+					tamanio_marco);
+			return true;
+		}
+
+	}
 }
 

@@ -9,6 +9,7 @@
 #define ESTRUCTURAS_H_
 
 #include <commons/collections/list.h>
+#include <stddef.h>
 
 typedef struct {
 	int codigo_operacion;
@@ -36,11 +37,7 @@ typedef struct {
 	int numero_operacion;
 	bool presencia;
 	bool uso;
-} t_tabla_paginas_item;
-
-typedef t_tabla_paginas_item t_tlb_item;
-
-typedef int marco;
+} t_item;
 
 /**
  * @DESC: Me ayuda para ver poder pedir punteros de tlb o

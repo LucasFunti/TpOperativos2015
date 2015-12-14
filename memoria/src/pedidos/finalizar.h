@@ -11,6 +11,6 @@
 #include "../globals.h"
 #include "../tabla_paginas.h"
 
-void finalizar(int pid, bool es_test);
+void finalizar(int pid);
 
 #endif /* SRC_PEDIDOS_FINALIZAR_H_ */

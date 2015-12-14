@@ -16,33 +16,16 @@
 #include "retardo.h"
 #include "algoritmos/algoritmos.h"
 
-int pid_matchear_tabla_paginas, pagina_matchear_tabla_paginas;
-
-/**
- * tlb_remover_pid
- */
-
-bool coincide_pid_tabla_paginas(void * data);
-
-void tabla_paginas_remover_pid(int pid, t_config * configuraciones,
-bool es_test);
-
-bool coincide_pid_tabla_paginas_y_libera_marcos(void * data);
-
-bool coincide_pid_tabla_paginas(void * data);
+void tabla_paginas_remover_pid(int pid);
 
 /**
  * tabla_paginas_aniadir_item
  */
-void tabla_paginas_aniadir_item(int pid, int pagina, int marco,
-bool es_modificado, bool presente);
+t_item * tabla_paginas_aniadir_item(int pid, int pagina, int marco);
 
 /**
  * tabla_paginas_buscar
  */
-marco tabla_paginas_buscar(int pid, int pagina, t_config * configuraciones,
-bool es_escritura);
-
-bool coincide_pid_y_pagina_tabla_paginas(void * data);
+t_item * tabla_paginas_buscar(int pid, int pagina);
 
 #endif /* TABLA_PAGINAS_H_ */

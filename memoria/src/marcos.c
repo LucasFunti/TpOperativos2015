@@ -10,7 +10,7 @@ void iniciar_marcos() {
 	pedidos_totales = 0;
 
 	int contadorAuxiliar;
-	for(contadorAuxiliar=0;contadorAuxiliar<100;contadorAuxiliar++) {
+	for (contadorAuxiliar = 0; contadorAuxiliar < 200; contadorAuxiliar++) {
 
 		registroTlb[contadorAuxiliar].aciertos = 0;
 		registroTlb[contadorAuxiliar].pedidos = 0;
@@ -45,9 +45,32 @@ void iniciar_marcos() {
 	}
 }
 
-int cantidad_marcos_libres() {
+int marcos_libres() {
 
 	return list_count_satisfying(marcos_disponibles, esta_libre);
+
+}
+
+int marco_disponible() {
+
+	t_marco * marcoParaDar = list_find(marcos_disponibles, esta_libre);
+
+	marcoParaDar->disponible = false;
+	return marcoParaDar->numero_marco;
+
+}
+
+bool tiene_marcos_asignados(int pid) {
+
+	return marcos_asignados(pid) != 0;
+
+}
+
+int marcos_asignados(int pid) {
+
+	pid_matchear = pid;
+
+	return list_count_satisfying(tabla_paginas, coincide_pid_y_esta_presente);
 
 }
 

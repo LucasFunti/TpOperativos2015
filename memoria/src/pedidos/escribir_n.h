@@ -14,6 +14,6 @@
 #include "../retardo.h"
 #include "../tlb.h"
 
-void escribir_n(int pid, int pagina, char * contenido);
+bool escribir_n(int pid, int pagina, char * contenido);
 
 #endif /* SRC_PEDIDOS_ESCRIBIR_N_H_ */

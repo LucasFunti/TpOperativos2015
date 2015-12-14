@@ -26,4 +26,6 @@
 #define ESCRIBIR 6
 #define FINALIZAR 8
 
+#define FALLO_MARCO -1
+
 #endif /* CONSTANTES_H_ */

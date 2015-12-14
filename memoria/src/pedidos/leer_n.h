@@ -12,6 +12,6 @@
 #include "../tlb.h"
 #include "../globals.h"
 
-char * leer_n(int pid, int pagina);
+bool leer_n(int pid, int pagina);
 
 #endif /* SRC_PEDIDOS_LEER_N_H_ */
