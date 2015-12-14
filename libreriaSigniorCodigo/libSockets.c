@@ -146,14 +146,15 @@ int conectarServidor(char* IP, char* Port, int backlog) {
 /* Funcion que serializa una estructura paquete */
 char *serializar(Paquete *unPaquete) {
 	void *buffer = malloc(
-			sizeof(int)/*ID*/+ sizeof(int)/*ProgCounter*/+ sizeof(int)/*Tamañopath*/
+			sizeof(int)/*CodOp*/+ sizeof(int)/*ProgCounter*/+ sizeof(int)/*PidProceso*/
+			+ sizeof(int)/*quantum*/+ sizeof(int)/*Tamañopath*/
 			+ sizeof(char) * unPaquete->tamanio);
 	memcpy(buffer, &unPaquete->codigoOperacion, sizeof(int));
 	memcpy(buffer + sizeof(int), &unPaquete->programCounter, sizeof(int));
-	memcpy(buffer + sizeof(int) + sizeof(int), &unPaquete->tamanio,
-			sizeof(int));
-	memcpy(buffer + sizeof(int) + sizeof(int) + sizeof(int),
-			&unPaquete->path, unPaquete->tamanio);
+	memcpy(buffer + (sizeof(int) * 2), &unPaquete->pid, sizeof(int));
+	memcpy(buffer + (sizeof(int) * 3), &unPaquete->quantum, sizeof(int));
+	memcpy(buffer + (sizeof(int) * 4), &unPaquete->tamanio, sizeof(int));
+	memcpy(buffer + (sizeof(int) * 5), &unPaquete->path, unPaquete->tamanio);
 	return buffer;
 }
 /* deserializar elheader del buffer a la estructura paquete
@@ -178,11 +179,13 @@ void deserializar_data(Paquete *unPaquete, char *buffer) {
  * los coloca dentro de la estructura Paquete */
 
 Paquete *generarPaquete(int codigoOperacion, int tamMessage, char *message,
-		int programCounter) {
-	Paquete *paquete=malloc(sizeof(Paquete));
+		int programCounter, int quantum, int pid) {
+	Paquete *paquete = malloc(sizeof(Paquete));
 
 	paquete->codigoOperacion = codigoOperacion;
 	paquete->programCounter = programCounter;
+	paquete->pid = pid;
+	paquete->quantum = quantum;
 	paquete->tamanio = tamMessage;
 	paquete->path = malloc(tamMessage);
 	memcpy(&paquete->path, message, paquete->tamanio);
@@ -194,5 +197,4 @@ void destruirPaquete(Paquete * unPaquete) {
 	free(unPaquete->path);
 	free(unPaquete);
 }
-
 

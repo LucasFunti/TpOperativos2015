@@ -6,15 +6,25 @@
  */
 #include "finalizar.h"
 
-void finalizar(int pid, t_config * configuraciones,bool es_test) {
+void finalizar(int pid, bool es_test) {
 
-	if (tlb_habilitada(configuraciones)) {
+	if (elemento_del_puntero_clock_m != NULL
+			&& pid == elemento_del_puntero_clock_m->pid) {
+		elemento_del_puntero_clock_m = NULL;
+	}
 
-		tlb_remover_pid(pid, configuraciones,es_test);
+	loggearInfo(
+			string_from_format(
+					"Se finaliza el proceso %d. El mismo tuvo %d aciertos sobre %d pedidos a la tlb",
+					pid, registroTlb[pid].aciertos, registroTlb[pid].pedidos));
+
+	if (tlb_habilitada(memoriaConfig)) {
+
+		tlb_remover_pid(pid, memoriaConfig, test);
 
 	} else {
 
-		tabla_paginas_remover_pid(pid, configuraciones,es_test);
+		tabla_paginas_remover_pid(pid, memoriaConfig, test);
 
 	}
 

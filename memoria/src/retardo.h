@@ -8,8 +8,9 @@
 #ifndef SRC_RETARDO_H_
 #define SRC_RETARDO_H_
 
-#include <commons/config.h>
+#include "globals.h"
+#include <unistd.h>
 
-void retardo(t_config * configuracion_retardo);
+void retardo();
 
 #endif /* SRC_RETARDO_H_ */

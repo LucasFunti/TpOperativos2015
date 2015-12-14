@@ -13,7 +13,7 @@
 #include  "marcos.h"
 
 bool swap_iniciar(int pid, int cantidad_paginas);
-void swap_escribir(int pid, int pagina, int marco, t_config * configuraciones);
+void swap_escribir(int pid, int pagina, int marco);
 char * swap_leer(int pid, int pagina);
 void swap_finalizar(int pid);
 

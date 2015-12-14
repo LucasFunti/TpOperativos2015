@@ -37,9 +37,9 @@ bool swap_iniciar(int pid, int cantidad_paginas) {
 
 }
 
-void swap_escribir(int pid, int pagina, int marco, t_config * configuraciones) {
+void swap_escribir(int pid, int pagina, int marco) {
 
-	int tamanio_marco = config_get_int_value(configuraciones, "TAMANIO_MARCO");
+	int tamanio_marco = config_get_int_value(memoriaConfig, "TAMANIO_MARCO");
 
 	void * data = malloc(3 * sizeof(int) + tamanio_marco);
 

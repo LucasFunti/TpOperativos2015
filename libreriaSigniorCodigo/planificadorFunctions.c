@@ -13,6 +13,7 @@
 #include <commons/config.h>
 #include <commons/log.h>
 #include <pthread.h>
+#include "libSockets.h"
 #include "planificadorFunctions.h"
 
 void inicializarMutex(pthread_mutex_t mutex_readys,
@@ -62,6 +63,7 @@ tipo_pcb *generarPCB(int pid, char *path, int estado, char *nombre) {
 	pcb->programCounter = 0;
 	pcb->nombrePrograma = malloc(strlen(nombre));
 	pcb->nombrePrograma = nombre;
+	pcb->tiempoComienzo = time(NULL);
 
 	return pcb;
 }
@@ -84,6 +86,15 @@ char *getAlgoritmo() {
 	char* algoritmo = config_get_string_value(planificador_config,
 			"ALGORITMO_PLANIFICACION");
 	return algoritmo;
+}
+
+int getQuantum() {
+	t_config *planificador_config;
+	planificador_config =
+			config_create(
+					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+	int quantum = config_get_int_value(planificador_config, "PUERTO_ESCUCHA");
+	return quantum;
 }
 
 /* inicializar las estructuras para el planificador */
@@ -137,7 +148,6 @@ void mostrarEstadoDeBloqueados(t_queue *cola, char*estado) {
 	}
 }
 
-
 /* cambiar estado del proceso */
 void cambiarEstado(tipo_pcb *proceso, int estado, t_queue*colaListos,
 		t_queue*entrada_salida, t_list*en_ejecucion) {
@@ -156,6 +166,7 @@ void agregarEnColaDeListos(tipo_pcb *proceso, pthread_mutex_t mutex_readys,
 	log_info(log_planificador,
 			"Colocado el proceso: %s con pid = %d en la cola de listos",
 			proceso->nombrePrograma, proceso->id);
+	proceso->tiempoIngreso = time(NULL);
 	cambiarEstado(proceso, listo, colaListos, entrada_salida, en_ejecucion);
 	pthread_mutex_unlock(&mutex_readys);
 
@@ -166,6 +177,8 @@ tipo_pcb * removerDeColaDeListos(pthread_mutex_t mutex_readys,
 	tipo_pcb *proceso = malloc(sizeof(tipo_pcb));
 	pthread_mutex_lock(&mutex_readys);
 	proceso = queue_pop(colaListos);
+	time_t horaActual = time(NULL);
+	proceso->tiempoEnReadys = difftime(horaActual, proceso->tiempoIngreso);
 	pthread_mutex_unlock(&mutex_readys);
 	return proceso;
 }
@@ -185,14 +198,15 @@ void agregarAListaDeEjecucion(pthread_mutex_t mutex_ejecucion,
 /* saca un proceso de la cola de listos y lo coloca en la lista de ejecucion*/
 void cambiarAEstadoDeEjecucion(pthread_mutex_t mutex_readys, t_queue*colaListos,
 		pthread_mutex_t mutex_ejecucion, t_list *listaEjecutando,
-		t_queue*entrada_salida, t_log*log_planificador,int socketEnEjecucion) {
+		t_queue*entrada_salida, t_log*log_planificador, int socketEnEjecucion) {
 	tipo_pcb *proceso = malloc(sizeof(tipo_pcb));
 	proceso = removerDeColaDeListos(mutex_readys, colaListos);
 	nodo_en_ejecucion*procesoEjecutando = malloc(sizeof(nodo_en_ejecucion));
 	procesoEjecutando->proceso = proceso;
 	procesoEjecutando->socket = socketEnEjecucion;
+	procesoEjecutando->instrucciones_ejecutadas = 0;
 	agregarAListaDeEjecucion(mutex_ejecucion, listaEjecutando,
-			procesoEjecutando, colaListos, entrada_salida,log_planificador);
+			procesoEjecutando, colaListos, entrada_salida, log_planificador);
 }
 
 nodo_en_ejecucion * removerDeListaDeEjecucion(tipo_pcb *pcb,
@@ -209,7 +223,7 @@ nodo_en_ejecucion * removerDeListaDeEjecucion(tipo_pcb *pcb,
 }
 void agregarAColaDeBloqueados(pthread_mutex_t mutex_bloqueados,
 		t_queue *entradaSalida, nodo_entrada_salida*io, t_queue*colaListos,
-		t_list*listaEjecutando,t_log*log_planificador) {
+		t_list*listaEjecutando, t_log*log_planificador) {
 	pthread_mutex_lock(&mutex_bloqueados);
 	queue_push(entradaSalida, io);
 	log_info(log_planificador,
@@ -221,21 +235,23 @@ void agregarAColaDeBloqueados(pthread_mutex_t mutex_bloqueados,
 
 }
 /* saca un proceso de la lista de ejecucion y lo coloca en la cola de entrada salida */
-void cambiarEstadoABloqueado(tipo_pcb *pcb, pthread_mutex_t mutex_bloqueados,
-		t_queue*entradaSalida, pthread_mutex_t mutex_ejecucion,
-		t_list*listaEjecutando, pthread_mutex_t mutex_readys,
-		t_queue*colaListos, t_log*log_planificador) {
+void * cambiarEstadoABloqueado(void* data) {
+	data_hilo *dataHilo = data;
 	nodo_en_ejecucion * proceso = malloc(sizeof(nodo_en_ejecucion));
-	proceso = removerDeListaDeEjecucion(pcb, mutex_ejecucion, listaEjecutando);
+	proceso = removerDeListaDeEjecucion(dataHilo->pcb,
+			dataHilo->mutex_ejecucion, dataHilo->listaEjecutando);
+
 	nodo_entrada_salida * io = malloc(sizeof(nodo_entrada_salida));
 	io->proceso = proceso->proceso;
-	agregarAColaDeBloqueados(mutex_bloqueados, entradaSalida, io, colaListos,
-			listaEjecutando,log_planificador);
-	//manejo de la espera de la entrada salida
+	agregarAColaDeBloqueados(dataHilo->mutex_bloqueados,
+			dataHilo->entradaSalida, io, dataHilo->colaListos,
+			dataHilo->listaEjecutando, dataHilo->log_planificador);
 
-	//	agregarEnColaDeListos(io->proceso, mutex_readys, colaListos,
-	//			log_planificador, entradaSalida, listaEjecutando);
-
+	sleep(io->espera);
+	agregarEnColaDeListos(io->proceso, dataHilo->mutex_readys,
+			dataHilo->colaListos, dataHilo->log_planificador,
+			dataHilo->entradaSalida, dataHilo->listaEjecutando);
+	pthread_exit(NULL);
 }
 
 /* agarra el proceso y coloca su puntero al final de la ultima instruccion para que
@@ -252,14 +268,189 @@ int setProgramCounter(char *dirProceso) {
 	while (!feof(archivo)) {
 		j = fgetc(archivo);
 		if (j == ';') {
-
+			pc++;
 		} else if (j == 'f') {
 
-			pc = ftell(archivo);
-			pc--;
+			pc++;
 			return pc;
 			break;
 		}
 	}
 	return -1;
+}
+/* GENERA EL CONTEXTO DE EJECUCION Y SE LO ENVIA A LA CPU */
+void enviarContextoEjecucion(int socketCliente, int codigoOperacion,
+		tipo_pcb *proceso, char *path,char *algoritmo, int quantum) {
+	Paquete *paquete = malloc(sizeof(Paquete));
+	if(!strcmp(algoritmo,"FIFO")){
+		quantum = 0;
+	}else if(!strcmp(algoritmo,"RR")){
+
+	}
+	paquete = generarPaquete(codigoOperacion, strlen(proceso->dirProceso) + 1,
+			path, proceso->programCounter, proceso->id, quantum);
+	void *buffer = serializar(paquete);
+	send(socketCliente, buffer,
+			sizeof(int) + sizeof(int) + sizeof(int) + paquete->tamanio, 0);
+	free(buffer);
+	free(path);
+
+}
+/* DESERIALIZAR UNA INSTRUCCION */
+//codigoOperacion - rafagaEjecutada - pid de la cpu - puntero - resultado Instruccion
+rafaga_t * deserializarInstruccion(void * data) {
+	rafaga_t *instruccion = malloc(sizeof(rafaga_t));
+	memcpy(&instruccion->rafagaEjecutada, data, sizeof(int));
+	memcpy(&instruccion->pid_cpu, data + sizeof(int), sizeof(int));
+	memcpy(&instruccion->PC, data + (sizeof(int) * 2), sizeof(int));
+	memcpy(&instruccion->resultado_rafaga, data + (sizeof(int) * 3),
+			sizeof(int));
+	return instruccion;
+}
+
+/*FUNCION QUE INTERPRETA LO RECIBIDO POR ALGUNA CPU*/
+void interpretarInstruccion(int instruccion, int socketCliente,
+		pthread_mutex_t mutex_readys, t_queue *colaListos,
+		t_log*log_planificador, t_queue*entradaSalida, t_list*en_ejecucion,
+		t_queue*finalizados, pthread_mutex_t mutex_bloqueados,
+		pthread_mutex_t mutex_ejecucion) {
+
+	void *data = malloc(sizeof(int) * 5);
+	void * dataIO = malloc(sizeof(int) * 2);
+	switch (instruccion) {
+	case finalizado:
+		recv(socketCliente, data, sizeof(data), 0);
+		rafaga_t * instruccion = malloc(sizeof(rafaga_t));
+		instruccion = deserializarInstruccion(data);
+		nodo_en_ejecucion * procesoAFinalizar = malloc(
+				sizeof(nodo_en_ejecucion));
+		bool encontrar_cpu(void * nodo) {
+			return ((((nodo_en_ejecucion*) nodo)->pid_cpu)
+					== instruccion->pid_cpu);
+		}
+
+		procesoAFinalizar = list_remove_by_condition(en_ejecucion,
+				encontrar_cpu);
+		agregarAFinalizados(finalizados, procesoAFinalizar, log_planificador);
+		free(data);
+		break;
+	case finquantum:
+		recv(socketCliente, data, sizeof(data), 0);
+		rafaga_t * unaInstruccion = malloc(sizeof(rafaga_t));
+		unaInstruccion = deserializarInstruccion(data);
+		bool encontrar_cpu_finQuantum(void * nodo) {
+			return ((((nodo_en_ejecucion*) nodo)->pid_cpu)
+					== unaInstruccion->pid_cpu);
+		}
+		nodo_en_ejecucion *proceso = malloc(sizeof(nodo_en_ejecucion));
+		proceso = list_remove_by_condition(en_ejecucion,
+				encontrar_cpu_finQuantum);
+		agregarEnColaDeListos(proceso->proceso, mutex_readys, colaListos,
+				log_planificador, entradaSalida, en_ejecucion);
+		free(data);
+		break;
+	case instruccionFinalizada:
+		recv(socketCliente, data, sizeof(data), 0);
+		rafaga_t * otraInstruccion = malloc(sizeof(rafaga_t));
+		otraInstruccion = deserializarInstruccion(data);
+		nodo_en_ejecucion * unProceso = malloc(sizeof(nodo_en_ejecucion));
+		unProceso = list_find(en_ejecucion, encontrar_cpu);
+		unProceso->instrucciones_ejecutadas =
+				unProceso->instrucciones_ejecutadas + 1;
+		loguearRafaga(otraInstruccion, unProceso, log_planificador);
+		free(data);
+		break;
+	case entrada_salida:
+		recv(socketCliente, dataIO, sizeof(data), 0);
+		int pid_cpu;
+		memcpy(&pid_cpu, dataIO, sizeof(int));
+		bool encontrar_cpu_io(void * nodo) {
+			return ((((nodo_en_ejecucion*) nodo)->pid_cpu) == pid_cpu);
+		}
+		nodo_en_ejecucion * Proceso = malloc(sizeof(nodo_en_ejecucion));
+		Proceso = list_find(en_ejecucion, encontrar_cpu_io);
+		pthread_t hilo;
+		data_hilo *dataHilo = malloc(sizeof(data_hilo));
+		memcpy(&dataHilo->tiempo, dataIO + sizeof(int), sizeof(int));
+		dataHilo = obtenerDatosHilo(dataHilo, Proceso, mutex_readys, colaListos,
+				log_planificador, entradaSalida, en_ejecucion, finalizados,
+				mutex_bloqueados, mutex_ejecucion);
+		pthread_create(&hilo, NULL, cambiarEstadoABloqueado, dataHilo);
+		break;
+	}
+}
+/* MOVER A COLA DE FINALIZADOS */
+void agregarAFinalizados(t_queue *finalizados, nodo_en_ejecucion * proceso,
+		t_log *log_planificador) {
+	queue_push(finalizados, proceso);
+	proceso->proceso->tiempoFinalizacion = time(NULL);
+	double tiempoDeEjecucion = difftime(proceso->proceso->tiempoFinalizacion,
+			proceso->proceso->tiempoComienzo);
+	log_info(log_planificador,
+			"Finalizado el proceso: %s con pid = %d en la cola de Finalizados.\n Su Tiempo de ejecucion es: %f - Su tiempo de espera es: %f\n",
+			proceso->proceso->nombrePrograma, tiempoDeEjecucion,
+			proceso->proceso->id, proceso->proceso->tiempoEnReadys);
+}
+/* LOGUEO DE UNA RAFAGA */
+void loguearRafaga(rafaga_t *otraInstruccion, nodo_en_ejecucion * unProceso,
+		t_log * log_planificador) {
+	if (otraInstruccion->resultado_rafaga == 0) {
+		if (otraInstruccion->rafagaEjecutada == 4) {
+			log_info(log_planificador,
+					"El proceso %s ejecuto la instruccion -iniciar- correctamente ",
+					unProceso->proceso->nombrePrograma);
+		} else if (otraInstruccion->rafagaEjecutada == 5) {
+			log_info(log_planificador,
+					"El proceso %s ejecuto la instruccion -leer- correctamente ",
+					unProceso->proceso->nombrePrograma);
+		} else if (otraInstruccion->rafagaEjecutada == 6) {
+			log_info(log_planificador,
+					"El proceso %s ejecuto la instruccion -escribir- correctamente ",
+					unProceso->proceso->nombrePrograma);
+		} else if (otraInstruccion->rafagaEjecutada == 7) {
+			log_info(log_planificador,
+					"El proceso %s ejecuto la instruccion -entrada salida- correctamente ",
+					unProceso->proceso->nombrePrograma);
+		} else if (otraInstruccion->rafagaEjecutada == 8) {
+			log_info(log_planificador,
+					"El proceso %s ejecuto la instruccion -finalizar- correctamente ",
+					unProceso->proceso->nombrePrograma);
+		}
+	}
+}
+/* */
+data_hilo *obtenerDatosHilo(data_hilo * dataHilo, nodo_en_ejecucion *Proceso,
+		pthread_mutex_t mutex_readys, t_queue *colaListos,
+		t_log*log_planificador, t_queue*entradaSalida, t_list*en_ejecucion,
+		t_queue*finalizados, pthread_mutex_t mutex_bloqueados,
+		pthread_mutex_t mutex_ejecucion) {
+	dataHilo->pcb = Proceso->proceso;
+	dataHilo->colaListos = colaListos;
+	dataHilo->entradaSalida = entradaSalida;
+	dataHilo->listaEjecutando = en_ejecucion;
+	dataHilo->log_planificador = log_planificador;
+	dataHilo->mutex_bloqueados = mutex_bloqueados;
+	dataHilo->mutex_ejecucion = mutex_ejecucion;
+	dataHilo->mutex_readys = mutex_readys;
+
+	return dataHilo;
+}
+/* FUNCION QUE ENVIA MSJ A LA CPU PARA AVERIGUAR SU PORCENTAJE */
+void peticionPorcentajeUsoCpu(t_list * lista,int codigo) {
+	int j;
+	if (list_size(lista) == 0) {
+		printf("No hay procesos en ejecución\n");
+
+	} else {
+
+		for (j = 0; j < list_size(lista); j++) {
+			nodo_en_ejecucion *procesoEnEjecucion = list_get(lista, j);
+			send(procesoEnEjecucion->socket,&codigo,sizeof(int),0);
+			int pid_cpu,porcentaje;
+			recv(procesoEnEjecucion->socket,&pid_cpu,sizeof(int),0);
+			recv(procesoEnEjecucion->socket,&porcentaje,sizeof(int),0);
+			printf("Cpu %d: %d\n",pid_cpu,porcentaje);
+		}
+
+	}
 }

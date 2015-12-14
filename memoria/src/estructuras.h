@@ -34,11 +34,11 @@ typedef struct {
 	int marco;
 	bool modificado;
 	int numero_operacion;
+	bool presencia;
+	bool uso;
 } t_tabla_paginas_item;
 
-
 typedef t_tabla_paginas_item t_tlb_item;
-
 
 typedef int marco;
 
@@ -48,5 +48,10 @@ typedef int marco;
  */
 typedef t_list t_tlb;
 typedef t_list t_tabla_paginas;
+
+typedef struct {
+	int pedidos;
+	int aciertos;
+} t_registro_tlb;
 
 #endif /* ESTRUCTURAS_H_ */

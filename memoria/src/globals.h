@@ -16,12 +16,19 @@
 
 int numero_operacion;
 
+bool test;
+
+int pedidos_totales, aciertos_totales;
+
+t_registro_tlb registroTlb[100];
+
 void * memoria;
 
 t_log * logger;
 
 t_config * memoriaConfig;
 
+t_list * cola_llegada;
 
 /**
  * @NAME: variables principales
@@ -30,6 +37,5 @@ t_config * memoriaConfig;
  */
 t_tlb * tlb;
 t_tabla_paginas * tabla_paginas;
-
 
 #endif /* GLOBALS_H_ */

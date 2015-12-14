@@ -1,51 +1,55 @@
 #include "tests_utils.h"
 
 context(test_admin_memoria) {
-
+/*
+	test = true;
 	describe("iniciar_n") {
 
-		t_config * configuracion;
+		remove(
+				"/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/logTest");
 
-		before {
+		logger =
+		log_create(
+				"/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+				"Test", true, LOG_LEVEL_DEBUG);
 
-			tabla_paginas = list_create();
-
-		}end
 
 		describe("sin tlb") {
 
 			before {
 
-				configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
-				iniciar_marcos(configuracion);
+				memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
+				iniciar_marcos();
 
 			}end
 
 			it("agrega una entrada a la tabla de páginas") {
 
-				should_bool(iniciar_n(1,2,configuracion,true)) be equal to (true);
+				should_bool(iniciar_n(1,2,true)) be equal to (true);
 
 				should_int(list_size(tabla_paginas)) be equal to(2);
 
-				assert_tabla_paginas_item(list_get(tabla_paginas,0),1,1,0,false);
-				assert_tabla_paginas_item(list_get(tabla_paginas,1),1,2,1,false);
+				assert_tabla_paginas_item(list_get(tabla_paginas,0),1,1,0,false,false);
+				assert_tabla_paginas_item(list_get(tabla_paginas,1),1,2,0,false,false);
 
 			}end
 
 			it("no puede registrar el proceso por exceso de páginas") {
 
-				should_bool(iniciar_n(1,5,configuracion,true)) be equal to (false);
-				should_int(list_size(tabla_paginas)) be equal to(0);
+				should_bool(iniciar_n(1,5,true)) be equal to (true);
+				should_int(list_size(tabla_paginas)) be equal to(5);
 
 			}end
 
 			it("agrega una entrada a la tabla de páginas swapeando") {
 
-				should_bool(iniciar_n(1,3,configuracion,true)) be equal to (true);
+				should_bool(iniciar_n(1,3,true)) be equal to (true);
 
-				should_int(list_size(tabla_paginas)) be equal to(2);
-				assert_tabla_paginas_item(list_get(tabla_paginas,0),1,2,1,false);
-				assert_tabla_paginas_item(list_get(tabla_paginas,1),1,3,0,false);
+				should_int(list_size(tabla_paginas)) be equal to(3);
+
+				assert_tabla_paginas_item(list_get(tabla_paginas,0),1,1,0,false,false);
+				assert_tabla_paginas_item(list_get(tabla_paginas,1),1,2,0,false,false);
+				assert_tabla_paginas_item(list_get(tabla_paginas,2),1,3,0,false,false);
 
 			}end
 
@@ -55,19 +59,45 @@ context(test_admin_memoria) {
 
 			before {
 
-				configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
-				iniciar_marcos(configuracion);
-				tlb = list_create();
+				memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+				iniciar_marcos();
 
 			}end
 
 			it("agrega una entrada a la tabla de páginas swapeando intentando remover la entrada swapeada de la tlb") {
 
-				should_bool(iniciar_n(1,3,configuracion,true)) be equal to (true);
+				should_bool(iniciar_n(1,1,true)) be equal to (true);
 
-				should_int(list_size(tabla_paginas)) be equal to(2);
-				assert_tabla_paginas_item(list_get(tabla_paginas,0),1,2,1,false);
-				assert_tabla_paginas_item(list_get(tabla_paginas,1),1,3,0,false);
+				leer_n(1,1);
+
+				iniciar_n(2,2,true);
+
+				should_int(list_size(tabla_paginas)) be equal to(3);
+				should_int(list_size(tlb)) be equal to(1);
+				should_int(list_size(cola_llegada)) be equal to(1);
+
+				//TODO agregar items a la tabla de llegada
+
+				assert_tabla_paginas_item(list_get(tabla_paginas,0),1,1,0,false,true);
+				assert_tabla_paginas_item(list_get(tabla_paginas,1),2,1,0,false,false);
+				assert_tabla_paginas_item(list_get(tabla_paginas,2),2,2,0,false,false);
+
+			}end
+
+			it("calcula correctamente la tasa de aciertos globales y la tasa de acierto por proceso") {
+
+				iniciar_n(1,2,true);
+
+				leer_n(1,1);
+				leer_n(1,1);
+				leer_n(1,1);
+				leer_n(1,2);
+
+				should_int(pedidos_totales) be equal to(4);
+				should_int(aciertos_totales) be equal to(2);
+
+				should_int(registroTlb[1].aciertos) be equal to(2);
+				should_int(registroTlb[1].pedidos) be equal to(4);
 
 			}end
 
@@ -77,24 +107,21 @@ context(test_admin_memoria) {
 
 	describe("escribir_n") {
 
-		t_config * configuracion;
-
 		before {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
-			iniciar_marcos(configuracion);
-			tabla_paginas = list_create();
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
+			iniciar_marcos();
 
 		}end
 
 		it("escribe estando en memoria") {
 
-			iniciar_n(1,2,configuracion,true);
+			iniciar_n(1,2,true);
 
-			escribir_n(1,1,"Hola",configuracion);
-			escribir_n(1,2,"Chau",configuracion);
+			escribir_n(1,1,"Hola");
+			escribir_n(1,2,"MasDe10Caracteres");
 
-			int tamanio_marco = config_get_int_value(configuracion, "TAMANIO_MARCO");
+			int tamanio_marco = config_get_int_value(memoriaConfig, "TAMANIO_MARCO");
 
 			char * pagina_1 = malloc(tamanio_marco);
 			char * pagina_2 = malloc(tamanio_marco);
@@ -103,35 +130,35 @@ context(test_admin_memoria) {
 			memcpy(pagina_2,memoria+tamanio_marco,tamanio_marco);
 
 			should_string((char *)pagina_1) be equal to("Hola");
-			should_string((char *)pagina_2) be equal to("Chau");
+			should_string((char *)pagina_2) be equal to("MasDe10Car");
 
 		}end
 
 		it("escribe estando en memoria, usando leer_n") {
 
-			iniciar_n(1,2,configuracion,true);
+			iniciar_n(1,2,true);
 
-			escribir_n(1,1,"Hola",configuracion);
-			escribir_n(1,2,"Chau",configuracion);
+			escribir_n(1,1,"Hola");
+			escribir_n(1,2,"Chau");
 
-			should_string(leer_n(1,1,configuracion)) be equal to("Hola");
-			should_string(leer_n(1,2,configuracion)) be equal to("Chau");
+			should_string(leer_n(1,1)) be equal to("Hola");
+			should_string(leer_n(1,2)) be equal to("Chau");
 
 		}end
 
 		it("escribe estando en la tlb") {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
-			iniciar_marcos(configuracion);
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			iniciar_marcos();
 
-			iniciar_n(1,2,configuracion,true);
+			iniciar_n(1,2,true);
 
-			escribir_n(1,1,"Hola",configuracion);
-			escribir_n(1,2,"Chau",configuracion);
+			escribir_n(1,1,"Hola");
+			escribir_n(1,2,"Chau");
 
 			should_int(list_size(tlb)) be equal to(2);
-			should_string(leer_n(1,1,configuracion)) be equal to("Hola");
-			should_string(leer_n(1,2,configuracion)) be equal to("Chau");
+			should_string(leer_n(1,1)) be equal to("Hola");
+			should_string(leer_n(1,2)) be equal to("Chau");
 
 		}end
 
@@ -139,42 +166,33 @@ context(test_admin_memoria) {
 
 	describe("leer_n") {
 
-		t_config * configuracion;
-
-		before {
-
-			tabla_paginas = list_create();
-			tlb = list_create();
-
-		}end
-
 		it("lee estando en memoria") {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
-			iniciar_marcos(configuracion);
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
+			iniciar_marcos();
 
-			iniciar_n(1,2,configuracion,true);
+			iniciar_n(1,2,true);
 
-			escribir_n(1,1,"Hola",configuracion);
-			escribir_n(1,2,"Chau",configuracion);
+			escribir_n(1,1,"Hola");
+			escribir_n(1,2,"Chau");
 
-			should_string(leer_n(1,1,configuracion)) be equal to("Hola");
-			should_string(leer_n(1,2,configuracion)) be equal to("Chau");
+			should_string(leer_n(1,1)) be equal to("Hola");
+			should_string(leer_n(1,2)) be equal to("Chau");
 
 		}end
 
 		it("lee estando en tlb") {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
-			iniciar_marcos(configuracion);
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			iniciar_marcos();
 
-			iniciar_n(1,2,configuracion,true);
+			iniciar_n(1,2,true);
 
-			escribir_n(1,1,"Hola",configuracion);
-			escribir_n(1,2,"Chau",configuracion);
+			escribir_n(1,1,"Hola");
+			escribir_n(1,2,"Chau");
 
-			should_string(leer_n(1,1,configuracion)) be equal to("Hola");
-			should_string(leer_n(1,2,configuracion)) be equal to("Chau");
+			should_string(leer_n(1,1)) be equal to("Hola");
+			should_string(leer_n(1,2)) be equal to("Chau");
 
 		}end
 
@@ -182,43 +200,36 @@ context(test_admin_memoria) {
 
 	describe("finalizar") {
 
-		t_config * configuracion;
-
 		it("remueve procesos de la tlb y la tabla liberando marcos") {
 
-			tabla_paginas = list_create();
-			tlb = list_create();
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			iniciar_marcos();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
-			iniciar_marcos(configuracion);
+			iniciar_n(1,1,true);
+			iniciar_n(2,1,true);
 
-			iniciar_n(1,1,configuracion,true);
-			iniciar_n(2,1,configuracion,true);
+			leer_n(1,1);
+			leer_n(2,1);
 
-			tlb_agregar_entrada(1,1,0,configuracion,false);
-			tlb_agregar_entrada(2,1,1,configuracion,false);
-
-			finalizar(1,configuracion,true);
+			finalizar(1,true);
 
 			should_int(list_size(tlb)) be equal to(1);
 			should_int(list_size(tabla_paginas)) be equal to(1);
+			should_int(list_size(cola_llegada)) be equal to(1);
 
 		}end
 
 		it("con un pid que no existe no remueve nada de ningún lado") {
 
-			tabla_paginas = list_create();
-			tlb = list_create();
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			iniciar_marcos();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
-			iniciar_marcos(configuracion);
+			iniciar_n(1,2,true);
 
-			iniciar_n(1,2,configuracion,true);
+			tlb_agregar_entrada(1,1,0,false);
+			tlb_agregar_entrada(1,2,1,false);
 
-			tlb_agregar_entrada(1,1,0,configuracion,false);
-			tlb_agregar_entrada(1,2,1,configuracion,false);
-
-			finalizar(2,configuracion,true);
+			finalizar(2,true);
 
 			should_int(list_size(tlb)) be equal to(2);
 			should_int(list_size(tabla_paginas)) be equal to(2);
@@ -229,27 +240,22 @@ context(test_admin_memoria) {
 
 	describe("señales") {
 
-		t_config * configuracion;
-
 		it("vuelca el contenido de la memoria en un log") {
 
-			tabla_paginas = list_create();
-			tlb = list_create();
-
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
-			iniciar_marcos(configuracion);
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			iniciar_marcos();
 
 			remove("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/log_test_volcado_memoria");
 
 			logger = log_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/log_test_volcado_memoria", "PAM", true, LOG_LEVEL_DEBUG);
 			loggearInfo("Inicio del test");
 
-			iniciar_n(1,2,configuracion,true);
+			iniciar_n(1,2,true);
 
-			escribir_n(1,1,"Hola",configuracion);
-			escribir_n(1,2,"Chau",configuracion);
+			escribir_n(1,1,"Hola");
+			escribir_n(1,2,"Chau");
 
-			volcar_memoria_principal(configuracion);
+			volcar_memoria_principal();
 			loggearInfo("Fin del test");
 
 			should_int(1) be equal to(1);
@@ -258,18 +264,15 @@ context(test_admin_memoria) {
 
 		it("vacia la tlb") {
 
-			tabla_paginas = list_create();
-			tlb = list_create();
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			iniciar_marcos();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
-			iniciar_marcos(configuracion);
+			iniciar_n(1,2,true);
 
-			iniciar_n(1,2,configuracion,true);
+			escribir_n(1,1,"Hola");
+			escribir_n(1,2,"Chau");
 
-			escribir_n(1,1,"Hola",configuracion);
-			escribir_n(1,2,"Chau",configuracion);
-
-			vaciar_tlb(configuracion);
+			vaciar_tlb();
 
 			should_int(list_size(tlb)) be equal to(0);
 			should_int(list_size(tabla_paginas)) be equal to(2);
@@ -277,15 +280,12 @@ context(test_admin_memoria) {
 
 		it("vacia la tabla de paginas") {
 
-			tabla_paginas = list_create();
-			tlb = list_create();
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			iniciar_marcos();
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
-			iniciar_marcos(configuracion);
+			iniciar_n(1,2,true);
 
-			iniciar_n(1,2,configuracion,true);
-
-			vaciar_tabla_paginas(configuracion);
+			vaciar_tabla_paginas();
 
 			should_int(list_size(tlb)) be equal to(0);
 			should_int(list_size(tabla_paginas)) be equal to(0);
@@ -295,81 +295,118 @@ context(test_admin_memoria) {
 
 	describe("fifo") {
 
-		t_config * configuracion;
-
 		before {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionFifo");
-			iniciar_marcos(configuracion);
-			tabla_paginas = list_create();
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionFifo");
+			iniciar_marcos();
 
 		}end
 
 		it("swappea paginas por fifo") {
 
-			iniciar_n(1,5,configuracion,true);
+			iniciar_n(1,5,true);
 
-			//Es el anteultimo (el primero con el que usa fifo)
-			t_tlb_item * item = list_get(tabla_paginas,1);
+			should_int(list_size(cola_llegada)) be equal to(3);
 
-			assert_tabla_paginas_item(item, 1, 4,0, false);
+			t_tlb_item * item = list_get(tabla_paginas,3);
 
-			//Es el ultimo (el segundo con el que usa fifo)
-			item = list_get(tabla_paginas,2);
+			assert_tabla_paginas_item(item, 1, 4,0, false,true);
 
-			assert_tabla_paginas_item(item, 1, 5,1, false);
+			item = list_get(tabla_paginas,4);
+
+			assert_tabla_paginas_item(item, 1, 5,1, false,true);
+
+			item = list_get(tabla_paginas,0);
+
+			assert_tabla_paginas_item(item, 1, 1,0, false,false);
+
+			item = list_get(tabla_paginas,1);
+
+			assert_tabla_paginas_item(item, 1, 2,1, false,false);
 
 		}end
 
 	}end
 
 	describe("lru") {
-		t_config * configuracion;
 
 		before {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionLru");
-			iniciar_marcos(configuracion);
-			tabla_paginas = list_create();
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionLru");
+			iniciar_marcos();
 
 		}end
 
 		it("swappea usando lru") {
 
-			//Tiene 3 entradas la tabla de páginas
-			iniciar_n(1,3,configuracion,true);
+			iniciar_n(1,3,true);
 
-			//Tendria que volar esta ya que fué la ultima utilizada
-			leer_n(1,3,configuracion);
-			leer_n(1,1,configuracion);
-			leer_n(1,2,configuracion);
+			leer_n(1,3);
+			leer_n(1,1);
+			leer_n(1,2);
 
 			//No tiene lugar y usa lru
-			iniciar_n(2,1,configuracion,true);
+			iniciar_n(2,1,true);
 
-			t_tlb_item * item = list_get(tabla_paginas,2);
+			t_tlb_item * item = list_get(tabla_paginas,3);
 
-			assert_tabla_paginas_item(item, 2, 1,2, false);
+			assert_tabla_paginas_item(item, 2, 1,2, false,true);
+
+			item = list_get(tabla_paginas,2);
+
+			assert_tabla_paginas_item(item, 1, 3,2, false,false);
+
+			iniciar_n(3,1,true);
+
+			item = list_get(tabla_paginas,4);
+
+			assert_tabla_paginas_item(item, 3, 1,0, false,true);
+
+			item = list_get(tabla_paginas,0);
+
+			assert_tabla_paginas_item(item, 1, 1,0, false,false);
 
 		}end
 
 	}end
 
 	describe("clock_m") {
-		t_config * configuracion;
 
 		before {
 
-			configuracion= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionClock-M");
-			iniciar_marcos(configuracion);
-			tabla_paginas = list_create();
+			memoriaConfig= config_create("/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/test/configuracionClock-M");
+			iniciar_marcos();
 
 		}end
 
-		it("agrega una entrada a la tabla de páginas swapeando intentando remover la entrada swapeada de la tlb") {
+		it("swappea usando clock_m") {
+
+			iniciar_n(1,2,true);
+			iniciar_n(2,1,true);
+			iniciar_n(3,2,true);
+			//Aloja uno y desaloja el marco cero que era del proceso 1 pagina 1
+			//El puntero pasó al segundo elemento ( p1 pag 2)
+
+			t_tlb_item * item = list_get(tabla_paginas,4);
+
+			assert_tabla_paginas_item(item, 3, 2, 0, false,true);
+
+			item = list_get(tabla_paginas,0);
+
+			assert_tabla_paginas_item(item, 1, 1, 0, false,false);
+
+			iniciar_n(4,2,true);
+			//Para la pagina 1 desaloja al segundo elemento (p1 pag2). El puntero pasa a ser el tercer elemento
+			item = list_get(tabla_paginas,5);
+
+			assert_tabla_paginas_item(item, 4, 1, 1, false,true);
+
+			item = list_get(tabla_paginas,6);
+
+			assert_tabla_paginas_item(item, 4, 2, 2, false,true);
 
 		}end
 
-	}end
+	}end*/
 
 }

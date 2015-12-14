@@ -24,6 +24,6 @@ t_list * marcos_disponibles;
 
 bool esta_libre(void * data);
 int cantidad_marcos_libres();
-void iniciar_marcos(t_config * configuraciones);
+void iniciar_marcos();
 
 #endif /* MARCOS_H_ */

@@ -6,8 +6,8 @@
  */
 #include "retardo.h"
 
-void retardo(t_config * configuracion_retardo) {
+void retardo() {
 
-	sleep(config_get_int_value(configuracion_retardo, "RETARDO_MEMORIA"));
+	sleep(config_get_int_value(memoriaConfig, "RETARDO_MEMORIA"));
 
 }

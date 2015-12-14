@@ -14,13 +14,18 @@
 #include "pedidos/escribir_n.h"
 #include "swap.h"
 #include "retardo.h"
+#include "algoritmos/algoritmos.h"
 
 int pid_matchear_tabla_paginas, pagina_matchear_tabla_paginas;
 
 /**
  * tlb_remover_pid
  */
-void tabla_paginas_remover_pid(int pid, t_config * configuraciones,bool es_test);
+
+bool coincide_pid_tabla_paginas(void * data);
+
+void tabla_paginas_remover_pid(int pid, t_config * configuraciones,
+bool es_test);
 
 bool coincide_pid_tabla_paginas_y_libera_marcos(void * data);
 
@@ -30,7 +35,7 @@ bool coincide_pid_tabla_paginas(void * data);
  * tabla_paginas_aniadir_item
  */
 void tabla_paginas_aniadir_item(int pid, int pagina, int marco,
-bool es_modificado);
+bool es_modificado, bool presente);
 
 /**
  * tabla_paginas_buscar

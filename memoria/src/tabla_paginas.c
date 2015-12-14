@@ -11,7 +11,18 @@ bool es_test) {
 
 	pid_matchear_tabla_paginas = pid;
 
-	int cantidad_restante = list_count_satisfying(tabla_paginas,
+	int cantidad_restante = list_count_satisfying(cola_llegada,
+			coincide_pid_tabla_paginas);
+
+	while (cantidad_restante) {
+
+		list_remove_by_condition(cola_llegada, coincide_pid_tabla_paginas);
+
+		cantidad_restante--;
+
+	}
+
+	cantidad_restante = list_count_satisfying(tabla_paginas,
 			coincide_pid_tabla_paginas);
 
 	while (cantidad_restante) {
@@ -31,6 +42,14 @@ bool es_test) {
 
 }
 
+bool coincide_pid_tabla_paginas(void * data) {
+
+	t_tabla_paginas_item * item = data;
+
+	return (item->pid == pid_matchear_tabla_paginas);
+
+}
+
 bool coincide_pid_tabla_paginas_y_libera_marcos(void * data) {
 
 	t_tabla_paginas_item * item = data;
@@ -46,16 +65,8 @@ bool coincide_pid_tabla_paginas_y_libera_marcos(void * data) {
 
 }
 
-bool coincide_pid_tabla_paginas(void * data) {
-
-	t_tabla_paginas_item * item = data;
-
-	return (item->pid == pid_matchear_tabla_paginas);
-
-}
-
 void tabla_paginas_aniadir_item(int pid, int pagina, int marco,
-bool es_modificado) {
+bool es_modificado, bool presente) {
 
 	t_tabla_paginas_item * nuevo = malloc(sizeof(t_tabla_paginas_item));
 
@@ -63,9 +74,9 @@ bool es_modificado) {
 	nuevo->pagina = pagina;
 	nuevo->marco = marco;
 	nuevo->modificado = false;
-	nuevo->numero_operacion = numero_operacion;
-
-	numero_operacion++;
+	nuevo->numero_operacion = get_numero_operacion();
+	nuevo->presencia = presente;
+	nuevo->uso = 1;
 
 	list_add(tabla_paginas, nuevo);
 
@@ -90,21 +101,27 @@ bool es_escritura) {
 
 		int marco_a_asignar = marco_libre();
 
-		tabla_paginas_aniadir_item(pid, pagina, marco_a_asignar, true);
+		tabla_paginas_aniadir_item(pid, pagina, marco_a_asignar, true, true);
 
-		char * contenido = swap_leer(pid, pagina);
+		if (!test) {
 
-		strcpy(memoria + tamanio_marco * marco_a_asignar, contenido);
+			char * contenido = swap_leer(pid, pagina);
 
-		//Deberia rellenar el contenido faltante con /0
+			strcpy(memoria + tamanio_marco * marco_a_asignar, contenido);
+		}
 
 		return marco_a_asignar;
 	}
 
 	else {
 
-		item_encontrado->numero_operacion = numero_operacion;
-		numero_operacion++;
+		item_encontrado->numero_operacion = get_numero_operacion();
+		item_encontrado->modificado = es_escritura;
+
+		if (es_escritura) {
+
+			item_encontrado->marco = marco_libre();
+		}
 
 		return item_encontrado->marco;
 

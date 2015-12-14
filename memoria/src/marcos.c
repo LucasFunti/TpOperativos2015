@@ -1,13 +1,28 @@
 #include "marcos.h"
 
-void iniciar_marcos(t_config * configuraciones) {
+void iniciar_marcos() {
+
+	cola_llegada = list_create();
+	tlb = list_create();
+	tabla_paginas = list_create();
+
+	aciertos_totales = 0;
+	pedidos_totales = 0;
+
+	int contadorAuxiliar;
+	for(contadorAuxiliar=0;contadorAuxiliar<100;contadorAuxiliar++) {
+
+		registroTlb[contadorAuxiliar].aciertos = 0;
+		registroTlb[contadorAuxiliar].pedidos = 0;
+
+	}
 
 	numero_operacion = 0;
 
-	int cantidad_marcos = config_get_int_value(configuraciones,
+	int cantidad_marcos = config_get_int_value(memoriaConfig,
 			"CANTIDAD_MARCOS");
 
-	int tamanio_marcos = config_get_int_value(configuraciones, "TAMANIO_MARCO");
+	int tamanio_marcos = config_get_int_value(memoriaConfig, "TAMANIO_MARCO");
 
 	memoria = malloc(tamanio_marcos * cantidad_marcos);
 

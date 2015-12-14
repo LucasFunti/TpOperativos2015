@@ -12,8 +12,12 @@
 #include <stdlib.h>
 #include "tabla_paginas.h"
 #include "estructuras.h"
+#include "globals.h"
 
 int pid_matchear_tlb, pagina_matchear_tlb;
+
+void coincide_pid_y_pagina_iterador(void * data);
+void tlb_sacar_presencia(int pid, int pagina, t_config * configuraciones);
 
 /**
  * tlb_remover_pid
@@ -45,7 +49,6 @@ bool es_escritura);
  * tlb_agregar_entrada
  */
 
-void tlb_agregar_entrada(int pid, int pagina, int marco,
-		t_config * configuraciones, bool es_escritura);
+void tlb_agregar_entrada(int pid, int pagina, int marco,bool es_escritura);
 
 #endif /* TLB_H_ */
