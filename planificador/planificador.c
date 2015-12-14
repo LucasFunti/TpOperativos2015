@@ -43,17 +43,37 @@ int main(int argc, char **argv) {
 	char * algoritmo = getAlgoritmo();
 	int quantum = getQuantum();
 
-	int socketCliente, socketEscucha, retornoPoll, fd_index;
+	int socketEscucha, retornoPoll;
+	int fd_index = 0;
 
 	struct pollfd fileDescriptors[4];
 	int cantfds = 0;
 	socketEscucha = setup_listen("localhost", port);
-	listen(socketEscucha, BACKLOG);
 
 	fileDescriptors[0].fd = socketEscucha;
 	fileDescriptors[0].events = POLLIN;
-	printf("SOCKET = %d\n", socketEscucha);
+	//printf("SOCKET = %d\n", socketEscucha);
+	retornoPoll = poll(fileDescriptors, cantfds, -1);
+	printf("retorno del poll = %d\n", retornoPoll);
+	if (retornoPoll == -1) {
+		printf("Error en la funcion poll\n");
+	}
+	if (fileDescriptors[fd_index].revents & POLLIN) {
+		if (fileDescriptors[fd_index].fd == socketEscucha) {
+			listen(socketEscucha, BACKLOG);
+			struct sockaddr_in addr;
+			socklen_t addrlen = sizeof(addr);
+			int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
+					&addrlen);
+			log_info(log_planificador, "Se conecto una cpu en el socket %d",
+					socketCliente);
 
+			fileDescriptors[cantfds].fd = socketCliente;
+			fileDescriptors[cantfds].events = POLLIN;
+			cantfds++;
+
+		}
+	}
 	int pid_a_finalizar;
 	int enviar = 1;
 
@@ -65,7 +85,10 @@ int main(int argc, char **argv) {
 		case 1:/* correr */
 			scanf("%s", nombreProceso);
 			char *path = malloc(256);
-			realpath(nombreProceso, path);
+			//realpath(nombreProceso, path);
+			strcpy(path,
+					"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/Debug/corto");
+			printf("el path a enviar es: %s \n", path);
 
 			int pid;
 			pid = generarPID(&p_last_id);
@@ -76,30 +99,12 @@ int main(int argc, char **argv) {
 			agregarEnColaDeListos(proceso, mutex_readys, colaListos,
 					log_planificador, entrada_salida, en_ejecucion);
 
-			retornoPoll = poll(fileDescriptors, cantfds, 100000);
-			printf("retorno del poll = %d\n", retornoPoll);
-			if (retornoPoll == -1) {
-				printf("Error en la funcion poll\n");
-			}
-			if (fileDescriptors[fd_index].revents & POLLIN) {
-				if (fileDescriptors[fd_index].fd == socketEscucha) {
+			enviarContextoEjecucion(fileDescriptors[cantfds - 1].fd, codigoOperacion, proceso,
+					path, algoritmo, quantum);
 
-					socketCliente = esperarConexionEntrante(socketEscucha,
-					BACKLOG, log_planificador);
-
-					fileDescriptors[cantfds].fd = socketCliente;
-					fileDescriptors[cantfds].events = POLLIN;
-					cantfds++;
-
-					enviarContextoEjecucion(socketCliente, codigoOperacion,
-							proceso, path,algoritmo, quantum);
-
-					cambiarAEstadoDeEjecucion(mutex_readys, colaListos,
-							mutex_ejecucion, en_ejecucion, entrada_salida,
-							log_planificador, fileDescriptors[cantfds].fd);
-
-				}
-			}
+			cambiarAEstadoDeEjecucion(mutex_readys, colaListos, mutex_ejecucion,
+					en_ejecucion, entrada_salida, log_planificador,
+					fileDescriptors[cantfds - 1].fd);
 
 			break;
 		case 99:
@@ -120,22 +125,23 @@ int main(int argc, char **argv) {
 			PC = setProgramCounter(procesoEnEjecucion->proceso->dirProceso);
 
 			procesoEnEjecucion->proceso->programCounter = PC;
-			agregarEnColaDeListos(procesoEnEjecucion->proceso, mutex_readys, colaListos,
-					log_planificador, entrada_salida, en_ejecucion);
+			agregarEnColaDeListos(procesoEnEjecucion->proceso, mutex_readys,
+					colaListos, log_planificador, entrada_salida, en_ejecucion);
 			free(procesoEnEjecucion);
 
 			break;
 		case 2:
 			/* ps */
 
-			mostrarEstadoDeLista(en_ejecucion, "Ejecutando");
-			mostrarEstadoDeListos(colaListos, "Listo");
-			mostrarEstadoDeBloqueados(entrada_salida, "Bloqueados");
+			mostrarEstadoDeLista(en_ejecucion, "Ejecutando", log_planificador);
+			mostrarEstadoDeListos(colaListos, "Listo", log_planificador);
+			mostrarEstadoDeBloqueados(entrada_salida, "Bloqueados",
+					log_planificador);
 
 			break;
 		case 3:
 			/* cpu */
-			peticionPorcentajeUsoCpu(en_ejecucion,3);
+			peticionPorcentajeUsoCpu(en_ejecucion, 3);
 			break;
 		}
 
@@ -160,11 +166,12 @@ int main(int argc, char **argv) {
 				}
 			}
 		}
+
+
+
 	}
-	close(socketCliente);
 	destruirMutex(mutex_readys, mutex_ejecucion, mutex_bloqueados);
 
 	return 0;
-
 }
 

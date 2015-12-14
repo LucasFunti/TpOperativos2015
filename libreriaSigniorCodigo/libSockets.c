@@ -8,13 +8,16 @@
 #define HEADER_PAQUETE (sizeof(int)*3)
 
 int setup_listen(char* IP, char* Port) {
-	struct addrinfo* serverInfo = cargarInfoSocket(IP, Port);
+	struct addrinfo * serverInfo = cargarInfoSocket(IP, Port);
 	if (serverInfo == NULL)
 		return -1;
 	int socketEscucha;
 	socketEscucha = socket(serverInfo->ai_family, serverInfo->ai_socktype,
 			serverInfo->ai_protocol);
-	bind(socketEscucha, serverInfo->ai_addr, serverInfo->ai_addrlen);
+	if (bind(socketEscucha, serverInfo->ai_addr, serverInfo->ai_addrlen)
+				== -1) {
+		printf("Error en el Bind \n");
+	}
 	freeaddrinfo(serverInfo);
 	return socketEscucha;
 }
@@ -36,7 +39,7 @@ int setup_listen_con_log(char* IP, char* Port, t_log * logger) {
 
 struct addrinfo* cargarInfoSocket(char *IP, char* Port) {
 	struct addrinfo hints;
-	struct addrinfo* serverInfo;
+	struct addrinfo * serverInfo;
 	int error;
 	memset(&hints, 0, sizeof(hints));
 
