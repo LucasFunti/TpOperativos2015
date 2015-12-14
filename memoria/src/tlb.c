@@ -145,11 +145,13 @@ void tlb_agregar_entrada(int pid, int pagina, int marco, bool es_escritura) {
 		item->pagina = pagina;
 		item->marco = marco;
 		item->modificado = es_escritura;
-		item->numero_operacion = 0;
+		item->presencia = true;
+
 
 		list_add(tlb, item);
 
 	} else {
+
 		//Swapea
 		t_tlb_item * item = list_get(tlb, 0);
 		if (item->modificado) {

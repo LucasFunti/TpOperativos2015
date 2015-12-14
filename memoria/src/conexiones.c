@@ -9,7 +9,7 @@
 void atenderConexiones() {
 
 	socketEscucha = setup_listen("localhost",
-			config_get_string_value(memoriaConfig,"PUERTO_ESCUCHA"));
+			config_get_string_value(memoriaConfig, "PUERTO_ESCUCHA"));
 
 	listen(socketEscucha, 15);
 
@@ -106,12 +106,14 @@ t_data * leer_paquete(int socket) {
 }
 
 struct addrinfo* common_setup(char *IP, char* Port) {
+
 	struct addrinfo hints;
 	struct addrinfo* serverInfo;
 	int16_t error;
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
+
 	if (!strcmp(IP, "localhost")) {
 		hints.ai_flags = AI_PASSIVE;
 		error = getaddrinfo(NULL, Port, &hints, &serverInfo);
@@ -128,7 +130,7 @@ int setup_listen(char* IP, char* Port) {
 
 	struct addrinfo* serverInfo = common_setup(IP, Port);
 	if (serverInfo == NULL)
-		return -1;
+		exit(-1);
 	int socketEscucha;
 	socketEscucha = socket(serverInfo->ai_family, serverInfo->ai_socktype,
 			serverInfo->ai_protocol);
@@ -192,9 +194,8 @@ void common_send(int socket, t_data * paquete) {
 
 void conectarseAlSwap() {
 
-	socketSwap = connect_to(
-			config_get_string_value(memoriaConfig,"IP_SWAP"),
-			config_get_string_value(memoriaConfig,"PUERTO_SWAP"));
+	socketSwap = connect_to(config_get_string_value(memoriaConfig, "IP_SWAP"),
+			config_get_string_value(memoriaConfig, "PUERTO_SWAP"));
 
 	int null_data = 0;
 

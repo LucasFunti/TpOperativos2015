@@ -65,7 +65,6 @@ bool coincide_pid_tabla_paginas_y_libera_marcos(void * data) {
 
 }
 
-
 void tabla_paginas_aniadir_item(int pid, int pagina, int marco,
 bool es_modificado, bool presente) {
 
@@ -75,13 +74,11 @@ bool es_modificado, bool presente) {
 	nuevo->pagina = pagina;
 	nuevo->marco = marco;
 	nuevo->modificado = false;
-	nuevo->numero_operacion = numero_operacion;
-	nuevo->presencia = true;
-
-	numero_operacion++;
+	nuevo->numero_operacion = get_numero_operacion();
+	nuevo->presencia = presente;
+	nuevo->uso = 1;
 
 	list_add(tabla_paginas, nuevo);
-	list_add(cola_llegada,nuevo);
 
 }
 
@@ -106,19 +103,25 @@ bool es_escritura) {
 
 		tabla_paginas_aniadir_item(pid, pagina, marco_a_asignar, true, true);
 
-		char * contenido = swap_leer(pid, pagina);
+		if (!test) {
 
-		strcpy(memoria + tamanio_marco * marco_a_asignar, contenido);
+			char * contenido = swap_leer(pid, pagina);
 
-		//Deberia rellenar el contenido faltante con /0
+			strcpy(memoria + tamanio_marco * marco_a_asignar, contenido);
+		}
 
 		return marco_a_asignar;
 	}
 
 	else {
 
-		item_encontrado->numero_operacion = numero_operacion;
-		numero_operacion++;
+		item_encontrado->numero_operacion = get_numero_operacion();
+		item_encontrado->modificado = es_escritura;
+
+		if (es_escritura) {
+
+			item_encontrado->marco = marco_libre();
+		}
 
 		return item_encontrado->marco;
 

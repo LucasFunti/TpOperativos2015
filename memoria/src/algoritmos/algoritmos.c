@@ -41,6 +41,12 @@ int lru() {
 	return posicion_del_menor_lru;
 }
 
+int get_numero_operacion(){
+	int n = numero_operacion;
+	numero_operacion++;
+	return n;
+}
+
 void encontrar_menor_numero_operacion(void * data) {
 
 	t_tabla_paginas_item * entrada = data;

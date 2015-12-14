@@ -16,6 +16,8 @@
 
 int numero_operacion;
 
+bool test;
+
 int pedidos_totales, aciertos_totales;
 
 t_registro_tlb registroTlb[100];

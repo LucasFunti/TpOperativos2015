@@ -35,6 +35,7 @@ typedef struct {
 	bool modificado;
 	int numero_operacion;
 	bool presencia;
+	bool uso;
 } t_tabla_paginas_item;
 
 typedef t_tabla_paginas_item t_tlb_item;

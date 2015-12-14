@@ -16,15 +16,15 @@ void finalizar(int pid, bool es_test) {
 	loggearInfo(
 			string_from_format(
 					"Se finaliza el proceso %d. El mismo tuvo %d aciertos sobre %d pedidos a la tlb",
-			pid, registroTlb[pid].aciertos, registroTlb[pid].pedidos));
+					pid, registroTlb[pid].aciertos, registroTlb[pid].pedidos));
 
 	if (tlb_habilitada(memoriaConfig)) {
 
-		tlb_remover_pid(pid, memoriaConfig, es_test);
+		tlb_remover_pid(pid, memoriaConfig, test);
 
 	} else {
 
-		tabla_paginas_remover_pid(pid, memoriaConfig, es_test);
+		tabla_paginas_remover_pid(pid, memoriaConfig, test);
 
 	}
 

@@ -61,8 +61,7 @@ void vaciar_tlb() {
 
 		item = list_remove(tlb, 0);
 		if (item->modificado) {
-			tabla_paginas_buscar(item->pid, item->pagina,
-					memoriaConfig, true);
+			tabla_paginas_buscar(item->pid, item->pagina, memoriaConfig, true);
 		}
 		free(item);
 
@@ -81,18 +80,18 @@ void vaciar_tabla_paginas() {
 		item = list_remove(tabla_paginas, 0);
 		if (item->modificado) {
 			swap_escribir(item->pid, item->pagina, item->marco);
+
+			free(item);
+
+			cantidad_elementos--;
 		}
-		free(item);
 
-		cantidad_elementos--;
 	}
-
 }
 
 void volcar_memoria_principal() {
 
-	int tamanio_marco = config_get_int_value(memoriaConfig,
-			"TAMANIO_MARCO");
+	int tamanio_marco = config_get_int_value(memoriaConfig, "TAMANIO_MARCO");
 	int cantidad_marcos = config_get_int_value(memoriaConfig,
 			"CANTIDAD_MARCOS");
 

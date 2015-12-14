@@ -18,6 +18,7 @@ int posicion_fifo, posicion_auxiliar;
 void encontrar_elemento_fifo(void * data);
 
 int lru();
+int get_numero_operacion();
 void encontrar_menor_numero_operacion(void * data);
 int posicion_lru, posicion_del_menor_lru;
 int minimo_numero_operacion;

@@ -14,12 +14,14 @@
 
 int main() {
 
+	test = true;
+
 	iniciarLogger();
 	levantarConfiguracion();
 	iniciar_marcos(memoriaConfig);
 	registrarSeniales();
 
-	conectarseAlSwap();
+	//conectarseAlSwap();
 
 	iniciarEstructuras();
 
@@ -128,7 +130,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 				sizeof(int));
 
 		char * texto = malloc(tamanio_texto);
-		memcpy(texto, data_entrante + 3 * sizeof(int), tamanio_texto);
+		memcpy(texto, data_entrante->data + 3 * sizeof(int), tamanio_texto);
 
 		escribir_n(pid_escribir, pagina_escribir, texto);
 
@@ -151,7 +153,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid_para_finalizar, data_entrante->data, sizeof(int));
 
 		//False porque no es test
-		finalizar(pid, false);
+		finalizar(pid_para_finalizar, false);
 
 		log_info(logger,
 				string_from_format("Se finalizó el pid %d",
