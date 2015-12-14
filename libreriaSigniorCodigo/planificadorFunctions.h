@@ -82,11 +82,11 @@ char *getAlgoritmo();
 void inicializarColecciones(t_queue * colaListos, t_queue * colaFinalizados,
 	t_list * listaEjecutando, t_queue * entradaSalida);
 
-void mostrarEstadoDeLista(t_list *lista, char*estado);
+void mostrarEstadoDeLista(t_list *lista, char*estado,t_log * log_planificador);
 
-void mostrarEstadoDeListos(t_queue *cola, char*estado);
+void mostrarEstadoDeListos(t_queue *cola, char*estado,t_log * log_planificador);
 
-void mostrarEstadoDeBloqueados(t_queue *cola, char*estado);
+void mostrarEstadoDeBloqueados(t_queue *cola, char*estado,t_log * log_planificador);
 
 void agregarAListaDeEjecucion(pthread_mutex_t mutex_ejecucion,
 	t_list *listaEjecutando, nodo_en_ejecucion *proceso, t_queue*colaListos,
@@ -113,7 +113,7 @@ void agregarAColaDeBloqueados(pthread_mutex_t mutex_bloqueados,
 void * cambiarEstadoABloqueado(void * data) ;
 
 void cambiarEstado(tipo_pcb *proceso, int estado, t_queue*colaListos,
-	t_queue*entrada_salida, t_list*en_ejecucion);
+	t_queue*entrada_salida, t_list*en_ejecucion,t_log * log_planificador);
 
 int setProgramCounter(char *dirProceso);
 
@@ -138,5 +138,6 @@ void agregarAFinalizados(t_queue *finalizados, nodo_en_ejecucion * proceso,
 		t_log *log_planificador) ;
 
 void peticionPorcentajeUsoCpu(t_list * lista,int codigo) ;
+
 
 #endif /* PLANIFICADORFUNCTIONS_H_ */
