@@ -100,7 +100,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid_leer, data_entrante->data, sizeof(int));
 		memcpy(&pagina_leer, data_entrante->data + sizeof(int), sizeof(int));
 
-		char * contenido = leer_n(pid_leer, pagina_leer);
+		char * contenido = leer_n(pid_leer, pagina_leer+1);
 
 		log_info(logger,
 				string_from_format("Leer el pid %d y página %d retorna %s",
@@ -132,7 +132,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		char * texto = malloc(tamanio_texto);
 		memcpy(texto, data_entrante->data + 3 * sizeof(int), tamanio_texto);
 
-		escribir_n(pid_escribir, pagina_escribir, texto);
+		escribir_n(pid_escribir, pagina_escribir+1, texto);
 
 		log_info(logger,
 				string_from_format(

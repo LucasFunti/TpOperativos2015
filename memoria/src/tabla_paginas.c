@@ -94,7 +94,7 @@ bool es_escritura) {
 	t_tabla_paginas_item * item_encontrado = list_find(tabla_paginas,
 			coincide_pid_y_pagina_tabla_paginas);
 
-	if (item_encontrado == NULL) {
+	if (item_encontrado == NULL && !test) {
 
 		int tamanio_marco = config_get_int_value(configuraciones,
 				"TAMANIO_MARCO");
@@ -103,12 +103,12 @@ bool es_escritura) {
 
 		tabla_paginas_aniadir_item(pid, pagina, marco_a_asignar, true, true);
 
-		if (!test) {
 
-			char * contenido = swap_leer(pid, pagina);
 
-			strcpy(memoria + tamanio_marco * marco_a_asignar, contenido);
-		}
+		char * contenido = swap_leer(pid, pagina);
+
+		strcpy(memoria + tamanio_marco * marco_a_asignar, contenido);
+
 
 		return marco_a_asignar;
 	}
