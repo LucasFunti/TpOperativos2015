@@ -19,8 +19,8 @@
 #include <commons/config.h>
 #include <commons/collections/list.h>
 #include <commons/bitarray.h>
-#include <swapFunctions.h>
-#include <libSockets.h>
+#include <signiorCodigo/swapFunctions.h>
+#include <signiorCodigo/libSockets.h>
 
 #define BACKLOG 5
 #define PACKAGESIZE 32
@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 //		recv(memoriaSocket, &packageHead, sizeof(int),0);
 //		evaluateAction(memoriaSocket,pages);
 //	}
-
+//
 //	printf("Ingrese Accion\n");
 //	char *action = malloc(sizeof(char)*15);
 //	scanf ("%s",action);
@@ -61,8 +61,8 @@ int main(int argc, char **argv) {
 //		printf("Ingrese Accion\n");
 //		scanf ("%s",action);
 //	}
-
-
+//
+//
 //	t_nodo_swap* item = NULL;
 //	for (i = 0; i < top ; i++){
 //		item = (t_nodo_swap*) list_get(pages,i);
@@ -83,14 +83,14 @@ int main(int argc, char **argv) {
 //	tamanioPagina = config_get_int_value(swapConfiguracion,"TAMANIO_PAGINA");
 //	retardoSwap = config_get_int_value(swapConfiguracion,"RETARDO_SWAP");
 //	retardoCompactacion = config_get_int_value(swapConfiguracion,"RETARDO_COMPACTACION");
-
-
+//
+//
 //	int socketCliente;
 //	socketCliente = conectarServidor("localhost", puerto, BACKLOG);
 //	char package[PACKAGESIZE];
 //	int status = 1;
-
-
+//
+//
 //	printf("Cliente conectado. Esperando mensajes:\n");
 //
 //	while (status != 0) {
