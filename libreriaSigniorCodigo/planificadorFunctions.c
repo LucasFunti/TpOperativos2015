@@ -57,11 +57,11 @@ int generarPID(int* pid) {
 tipo_pcb *generarPCB(int pid, char *path, int estado, char *nombre) {
 	tipo_pcb *pcb = malloc(sizeof(tipo_pcb));
 	pcb->id = pid;
-	pcb->dirProceso = malloc(strlen(path));
+	pcb->dirProceso = malloc(strlen(path) + 1);
 	pcb->dirProceso = path;
 	pcb->estado = estado;
 	pcb->programCounter = 0;
-	pcb->nombrePrograma = malloc(strlen(nombre));
+	pcb->nombrePrograma = malloc(strlen(nombre) + 1);
 	pcb->nombrePrograma = nombre;
 	pcb->tiempoComienzo = time(NULL);
 
@@ -73,7 +73,7 @@ char *getPuerto() {
 	planificador_config =
 			config_create(
 					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
-	char* puerto = config_get_string_value(planificador_config,
+	char * puerto = config_get_string_value(planificador_config,
 			"PUERTO_ESCUCHA");
 	return puerto;
 }
@@ -107,7 +107,7 @@ void inicializarColecciones(t_queue * colaListos, t_queue * colaFinalizados,
 }
 
 /* recorro la lissta mostrando los estado de los procesos para la instruccion ps */
-void mostrarEstadoDeLista(t_list *lista, char*estado) {
+void mostrarEstadoDeLista(t_list *lista, char*estado, t_log * log_planificador) {
 	int j;
 	if (list_size(lista) == 0) {
 		printf("La lista de planificacion ,%s, esta vacia\n", estado);
@@ -118,12 +118,15 @@ void mostrarEstadoDeLista(t_list *lista, char*estado) {
 			nodo_en_ejecucion *procesoEnEjecucion = list_get(lista, j);
 			printf("mProc %d: %s -> %s \n", procesoEnEjecucion->proceso->id,
 					procesoEnEjecucion->proceso->nombrePrograma, estado);
+			log_info(log_planificador, "mProc %d: %s -> %s \n",
+					procesoEnEjecucion->proceso->id,
+					procesoEnEjecucion->proceso->nombrePrograma, estado);
 		}
 
 	}
 }
 
-void mostrarEstadoDeListos(t_queue *cola, char*estado) {
+void mostrarEstadoDeListos(t_queue *cola, char*estado, t_log * log_planificador) {
 	int j;
 	if (queue_size(cola) == 0) {
 		printf("La cola de planificacion ,%s, esta vacia\n", estado);
@@ -132,10 +135,13 @@ void mostrarEstadoDeListos(t_queue *cola, char*estado) {
 			tipo_pcb *proceso = list_get(cola->elements, j);
 			printf("mProc %d: %s -> %s \n", proceso->id,
 					proceso->nombrePrograma, estado);
+			log_info(log_planificador, "mProc %d: %s -> %s \n", proceso->id,
+					proceso->nombrePrograma, estado);
 		}
 	}
 }
-void mostrarEstadoDeBloqueados(t_queue *cola, char*estado) {
+void mostrarEstadoDeBloqueados(t_queue *cola, char*estado,
+		t_log *log_planificador) {
 	int j;
 	if (queue_size(cola) == 0) {
 		printf("La cola de planificacion ,%s, esta vacia\n", estado);
@@ -144,17 +150,20 @@ void mostrarEstadoDeBloqueados(t_queue *cola, char*estado) {
 			nodo_en_ejecucion *proceso = list_get(cola->elements, j);
 			printf("mProc %d: %s -> %s \n", proceso->proceso->id,
 					proceso->proceso->nombrePrograma, estado);
+			log_info(log_planificador, "mProc %d: %s -> %s \n",
+					proceso->proceso->id, proceso->proceso->nombrePrograma,
+					estado);
 		}
 	}
 }
 
 /* cambiar estado del proceso */
 void cambiarEstado(tipo_pcb *proceso, int estado, t_queue*colaListos,
-		t_queue*entrada_salida, t_list*en_ejecucion) {
+		t_queue*entrada_salida, t_list*en_ejecucion, t_log * log_planificador) {
 	proceso->estado = estado;
-	mostrarEstadoDeListos(colaListos, "Listos");
-	mostrarEstadoDeLista(en_ejecucion, "Ejecucion");
-	mostrarEstadoDeBloqueados(entrada_salida, "Bolqueados");
+	mostrarEstadoDeListos(colaListos, "Listos", log_planificador);
+	mostrarEstadoDeLista(en_ejecucion, "Ejecucion", log_planificador);
+	mostrarEstadoDeBloqueados(entrada_salida, "Bolqueados", log_planificador);
 }
 
 /*agrega un proceso a la cola de listos */
@@ -167,7 +176,8 @@ void agregarEnColaDeListos(tipo_pcb *proceso, pthread_mutex_t mutex_readys,
 			"Colocado el proceso: %s con pid = %d en la cola de listos",
 			proceso->nombrePrograma, proceso->id);
 	proceso->tiempoIngreso = time(NULL);
-	cambiarEstado(proceso, listo, colaListos, entrada_salida, en_ejecucion);
+	cambiarEstado(proceso, listo, colaListos, entrada_salida, en_ejecucion,
+			log_planificador);
 	pthread_mutex_unlock(&mutex_readys);
 
 }
@@ -191,7 +201,7 @@ void agregarAListaDeEjecucion(pthread_mutex_t mutex_ejecucion,
 			"Colocado el proceso: %s con pid = %d en la cola de ejecucion",
 			proceso->proceso->nombrePrograma, proceso->proceso->id);
 	cambiarEstado(proceso->proceso, ejecucion, colaListos, entrada_salida,
-			listaEjecutando);
+			listaEjecutando, log_planificador);
 	pthread_mutex_unlock(&mutex_ejecucion);
 
 }
@@ -230,7 +240,7 @@ void agregarAColaDeBloqueados(pthread_mutex_t mutex_bloqueados,
 			"Colocado el proceso: %s con pid = %d en la cola de bloqueados",
 			io->proceso->nombrePrograma, io->proceso->id);
 	cambiarEstado(io->proceso, bloqueado, colaListos, entradaSalida,
-			listaEjecutando);
+			listaEjecutando, log_planificador);
 	pthread_mutex_unlock(&mutex_bloqueados);
 
 }
@@ -280,18 +290,18 @@ int setProgramCounter(char *dirProceso) {
 }
 /* GENERA EL CONTEXTO DE EJECUCION Y SE LO ENVIA A LA CPU */
 void enviarContextoEjecucion(int socketCliente, int codigoOperacion,
-		tipo_pcb *proceso, char *path,char *algoritmo, int quantum) {
+		tipo_pcb *proceso, char *path, char *algoritmo, int quantum) {
 	Paquete *paquete = malloc(sizeof(Paquete));
-	if(!strcmp(algoritmo,"FIFO")){
+	if (!strcmp(algoritmo, "FIFO")) {
 		quantum = 0;
-	}else if(!strcmp(algoritmo,"RR")){
+	} else if (!strcmp(algoritmo, "RR")) {
 
 	}
 	paquete = generarPaquete(codigoOperacion, strlen(proceso->dirProceso) + 1,
 			path, proceso->programCounter, proceso->id, quantum);
 	void *buffer = serializar(paquete);
 	send(socketCliente, buffer,
-			sizeof(int) + sizeof(int) + sizeof(int) + paquete->tamanio, 0);
+			(sizeof(int) *5) + paquete->tamanio, 0);
 	free(buffer);
 	free(path);
 
@@ -332,6 +342,8 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		procesoAFinalizar = list_remove_by_condition(en_ejecucion,
 				encontrar_cpu);
 		agregarAFinalizados(finalizados, procesoAFinalizar, log_planificador);
+		close(socketCliente);
+		log_info(log_planificador,"Se cerro la conexión con la cpu %d en el socket %d",instruccion->pid_cpu,socketCliente);
 		free(data);
 		break;
 	case finquantum:
@@ -436,7 +448,7 @@ data_hilo *obtenerDatosHilo(data_hilo * dataHilo, nodo_en_ejecucion *Proceso,
 	return dataHilo;
 }
 /* FUNCION QUE ENVIA MSJ A LA CPU PARA AVERIGUAR SU PORCENTAJE */
-void peticionPorcentajeUsoCpu(t_list * lista,int codigo) {
+void peticionPorcentajeUsoCpu(t_list * lista, int codigo) {
 	int j;
 	if (list_size(lista) == 0) {
 		printf("No hay procesos en ejecución\n");
@@ -445,12 +457,13 @@ void peticionPorcentajeUsoCpu(t_list * lista,int codigo) {
 
 		for (j = 0; j < list_size(lista); j++) {
 			nodo_en_ejecucion *procesoEnEjecucion = list_get(lista, j);
-			send(procesoEnEjecucion->socket,&codigo,sizeof(int),0);
-			int pid_cpu,porcentaje;
-			recv(procesoEnEjecucion->socket,&pid_cpu,sizeof(int),0);
-			recv(procesoEnEjecucion->socket,&porcentaje,sizeof(int),0);
-			printf("Cpu %d: %d\n",pid_cpu,porcentaje);
+			send(procesoEnEjecucion->socket, &codigo, sizeof(int), 0);
+			int pid_cpu, porcentaje;
+			recv(procesoEnEjecucion->socket, &pid_cpu, sizeof(int), 0);
+			recv(procesoEnEjecucion->socket, &porcentaje, sizeof(int), 0);
+			printf("Cpu %d: %d\n", pid_cpu, porcentaje);
 		}
 
 	}
 }
+

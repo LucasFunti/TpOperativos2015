@@ -1,22 +1,130 @@
-[INFO] 19:20:38:560 PAM/(28330:28330): Iniciado el proceso administrador de memoria
-[INFO] 19:20:38:561 PAM/(28330:28330): Levantan las configuraciones
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con PUERTO_ESCUCHA: 5001
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con IP_SWAP: localhost
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con PUERTO_SWAP: 6000
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con CANTIDAD_MARCOS: 20
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con TAMANIO_MARCO: 15
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con ENTRADAS_TLB: 2
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con TLB_HABILITADA: NO
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con RETARDO_MEMORIA: 0
-[INFO] 19:20:38:561 PAM/(28330:28330): Configurado con ALGORITMO_REMPLAZO: FIFO
-[INFO] 19:20:38:561 PAM/(28330:28330): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
-[INFO] 19:20:38:562 PAM/(28330:28330): Se escuchan conexiones en el socket 4
-[INFO] 19:20:45:146 PAM/(28330:28330): Se detecto conexión entrante al puerto de escucha
-[INFO] 19:20:45:146 PAM/(28330:28330): Se asigna el socket 5
-[INFO] 19:21:21:425 PAM/(28330:28330): Se detecto conexión entrante al puerto de escucha
-[INFO] 19:21:21:425 PAM/(28330:28330): Se asigna el socket 6
-[INFO] 19:23:14:167 PAM/(28330:28330): Se detecto conexión entrante al puerto de escucha
-[INFO] 19:23:14:167 PAM/(28330:28330): Se asigna el socket 7
-[INFO] 19:25:54:535 PAM/(28330:28330): Se detecto conexión entrante al puerto de escucha
-[INFO] 19:25:54:536 PAM/(28330:28330): Se asigna el socket 8
+[INFO] 02:07:02:332 PAM/(9966:9966): Iniciado el proceso administrador de memoria
+[INFO] 02:07:02:332 PAM/(9966:9966): Levantan las configuraciones
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con PUERTO_ESCUCHA: 5001
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con IP_SWAP: localhost
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con PUERTO_SWAP: 6000
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con CANTIDAD_MARCOS: 20
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con TAMANIO_MARCO: 15
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con ENTRADAS_TLB: 2
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con TLB_HABILITADA: NO
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con RETARDO_MEMORIA: 0
+[INFO] 02:07:02:334 PAM/(9966:9966): Configurado con ALGORITMO_REMPLAZO: FIFO
+[INFO] 02:07:02:334 PAM/(9966:9966): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
+[INFO] 02:07:02:334 PAM/(9966:9966): Se escuchan conexiones en el socket 7
+[INFO] 02:07:25:211 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:07:25:211 PAM/(9966:9966): Se asigna el socket 8
+[INFO] 02:07:38:571 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:07:38:571 PAM/(9966:9966): Realizando una operación INICIAR para el socket 8
+[INFO] 02:07:38:572 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:07:39:624 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:07:39:624 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 8.
+[INFO] 02:07:39:625 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:07:40:674 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:07:40:674 PAM/(9966:9966): Realizando una operación LEER para el socket 8
+[INFO] 02:07:40:674 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 02:15:27:382 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:15:27:382 PAM/(9966:9966): Se asigna el socket 9
+[INFO] 02:15:48:911 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:15:48:911 PAM/(9966:9966): Realizando una operación INICIAR para el socket 9
+[INFO] 02:15:48:911 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:15:49:966 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:15:49:967 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 9.
+[INFO] 02:15:49:967 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:15:51:19 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:15:51:19 PAM/(9966:9966): Realizando una operación LEER para el socket 9
+[INFO] 02:15:51:19 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 02:18:03:438 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:18:03:438 PAM/(9966:9966): Se asigna el socket 10
+[INFO] 02:18:12:180 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:18:12:180 PAM/(9966:9966): Realizando una operación INICIAR para el socket 10
+[INFO] 02:18:12:180 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:18:13:239 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:18:13:240 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 10.
+[INFO] 02:18:13:240 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:18:14:298 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:18:14:298 PAM/(9966:9966): Realizando una operación LEER para el socket 10
+[INFO] 02:18:14:298 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 02:29:47:741 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:29:47:741 PAM/(9966:9966): Se asigna el socket 11
+[INFO] 02:29:55:94 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:29:55:94 PAM/(9966:9966): Realizando una operación INICIAR para el socket 11
+[INFO] 02:29:55:94 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:29:56:146 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:29:56:146 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 11.
+[INFO] 02:29:56:146 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:29:57:232 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:29:57:233 PAM/(9966:9966): Realizando una operación LEER para el socket 11
+[INFO] 02:29:57:233 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 02:36:01:717 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:36:01:717 PAM/(9966:9966): Se asigna el socket 12
+[INFO] 02:36:09:971 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:36:09:971 PAM/(9966:9966): Realizando una operación INICIAR para el socket 12
+[INFO] 02:36:09:971 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:36:11:24 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:36:11:24 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 12.
+[INFO] 02:36:11:24 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:36:12:152 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:36:12:152 PAM/(9966:9966): Realizando una operación LEER para el socket 12
+[INFO] 02:36:12:152 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 02:37:39:373 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:37:39:373 PAM/(9966:9966): Se asigna el socket 13
+[INFO] 02:37:46:222 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:37:46:222 PAM/(9966:9966): Realizando una operación INICIAR para el socket 13
+[INFO] 02:37:46:222 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:37:47:276 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:37:47:276 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 13.
+[INFO] 02:37:47:276 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:37:48:332 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:37:48:332 PAM/(9966:9966): Realizando una operación LEER para el socket 13
+[INFO] 02:37:48:332 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 02:41:29:346 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:41:29:346 PAM/(9966:9966): Se asigna el socket 14
+[INFO] 02:41:35:666 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:41:35:666 PAM/(9966:9966): Realizando una operación INICIAR para el socket 14
+[INFO] 02:41:35:666 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:41:36:872 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:41:36:873 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 14.
+[INFO] 02:41:36:873 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:41:38:7 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:41:38:7 PAM/(9966:9966): Realizando una operación LEER para el socket 14
+[INFO] 02:41:38:7 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 02:43:02:696 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:43:02:696 PAM/(9966:9966): Se asigna el socket 15
+[INFO] 02:44:37:459 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:44:37:459 PAM/(9966:9966): Se asigna el socket 16
+[INFO] 02:47:06:948 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:47:06:948 PAM/(9966:9966): Se asigna el socket 17
+[INFO] 02:50:51:330 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:50:51:330 PAM/(9966:9966): Se asigna el socket 18
+[INFO] 02:51:23:992 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:51:23:993 PAM/(9966:9966): Realizando una operación INICIAR para el socket 18
+[INFO] 02:51:23:993 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:51:25:188 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:51:25:189 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 18.
+[INFO] 02:51:25:189 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:51:26:744 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:51:26:744 PAM/(9966:9966): Realizando una operación LEER para el socket 18
+[INFO] 02:51:26:744 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 02:57:07:928 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 02:57:07:928 PAM/(9966:9966): Se asigna el socket 19
+[INFO] 02:57:35:472 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:57:35:472 PAM/(9966:9966): Realizando una operación INICIAR para el socket 19
+[INFO] 02:57:35:472 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 02:57:36:533 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:57:36:533 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 19.
+[INFO] 02:57:36:533 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 02:57:38:59 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 02:57:38:60 PAM/(9966:9966): Realizando una operación LEER para el socket 19
+[INFO] 02:57:38:60 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
+[INFO] 03:02:40:870 PAM/(9966:9966): Se detecto conexión entrante al puerto de escucha
+[INFO] 03:02:40:870 PAM/(9966:9966): Se asigna el socket 20
+[INFO] 03:03:00:344 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 03:03:00:345 PAM/(9966:9966): Realizando una operación INICIAR para el socket 20
+[INFO] 03:03:00:345 PAM/(9966:9966): Se inicia el programa 1 con 1 marcos
+[INFO] 03:03:01:400 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 03:03:01:401 PAM/(9966:9966): Realizando una operación ESCRIBIR para el socket 20.
+[INFO] 03:03:01:401 PAM/(9966:9966): Se escribío en la página 0 del pid 1 el texto "probando una I/O".
+[INFO] 03:03:02:454 PAM/(9966:9966): Se detecto una conexión existente con un pedido
+[INFO] 03:03:02:454 PAM/(9966:9966): Realizando una operación LEER para el socket 20
+[INFO] 03:03:02:454 PAM/(9966:9966): Leer el pid 1 y página 0 retorna "probando una .
