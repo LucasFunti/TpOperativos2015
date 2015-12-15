@@ -53,31 +53,32 @@ int main(int argc, char **argv) {
 	fileDescriptors[0].fd = socketEscucha;
 	fileDescriptors[0].events = POLLIN;
 	//printf("SOCKET = %d\n", socketEscucha);
-	retornoPoll = poll(fileDescriptors, cantfds, -1);
-	printf("retorno del poll = %d\n", retornoPoll);
-	if (retornoPoll == -1) {
-		printf("Error en la funcion poll\n");
-	}
-	if (fileDescriptors[fd_index].revents & POLLIN) {
-		if (fileDescriptors[fd_index].fd == socketEscucha) {
-			listen(socketEscucha, BACKLOG);
-			struct sockaddr_in addr;
-			socklen_t addrlen = sizeof(addr);
-			int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
-					&addrlen);
-			log_info(log_planificador, "Se conecto una cpu en el socket %d",
-					socketCliente);
 
-			fileDescriptors[cantfds].fd = socketCliente;
-			fileDescriptors[cantfds].events = POLLIN;
-			cantfds++;
-
-		}
-	}
 	int pid_a_finalizar;
 	int enviar = 1;
 
 	while (enviar) {
+		retornoPoll = poll(fileDescriptors, cantfds, -1);
+			printf("retorno del poll = %d\n", retornoPoll);
+			if (retornoPoll == -1) {
+				printf("Error en la funcion poll\n");
+			}
+			if (fileDescriptors[fd_index].revents & POLLIN) {
+				if (fileDescriptors[fd_index].fd == socketEscucha) {
+					listen(socketEscucha, BACKLOG);
+					struct sockaddr_in addr;
+					socklen_t addrlen = sizeof(addr);
+					int socketCliente = accept(socketEscucha, (struct sockaddr *) &addr,
+							&addrlen);
+					log_info(log_planificador, "Se conecto una cpu en el socket %d",
+							socketCliente);
+
+					fileDescriptors[cantfds].fd = socketCliente;
+					fileDescriptors[cantfds].events = POLLIN;
+					cantfds++;
+
+				}
+			}
 		int codigoOperacion;
 		codigoOperacion = reconocerIdentificador();
 		char *nombreProceso = malloc(64 * sizeof(char));
