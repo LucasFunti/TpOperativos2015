@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
 					fileDescriptors[cantfds].events = POLLIN;
 					cantfds++;
 
-					recv(socketCliente ,&pid_cpu,sizeof(int),0);
+					recv(socketCliente, &pid_cpu, sizeof(int), 0);
 				} else {
 
 					codigoOperacion = -33;
@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
 
 			cambiarAEstadoDeEjecucion(mutex_readys, colaListos, mutex_ejecucion,
 					en_ejecucion, entrada_salida, log_planificador,
-					fileDescriptors[cantfds - 1].fd,pid_cpu);
+					fileDescriptors[cantfds - 1].fd, pid_cpu);
 
 			break;
 		case 99:
