@@ -88,7 +88,7 @@ void removeChar(char *string, char basura) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-char *empaquetarEntradaSalida(){
+char *empaquetarEntradaSalida() {
 	char *buffer;
 	return buffer;
 }
@@ -216,11 +216,10 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 //		estadoDeEjecucion = 1; // SOLO PARA TESTEAR
 
-
-
 		if (datos->header->codigo_operacion == 1) {
 //			printf("mProc %s - Iniciado correctamente.\n", idProceso);
-			logearIniciar(datosDelHilo, datos->header->codigo_operacion, idProceso);
+			logearIniciar(datosDelHilo, datos->header->codigo_operacion,
+					idProceso);
 			resultado = 1;
 		} else {
 //			printf("mProc %s - Fallo al iniciar\n", idProceso);
@@ -242,14 +241,16 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 //		estadoDeEjecucion = 1; // SOLO PARA TESTEAR
 
 		datos = leer_paquete(serverMemoria);
-		if(datos->header == 1){
-			logearLectura(datosDelHilo, idProceso, array[1], (char *) datos->data);
+		if (datos->header->codigo_operacion == 1) {
+			logearLectura(datosDelHilo, idProceso, array[1],
+					(char *) datos->data);
 //			printf("\n%s\n", datos->data);
 			resultado = 1;
-		}
-		else{
-			log_info(infoHilo->logger,string_from_format("CPU%s proceso: %s - error de lectura en la página %s",
-					datosDelHilo->idHilo, idProceso, paginas));
+		} else {
+			log_info(infoHilo->logger,
+					string_from_format(
+							"CPU%s proceso: %s - error de lectura en la página %s",
+							datosDelHilo->idHilo, idProceso, paginas));
 			resultado = 0;
 			return resultado;
 		}
@@ -266,11 +267,10 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		datos = leer_paquete(serverMemoria);
 		logearEscritura(datosDelHilo, idProceso, estadoDeEjecucion, array[1],
 				array[2]);
-		 if (datos->data == 1) {
-		//	printf("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
+		if (datos->header->codigo_operacion == 1) {
+			//	printf("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
 			resultado = 1;
-			}
-		 else {
+		} else {
 //			printf("mProc %s - Error de escritura de página\n", idProceso);
 			resultado = 0;
 			return resultado;
@@ -424,7 +424,8 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 
 				resultado.contador = n;
 				resultado.causa_finalizacion = 21;
-				resultado.estado_ultima_instruccion = resultado.data[resultado.m];
+				resultado.estado_ultima_instruccion =
+						resultado.data[resultado.m];
 				t_data *paquete = crearPaqueteFinalizar(resultado);
 				common_send(serverPlanificador, paquete);
 				return resultado;
@@ -432,7 +433,8 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 			n++;
 			resultado.m++;
 			instruccionesEjecutadas[infoDelHilo->idHilo]++;
-			porcentajeDeUso[infoDelHilo->idHilo] = ((instruccionesEjecutadas[infoDelHilo->idHilo] * 100)
+			porcentajeDeUso[infoDelHilo->idHilo] =
+					((instruccionesEjecutadas[infoDelHilo->idHilo] * 100)
 							/ instruccionesMaximasPorMinuto);
 			usleep(retardo * 1000000);
 
@@ -440,16 +442,16 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 		resultado.contador = n;
 		if (operacion == 7) {
 			resultado.causa_finalizacion = 20;
-			char ** array = string_split(listaInstrucciones[n-1], " ");
+			char ** array = string_split(listaInstrucciones[n - 1], " ");
 			resultado.tiempoIO = atoi(array[1]);
 			t_data *paquete = crearPaqueteEntradaSalida(resultado);
 			common_send(serverPlanificador, paquete);
 
 		} else
 			resultado.causa_finalizacion = 23;
-			t_data *paquete = crearPaqueteFinalizar(resultado);
-			common_send(serverPlanificador, paquete);
-
+		resultado.estado_ultima_instruccion = resultado.data[resultado.m];
+		t_data *paquete = crearPaqueteFinalizar(resultado);
+		common_send(serverPlanificador, paquete);
 
 	} else if (quantum != 0) { // Caso Round-Robin
 		int contador = 0;
@@ -482,12 +484,12 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 		if (operacion == 7) {
 			resultado.causa_finalizacion = 20;
 			resultado.estado_ultima_instruccion = 1;
-			char ** array = string_split(listaInstrucciones[n-1], " ");
+			char ** array = string_split(listaInstrucciones[n - 1], " ");
 			resultado.tiempoIO = atoi(array[1]);
 			t_data *paquete = crearPaqueteEntradaSalida(resultado);
 			common_send(serverPlanificador, paquete);
 
-		} else if(contador < quantum){
+		} else if (contador < quantum) {
 			resultado.causa_finalizacion = 23;
 			resultado.estado_ultima_instruccion = 1;
 			t_data *paquete = crearPaqueteFinalizar(resultado);
@@ -500,7 +502,6 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 			common_send(serverPlanificador, paquete);
 		}
 
-
 	}
 	return resultado;
 
@@ -510,32 +511,31 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 // Funciones para la creación de paquetes al finalizar una ejecución (por I/O, error de ejecución,
 // fin de quantum, o instrucción finalizar)
 
-t_data *crearPaqueteEntradaSalida(t_resultadoOperacion resultado){
-	t_data * paquete = malloc(sizeof(t_data));
-	paquete->header = malloc(sizeof(t_header));
-	int tamanio = 2 * sizeof(int);
-	paquete->data = malloc(tamanio);
-	memcpy(paquete->data, &resultado.idCpu, sizeof(int));
-	memcpy(paquete->data + sizeof(int), &resultado.tiempoIO, sizeof(int));
-	memcpy(paquete->header->codigo_operacion, &resultado.causa_finalizacion, sizeof(int));
-	memcpy(paquete->header->tamanio_data, &tamanio, sizeof(int));
+t_data *crearPaqueteEntradaSalida(t_resultadoOperacion resultado) {
+
+	void * buffer = malloc(sizeof(int)*2);
+
+	memcpy(buffer, &resultado.idCpu, sizeof(int));
+	memcpy(buffer + sizeof(int), &resultado.tiempoIO, sizeof(int));
+
+	t_data * paquete = pedirPaquete(resultado.causa_finalizacion,2*sizeof(int),buffer);
 
 	return paquete;
 }
 
-t_data *crearPaqueteFinQuantum(t_resultadoOperacion resultado){
+t_data *crearPaqueteFinQuantum(t_resultadoOperacion resultado) {
 	t_data * paquete = malloc(sizeof(t_data));
 	paquete->header = malloc(sizeof(t_header));
 	int tamanio = (sizeof(int));
-	paquete->data =malloc(tamanio);
+	paquete->data = malloc(tamanio);
 	memcpy(paquete->data, &resultado.idCpu, sizeof(int));
-	memcpy(paquete->header->codigo_operacion, &resultado.causa_finalizacion, sizeof(int));
-	memcpy(paquete->header->tamanio_data, &tamanio,sizeof(int));
+	paquete->header->codigo_operacion = resultado.causa_finalizacion;
+	paquete->header->tamanio_data = tamanio;
 
 	return paquete;
 }
 
-t_data *crearPaqueteFinalizar(t_resultadoOperacion resultado){
+t_data *crearPaqueteFinalizar(t_resultadoOperacion resultado) {
 	t_data * paquete = malloc(sizeof(t_data));
 	paquete->header = malloc(sizeof(t_header));
 	int tamanio = 4 * sizeof(int);
@@ -543,9 +543,10 @@ t_data *crearPaqueteFinalizar(t_resultadoOperacion resultado){
 	memcpy(paquete->data, &resultado.m, sizeof(int));
 	memcpy(paquete->data + sizeof(int), &resultado.idCpu, sizeof(int));
 	memcpy(paquete->data + 2 * sizeof(int), &resultado.contador, sizeof(int));
-	memcpy(paquete->data + 3 * sizeof(int), &resultado.estado_ultima_instruccion, sizeof(int));
-	memcpy(paquete->header->codigo_operacion, &resultado.causa_finalizacion, sizeof(int));
-	memcpy(paquete->header->tamanio_data, &tamanio, sizeof(int));
+	memcpy(paquete->data + 3 * sizeof(int),
+			&resultado.estado_ultima_instruccion, sizeof(int));
+	paquete->header->codigo_operacion = resultado.causa_finalizacion;
+	paquete->header->tamanio_data = tamanio;
 
 	return paquete;
 }
@@ -567,7 +568,7 @@ int cantidadElementos(char **lista) {
 char *getIpPlanificador() {
 	t_config *cpuConfig;
 	cpuConfig = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+			"/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
 	char * ip = config_get_string_value(cpuConfig, "IP_PLANIFICADOR");
 	return ip;
 }
@@ -575,7 +576,7 @@ char *getIpPlanificador() {
 char *getPuertoPlanificador() {
 	t_config *cpuConfig;
 	cpuConfig = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+			"/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
 	char * puerto = config_get_string_value(cpuConfig, "PUERTO_PLANIFICADOR");
 	return puerto;
 }
@@ -583,7 +584,7 @@ char *getPuertoPlanificador() {
 char *getIpMemoria() {
 	t_config *cpuConfig;
 	cpuConfig = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+			"/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
 	char * ip = config_get_string_value(cpuConfig, "IP_MEMORIA");
 	return ip;
 }
@@ -591,14 +592,14 @@ char *getIpMemoria() {
 char *getPuertoMemoria() {
 	t_config *cpuConfig;
 	cpuConfig = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+			"/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
 	char * puerto = config_get_string_value(cpuConfig, "PUERTO_MEMORIA");
 	return puerto;
 }
 int getHilos() {
 	t_config *cpuConfig;
 	cpuConfig = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+			"/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
 	int hilos = config_get_int_value(cpuConfig, "CANTIDAD_HILOS");
 	return hilos;
 }
@@ -606,12 +607,12 @@ int getHilos() {
 int getRetardo() {
 	t_config *cpuConfig;
 	cpuConfig = config_create(
-			"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
+			"/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
 	int retardo = config_get_int_value(cpuConfig, "RETARDO");
 	return retardo;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-t_data *crearPaqueteConsumo(int id, int consumoActual){
+t_data *crearPaqueteConsumo(int id, int consumoActual) {
 	t_data * paquete = malloc(sizeof(t_data));
 	paquete->header = malloc(sizeof(t_header));
 	int tamanio = 2 * sizeof(int);
@@ -619,13 +620,11 @@ t_data *crearPaqueteConsumo(int id, int consumoActual){
 	memcpy(paquete->data, &id, sizeof(int));
 	memcpy(paquete->data + sizeof(int), &consumoActual, sizeof(int));
 	memcpy(paquete->header->tamanio_data, &tamanio, sizeof(int));
-
 	return paquete;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* funcion  que simula una instancia de CPU. */
-
 void *iniciarcpu(void *punteroALaInfo) {
 	t_hilo *threadInfo = (t_hilo *) punteroALaInfo;
 
@@ -638,9 +637,7 @@ void *iniciarcpu(void *punteroALaInfo) {
 
 	serverPlanificador = conectarCliente(ip_Planificador, puerto_Planificador);
 	serverMemoria = conectarCliente(ip_Memoria, puerto_Memoria);
-	if (serverMemoria == -1) {
-		exit(-1);
-	}
+	send(serverPlanificador, &threadInfo->idHilo, sizeof(int), MSG_WAITALL);
 
 //	char package[PACKAGESIZE];
 	int status = 1;
@@ -653,86 +650,78 @@ void *iniciarcpu(void *punteroALaInfo) {
 
 	while (status != 0) {
 
+		int codigoOperacion, programCounter, pid, tamanio, quantum;
+		recv(serverPlanificador, &codigoOperacion, sizeof(int), MSG_WAITALL);
+		recv(serverPlanificador, &programCounter, sizeof(int), MSG_WAITALL);
+		recv(serverPlanificador, &pid, sizeof(int), MSG_WAITALL);
+		recv(serverPlanificador, &quantum, sizeof(int), MSG_WAITALL);
+		recv(serverPlanificador, &tamanio, sizeof(int), MSG_WAITALL);
 
-		 int codigoOperacion,programCounter,pid,tamanio,quantum;
-		 recv(serverPlanificador,&codigoOperacion, sizeof(int) , MSG_WAITALL);
-		 recv(serverPlanificador,&programCounter, sizeof(int) , MSG_WAITALL);
-		 recv(serverPlanificador,&pid, sizeof(int) , MSG_WAITALL);
-		 recv(serverPlanificador,&quantum, sizeof(int) , MSG_WAITALL);
-		 recv(serverPlanificador,&tamanio, sizeof(int) , MSG_WAITALL);
+		char * path = malloc(tamanio);
+		recv(serverPlanificador, path, tamanio, MSG_WAITALL);
 
-		 char * path = malloc(sizeof(tamanio));
-		 recv(serverPlanificador,path, sizeof(int) , MSG_WAITALL);
+		if (status != 0) {
 
+			if (codigoOperacion == 1) {		// caso Correr Archivo
+				char *rutaDelArchivo = path;
+				int contadorDePrograma = programCounter;
+				char *idProceso = string_itoa(pid);
 
-		 if (status != 0) {
-		 char * dataBuffer = malloc(tamanio);
-		 recv(serverPlanificador, dataBuffer, tamanio, 0);
-		 path = malloc(tamanio);
-		 memcpy(path, dataBuffer,tamanio);
-		 free(dataBuffer);
+				char *contextoRecibido =
+						logeoDeEjecucion(
+								"Contexto de ejecución recibido. Ruta del archivo:| ; Posicion del contador de Programa:| ;Id de proceso:|",
+								rutaDelArchivo, contadorDePrograma, idProceso);
+				log_info(threadInfo->logger, contextoRecibido);
+				printf("%s", rutaDelArchivo);
+				t_resultadoOperacion resultado = correrArchivo(rutaDelArchivo,
+						contadorDePrograma, idProceso, serverMemoria,
+						serverPlanificador, threadInfo, quantum);
 
+				/*
+				 char * rutaDelArchivo = "/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/Debug/memoria";
+				 int contadorDePrograma = 0;
+				 char *idProceso = "1";
+				 int quantum = 0;
 
-		 if(codigoOperacion == 0){		// caso Correr Archivo
-		 char *rutaDelArchivo = path;
-		 int contadorDePrograma = programCounter;
-		 char *idProceso = string_itoa(pid);
+				 printf("\n");
 
-		 char *contextoRecibido = logeoDeEjecucion("Contexto de ejecución recibido. Ruta del archivo:| ; Posicion del contador de Programa:| ;Id de proceso:|",
-		 rutaDelArchivo, contadorDePrograma, idProceso);
-		 log_info(threadInfo->logger, contextoRecibido);
-		 printf("%s", rutaDelArchivo);
-		 t_resultadoOperacion resultado = correrArchivo(rutaDelArchivo, contadorDePrograma, idProceso, serverMemoria,
-		 serverPlanificador,threadInfo, quantum);
+				 resultado = correrArchivo(rutaDelArchivo, contadorDePrograma, idProceso,
+				 serverMemoria, 456, threadInfo, quantum);
 
+				 printf(
+				 "\noperación exitosa. El resultado de la ejecución fue el siguiente:\nposición actual del contador: %d\n",
+				 resultado.contador);
+				 printf("uso de cpu: %d\n", porcentajeDeUso[threadInfo->idHilo]); */
 
-/*
-		char * rutaDelArchivo = "/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/Debug/memoria";
-		int contadorDePrograma = 0;
-		char *idProceso = "1";
-		int quantum = 0;
+			} else if (codigoOperacion == 2) {	// caso Finalizar PID
+				int cantidadInstrucciones = cantidadElementos(path);
+				programCounter = cantidadInstrucciones - 1;
+			}
 
-		printf("\n");
+			else if (codigoOperacion == 3) { // caso Consumo de CPU
+				int id = threadInfo->idHilo;
+				int consumoActual = resultado.usoDeCpu;
+				t_data *paqueteConsumo = crearPaqueteConsumo(id, consumoActual);
+				common_send(serverPlanificador, paqueteConsumo);
+			};
 
-		resultado = correrArchivo(rutaDelArchivo, contadorDePrograma, idProceso,
-				serverMemoria, 456, threadInfo, quantum);
-
-		printf(
-				"\noperación exitosa. El resultado de la ejecución fue el siguiente:\nposición actual del contador: %d\n",
-				resultado.contador);
-		printf("uso de cpu: %d\n", porcentajeDeUso[threadInfo->idHilo]); */
-
-		 }
-		else if(codigoOperacion == 1){	// caso Finalizar PID
-			int cantidadInstrucciones = cantidadElementos(path);
-			programCounter = cantidadInstrucciones - 1;
-		 }
-
-		 else if(codigoOperacion == 2){ // caso Consumo de CPU
-			 int id = threadInfo->idHilo;
-			 int consumoActual = resultado.usoDeCpu;
-			 t_data *paqueteConsumo = crearPaqueteConsumo(id, consumoActual);
-			 common_send(serverPlanificador, paqueteConsumo);
-		 };
-
-		printf("\n");
-		char *disponible = eventoDeLogeo("liberada la CPU ",
-				threadInfo->idHilo);
-		log_info(threadInfo->logger, disponible);
+			printf("\n");
+			char *disponible = eventoDeLogeo("liberada la CPU ",
+					threadInfo->idHilo);
+			log_info(threadInfo->logger, disponible);
 //		printf("PC %d liberada y disponible\n", threadInfo->idHilo);
 //		status = 0;
-	}
+		}
 
 	}
 
 //	close(serverPlanificador);
 //	close(serverMemoria);
 
-		printf("\nejecución exitosa. Finalizando...\n");
-		return NULL;
+	printf("\nejecución exitosa. Finalizando...\n");
+	return NULL;
 
-	}
-
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 char *eventoDeLogeo(char * mensajeALogear, int id) {
@@ -803,138 +792,138 @@ void resetearContadores() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*función de testeo. */
 /*
-void testCpuFunction(char *accion) {
-//	printf("ingrese la accion a testear, o escriba 'ayuda' para ver comandos disponibles:\n");
-//	scanf("%[^\n]%*c", accion);
-	if (strcmp(accion, "reconocer instruccion") == 0) {
-		int respuesta;
-		printf("ingrese la instruccion a reconocer\n");
-		char *dataAdicional = malloc(sizeof(char) * 32);
-		scanf("%[^\n]%*c", dataAdicional);
-		respuesta = reconocerInstruccion(dataAdicional);
-		printf("el header correspondiente a la instruccion es: %d\n",
-				respuesta);
+ void testCpuFunction(char *accion) {
+ //	printf("ingrese la accion a testear, o escriba 'ayuda' para ver comandos disponibles:\n");
+ //	scanf("%[^\n]%*c", accion);
+ if (strcmp(accion, "reconocer instruccion") == 0) {
+ int respuesta;
+ printf("ingrese la instruccion a reconocer\n");
+ char *dataAdicional = malloc(sizeof(char) * 32);
+ scanf("%[^\n]%*c", dataAdicional);
+ respuesta = reconocerInstruccion(dataAdicional);
+ printf("el header correspondiente a la instruccion es: %d\n",
+ respuesta);
 
-	} else if (strcmp(accion, "empaquetado normal") == 0) {
-		printf(
-				"ingrese la instruccion a empaquetar(formato aceptado: instruccion paginas):\n");
-		char *dataAdicional = malloc(sizeof(char) * 64);
-		scanf("%[^\n]%*c", dataAdicional);
-		t_instruccion paquete;
-		char **algo;
-		algo = string_split(dataAdicional, " ");
-		paquete = empaquetar(algo[0], algo[1]);
-		printf("la instruccion es: %s\n", paquete.instruccion);
-		printf("el número de página/proceso es: %s\n",
-				paquete.cantidadDePaginas);
+ } else if (strcmp(accion, "empaquetado normal") == 0) {
+ printf(
+ "ingrese la instruccion a empaquetar(formato aceptado: instruccion paginas):\n");
+ char *dataAdicional = malloc(sizeof(char) * 64);
+ scanf("%[^\n]%*c", dataAdicional);
+ t_instruccion paquete;
+ char **algo;
+ algo = string_split(dataAdicional, " ");
+ paquete = empaquetar(algo[0], algo[1]);
+ printf("la instruccion es: %s\n", paquete.instruccion);
+ printf("el número de página/proceso es: %s\n",
+ paquete.cantidadDePaginas);
 
-	} else if (strcmp(accion, "empaquetado de escritura") == 0) {
-		printf(
-				"ingrese la instruccion a empaquetar(formato aceptado: id pagina contenido):\n");
-		char *dataAdicional = malloc(sizeof(char) * 64);
-		fgets(dataAdicional, 64, stdin);
-		t_instruccionEscritura paquete;
-		char **algo;
-		algo = string_n_split(dataAdicional, 3, " ");
-		paquete = empaquetarEscritura(algo[0], algo[1], algo[2]);
-		printf("el proceso es: %d\n", paquete.idProceso);
-		printf("el número de página es: %d\n", paquete.paginas);
-		printf("el contenido a escribir es: %s\n", paquete.textoAEscribir);
+ } else if (strcmp(accion, "empaquetado de escritura") == 0) {
+ printf(
+ "ingrese la instruccion a empaquetar(formato aceptado: id pagina contenido):\n");
+ char *dataAdicional = malloc(sizeof(char) * 64);
+ fgets(dataAdicional, 64, stdin);
+ t_instruccionEscritura paquete;
+ char **algo;
+ algo = string_n_split(dataAdicional, 3, " ");
+ paquete = empaquetarEscritura(algo[0], algo[1], algo[2]);
+ printf("el proceso es: %d\n", paquete.idProceso);
+ printf("el número de página es: %d\n", paquete.paginas);
+ printf("el contenido a escribir es: %s\n", paquete.textoAEscribir);
 
-	} else if (strcmp(accion, "archivo a texto") == 0) {
-		printf("ingrese una ruta de archivo válida:\n");
-		char *dataAdicional = malloc(sizeof(char) * 64);
-		scanf("%[^\n]%*c", dataAdicional);
-		char *texto = txtAString(dataAdicional);
-		printf("el contenido del archivo es: %s\n", texto);
+ } else if (strcmp(accion, "archivo a texto") == 0) {
+ printf("ingrese una ruta de archivo válida:\n");
+ char *dataAdicional = malloc(sizeof(char) * 64);
+ scanf("%[^\n]%*c", dataAdicional);
+ char *texto = txtAString(dataAdicional);
+ printf("el contenido del archivo es: %s\n", texto);
 
-	} else if (strcmp(accion, "ejecutar instruccion") == 0) {
-		printf("ingrese la instruccion a ejecutar:\n");
-		char *dataAdicional = malloc(sizeof(char) * 64);
-		char *idProceso = malloc(sizeof(char) * 12);
-		char *id;
-		t_hilo infoHilo;
-		infoHilo.idHilo = 1;
-		remove("log_cpu");
-		t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
-		scanf("%[^\n]%*c", dataAdicional);
-		printf("ingrese una id de proceso:\n");
-		scanf("%[^\n]%*c", idProceso);
-		id = idProceso;
-		int resultado = ejecutar(dataAdicional, 123, 456, id, &infoHilo);
-		printf("el resultado fue: %d\n", resultado);
+ } else if (strcmp(accion, "ejecutar instruccion") == 0) {
+ printf("ingrese la instruccion a ejecutar:\n");
+ char *dataAdicional = malloc(sizeof(char) * 64);
+ char *idProceso = malloc(sizeof(char) * 12);
+ char *id;
+ t_hilo infoHilo;
+ infoHilo.idHilo = 1;
+ remove("log_cpu");
+ t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
+ scanf("%[^\n]%*c", dataAdicional);
+ printf("ingrese una id de proceso:\n");
+ scanf("%[^\n]%*c", idProceso);
+ id = idProceso;
+ int resultado = ejecutar(dataAdicional, 123, 456, id, &infoHilo);
+ printf("el resultado fue: %d\n", resultado);
 
-	} else if (strcmp(accion, "correr archivo") == 0) {
-		char *ruta;
-		int contadorPrograma = 0;
-		printf("ingrese una ruta de archivo válida:\n");
-		char *dataAdicional = malloc(sizeof(char) * 64);
-		scanf("%[^\n]%*c", dataAdicional);
-		ruta = dataAdicional;
-		//		printf("ingrese un valor inicial para el contador de programa:\n");
-		//		char *dataAdicionalDos = malloc(sizeof(char) *6);
-		//		scanf ("%[^\n]%*c", dataAdicionalDos);
-		//		contadorPrograma = atoi(dataAdicionalDos);
-		t_hilo infoHilo;
-		infoHilo.idHilo = 1;
-		remove("log_cpu");
-		t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
-		infoHilo.logger;
-		t_resultadoOperacion resultado = correrArchivo(ruta, contadorPrograma,
-				"1", 123, 456, &infoHilo, 0);
-		printf("uso de cpu: %d\n", resultado.usoDeCpu);
+ } else if (strcmp(accion, "correr archivo") == 0) {
+ char *ruta;
+ int contadorPrograma = 0;
+ printf("ingrese una ruta de archivo válida:\n");
+ char *dataAdicional = malloc(sizeof(char) * 64);
+ scanf("%[^\n]%*c", dataAdicional);
+ ruta = dataAdicional;
+ //		printf("ingrese un valor inicial para el contador de programa:\n");
+ //		char *dataAdicionalDos = malloc(sizeof(char) *6);
+ //		scanf ("%[^\n]%*c", dataAdicionalDos);
+ //		contadorPrograma = atoi(dataAdicionalDos);
+ t_hilo infoHilo;
+ infoHilo.idHilo = 1;
+ remove("log_cpu");
+ t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
+ infoHilo.logger;
+ t_resultadoOperacion resultado = correrArchivo(ruta, contadorPrograma,
+ "1", 123, 456, &infoHilo, 0);
+ printf("uso de cpu: %d\n", resultado.usoDeCpu);
 
-	} else if (strcmp(accion, "iniciar cpu") == 0) {
-		t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
-		t_hilo hiloInfo;
-		hiloInfo.idHilo = 1;
-		hiloInfo.logger = log_cpu;
-		t_hilo *puntero = malloc(sizeof(t_hilo));
-		memcpy(puntero, &hiloInfo, sizeof(t_hilo));
-		iniciarcpu(puntero);
+ } else if (strcmp(accion, "iniciar cpu") == 0) {
+ t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
+ t_hilo hiloInfo;
+ hiloInfo.idHilo = 1;
+ hiloInfo.logger = log_cpu;
+ t_hilo *puntero = malloc(sizeof(t_hilo));
+ memcpy(puntero, &hiloInfo, sizeof(t_hilo));
+ iniciarcpu(puntero);
 
-	} else if (strcmp(accion, "ayuda") == 0) {
-		printf(
-				"lista de comandos disponibles:\nreconocer instruccion\nempaquetado normal\nempaquetado de escritura\n"
-						"empaquetar resultado\narchivo a texto\nserializacion normal\nserializacion con escritura\n"
-						"serializar resultado\nejecutar instruccion\ncorrer archivo\niniciar cpu\ngenerar hilo\n"
-						"generar dos hilos\ngenerar n hilos\n\n");
-		printf(
-				"para las opciones 'reconocer instruccion' y 'ejecutar instrucción' utilice las siguientes instrucciones:\n"
-						"iniciar N\nleer N\nescribir N contenidoAEscribir\nentrada-salida Tiempo\nfinalizar\n");
+ } else if (strcmp(accion, "ayuda") == 0) {
+ printf(
+ "lista de comandos disponibles:\nreconocer instruccion\nempaquetado normal\nempaquetado de escritura\n"
+ "empaquetar resultado\narchivo a texto\nserializacion normal\nserializacion con escritura\n"
+ "serializar resultado\nejecutar instruccion\ncorrer archivo\niniciar cpu\ngenerar hilo\n"
+ "generar dos hilos\ngenerar n hilos\n\n");
+ printf(
+ "para las opciones 'reconocer instruccion' y 'ejecutar instrucción' utilice las siguientes instrucciones:\n"
+ "iniciar N\nleer N\nescribir N contenidoAEscribir\nentrada-salida Tiempo\nfinalizar\n");
 
-	} else if (strcmp(accion, "generar hilo") == 0) {
-		t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
-		t_hilo hiloInfo;
-		hiloInfo.idHilo = 1;
-		hiloInfo.logger = log_cpu;
-		t_hilo *puntero = malloc(sizeof(t_hilo));
-		memcpy(puntero, &hiloInfo, sizeof(t_hilo));
+ } else if (strcmp(accion, "generar hilo") == 0) {
+ t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
+ t_hilo hiloInfo;
+ hiloInfo.idHilo = 1;
+ hiloInfo.logger = log_cpu;
+ t_hilo *puntero = malloc(sizeof(t_hilo));
+ memcpy(puntero, &hiloInfo, sizeof(t_hilo));
 
-		pthread_t hilo1;
-		pthread_create(&hilo1, NULL, iniciarcpu, (void *) &hiloInfo);
-		pthread_join(hilo1, NULL);
+ pthread_t hilo1;
+ pthread_create(&hilo1, NULL, iniciarcpu, (void *) &hiloInfo);
+ pthread_join(hilo1, NULL);
 
-	} else if (strcmp(accion, "generar n hilos") == 0) {
-		t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
-		t_hilo *infoHilo;
-		struct t_hilo *puntero = malloc(sizeof(t_hilo));
-		int i;
-		int cantHilos = getHilos();
-		pthread_t hilos[cantHilos], hiloContador;
-		pthread_create(&hiloContador, NULL, funcionResetearContadores, NULL);
-		for (i = 0; i < cantHilos; i++) {
-			infoHilo = malloc(sizeof(t_hilo));
-			infoHilo->idHilo = i;
-			infoHilo->logger = log_cpu;
-			pthread_create(&hilos[i], NULL, iniciarcpu, infoHilo);
-		};
-		for (i = 0; i < cantHilos; i++) {
-			pthread_join(hilos[i], NULL);
-		};
-		pthread_join(hiloContador, NULL);
-	} else {
-		printf("comando desconocido. por favor, intente de nuevo.\n");
-	}
-} */
+ } else if (strcmp(accion, "generar n hilos") == 0) {
+ t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
+ t_hilo *infoHilo;
+ struct t_hilo *puntero = malloc(sizeof(t_hilo));
+ int i;
+ int cantHilos = getHilos();
+ pthread_t hilos[cantHilos], hiloContador;
+ pthread_create(&hiloContador, NULL, funcionResetearContadores, NULL);
+ for (i = 0; i < cantHilos; i++) {
+ infoHilo = malloc(sizeof(t_hilo));
+ infoHilo->idHilo = i;
+ infoHilo->logger = log_cpu;
+ pthread_create(&hilos[i], NULL, iniciarcpu, infoHilo);
+ };
+ for (i = 0; i < cantHilos; i++) {
+ pthread_join(hilos[i], NULL);
+ };
+ pthread_join(hiloContador, NULL);
+ } else {
+ printf("comando desconocido. por favor, intente de nuevo.\n");
+ }
+ } */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

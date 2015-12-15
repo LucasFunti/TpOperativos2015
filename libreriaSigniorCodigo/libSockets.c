@@ -14,9 +14,12 @@ int setup_listen(char* IP, char* Port) {
 	int socketEscucha;
 	socketEscucha = socket(serverInfo->ai_family, serverInfo->ai_socktype,
 			serverInfo->ai_protocol);
-	if (bind(socketEscucha, serverInfo->ai_addr, serverInfo->ai_addrlen)
-				== -1) {
+	int resultadoBind;
+	resultadoBind = bind(socketEscucha, serverInfo->ai_addr,
+			serverInfo->ai_addrlen);
+	if (resultadoBind == -1) {
 		printf("Error en el Bind \n");
+		exit(-1);
 	}
 	freeaddrinfo(serverInfo);
 	return socketEscucha;
@@ -73,7 +76,7 @@ int conectarCliente(char *IP, char* Port) {
 			== -1) {
 		printf("No se pudo conectar con el socket servidor\n");
 		close(serverSocket);
-		return -1;
+		exit(-1);
 	}
 	freeaddrinfo(serverInfo);
 	return serverSocket;
@@ -183,7 +186,7 @@ void deserializar_data(Paquete *unPaquete, char *buffer) {
 
 Paquete *generarPaquete(int codigoOperacion, int tamMessage, char *message,
 		int programCounter, int quantum, int pid) {
-	Paquete *paquete = malloc(sizeof(Paquete));
+	Paquete * paquete = malloc(sizeof(Paquete));
 
 	paquete->codigoOperacion = codigoOperacion;
 	paquete->programCounter = programCounter;
@@ -191,8 +194,7 @@ Paquete *generarPaquete(int codigoOperacion, int tamMessage, char *message,
 	paquete->quantum = quantum;
 	paquete->tamanio = tamMessage;
 	paquete->path = malloc(tamMessage);
-	memcpy(&paquete->path, message, paquete->tamanio);
-	memset(paquete->path, '\0', paquete->tamanio - 1);
+	memcpy(paquete->path, message, paquete->tamanio);
 	return paquete;
 }
 /* funcion para destruir paquete */

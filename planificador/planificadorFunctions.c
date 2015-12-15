@@ -13,7 +13,7 @@
 #include <commons/config.h>
 #include <commons/log.h>
 #include <pthread.h>
-#include "libSockets.h"
+#include <signiorCodigo/libSockets.h>
 #include "planificadorFunctions.h"
 
 void inicializarMutex(pthread_mutex_t mutex_readys,
@@ -72,7 +72,7 @@ char *getPuerto() {
 	t_config *planificador_config;
 	planificador_config =
 			config_create(
-					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+					"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
 	char * puerto = config_get_string_value(planificador_config,
 			"PUERTO_ESCUCHA");
 	return puerto;
@@ -82,7 +82,7 @@ char *getAlgoritmo() {
 	t_config *planificador_config;
 	planificador_config =
 			config_create(
-					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+					"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
 	char* algoritmo = config_get_string_value(planificador_config,
 			"ALGORITMO_PLANIFICACION");
 	return algoritmo;
@@ -92,7 +92,7 @@ int getQuantum() {
 	t_config *planificador_config;
 	planificador_config =
 			config_create(
-					"/home/utnso/git/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+					"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
 	int quantum = config_get_int_value(planificador_config, "PUERTO_ESCUCHA");
 	return quantum;
 }
@@ -208,12 +208,14 @@ void agregarAListaDeEjecucion(pthread_mutex_t mutex_ejecucion,
 /* saca un proceso de la cola de listos y lo coloca en la lista de ejecucion*/
 void cambiarAEstadoDeEjecucion(pthread_mutex_t mutex_readys, t_queue*colaListos,
 		pthread_mutex_t mutex_ejecucion, t_list *listaEjecutando,
-		t_queue*entrada_salida, t_log*log_planificador, int socketEnEjecucion) {
+		t_queue*entrada_salida, t_log*log_planificador, int socketEnEjecucion,
+		int pid_cpu) {
 	tipo_pcb *proceso = malloc(sizeof(tipo_pcb));
 	proceso = removerDeColaDeListos(mutex_readys, colaListos);
 	nodo_en_ejecucion*procesoEjecutando = malloc(sizeof(nodo_en_ejecucion));
 	procesoEjecutando->proceso = proceso;
 	procesoEjecutando->socket = socketEnEjecucion;
+	procesoEjecutando->pid_cpu = pid_cpu;
 	procesoEjecutando->instrucciones_ejecutadas = 0;
 	agregarAListaDeEjecucion(mutex_ejecucion, listaEjecutando,
 			procesoEjecutando, colaListos, entrada_salida, log_planificador);
@@ -291,17 +293,19 @@ int setProgramCounter(char *dirProceso) {
 /* GENERA EL CONTEXTO DE EJECUCION Y SE LO ENVIA A LA CPU */
 void enviarContextoEjecucion(int socketCliente, int codigoOperacion,
 		tipo_pcb *proceso, char *path, char *algoritmo, int quantum) {
-	Paquete *paquete = malloc(sizeof(Paquete));
+
 	if (!strcmp(algoritmo, "FIFO")) {
 		quantum = 0;
-	} else if (!strcmp(algoritmo, "RR")) {
-
 	}
-	paquete = generarPaquete(codigoOperacion, strlen(proceso->dirProceso) + 1,
-			path, proceso->programCounter, proceso->id, quantum);
-	void *buffer = serializar(paquete);
-	send(socketCliente, buffer,
-			(sizeof(int) *5) + paquete->tamanio, 0);
+	int tamanio = strlen(path) + 1;
+	void *buffer = malloc(sizeof(int) * 5 + tamanio);
+	memcpy(buffer, &codigoOperacion, sizeof(int));
+	memcpy(buffer + sizeof(int), &proceso->programCounter, sizeof(int));
+	memcpy(buffer + 2 * sizeof(int), &proceso->id, sizeof(int));
+	memcpy(buffer + 3 * sizeof(int), &quantum, sizeof(int));
+	memcpy(buffer + 4 * sizeof(int), &tamanio, sizeof(int));
+	memcpy(buffer + 5 * sizeof(int), path, tamanio);
+	send(socketCliente, buffer, (sizeof(int) * 5) + tamanio, MSG_WAITALL);
 	free(buffer);
 	free(path);
 
@@ -343,7 +347,9 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 				encontrar_cpu);
 		agregarAFinalizados(finalizados, procesoAFinalizar, log_planificador);
 		close(socketCliente);
-		log_info(log_planificador,"Se cerro la conexión con la cpu %d en el socket %d",instruccion->pid_cpu,socketCliente);
+		log_info(log_planificador,
+				"Se cerro la conexión con la cpu %d en el socket %d",
+				instruccion->pid_cpu, socketCliente);
 		free(data);
 		break;
 	case finquantum:
@@ -373,11 +379,14 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		free(data);
 		break;
 	case entrada_salida:
-		recv(socketCliente, dataIO, sizeof(data), 0);
-		int pid_cpu;
+		recv(socketCliente, dataIO, sizeof(int), MSG_WAITALL);
+		recv(socketCliente, dataIO, sizeof(int) * 2, MSG_WAITALL);
+		int pid_cpu, tiempoIO;
 		memcpy(&pid_cpu, dataIO, sizeof(int));
+		memcpy(&tiempoIO, dataIO + sizeof(int), sizeof(int));
 		bool encontrar_cpu_io(void * nodo) {
-			return ((((nodo_en_ejecucion*) nodo)->pid_cpu) == pid_cpu);
+			nodo_en_ejecucion * nodito = nodo;
+			return nodito->pid_cpu == pid_cpu;
 		}
 		nodo_en_ejecucion * Proceso = malloc(sizeof(nodo_en_ejecucion));
 		Proceso = list_find(en_ejecucion, encontrar_cpu_io);
