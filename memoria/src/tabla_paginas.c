@@ -95,8 +95,6 @@ t_item * tabla_paginas_buscar(int pid, int pagina) {
 
 	else {
 
-		item_encontrado->numero_operacion = get_numero_operacion();
-
 		return item_encontrado;
 
 	}

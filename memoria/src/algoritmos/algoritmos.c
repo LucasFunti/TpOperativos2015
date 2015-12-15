@@ -25,6 +25,7 @@ int fifo() {
 	}
 
 	item->presencia = false;
+	item->numero_operacion = get_numero_operacion();
 
 	return item->marco;
 

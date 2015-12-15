@@ -96,7 +96,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid_leer, data_entrante->data, sizeof(int));
 		memcpy(&pagina_leer, data_entrante->data + sizeof(int), sizeof(int));
 
-		bool exito = leer_n(pid_leer, pagina_leer + 1);
+		bool exito = leer_n(pid_leer, pagina_leer);
 
 		if (exito) {
 
@@ -139,23 +139,24 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		char * texto = malloc(tamanio_texto);
 		memcpy(texto, data_entrante->data + 3 * sizeof(int), tamanio_texto);
 
-		exito = escribir_n(pid_escribir, pagina_escribir + 1, texto);
+		exito = escribir_n(pid_escribir, pagina_escribir, texto);
 
 		if (exito) {
 			log_info(logger,
 					string_from_format(
 							"Se escribío en la página %d del pid %d el texto %s.",
 							pagina_escribir, pid_escribir, texto));
+			paquete = pedirPaquete(1, 4, &exito);
 
 		} else {
 			log_error(logger,
 					string_from_format(
 							"No se disponian marcos para el proceso %d, se finaliza.",
 							pid_escribir));
+			paquete = pedirPaquete(0, 4, &exito);
 			finalizar(pid);
 		}
 
-		paquete = pedirPaquete(ESCRIBIR, 4, &exito);
 		common_send(socket, paquete);
 
 		break;
@@ -206,9 +207,8 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 
 void levantarConfiguracion() {
 
-	memoriaConfig =
-			config_create(
-					"/home/utnso/Desarrollo/tp-2015-2c-signiorcodigo/memoria/src/memoriaConfig");
+	memoriaConfig = config_create(
+			"/tp-2015-2c-signiorcodigo/memoria/src/memoriaConfig");
 
 	loggearInfo("Levantan las configuraciones");
 

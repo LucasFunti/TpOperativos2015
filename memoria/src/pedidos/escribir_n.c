@@ -16,6 +16,8 @@ bool escribir_n(int pid, int pagina, char * contenido) {
 
 	} else {
 
+		item->numero_operacion = get_numero_operacion();
+
 		if (!item->presencia) {
 
 			int marco = marco_libre(pid);

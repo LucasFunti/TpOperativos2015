@@ -134,7 +134,10 @@ int setup_listen(char* IP, char* Port) {
 	int socketEscucha;
 	socketEscucha = socket(serverInfo->ai_family, serverInfo->ai_socktype,
 			serverInfo->ai_protocol);
-	bind(socketEscucha, serverInfo->ai_addr, serverInfo->ai_addrlen);
+	if (bind(socketEscucha, serverInfo->ai_addr, serverInfo->ai_addrlen) < 0) {
+		printf("Puerto en TIME-WAIT");
+		exit(-1);
+	}
 	freeaddrinfo(serverInfo);
 	return socketEscucha;
 }

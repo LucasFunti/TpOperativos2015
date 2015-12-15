@@ -18,6 +18,8 @@ bool leer_n(int pid, int pagina) {
 
 	} else {
 
+		item->numero_operacion = get_numero_operacion();
+
 		if (!item->presencia) {
 
 			int marco = marco_libre(pid);
@@ -29,9 +31,9 @@ bool leer_n(int pid, int pagina) {
 
 			} else {
 
-				if(!test){
+				if (!test) {
 					contenido_lectura = swap_leer(pid, pagina);
-				}else{
+				} else {
 					contenido_lectura = malloc(2);
 					contenido_lectura = "T";
 				}
@@ -39,7 +41,7 @@ bool leer_n(int pid, int pagina) {
 				item->marco = marco;
 				item->presencia = true;
 				return true;
-				list_add(cola_llegada,item);
+				list_add(cola_llegada, item);
 			}
 		} else {
 

@@ -60,8 +60,6 @@ t_item * tlb_buscar(int pid, int pagina) {
 
 			registroTlb[pid].aciertos++;
 
-			item_encontrado->numero_operacion = get_numero_operacion();
-
 			return item_encontrado;
 		}
 
