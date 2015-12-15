@@ -70,12 +70,16 @@ typedef struct{
 } t_mensaje;
 
 typedef struct{
+	int idProceso;
+	int idCpu;
+	int tiempoIO;
 	int m; 				// slots del array usados hasta ahora
-	int maximo; 		// capacidad máxima del array
+	int estado_ultima_instruccion; 		// 1 si la última instrucción ejecutó correctamente; 0 si hubo un error
+	int maximo;
 	int contador;		// posición actualizada del contador de programa
 	int *data;			// el array de resultados de las ejecuciones de cada instrucción
 	int usoDeCpu;		// porcentaje de CPU utilizada en el ultimo minuto;
-	int causa_finalizacion; // valor que indica el motivo del fin de ejecucion (I/O = 0, fin de archivo = 1, Quantum = 2)
+	int causa_finalizacion; // valor que indica el motivo del fin de ejecucion (I/O = 20,error = 21, Quantum = 22, finalizar = 23)
 } t_resultadoOperacion;
 
 typedef struct {
@@ -123,5 +127,9 @@ void funcionResetearContadores();
 void resetearContadores();
 t_data * leer_paquete(int socket);
 t_data * pedirPaquete(int codigoOp, int tamanio, void * data);
+t_data *crearPaqueteEntradaSalida(t_resultadoOperacion resultado);
+t_data *crearPaqueteFinQuantum(t_resultadoOperacion resultado);
+t_data *crearPaqueteFinalizar(t_resultadoOperacion resultado);
+t_data *crearPaqueteConsumo(int id, int consumoActual);
 
 #endif /* LIBRERIACPU_H_ */

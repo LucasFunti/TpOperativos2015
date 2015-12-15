@@ -101,7 +101,7 @@ void agregarEnColaDeListos(tipo_pcb *proceso, pthread_mutex_t mutex_readys,
 
 void cambiarAEstadoDeEjecucion(pthread_mutex_t mutex_readys, t_queue*colaListos,
 	pthread_mutex_t mutex_ejecucion, t_list *listaEjecutando,
-	t_queue*entrada_salida, t_log*log_planificador, int socketEnEjecucion);
+	t_queue*entrada_salida, t_log*log_planificador, int socketEnEjecucion,int pid_cpu);
 
 nodo_en_ejecucion * removerDeListaDeEjecucion(tipo_pcb *pcb,
 	pthread_mutex_t mutex_ejecucion, t_list*listaEjecutando);
