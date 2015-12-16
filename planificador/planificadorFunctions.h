@@ -10,6 +10,18 @@
 #include <commons/log.h>
 #include <commons/collections/queue.h>
 
+pthread_mutex_t mutex_readys;
+pthread_mutex_t mutex_ejecucion;
+pthread_mutex_t mutex_bloqueados;
+t_queue * colaListos;
+t_queue * entradaSalida;
+t_list * en_ejecucion;
+t_queue * colaFinalizados;
+int codigoOperacion;
+int p_last_id;
+t_log *log_planificador;
+
+
 enum estado {
 	listo = 98,
 	ejecucion,
@@ -139,5 +151,6 @@ void agregarAFinalizados(t_queue *finalizados, nodo_en_ejecucion * proceso,
 
 void peticionPorcentajeUsoCpu(t_list * lista,int codigo) ;
 
+void * ejecutarIngresoConsola();
 
 #endif /* PLANIFICADORFUNCTIONS_H_ */

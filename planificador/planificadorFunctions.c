@@ -262,6 +262,7 @@ void * cambiarEstadoABloqueado(void* data) {
 	io->espera = dataHilo->tiempo;
 	sleep(io->espera);
 	log_info(dataHilo->log_planificador,"Se termino la entrada salida del proceso: %s\n",io->proceso->nombrePrograma);
+	io->proceso->programCounter = io->proceso->programCounter + 1;
 	agregarEnColaDeListos(io->proceso, dataHilo->mutex_readys,
 			dataHilo->colaListos, dataHilo->log_planificador,
 			dataHilo->entradaSalida, dataHilo->listaEjecutando);
@@ -348,7 +349,6 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		procesoAFinalizar = list_remove_by_condition(en_ejecucion,
 				encontrar_cpu);
 		agregarAFinalizados(finalizados, procesoAFinalizar, log_planificador);
-		close(socketCliente);
 		log_info(log_planificador,
 				"Se cerro la conexión con la cpu %d en el socket %d",
 				instruccion->pid_cpu, socketCliente);
@@ -367,6 +367,7 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 				encontrar_cpu_finQuantum);
 		agregarEnColaDeListos(proceso->proceso, mutex_readys, colaListos,
 				log_planificador, entradaSalida, en_ejecucion);
+		proceso->proceso->programCounter = proceso->proceso->programCounter + 1;
 		free(data);
 		break;
 	case instruccionFinalizada:
@@ -387,7 +388,6 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		int pid_cpu, tiempoIO;
 		memcpy(&pid_cpu, dataIO, sizeof(int));
 		memcpy(&tiempoIO, dataIO + sizeof(int), sizeof(int));
-		int prueba = tiempoIO;
 		bool encontrar_cpu_io(void * nodo) {
 			nodo_en_ejecucion * nodito = nodo;
 			return nodito->pid_cpu == pid_cpu;
@@ -479,3 +479,67 @@ void peticionPorcentajeUsoCpu(t_list * lista, int codigo) {
 	}
 }
 
+void * ejecutarIngresoConsola(){
+	int pid_a_finalizar=-1;
+	while(1){
+		codigoOperacion = reconocerIdentificador();
+		char *nombreProceso = malloc(512);
+		switch (codigoOperacion) {
+		case 1:/* correr */
+			scanf("%s", nombreProceso);
+			char *path = malloc(256);
+//			realpath(nombreProceso, path);
+			strcpy(path,"/tp-2015-2c-signiorcodigo/programas/");
+			strcat(path,nombreProceso);
+
+			printf("el path a enviar es: %s \n", path);
+			int pid;
+			pid = generarPID(&p_last_id);
+
+			tipo_pcb *proceso = malloc(sizeof(tipo_pcb));
+			proceso = generarPCB(pid, path, listo, nombreProceso);
+
+			agregarEnColaDeListos(proceso, mutex_readys, colaListos,
+					log_planificador, entradaSalida, en_ejecucion);
+
+			break;
+		case 99:
+			/*finalizar*/
+
+			scanf("%d", &pid_a_finalizar);
+			bool encontrar_pid(void * nodo) {
+				return ((((nodo_en_ejecucion*) nodo)->proceso->id)
+						== pid_a_finalizar);
+			}
+			nodo_en_ejecucion *procesoEnEjecucion = malloc(
+					sizeof(nodo_en_ejecucion));
+			procesoEnEjecucion = list_remove_by_condition(en_ejecucion,
+					encontrar_pid);
+			printf("VAMOS A FINALIZAR AL PROCESO CON PID: %d\n",
+					procesoEnEjecucion->proceso->id);
+			int PC = -1;
+			PC = setProgramCounter(procesoEnEjecucion->proceso->dirProceso);
+
+			procesoEnEjecucion->proceso->programCounter = PC;
+			agregarEnColaDeListos(procesoEnEjecucion->proceso, mutex_readys,
+					colaListos, log_planificador, entradaSalida, en_ejecucion);
+			free(procesoEnEjecucion);
+
+			break;
+		case 2:
+			/* ps */
+
+			mostrarEstadoDeLista(en_ejecucion, "Ejecutando", log_planificador);
+			mostrarEstadoDeListos(colaListos, "Listo", log_planificador);
+			mostrarEstadoDeBloqueados(entradaSalida, "Bloqueados",log_planificador);
+
+			break;
+		case 3:
+			/* cpu */
+			peticionPorcentajeUsoCpu(en_ejecucion, 3);
+			break;
+		}
+
+	}
+	return NULL;
+}
