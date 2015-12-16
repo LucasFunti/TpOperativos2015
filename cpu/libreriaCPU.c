@@ -399,7 +399,8 @@ void correrArchivo(void * infoHilo) {
 
 			operacion = reconocerInstruccion(listaInstrucciones[n]);
 			resultado.data[resultado.m] = ejecutar(listaInstrucciones[n],
-					infoCorrer->serverMemoria, infoCorrer->serverPlanificador, infoCorrer->id, dataDelHilo);
+					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
+					infoCorrer->id, dataDelHilo);
 			if (resultado.data[resultado.m] == 0) {
 
 				resultado.contador = n;
@@ -426,12 +427,15 @@ void correrArchivo(void * infoHilo) {
 			resultado.tiempoIO = atoi(array[1]);
 			t_data *paquete = crearPaqueteEntradaSalida(resultado);
 			common_send(infoCorrer->serverPlanificador, paquete);
+			n++;
 
-		} else
+		} else {
 			resultado.causa_finalizacion = 23;
-		resultado.estado_ultima_instruccion = resultado.data[resultado.m];
-		t_data *paquete = crearPaqueteFinalizar(resultado);
-		common_send(infoCorrer->serverPlanificador, paquete);
+			resultado.estado_ultima_instruccion = resultado.data[resultado.m];
+			t_data *paquete = crearPaqueteFinalizar(resultado);
+			common_send(infoCorrer->serverPlanificador, paquete);
+			n++;
+		}
 
 	} else if (infoCorrer->quantum != 0) { // Caso Round-Robin
 		int contador = 0;
@@ -440,7 +444,8 @@ void correrArchivo(void * infoHilo) {
 
 			operacion = reconocerInstruccion(listaInstrucciones[n]);
 			resultado.data[resultado.m] = ejecutar(listaInstrucciones[n],
-					infoCorrer->serverMemoria, infoCorrer->serverPlanificador, infoCorrer->id, dataDelHilo);
+					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
+					infoCorrer->id, dataDelHilo);
 			if (resultado.data[resultado.m] == 0) {
 				resultado.contador = n;
 				resultado.causa_finalizacion = 21;
@@ -592,9 +597,10 @@ t_data *crearPaqueteConsumo(int id, int consumoActual) {
 	paquete->header = malloc(sizeof(t_header));
 	int tamanio = 2 * sizeof(int);
 	paquete->data = malloc(tamanio);
+	paquete->header->codigo_operacion = 43;
+	paquete->header->tamanio_data = tamanio;
 	memcpy(paquete->data, &id, sizeof(int));
 	memcpy(paquete->data + sizeof(int), &consumoActual, sizeof(int));
-	memcpy(paquete->header->tamanio_data, &tamanio, sizeof(int));
 	return paquete;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -659,8 +665,7 @@ void *iniciarcpu(void *punteroALaInfo) {
 			infoCorrer->serverPlanificador = serverPlanificador;
 			infoCorrer->threadInfo = threadInfo;
 
-			pthread_create(&hiloEjecucion,NULL,correrArchivo,infoCorrer);
-
+			pthread_create(&hiloEjecucion, NULL, correrArchivo, infoCorrer);
 
 		} else if (codigoOperacion == 3) { // caso Consumo de CPU
 			int id = threadInfo->idHilo;
