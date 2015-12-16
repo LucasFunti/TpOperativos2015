@@ -370,3 +370,4 @@
 [INFO] 03:03:00:343 PLANIFICADOR/(5378:5378): Colocado el proceso: entradasalida con pid = 1 en la cola de ejecucion
 [INFO] 03:03:00:343 PLANIFICADOR/(5378:5378): mProc 1: entradasalida -> Ejecucion 
 
+[INFO] 22:32:08:756 PLANIFICADOR/(3607:3607): Se conecto una cpu en el socket 5

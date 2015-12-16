@@ -6,18 +6,18 @@ context(test_admin_memoria) {
 	describe("iniciar_n") {
 
 		remove(
-				"tp-2015-2c-signiorcodigo/memoria/test/logTest");
+				"/tp-2015-2c-signiorcodigo/memoria/test/logTest");
 
 		logger =
 		log_create(
-				"tp-2015-2c-signiorcodigo/memoria/test/logTest",
+				"/tp-2015-2c-signiorcodigo/memoria/test/logTest",
 				"Test", true, LOG_LEVEL_DEBUG);
 
 		describe("sin tlb") {
 
 			before {
 
-				memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
+				memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 				iniciar_marcos();
 
 			}end
@@ -39,7 +39,7 @@ context(test_admin_memoria) {
 
 			before {
 
-				memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+				memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 				iniciar_marcos();
 
 			}end
@@ -89,7 +89,7 @@ context(test_admin_memoria) {
 
 		before {
 
-			memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 			iniciar_marcos();
 
 		}end
@@ -131,7 +131,7 @@ context(test_admin_memoria) {
 
 		it("escribe estando en la tlb") {
 
-			memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos();
 
 			iniciar_n(1,2);
@@ -155,7 +155,7 @@ context(test_admin_memoria) {
 
 		it("lee estando en memoria") {
 
-			memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 			iniciar_marcos();
 
 			iniciar_n(1,2);
@@ -173,7 +173,7 @@ context(test_admin_memoria) {
 
 		it("lee estando en tlb") {
 
-			memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos();
 
 			iniciar_n(1,2);
@@ -195,7 +195,7 @@ context(test_admin_memoria) {
 
 		it("remueve procesos de la tlb y la tabla liberando marcos") {
 
-			memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos();
 
 			iniciar_n(1,1);
@@ -214,7 +214,7 @@ context(test_admin_memoria) {
 
 		it("con un pid que no existe no remueve nada de ningún lado") {
 
-			memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 			iniciar_marcos();
 
 			iniciar_n(1,2);
@@ -367,7 +367,7 @@ context(test_admin_memoria) {
 
 		before {
 
-			memoriaConfig= config_create("tp-2015-2c-signiorcodigo/memoria/test/configuracionClock-M");
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionClock-M");
 			iniciar_marcos();
 
 		}end

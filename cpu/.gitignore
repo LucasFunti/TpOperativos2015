@@ -36,8 +36,6 @@
 /Debug
 .cproject
 .project
-src/logMemoria
-test/logTest
-log_test_volcado_memoria
+log_cpu
 
 
