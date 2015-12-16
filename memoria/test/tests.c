@@ -329,6 +329,29 @@ context(test_admin_memoria) {
 
 	}end
 
+	it("ejecuta mem.cod") {
+
+		iniciar_n(1,5);
+
+		escribir_n(1,0,"Hola");
+		escribir_n(1,1,"Hola");
+		escribir_n(1,2,"Hola");
+		escribir_n(1,3,"Hola");
+
+		should_int(list_size(cola_llegada)) be equal to(3);
+
+		assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,0,false,false);
+		assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,1,true,true);
+		assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,2,true,true);
+		assert_tabla_paginas_item(list_get(tabla_paginas,3),1,3,0,true,true);
+
+		escribir_n(1,0,"Hola");
+
+		assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,1,true,true);
+		assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,1,false,false);
+
+	}end
+
 	describe("lru") {
 
 		before {

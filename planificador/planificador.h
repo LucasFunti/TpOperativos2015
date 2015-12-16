@@ -5,10 +5,8 @@
  *      Author: root
  */
 
-
 #ifndef PLANIFICADOR_H_
 #define PLANIFICADOR_H_
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -49,5 +47,3 @@ int p_last_id;
 t_log *log_planificador;
 
 #endif /* PLANIFICADOR_H_ */
-
-

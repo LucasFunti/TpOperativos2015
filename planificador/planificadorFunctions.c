@@ -234,6 +234,15 @@ void agregarAColaDeBloqueados(nodo_entrada_salida*io) {
 	pthread_mutex_unlock(&mutex_bloqueados);
 
 }
+void quitarDeColaBloqueados(nodo_entrada_salida *io){
+	bool encontrarIO(void * data){
+		return ((((nodo_entrada_salida*)data)->proceso->id)==io->proceso->id);
+	}
+	nodo_entrada_salida * entradasalida = list_remove_by_condition(entradaSalida.elements, encontrarIO);
+
+}
+
+
 /* saca un proceso de la lista de ejecucion y lo coloca en la cola de entrada salida */
 void * cambiarEstadoABloqueado(void* data) {
 	data_hilo *dataHilo = data;
@@ -253,6 +262,7 @@ void * cambiarEstadoABloqueado(void* data) {
 			io->proceso->nombrePrograma);
 
 	//TODO removerlo de la cola de bloqueados, pero no popeando, sino con un list-find
+	quitarDeColaBloqueados(io);
 
 	io->proceso->programCounter++;
 
@@ -384,13 +394,20 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		break;
 
 	case instruccionFinalizada:
-		recv(socketCliente, data, sizeof(data), 0);
-		rafaga_t * otraInstruccion = malloc(sizeof(rafaga_t));
-		otraInstruccion = deserializarInstruccion(data);
-		nodo_en_ejecucion * unProceso = malloc(sizeof(nodo_en_ejecucion));
-		unProceso = list_find(en_ejecucion, encontrar_cpu);
-		loguearRafaga(otraInstruccion, unProceso, log_planificador);
-		unProceso->proceso->programCounter = unProceso->proceso->programCounter + 1;
+
+		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
+		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
+
+		rafaga_t * otraInstruccion = deserializarInstruccion(data);
+
+		proceso = list_find(en_ejecucion, encontrar_cpu);
+
+		proceso->instrucciones_ejecutadas++;
+
+		loguearRafaga(otraInstruccion, proceso, log_planificador);
+
+		proceso->proceso->programCounter++;
+
 		free(data);
 		break;
 

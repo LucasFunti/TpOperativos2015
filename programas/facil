@@ -1,0 +1,8 @@
+iniciar 3;
+escribir 0 "Hola";
+escribir 1 "soy";
+escribir 2 "facil";
+leer 0;
+leer 1;
+leer 2;
+finalizar;

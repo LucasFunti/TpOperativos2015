@@ -7,6 +7,23 @@
 
 #ifndef LIBRERIACPU_H_
 #define LIBRERIACPU_H_
+#include <commons/txt.h>
+#include <commons/string.h>
+#include <commons/config.h>
+#include <commons/log.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/select.h>
+#include <pthread.h>
+#include <sys/time.h>
+#include <signal.h>
+#include <signiorCodigo/libSockets.h>
 #include <pthread.h>
 #include "../planificador/planificadorFunctions.h"
 
@@ -25,12 +42,12 @@ typedef struct {
 
 } t_data;
 
-typedef struct instruccion{
+typedef struct instruccion {
 	char *instruccion;
 	char *cantidadDePaginas;
 } t_instruccion;
 
-typedef struct instruccionEscritura{
+typedef struct instruccionEscritura {
 	int idProceso;
 	int paginas;
 	char *textoAEscribir;
@@ -43,7 +60,7 @@ typedef struct {
 	char *mensaje;
 } t_tablaDeInstruccion;
 
-typedef struct{
+typedef struct {
 	char * ipPlanificador;
 	char * puerto_planificador;
 	char * ipMemoria;
@@ -52,32 +69,42 @@ typedef struct{
 	int retardo;
 } t_config_cpu;
 
-typedef struct{
+typedef struct {
 	int idHilo;
 	t_log *logger;
 } t_hilo;
 
-typedef struct{
+typedef struct {
+	char * path;
+	int contadorPrograma;
+	char * id;
+	int serverMemoria;
+	int serverPlanificador;
+	t_hilo * threadInfo;
+	int quantum;
+} t_correr_info;
+
+typedef struct {
 	char *nombrePrograma;
 	int programCounter;
 	char *resultadosSerializados;
 } t_resultadoEjecucion;
 
-typedef struct{
+typedef struct {
 	int header;
 	int tamanio;
 	char * mensaje;
 } t_mensaje;
 
-typedef struct{
+typedef struct {
 	int idProceso;
 	int idCpu;
 	int tiempoIO;
 	int m; 				// slots del array usados hasta ahora
-	int estado_ultima_instruccion; 		// 1 si la última instrucción ejecutó correctamente; 0 si hubo un error
+	int estado_ultima_instruccion; // 1 si la última instrucción ejecutó correctamente; 0 si hubo un error
 	int maximo;
 	int contador;		// posición actualizada del contador de programa
-	int *data;			// el array de resultados de las ejecuciones de cada instrucción
+	int *data;	// el array de resultados de las ejecuciones de cada instrucción
 	int usoDeCpu;		// porcentaje de CPU utilizada en el ultimo minuto;
 	int causa_finalizacion; // valor que indica el motivo del fin de ejecucion (I/O = 20,error = 21, Quantum = 22, finalizar = 23)
 } t_resultadoOperacion;
@@ -87,17 +114,18 @@ typedef struct {
 	int tamanio_data;
 } t_headersCpu;
 
-
+int getNumeroHilo();
 int reconocerInstruccion(char*);
 t_instruccion empaquetar(char *, char *);
 t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
 char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
-char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaquetada);
-int ejecutar(char *linea, int serverMemoria, int serverPlanificador, char *idProceso, t_hilo *infoHilo);
-t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma, char* idProceso, int serverMemoria, int serverPlanificador,
-		t_hilo *infoDelHilo, int quantum);
+char *serializarEmpaquetadoEscritura(
+		t_instruccionEscritura instruccionEmpaquetada);
+int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
+		char *idProceso, t_hilo *infoHilo);
+void correrArchivo(void * dataCorrer);
 char *getIpPlanificador();
-void *iniciarcpu(void *buffer);
+void *iniciarcpu(void * buffer);
 char *getIpPlanificador();
 char *getPuertoPlanificador();
 char *getIpMemoria();
@@ -112,13 +140,16 @@ char* serializarPaqueteCpu(t_data * unPaquete);
 void common_send(int socket, t_data * paquete);
 t_resultadoEjecucion empaquetarResultado(char *ruta, int contadorPrograma);
 t_data *crearPaquete(int codigoOperacion, int pid, int paginas);
-t_data *crearPaqueteEscritura(int codigoOperacion, int pid, int paginas, char *string);
+t_data *crearPaqueteEscritura(int codigoOperacion, int pid, int paginas,
+		char *string);
 int cantidadElementos(char **lista);
 char *eventoDeLogeo(char *mensaje, int id);
 char *logeoDeEjecucion(char *mensaje, char *ruta, int contador, char *idProceso);
 void logearIniciar(t_hilo *infoHilo, int estadoDeEjecucion, char *idProceso);
-void logearLectura(t_hilo *infoHilo, char *idProceso, char *pagina, char *contenidoDePagina);
-void logearEscritura(t_hilo *infoHilo, char *idProceso, int estadoDeEjecucion, char *pagina, char *texto);
+void logearLectura(t_hilo *infoHilo, char *idProceso, char *pagina,
+		char *contenidoDePagina);
+void logearEscritura(t_hilo *infoHilo, char *idProceso, int estadoDeEjecucion,
+		char *pagina, char *texto);
 void logearEntradaSalida(t_hilo *infoHilo, char *idProceso, char *tiempo);
 void logearFinalizacion(t_hilo *infoHilo, char *idProceso);
 void reiniciarContador(int contador);

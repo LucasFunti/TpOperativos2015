@@ -138,4 +138,6 @@ void despacharProcesosListos(void * data);
 
 bool cpuEstaLibre(void * data);
 
+void quitarDeColaBloqueados(nodo_entrada_salida *io);
+
 #endif /* PLANIFICADORFUNCTIONS_H_ */
