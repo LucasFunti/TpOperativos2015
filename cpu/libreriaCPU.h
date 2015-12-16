@@ -7,8 +7,8 @@
 
 #ifndef LIBRERIACPU_H_
 #define LIBRERIACPU_H_
-#include <signiorCodigo/planificadorFunctions.h>
 #include <pthread.h>
+#include "../planificador/planificadorFunctions.h"
 
 int porcentajeDeUso[50], instruccionesEjecutadas[50];
 
