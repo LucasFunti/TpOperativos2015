@@ -25,16 +25,6 @@ typedef struct {
 
 } t_data;
 
-typedef struct instruccion{
-	char *instruccion;
-	char *cantidadDePaginas;
-} t_instruccion;
-
-typedef struct instruccionEscritura{
-	int idProceso;
-	int paginas;
-	char *textoAEscribir;
-} t_instruccionEscritura;
 
 typedef struct {
 	int codigoOperacion;
@@ -89,10 +79,6 @@ typedef struct {
 
 
 int reconocerInstruccion(char*);
-t_instruccion empaquetar(char *, char *);
-t_instruccionEscritura empaquetarEscritura(char *, char *, char *);
-char *serializarEmpaquetado(t_instruccion instruccionEmpaquetada);
-char *serializarEmpaquetadoEscritura(t_instruccionEscritura instruccionEmpaquetada);
 int ejecutar(char *linea, int serverMemoria, int serverPlanificador, char *idProceso, t_hilo *infoHilo);
 t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma, char* idProceso, int serverMemoria, int serverPlanificador,
 		t_hilo *infoDelHilo, int quantum);

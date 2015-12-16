@@ -51,30 +51,6 @@ int reconocerInstruccion(char *linea) {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* empaquetado para todas las instrucciones salvo la escritura. */
-t_instruccion empaquetar(char *instruccionRecibida, char *paginas) {
-	t_instruccion instruccionEmpaquetada;
-	instruccionEmpaquetada.instruccion = instruccionRecibida;
-	instruccionEmpaquetada.cantidadDePaginas = paginas;
-
-	return instruccionEmpaquetada;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/* empaquetado para la instruccion de escritura. */
-t_instruccionEscritura empaquetarEscritura(char *idProceso, char *paginas,
-		char *texto) {
-	t_instruccionEscritura escrituraEmpaquetada;
-	escrituraEmpaquetada.idProceso = atoi(idProceso);
-	escrituraEmpaquetada.paginas = atoi(paginas);
-	char *textoSinComillas = texto;
-	removeChar(textoSinComillas, '"');
-	escrituraEmpaquetada.textoAEscribir = textoSinComillas;
-
-	return escrituraEmpaquetada;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /* Función para remover un char en concreto de un string (usado para sacar las comillas de la instruccion escribir) */
 void removeChar(char *string, char basura) {
 	char *src, *dst;
@@ -188,6 +164,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 			estadoDeEjecucion, paginas, header, largoString, codigo,
 			codigoRecibido;
 	char *contenidoDePagina;
+	char *resultadoEjecucion = malloc(128);
 	char **array;
 	t_data *datos = malloc(sizeof(t_data));
 	char *paqueteSerializado, textoAEscribir;
@@ -208,15 +185,15 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		datos = leer_paquete(serverMemoria);
 
 
-		if (estadoDeEjecucion == 1){
-//		if (datos->header->codigo_operacion == 1) {
-//			printf("mProc %s - Iniciado correctamente.\n", idProceso);
+//		if (estadoDeEjecucion == 1){
+		if (datos->header->codigo_operacion == 1) {
+			resultadoEjecucion = string_from_format("mProc %s - Iniciado correctamente.", idProceso);
 			logearIniciar(datosDelHilo, datos->header->codigo_operacion,
 					idProceso);
 			printf("\n");
 			resultado = 1;
 		} else {
-//			printf("mProc %s - Fallo al iniciar\n", idProceso);
+			resultadoEjecucion = string_from_format("mProc %s - Fallo al iniciar\n", idProceso);
 			resultado = 0;
 			return resultado;
 		}
@@ -238,14 +215,15 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		if (datos->header->codigo_operacion == 1) {
 			logearLectura(datosDelHilo, idProceso, array[1],
 					(char *) datos->data);
+			contenidoDePagina = datos->data;
 			printf("\n");
-//			printf("\n%s\n", datos->data);
+     		resultadoEjecucion = string_from_format("mProc %s, página %d leída: %s", idProceso, paginas, contenidoDePagina);
 			resultado = 1;
 		} else {
 			log_info(infoHilo->logger,
-					string_from_format(
-							"CPU%s proceso: %s - error de lectura en la página %s",
-							datosDelHilo->idHilo, idProceso, paginas));
+			string_from_format("CPU%s proceso: %s - error de lectura en la página %s",
+			datosDelHilo->idHilo, idProceso, paginas));
+			resultadoEjecucion = string_from_format("mProc %s - error de lectura en la página %s", idProceso, paginas);
 			printf("\n");
 			resultado = 0;
 			return resultado;
@@ -265,10 +243,10 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 				array[2]);
 		printf("\n");
 		if (datos->header->codigo_operacion == 1) {
-			//	printf("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
+		    resultadoEjecucion = string_from_format("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
 			resultado = 1;
 		} else {
-//			printf("mProc %s - Error de escritura de página\n", idProceso);
+			resultadoEjecucion = string_from_format("mProc %s - Error de escritura de página\n", idProceso);
 			resultado = 0;
 			return resultado;
 		}
@@ -283,7 +261,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 		resultado = 1;
 		logearEntradaSalida(datosDelHilo, idProceso, array[1]);
-//		printf("mProc %s - en entrada/salida de tiempo %s\n", idProceso, array[1]);
+		resultadoEjecucion = string_from_format("mProc %s - en entrada/salida de tiempo %s\n", idProceso, array[1]);
 		printf("\n");
 		resultado = 1;
 
@@ -295,7 +273,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		common_send(serverMemoria, datos);
 		resultado = 1;
 		logearFinalizacion(datosDelHilo, idProceso);
-//		printf("mProc %s - Finalizado.\n", idProceso);
+		resultadoEjecucion = string_from_format("mProc %s - Finalizado.\n", idProceso);
 		printf("\n");
 		break;
 
@@ -427,7 +405,7 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 						resultado.data[resultado.m];
 				t_data *paquete = crearPaqueteFinalizar(resultado);
 				common_send(serverPlanificador, paquete);
-				return resultado;
+				goto final;
 			}
 			n++;
 			resultado.m++;
@@ -445,12 +423,14 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 			resultado.tiempoIO = atoi(array[1]);
 			t_data *paquete = crearPaqueteEntradaSalida(resultado);
 			common_send(serverPlanificador, paquete);
+			goto final;
 
 		} else
 			resultado.causa_finalizacion = 23;
 		resultado.estado_ultima_instruccion = resultado.data[resultado.m];
 		t_data *paquete = crearPaqueteFinalizar(resultado);
 		common_send(serverPlanificador, paquete);
+		goto final;
 
 	} else if (quantum != 0) { // Caso Round-Robin
 		int contador = 0;
@@ -465,6 +445,7 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 				resultado.causa_finalizacion = 21;
 				t_data *paquete = crearPaqueteFinalizar(resultado);
 				common_send(serverPlanificador, paquete);
+				goto final;
 
 				return resultado;
 			}
@@ -487,21 +468,25 @@ t_resultadoOperacion correrArchivo(char *ruta, int contadorPrograma,
 			resultado.tiempoIO = atoi(array[1]);
 			t_data *paquete = crearPaqueteEntradaSalida(resultado);
 			common_send(serverPlanificador, paquete);
+			goto final;
 
 		} else if (contador < quantum) {
 			resultado.causa_finalizacion = 23;
 			resultado.estado_ultima_instruccion = 1;
 			t_data *paquete = crearPaqueteFinalizar(resultado);
 			common_send(serverPlanificador, paquete);
+			goto final;
 
 		} else {
 			resultado.causa_finalizacion = 22;
 			resultado.estado_ultima_instruccion = 1;
 			t_data *paquete = crearPaqueteFinQuantum(resultado);
 			common_send(serverPlanificador, paquete);
+			goto final;
 		}
 
 	}
+	final:
 	return resultado;
 
 }
