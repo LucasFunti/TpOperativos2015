@@ -1,14 +1,10 @@
 /*
  * memoria.c
- *
- <<<<<<< HEAD
- *  Created on: 5/9/2015
- =======
  *  Created on: 28/9/2015
- >>>>>>> e5bed079387090f438690c736e7ce6b16c1bb69c
  *      Author: utnso
  */
 #include "memoria.h"
+
 
 int main() {
 

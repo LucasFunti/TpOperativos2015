@@ -70,9 +70,8 @@ tipo_pcb *generarPCB(int pid, char *path, int estado, char *nombre) {
 /* Leer el archivo de config y guardarla en una estructura */
 char *getPuerto() {
 	t_config *planificador_config;
-	planificador_config =
-			config_create(
-					"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+	planificador_config = config_create(
+			"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
 	char * puerto = config_get_string_value(planificador_config,
 			"PUERTO_ESCUCHA");
 	return puerto;
@@ -80,9 +79,8 @@ char *getPuerto() {
 
 char *getAlgoritmo() {
 	t_config *planificador_config;
-	planificador_config =
-			config_create(
-					"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+	planificador_config = config_create(
+			"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
 	char* algoritmo = config_get_string_value(planificador_config,
 			"ALGORITMO_PLANIFICACION");
 	return algoritmo;
@@ -90,9 +88,8 @@ char *getAlgoritmo() {
 
 int getQuantum() {
 	t_config *planificador_config;
-	planificador_config =
-			config_create(
-					"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
+	planificador_config = config_create(
+			"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
 	int quantum = config_get_int_value(planificador_config, "PUERTO_ESCUCHA");
 	return quantum;
 }
@@ -255,13 +252,17 @@ void * cambiarEstadoABloqueado(void* data) {
 
 	nodo_entrada_salida * io = malloc(sizeof(nodo_entrada_salida));
 	io->proceso = proceso->proceso;
-	log_info(dataHilo->log_planificador,"Se creo el hilo para el manejo de entrada salida del programa : %s\n",io->proceso->nombrePrograma);
+	log_info(dataHilo->log_planificador,
+			"Se creo el hilo para el manejo de entrada salida del programa : %s\n",
+			io->proceso->nombrePrograma);
 	agregarAColaDeBloqueados(dataHilo->mutex_bloqueados,
 			dataHilo->entradaSalida, io, dataHilo->colaListos,
 			dataHilo->listaEjecutando, dataHilo->log_planificador);
 	io->espera = dataHilo->tiempo;
 	sleep(io->espera);
-	log_info(dataHilo->log_planificador,"Se termino la entrada salida del proceso: %s\n",io->proceso->nombrePrograma);
+	log_info(dataHilo->log_planificador,
+			"Se termino la entrada salida del proceso: %s\n",
+			io->proceso->nombrePrograma);
 	agregarEnColaDeListos(io->proceso, dataHilo->mutex_readys,
 			dataHilo->colaListos, dataHilo->log_planificador,
 			dataHilo->entradaSalida, dataHilo->listaEjecutando);
@@ -331,12 +332,16 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		t_queue*finalizados, pthread_mutex_t mutex_bloqueados,
 		pthread_mutex_t mutex_ejecucion) {
 
-	void *data = malloc(sizeof(int) * 5);
+	void * data = malloc(sizeof(int) * 4);
 	void * dataIO = malloc(sizeof(int) * 2);
+	int tamanio;
 	switch (instruccion) {
 	case finalizado:
-		recv(socketCliente, data, sizeof(data), 0);
-		rafaga_t * instruccion = malloc(sizeof(rafaga_t));
+
+		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
+		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
+
+		rafaga_t * instruccion;
 		instruccion = deserializarInstruccion(data);
 		nodo_en_ejecucion * procesoAFinalizar = malloc(
 				sizeof(nodo_en_ejecucion));
@@ -348,14 +353,15 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		procesoAFinalizar = list_remove_by_condition(en_ejecucion,
 				encontrar_cpu);
 		agregarAFinalizados(finalizados, procesoAFinalizar, log_planificador);
-		close(socketCliente);
-		log_info(log_planificador,
-				"Se cerro la conexión con la cpu %d en el socket %d",
-				instruccion->pid_cpu, socketCliente);
+
+
 		free(data);
 		break;
 	case finquantum:
-		recv(socketCliente, data, sizeof(data), 0);
+
+		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
+		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
+
 		rafaga_t * unaInstruccion = malloc(sizeof(rafaga_t));
 		unaInstruccion = deserializarInstruccion(data);
 		bool encontrar_cpu_finQuantum(void * nodo) {
@@ -369,8 +375,12 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 				log_planificador, entradaSalida, en_ejecucion);
 		free(data);
 		break;
+
 	case instruccionFinalizada:
-		recv(socketCliente, data, sizeof(data), 0);
+
+		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
+		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
+
 		rafaga_t * otraInstruccion = malloc(sizeof(rafaga_t));
 		otraInstruccion = deserializarInstruccion(data);
 		nodo_en_ejecucion * unProceso = malloc(sizeof(nodo_en_ejecucion));
@@ -378,12 +388,16 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		unProceso->instrucciones_ejecutadas =
 				unProceso->instrucciones_ejecutadas + 1;
 		loguearRafaga(otraInstruccion, unProceso, log_planificador);
-		unProceso->proceso->programCounter = unProceso->proceso->programCounter + 1;
+		unProceso->proceso->programCounter = unProceso->proceso->programCounter
+				+ 1;
 		free(data);
 		break;
+
 	case entrada_salida:
-		recv(socketCliente, dataIO, sizeof(int), MSG_WAITALL);
+
+		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
 		recv(socketCliente, dataIO, sizeof(int) * 2, MSG_WAITALL);
+
 		int pid_cpu, tiempoIO;
 		memcpy(&pid_cpu, dataIO, sizeof(int));
 		memcpy(&tiempoIO, dataIO + sizeof(int), sizeof(int));
@@ -398,7 +412,7 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		data_hilo *dataHilo = malloc(sizeof(data_hilo));
 		dataHilo = obtenerDatosHilo(dataHilo, Proceso, mutex_readys, colaListos,
 				log_planificador, entradaSalida, en_ejecucion, finalizados,
-				mutex_bloqueados, mutex_ejecucion,tiempoIO);
+				mutex_bloqueados, mutex_ejecucion, tiempoIO);
 		pthread_create(&hilo, NULL, cambiarEstadoABloqueado, dataHilo);
 		break;
 	}

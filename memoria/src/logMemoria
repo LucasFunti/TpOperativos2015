@@ -1,16 +1,66 @@
-[INFO] 22:31:38:580 PAM/(3594:3594): Iniciado el proceso administrador de memoria
-[INFO] 22:31:38:581 PAM/(3594:3594): Levantan las configuraciones
-[INFO] 22:31:38:581 PAM/(3594:3594): Configurado con PUERTO_ESCUCHA: 5001
-[INFO] 22:31:38:581 PAM/(3594:3594): Configurado con IP_SWAP: localhost
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con PUERTO_SWAP: 6000
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con CANTIDAD_MARCOS: 20
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con TAMANIO_MARCO: 15
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con ENTRADAS_TLB: 2
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con TLB_HABILITADA: NO
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con RETARDO_MEMORIA: 0
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con ALGORITMO_REMPLAZO: FIFO
-[INFO] 22:31:38:583 PAM/(3594:3594): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
-[INFO] 22:31:38:584 PAM/(3594:3594): Se escuchan conexiones en el socket 7
-[INFO] 22:32:08:756 PAM/(3594:3594): Se detecto conexión entrante al puerto de escucha
-[INFO] 22:32:08:756 PAM/(3594:3594): Se asigna el socket 8
+[INFO] 01:40:56:160 PAM/(8265:8265): Iniciado el proceso administrador de memoria
+[INFO] 01:40:56:160 PAM/(8265:8265): Levantan las configuraciones
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con PUERTO_ESCUCHA: 5001
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con IP_SWAP: localhost
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con PUERTO_SWAP: 6000
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con CANTIDAD_MARCOS: 20
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con TAMANIO_MARCO: 15
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con ENTRADAS_TLB: 2
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con TLB_HABILITADA: NO
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con RETARDO_MEMORIA: 0
+[INFO] 01:40:56:160 PAM/(8265:8265): Configurado con ALGORITMO_REMPLAZO: FIFO
+[INFO] 01:40:56:161 PAM/(8265:8265): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
+[INFO] 01:40:56:161 PAM/(8265:8265): Se escuchan conexiones en el socket 7
+[INFO] 01:41:18:905 PAM/(8265:8265): Se detecto conexión entrante al puerto de escucha
+[INFO] 01:41:18:906 PAM/(8265:8265): Se asigna el socket 8
+[INFO] 01:41:30:88 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:41:30:88 PAM/(8265:8265): Realizando una operación INICIAR para el socket 8
+[INFO] 01:41:30:88 PAM/(8265:8265): Se inicia el programa 1 con 3 marcos
+[INFO] 01:41:31:89 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:41:31:89 PAM/(8265:8265): Realizando una operación ESCRIBIR para el socket 8.
+[INFO] 01:41:31:89 PAM/(8265:8265): Se escribío en la página 0 del pid 1 el texto "Hola".
+[INFO] 01:41:32:90 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:41:32:90 PAM/(8265:8265): Realizando una operación ESCRIBIR para el socket 8.
+[INFO] 01:41:32:90 PAM/(8265:8265): Se escribío en la página 1 del pid 1 el texto "soy".
+[INFO] 01:41:33:90 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:41:33:91 PAM/(8265:8265): Realizando una operación ESCRIBIR para el socket 8.
+[INFO] 01:41:33:91 PAM/(8265:8265): Se escribío en la página 2 del pid 1 el texto "facil".
+[INFO] 01:41:34:91 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:41:34:91 PAM/(8265:8265): Realizando una operación LEER para el socket 8
+[INFO] 01:41:34:91 PAM/(8265:8265): Leer el pid 1 y página 0 retorna "Hola".
+[INFO] 01:41:35:92 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:41:35:92 PAM/(8265:8265): Realizando una operación LEER para el socket 8
+[INFO] 01:41:35:92 PAM/(8265:8265): Leer el pid 1 y página 1 retorna "soy".
+[INFO] 01:41:36:92 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:41:36:92 PAM/(8265:8265): Realizando una operación LEER para el socket 8
+[INFO] 01:41:36:92 PAM/(8265:8265): Leer el pid 1 y página 2 retorna "facil".
+[INFO] 01:41:37:92 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:41:37:93 PAM/(8265:8265): Realizando una operación FINALIZAR para el socket 8
+[INFO] 01:41:37:93 PAM/(8265:8265): Se finalizó el pid 1
+[INFO] 01:48:22:730 PAM/(8265:8265): Se detecto conexión entrante al puerto de escucha
+[INFO] 01:48:22:731 PAM/(8265:8265): Se asigna el socket 9
+[INFO] 01:48:32:482 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:48:32:482 PAM/(8265:8265): Realizando una operación INICIAR para el socket 9
+[INFO] 01:48:32:482 PAM/(8265:8265): Se inicia el programa 1 con 3 marcos
+[INFO] 01:48:33:482 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:48:33:482 PAM/(8265:8265): Realizando una operación ESCRIBIR para el socket 9.
+[INFO] 01:48:33:482 PAM/(8265:8265): Se escribío en la página 0 del pid 1 el texto "Hola".
+[INFO] 01:48:34:483 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:48:34:483 PAM/(8265:8265): Realizando una operación ESCRIBIR para el socket 9.
+[INFO] 01:48:34:483 PAM/(8265:8265): Se escribío en la página 1 del pid 1 el texto "soy".
+[INFO] 01:48:35:484 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:48:35:484 PAM/(8265:8265): Realizando una operación ESCRIBIR para el socket 9.
+[INFO] 01:48:35:484 PAM/(8265:8265): Se escribío en la página 2 del pid 1 el texto "facil".
+[INFO] 01:48:36:485 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:48:36:485 PAM/(8265:8265): Realizando una operación LEER para el socket 9
+[INFO] 01:48:36:485 PAM/(8265:8265): Leer el pid 1 y página 0 retorna "Hola".
+[INFO] 01:48:37:485 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:48:37:486 PAM/(8265:8265): Realizando una operación LEER para el socket 9
+[INFO] 01:48:37:486 PAM/(8265:8265): Leer el pid 1 y página 1 retorna "soy".
+[INFO] 01:48:38:486 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:48:38:486 PAM/(8265:8265): Realizando una operación LEER para el socket 9
+[INFO] 01:48:38:486 PAM/(8265:8265): Leer el pid 1 y página 2 retorna "facil".
+[INFO] 01:48:39:487 PAM/(8265:8265): Se detecto una conexión existente con un pedido
+[INFO] 01:48:39:487 PAM/(8265:8265): Realizando una operación FINALIZAR para el socket 9
+[INFO] 01:48:39:487 PAM/(8265:8265): Se finalizó el pid 1

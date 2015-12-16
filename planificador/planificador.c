@@ -97,19 +97,20 @@ int main(int argc, char **argv) {
 								codigoOperacion, proceso, proceso->dirProceso, algoritmo, quantum);
 		}
 		codigoOperacion = reconocerIdentificador();
-		char *nombreProceso = malloc(512);
+		char *nombreProceso = malloc(100);
 		hacerSwitch: switch (codigoOperacion) {
 		case 1:/* correr */
 			scanf("%s", nombreProceso);
-			char *path = malloc(256);
-			realpath(nombreProceso, path);
-//			strcpy(path,"/home/utnso/git/tp-2015-2c-signiorcodigo/cpu/Debug/corto");
+			char * path = string_new();
+
+			string_append(&path, "/tp-2015-2c-signiorcodigo/programas/");
+			string_append(&path,nombreProceso);
+
 			printf("el path a enviar es: %s \n", path);
 			int pid;
 			pid = generarPID(&p_last_id);
 
-			tipo_pcb *proceso = malloc(sizeof(tipo_pcb));
-			proceso = generarPCB(pid, path, listo, nombreProceso);
+			tipo_pcb * proceso = generarPCB(pid, path, listo, nombreProceso);
 
 			agregarEnColaDeListos(proceso, mutex_readys, colaListos,
 					log_planificador, entrada_salida, en_ejecucion);
