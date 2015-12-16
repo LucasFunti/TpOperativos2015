@@ -255,11 +255,13 @@ void * cambiarEstadoABloqueado(void* data) {
 
 	nodo_entrada_salida * io = malloc(sizeof(nodo_entrada_salida));
 	io->proceso = proceso->proceso;
+	log_info(dataHilo->log_planificador,"Se creo el hilo para el manejo de entrada salida del programa : %s\n",io->proceso->nombrePrograma);
 	agregarAColaDeBloqueados(dataHilo->mutex_bloqueados,
 			dataHilo->entradaSalida, io, dataHilo->colaListos,
 			dataHilo->listaEjecutando, dataHilo->log_planificador);
-
+	io->espera = dataHilo->tiempo;
 	sleep(io->espera);
+	log_info(dataHilo->log_planificador,"Se termino la entrada salida del proceso: %s\n",io->proceso->nombrePrograma);
 	agregarEnColaDeListos(io->proceso, dataHilo->mutex_readys,
 			dataHilo->colaListos, dataHilo->log_planificador,
 			dataHilo->entradaSalida, dataHilo->listaEjecutando);
@@ -376,6 +378,7 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		unProceso->instrucciones_ejecutadas =
 				unProceso->instrucciones_ejecutadas + 1;
 		loguearRafaga(otraInstruccion, unProceso, log_planificador);
+		unProceso->proceso->programCounter = unProceso->proceso->programCounter + 1;
 		free(data);
 		break;
 	case entrada_salida:
@@ -384,6 +387,7 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		int pid_cpu, tiempoIO;
 		memcpy(&pid_cpu, dataIO, sizeof(int));
 		memcpy(&tiempoIO, dataIO + sizeof(int), sizeof(int));
+		int prueba = tiempoIO;
 		bool encontrar_cpu_io(void * nodo) {
 			nodo_en_ejecucion * nodito = nodo;
 			return nodito->pid_cpu == pid_cpu;
@@ -392,10 +396,9 @@ void interpretarInstruccion(int instruccion, int socketCliente,
 		Proceso = list_find(en_ejecucion, encontrar_cpu_io);
 		pthread_t hilo;
 		data_hilo *dataHilo = malloc(sizeof(data_hilo));
-		memcpy(&dataHilo->tiempo, dataIO + sizeof(int), sizeof(int));
 		dataHilo = obtenerDatosHilo(dataHilo, Proceso, mutex_readys, colaListos,
 				log_planificador, entradaSalida, en_ejecucion, finalizados,
-				mutex_bloqueados, mutex_ejecucion);
+				mutex_bloqueados, mutex_ejecucion,tiempoIO);
 		pthread_create(&hilo, NULL, cambiarEstadoABloqueado, dataHilo);
 		break;
 	}
@@ -444,7 +447,7 @@ data_hilo *obtenerDatosHilo(data_hilo * dataHilo, nodo_en_ejecucion *Proceso,
 		pthread_mutex_t mutex_readys, t_queue *colaListos,
 		t_log*log_planificador, t_queue*entradaSalida, t_list*en_ejecucion,
 		t_queue*finalizados, pthread_mutex_t mutex_bloqueados,
-		pthread_mutex_t mutex_ejecucion) {
+		pthread_mutex_t mutex_ejecucion, int tiempo) {
 	dataHilo->pcb = Proceso->proceso;
 	dataHilo->colaListos = colaListos;
 	dataHilo->entradaSalida = entradaSalida;
@@ -453,7 +456,7 @@ data_hilo *obtenerDatosHilo(data_hilo * dataHilo, nodo_en_ejecucion *Proceso,
 	dataHilo->mutex_bloqueados = mutex_bloqueados;
 	dataHilo->mutex_ejecucion = mutex_ejecucion;
 	dataHilo->mutex_readys = mutex_readys;
-
+	dataHilo->tiempo = tiempo;
 	return dataHilo;
 }
 /* FUNCION QUE ENVIA MSJ A LA CPU PARA AVERIGUAR SU PORCENTAJE */
