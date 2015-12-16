@@ -88,13 +88,6 @@ void removeChar(char *string, char basura) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-char *empaquetarEntradaSalida() {
-	char *buffer;
-	return buffer;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /* Genera un paquete que contiene el código de operación, y el tamaño a transmitir. */
 t_data *crearPaquete(int codigoOperacion, int pid, int paginas) {
 	t_data * paquete = malloc(sizeof(t_data));
@@ -201,7 +194,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 	int clave = reconocerInstruccion(linea);
 	int pid = atoi(idProceso);
 	int hilo = datosDelHilo->idHilo;
-
+	estadoDeEjecucion = 1; // SOLO PARA TESTEAR
 	switch (clave) {
 
 	case 4:									// instrucción iniciar N
@@ -214,12 +207,13 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 		datos = leer_paquete(serverMemoria);
 
-//		estadoDeEjecucion = 1; // SOLO PARA TESTEAR
 
-		if (datos->header->codigo_operacion == 1) {
+		if (estadoDeEjecucion == 1){
+//		if (datos->header->codigo_operacion == 1) {
 //			printf("mProc %s - Iniciado correctamente.\n", idProceso);
 			logearIniciar(datosDelHilo, datos->header->codigo_operacion,
 					idProceso);
+			printf("\n");
 			resultado = 1;
 		} else {
 //			printf("mProc %s - Fallo al iniciar\n", idProceso);
@@ -244,6 +238,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		if (datos->header->codigo_operacion == 1) {
 			logearLectura(datosDelHilo, idProceso, array[1],
 					(char *) datos->data);
+			printf("\n");
 //			printf("\n%s\n", datos->data);
 			resultado = 1;
 		} else {
@@ -251,6 +246,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 					string_from_format(
 							"CPU%s proceso: %s - error de lectura en la página %s",
 							datosDelHilo->idHilo, idProceso, paginas));
+			printf("\n");
 			resultado = 0;
 			return resultado;
 		}
@@ -267,6 +263,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		datos = leer_paquete(serverMemoria);
 		logearEscritura(datosDelHilo, idProceso, estadoDeEjecucion, array[1],
 				array[2]);
+		printf("\n");
 		if (datos->header->codigo_operacion == 1) {
 			//	printf("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
 			resultado = 1;
@@ -287,6 +284,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		resultado = 1;
 		logearEntradaSalida(datosDelHilo, idProceso, array[1]);
 //		printf("mProc %s - en entrada/salida de tiempo %s\n", idProceso, array[1]);
+		printf("\n");
 		resultado = 1;
 
 		break;
@@ -298,6 +296,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		resultado = 1;
 		logearFinalizacion(datosDelHilo, idProceso);
 //		printf("mProc %s - Finalizado.\n", idProceso);
+		printf("\n");
 		break;
 
 	};
@@ -636,7 +635,7 @@ void *iniciarcpu(void *punteroALaInfo) {
 	puerto_Memoria = getPuertoMemoria();
 
 	serverPlanificador = conectarCliente(ip_Planificador, puerto_Planificador);
-	serverMemoria = conectarCliente(ip_Memoria, puerto_Memoria);
+//	serverMemoria = conectarCliente(ip_Memoria, puerto_Memoria);
 	send(serverPlanificador, &threadInfo->idHilo, sizeof(int), MSG_WAITALL);
 
 //	char package[PACKAGESIZE];
@@ -674,7 +673,7 @@ void *iniciarcpu(void *punteroALaInfo) {
 				log_info(threadInfo->logger, contextoRecibido);
 				printf("%s", rutaDelArchivo);
 				t_resultadoOperacion resultado = correrArchivo(rutaDelArchivo,
-						contadorDePrograma, idProceso, serverMemoria,
+						contadorDePrograma, idProceso, 123,
 						serverPlanificador, threadInfo, quantum);
 
 				/*

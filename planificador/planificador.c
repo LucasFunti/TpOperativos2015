@@ -90,7 +90,12 @@ int main(int argc, char **argv) {
 				}
 			}
 		}
-
+		if (queue_size(colaListos) != 0){
+			tipo_pcb * proceso = malloc(sizeof(tipo_pcb));
+			proceso = queue_pop(colaListos);
+			enviarContextoEjecucion(fileDescriptors[cantfds - 1].fd,
+								codigoOperacion, proceso, proceso->dirProceso, algoritmo, quantum);
+		}
 		codigoOperacion = reconocerIdentificador();
 		char *nombreProceso = malloc(512);
 		hacerSwitch: switch (codigoOperacion) {

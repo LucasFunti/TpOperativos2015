@@ -130,7 +130,7 @@ data_hilo *obtenerDatosHilo(data_hilo * dataHilo, nodo_en_ejecucion *Proceso,
 		pthread_mutex_t mutex_readys, t_queue *colaListos,
 		t_log*log_planificador, t_queue*entradaSalida, t_list*en_ejecucion,
 		t_queue*finalizados, pthread_mutex_t mutex_bloqueados,
-		pthread_mutex_t mutex_ejecucion);
+		pthread_mutex_t mutex_ejecucion,int tiempo);
 
 void loguearRafaga(rafaga_t *otraInstruccion, nodo_en_ejecucion * unProceso,t_log * log_planificador) ;
 
