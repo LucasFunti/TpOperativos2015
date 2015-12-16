@@ -1,19 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <commons/config.h>
-#include <commons/collections/queue.h>
-#include <commons/collections/list.h>
-#include <commons/string.h>
-#include <commons/log.h>
-#include <pthread.h>
-#include <poll.h>
-#include <signiorCodigo/libSockets.h>
-#include "planificadorFunctions.h"
+#include "planificador.h"
 
 #define BACKLOG 100
 #define PACKAGESIZE 32
@@ -26,14 +11,15 @@ int main(int argc, char **argv) {
 	entradaSalida = queue_create();
 	en_ejecucion = list_create();
 	colaFinalizados = queue_create();
-//	inicializarMutex(mutex_readys, mutex_ejecucion, mutex_bloqueados);
+	listaCpu = list_create();
 	pthread_mutex_init(&mutex_readys, NULL);
 	pthread_mutex_init(&mutex_ejecucion, NULL);
 	pthread_mutex_init(&mutex_bloqueados, NULL);
+	pthread_mutex_init(&mutex_cpus, NULL);
+	sem_init(&procesos_listos, 1, 0);
+	sem_init(&cpu_libre, 1, 0);
 
 	char * port = getPuerto();
-	char * algoritmo = getAlgoritmo();
-	int quantum = getQuantum();
 
 	int socketEscucha, retornoPoll;
 	int fd_index = 0;
@@ -46,16 +32,18 @@ int main(int argc, char **argv) {
 	fileDescriptors[0].fd = socketEscucha;
 	fileDescriptors[0].events = POLLIN;
 	cantfds++;
-	//printf("SOCKET = %d\n", socketEscucha);
 
 	int enviar = 1;
 	int pid_cpu;
+	int socketConActividad;
+	int posiblePorcentaje;
 
-	pthread_t hiloConsola;
+	pthread_t hiloConsola, hiloDespachadorListos;
 	pthread_create(&hiloConsola, NULL, ejecutarIngresoConsola, NULL);
+	pthread_create(&hiloDespachadorListos, NULL, despacharProcesosListos, NULL);
 
 	while (enviar) {
-		retornoPoll = poll(fileDescriptors, cantfds, -1);
+		llamadaPoll: retornoPoll = poll(fileDescriptors, cantfds, -1);
 		printf("retorno del poll = %d\n", retornoPoll);
 		if (retornoPoll == -1) {
 			printf("Error en la funcion poll\n");
@@ -71,56 +59,62 @@ int main(int argc, char **argv) {
 					log_info(log_planificador,
 							"Se conecto una cpu en el socket %d",
 							socketCliente);
+					t_cpu * nuevaCpu = malloc(sizeof(t_cpu));
+
+					nuevaCpu->socket = socketCliente;
+					nuevaCpu->libre = true;
+
+					list_add(listaCpu, nuevaCpu);
 
 					fileDescriptors[cantfds].fd = socketCliente;
 					fileDescriptors[cantfds].events = POLLIN;
 					cantfds++;
 
 					recv(socketCliente, &pid_cpu, sizeof(int), 0);
+					nuevaCpu->cpu_id = pid_cpu;
+					sem_post(&cpu_libre);
+					goto llamadaPoll;
 				} else {
 
 					codigoOperacion = -33;
-
+					socketConActividad = fileDescriptors[fd_index].fd;
 					goto seguir;
 
 				}
 			}
 		}
 
-		seguir: if (queue_size(colaListos) != 0) {
-			tipo_pcb * proceso = malloc(sizeof(tipo_pcb));
-			proceso = queue_pop(colaListos);
-			enviarContextoEjecucion(fileDescriptors[cantfds - 1].fd,
-					codigoOperacion, proceso, proceso->dirProceso, algoritmo,
-					quantum);
-			cambiarAEstadoDeEjecucion(mutex_readys, colaListos, mutex_ejecucion,
-					en_ejecucion, entradaSalida, log_planificador,
-					fileDescriptors[cantfds - 1].fd, pid_cpu);
-		}
+		seguir: recv(socketConActividad, &posiblePorcentaje, sizeof(int),
+		MSG_PEEK);
 
-		/*	retornoPoll = poll(fileDescriptors, cantfds, 0);
-		 if (retornoPoll == -1) {
-		 printf("Error en la funcion poll\n");
-		 exit(0);
-		 }*/
-		if (list_size(en_ejecucion) != 0) {
+		if (posiblePorcentaje == 43) {
 
-			for (fd_index = 0; fd_index < cantfds; fd_index++) {
-				if (fileDescriptors[fd_index].revents & POLLIN) {
-					if (fileDescriptors[fd_index].fd != socketEscucha) {
+			int pid_cpu, porcentaje;
 
-						int instruccion;
-						recv(fileDescriptors[fd_index].fd, &instruccion,
-								sizeof(int), MSG_WAITALL);
-						interpretarInstruccion(instruccion,
-								fileDescriptors[fd_index].fd, mutex_readys,
-								colaListos, log_planificador, entradaSalida,
-								en_ejecucion, colaFinalizados, mutex_bloqueados,
-								mutex_ejecucion);
+			//Es para quemar el codOp
+			recv(socketConActividad, &pid_cpu, sizeof(int),
+			MSG_WAITALL);
+			//Es para quemar el tamanio
+			recv(socketConActividad, &pid_cpu, sizeof(int),
+			MSG_WAITALL);
 
-					}
-				}
-			}
+			recv(socketConActividad, &pid_cpu, sizeof(int),
+			MSG_WAITALL);
+			recv(socketConActividad, &porcentaje, sizeof(int),
+			MSG_WAITALL);
+			printf("Cpu %d: %d\n", pid_cpu, porcentaje);
+
+			goto llamadaPoll;
+
+		} else {
+
+			int instruccion;
+
+			recv(socketConActividad, &instruccion, sizeof(int),
+			MSG_WAITALL);
+
+			interpretarInstruccion(instruccion, socketConActividad);
+
 		}
 
 	}
