@@ -46,6 +46,7 @@ void crear_estructura_para_proceso(int pid, int cantidad_paginas) {
 int marco_libre(int pid) {
 
 	pid_matchear = pid;
+	int paginaNuevoProceso = pagina_matchear;
 
 	if (marcos_libres() == 0) {
 		//Si no hay marcos disponibles
@@ -54,18 +55,23 @@ int marco_libre(int pid) {
 
 			//Swappea uno que ya tiene
 
-			char * algoritmo = config_get_string_value(memoriaConfig,
-					"ALGORITMO_REEMPLAZO");
-
-			if (es_fifo(algoritmo)) {
+			if (es_fifo()) {
 				return fifo();
 			}
 
-			if (es_lru(algoritmo)) {
+			if (es_lru()) {
 				return lru();
 			}
 
-			return clock_m();
+			int marco = clock_m();
+			pagina_matchear = paginaNuevoProceso;
+
+			t_item * itemParaMeter = list_find(tabla_paginas,
+					coincide_pid_y_pagina);
+
+			list_replace(cola_llegada, posicionVictima, itemParaMeter);
+
+			return marco;
 
 		} else {
 
@@ -83,39 +89,76 @@ int marco_libre(int pid) {
 
 			//Le doy un marco nuevo
 
-			return marco_disponible();
+			int marco = marco_disponible();
+
+			if (es_clock_modificado()) {
+
+				//Si es clockModificado me fijo si no tiene presentes,
+				//significa que este que tengo acá en pid_matchear y pagina_matchear
+				//es el único elemento y pasa a ser puntero
+
+				t_item * elementoParaHacerPuntero;
+
+				bool algunoPresente = list_any_satisfy(tabla_paginas,
+						coincide_pid_y_esta_presente);
+
+				if (!algunoPresente) {
+
+					elementoParaHacerPuntero = list_find(tabla_paginas,
+							coincide_pid_y_pagina);
+
+					elementoParaHacerPuntero->puntero = true;
+
+				}
+
+			}
+
+			return marco;
 
 		} else {
 
 			//Tiene el maximo y necesita swappear uno existente
 
-			char * algoritmo = config_get_string_value(memoriaConfig,
-					"ALGORITMO_REEMPLAZO");
-
-			if (es_fifo(algoritmo)) {
+			if (es_fifo()) {
 				return fifo();
 			}
 
-			if (es_lru(algoritmo)) {
+			if (es_lru()) {
 				return lru();
 			}
 
-			return clock_m();
+			int marco = clock_m();
+			pagina_matchear = paginaNuevoProceso;
+
+			t_item * itemParaMeter = list_find(tabla_paginas,
+					coincide_pid_y_pagina);
+
+			itemParaMeter->uso = true;
+
+			list_replace(cola_llegada, posicionVictima, itemParaMeter);
+
+			return marco;
 
 		}
 
 	}
 }
 
-bool es_fifo(char * algoritmo) {
+bool es_fifo() {
+	char * algoritmo = config_get_string_value(memoriaConfig,
+			"ALGORITMO_REEMPLAZO");
 	return !strcmp(algoritmo, "FIFO");
 }
 
-bool es_lru(char * algoritmo) {
+bool es_lru() {
+	char * algoritmo = config_get_string_value(memoriaConfig,
+			"ALGORITMO_REEMPLAZO");
 	return !strcmp(algoritmo, "LRU");
 }
 
-bool es_clock_modificado(char * algoritmo) {
+bool es_clock_modificado() {
+	char * algoritmo = config_get_string_value(memoriaConfig,
+			"ALGORITMO_REEMPLAZO");
 	return !strcmp(algoritmo, "CLOCK-M");
 }
 

@@ -489,29 +489,70 @@ context(test_admin_memoria) {
 
 		it("swappea usando clock_m") {
 
-			iniciar_n(1,2);
-			iniciar_n(2,1);
-			iniciar_n(3,2);
-			//Aloja uno y desaloja el marco cero que era del proceso 1 pagina 1
-			//El puntero pasó al segundo elemento ( p1 pag 2)
+			//TODO
 
-			t_item * item = list_get(tabla_paginas,4);
+		}end
 
-			assert_tabla_paginas_item(item, 3, 2, 0, false,true);
+		it("ejecuta mem.cod") {
 
-			item = list_get(tabla_paginas,0);
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configAlgoritmoClockM");
+			iniciar_marcos();
 
-			assert_tabla_paginas_item(item, 1, 1, 0, false,false);
+			/*
+			 * iniciar 6;
+			 escribir 2 "dos";
+			 leer 2;
+			 escribir 3 "tres";
+			 leer 2;
+			 escribir 1 "uno"
+			 leer 1;
+			 escribir 5 "cinco";
+			 leer 2;
+			 escribir 4 "cuatro";
+			 leer 5;
+			 leer 3;
+			 escribir 2 "dos";
+			 leer 5;
+			 leer 2;
+			 */
 
-			iniciar_n(4,2);
-			//Para la pagina 1 desaloja al segundo elemento (p1 pag2). El puntero pasa a ser el tercer elemento
-			item = list_get(tabla_paginas,5);
+			iniciar_n(1,6);
 
-			assert_tabla_paginas_item(item, 4, 1, 1, false,true);
+			escribir_n(1,1,"Dos");
+			leer_n(1,1);
 
-			item = list_get(tabla_paginas,6);
+			escribir_n(1,2,"Tres");
+			leer_n(1,1);
 
-			assert_tabla_paginas_item(item, 4, 2, 2, false,true);
+			escribir_n(1,0,"Uno");
+			leer_n(1,0);
+
+			escribir_n(1,4,"Cinco");
+			leer_n(1,1);
+
+			escribir_n(1,3,"Cuatro");
+			leer_n(1,4);
+			leer_n(1,2);
+
+			escribir_n(1,1,"Dos");
+			leer_n(1,4);
+			leer_n(1,1);
+
+			should_int(page_faults) be equal to(8);
+			should_int(accesos_swap) be equal to(12);
+
+			t_item * item = list_get(tabla_paginas,1);
+
+			should_bool(item->modificado) be equal to(true);
+			should_bool(item->uso) be equal to(true);
+
+			item = list_get(tabla_paginas,2);
+			should_bool(item->modificado) be equal to(false);
+			should_bool(item->uso) be equal to(true);
+
+			item = list_get(tabla_paginas,4);
+			should_bool(item->modificado) be equal to(true);
+			should_bool(item->uso) be equal to(true);
 
 		}end
 
