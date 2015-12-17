@@ -18,11 +18,9 @@ int main() {
 		conectarseAlSwap();
 	}
 
-
-
-
 	//Inicio el semáforo que blockea todas las operaciones de la memoria
 	pthread_mutex_init(&semaforo_memoria, NULL);
+	pthread_create(&hiloMostrarTasa, NULL, mostrarTasaTlb, NULL);
 
 	atenderConexiones();
 

@@ -35,6 +35,6 @@ t_item * tlb_buscar(int pid, int pagina);
 
 void tlb_agregar_item(t_item * item);
 
-void mostrarTasaTlb(void * data);
+void * mostrarTasaTlb(void * data);
 
 #endif /* TLB_H_ */

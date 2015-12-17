@@ -102,20 +102,23 @@ void tlb_agregar_item(t_item * item) {
 	}
 }
 
-void mostrarTasaTlb(void * data) {
+void * mostrarTasaTlb(void * data) {
 
-	printf("ADMINISTRADOR DE MEMORIA");
+	printf("\n\n\nADMINISTRADOR DE MEMORIA\n");
 
 	while (1) {
 
 		sleep(60);
 
-		system("clear");
-		printf("ADMINISTRADOR DE MEMORIA");
+		printf("\n\n\nADMINISTRADOR DE MEMORIA");
 
 		if (tlb_habilitada()) {
 
 			float tasa = (double) aciertos_totales / (double) pedidos_totales;
+
+			if (aciertos_totales == 0) {
+				tasa = 0;
+			}
 
 			loggearInfo(string_from_format("Tasa aciertos %.2f", tasa * 100));
 			loggearInfo(
@@ -132,5 +135,7 @@ void mostrarTasaTlb(void * data) {
 		}
 
 	}
+
+	return NULL;
 
 }

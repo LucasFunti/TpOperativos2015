@@ -181,34 +181,3 @@ bool es_clock_modificado() {
 			"ALGORITMO_REEMPLAZO");
 	return !strcmp(algoritmo, "CLOCK-M");
 }
-
-void compuA() {
-	//Cliente
-	//localhost:5000
-
-	//Pedir socket pero para pedir un socket necesitas parametros de la dirección
-	// Entonces primero cargás los datos de la dirección con el tipo de socket y parecidos
-	//conseguis la dirección
-
-	//Los parámetros de la función socket los sacás de la estructura de la dirección que conseguiste
-	// int socketCompuB = socket(infoDireccion->sarlanga,infoDireccion->sarlanga2,infoDireccion->sarlanga3)
-	int socketCompuB;
-	int mensaje = 33;
-
-	send(socketCompuB, &mensaje, sizeof(int), MSG_WAITALL);
-
-}
-
-void compuB() {
-
-	//localhost:5000
-
-	//Cargar la info de la direccion
-
-	int socketCompuA = 3;
-	int mensajeRecibido;
-
-	recv(socketCompuA, &mensajeRecibido, sizeof(int), MSG_WAITALL);
-
-}
-
