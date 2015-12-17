@@ -45,6 +45,7 @@ typedef struct {
 	time_t tiempoFinalizacion;
 	time_t tiempoIngreso;
 	double tiempoEnReadys;
+	time_t tiempoRespuesta;
 } tipo_pcb;
 
 typedef struct {

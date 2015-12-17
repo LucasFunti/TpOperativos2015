@@ -387,13 +387,12 @@ void correrArchivo(void * infoHilo) {
 
 	int nInstruccion = infoCorrer->contadorPrograma;
 	bool ultimaNoFueIO = true;
-
 	if (quantum == 0) { //fifo
 
 		while (nInstruccion <= list_size(instrucciones) && ultimaNoFueIO) {
 
-			int operacion = reconocerInstruccion(listaInstrucciones[n]);
-			bool fueCorrecta = ejecutar(listaInstrucciones[n],
+			int operacion = reconocerInstruccion(listaInstrucciones[nInstruccion]);
+			bool fueCorrecta = ejecutar(listaInstrucciones[nInstruccion],
 					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
 					infoCorrer->id, dataDelHilo);
 
@@ -403,6 +402,7 @@ void correrArchivo(void * infoHilo) {
 			resultadoEjecucion->instruccion = operacion;
 			resultadoEjecucion->resultado = fueCorrecta;
 
+			list_add(resultados,resultadoEjecucion);
 			instruccionesEjecutadas[dataDelHilo->idHilo]++;
 			porcentajeDeUso[dataDelHilo->idHilo] =
 					((instruccionesEjecutadas[dataDelHilo->idHilo] * 100)
@@ -423,7 +423,7 @@ void correrArchivo(void * infoHilo) {
 				case ENTRADASALIDA:
 
 					ultimaNoFueIO = false;
-					tiempoIO = obtenerTiempoIO(listaInstrucciones[n]);
+					tiempoIO = obtenerTiempoIO(listaInstrucciones[nInstruccion - 1]);
 					enviarPaqueteEntradaSalida(infoCorrer->threadInfo->idHilo,
 							tiempoIO, nInstruccion,
 							infoCorrer->serverPlanificador, resultados);
@@ -445,8 +445,8 @@ void correrArchivo(void * infoHilo) {
 
 		while (nInstruccion <= list_size(instrucciones) && ultimaNoFueIO
 				&& contadorEjecutadas < quantum) {
-			int operacion = reconocerInstruccion(listaInstrucciones[n]);
-			bool fueCorrecta = ejecutar(listaInstrucciones[n],
+			int operacion = reconocerInstruccion(listaInstrucciones[nInstruccion]);
+			bool fueCorrecta = ejecutar(listaInstrucciones[nInstruccion],
 					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
 					infoCorrer->id, dataDelHilo);
 
@@ -455,6 +455,9 @@ void correrArchivo(void * infoHilo) {
 
 			resultadoEjecucion->instruccion = operacion;
 			resultadoEjecucion->resultado = fueCorrecta;
+
+			list_add(resultados,resultadoEjecucion);
+
 
 			instruccionesEjecutadas[dataDelHilo->idHilo]++;
 			porcentajeDeUso[dataDelHilo->idHilo] =
@@ -476,7 +479,7 @@ void correrArchivo(void * infoHilo) {
 				case ENTRADASALIDA:
 
 					ultimaNoFueIO = false;
-					tiempoIO = obtenerTiempoIO(listaInstrucciones[n]);
+					tiempoIO = obtenerTiempoIO(listaInstrucciones[nInstruccion - 1]);
 					enviarPaqueteEntradaSalida(infoCorrer->threadInfo->idHilo,
 							tiempoIO, nInstruccion,
 							infoCorrer->serverPlanificador, resultados);
@@ -533,7 +536,7 @@ void enviarPaqueteEntradaSalida(int pidCpu, int tiempoIO, int contadorPrograma,
 		t_resultado_ejecucion * resultado = data;
 
 		memcpy(buffer + 4 * sizeof(int) + n * sizeof(int),
-				resultado->instruccion, sizeof(int));
+				&resultado->instruccion, sizeof(int));
 		n++;
 
 		memcpy(buffer + 16 + n * 4, &resultado->resultado, sizeof(int));
@@ -543,7 +546,7 @@ void enviarPaqueteEntradaSalida(int pidCpu, int tiempoIO, int contadorPrograma,
 
 	list_iterate(resultados, copiarResultado);
 
-	int tamanio = 4 * sizeof(int) + n * sizeof(int);
+	int tamanio = 4 * sizeof(int) + list_size(resultados) * 2 * sizeof(int);
 
 	t_data * paquete = pedirPaquete(20, tamanio, buffer);
 
@@ -588,7 +591,7 @@ void enviarPaqueteFinQuantum(int idCpu, int contadorPrograma, int socket,
 
 	list_iterate(resultados, copiarResultado);
 
-	int tamanio = 3 * sizeof(int) + n * sizeof(int);
+	int tamanio = 3 * sizeof(int) +  list_size(resultados) * 2 * sizeof(int);
 
 	t_data * paquete = pedirPaquete(22, tamanio, buffer);
 
@@ -613,17 +616,18 @@ void enviarPaqueteFinalizar(int pidCpu, int socket,
 		t_resultado_ejecucion * resultado = data;
 
 		memcpy(buffer + 2 * sizeof(int) + n * sizeof(int),
-				resultado->instruccion, sizeof(int));
+				&resultado->instruccion, sizeof(int));
 		n++;
 
 		memcpy(buffer + 8 + n * 4, &resultado->resultado,sizeof(int));
 		n++;
 
 	}
+	int tamanio;
 
 	list_iterate(resultados, copiarResultado);
 
-	int tamanio = 2 * sizeof(int) + n * sizeof(int);
+	tamanio = 2 * sizeof(int) +  list_size(resultados)* 2 * sizeof(int);
 
 	t_data * paquete = pedirPaquete(23, tamanio, buffer);
 

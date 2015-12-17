@@ -1,30 +1,587 @@
-[INFO] 04:34:48:141 PLANIFICADOR/(8132:8132): Se conecto la cpu con pid: -1073745452, en el socket 5
-[INFO] 04:35:41:147 PLANIFICADOR/(8132:8132): Se conecto la cpu con pid: -1073745452, en el socket 6
-[INFO] 04:35:41:147 PLANIFICADOR/(8132:8132): Se conecto la cpu con pid: -1073745452, en el socket 7
-[INFO] 04:35:41:147 PLANIFICADOR/(8132:8132): Se conecto la cpu con pid: -1073745452, en el socket 8
-[INFO] 04:35:41:148 PLANIFICADOR/(8132:8132): Se conecto la cpu con pid: -1073745452, en el socket 9
-[INFO] 04:37:00:193 PLANIFICADOR/(8404:8410): Colocado el proceso: facil con pid = 1 en la cola de listos
-[INFO] 04:37:00:195 PLANIFICADOR/(8404:8410): mProc 1: facil -> Listos 
+[INFO] 16:10:07:397 PLANIFICADOR/(11509:11509): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 16:10:12:246 PLANIFICADOR/(11509:11515): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 16:10:12:246 PLANIFICADOR/(11509:11515): mProc 1: corto -> Listos 
 
-[INFO] 04:37:00:195 PLANIFICADOR/(8404:8410): La lista de planificacion, Ejecucion, esta vacía
-[INFO] 04:37:00:195 PLANIFICADOR/(8404:8410): La cola de planificacion, Bolqueados, esta vacía
-[INFO] 04:37:09:944 PLANIFICADOR/(8404:8404): Se conecto la cpu con pid: -1073745452, en el socket 5
-[INFO] 04:37:09:948 PLANIFICADOR/(8404:8411): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
-[INFO] 04:37:09:959 PLANIFICADOR/(8404:8411): La cola de planificacion, Listos, esta vacía
-[INFO] 04:37:09:960 PLANIFICADOR/(8404:8411): mProc 1: facil -> Ejecucion 
+[INFO] 16:10:12:246 PLANIFICADOR/(11509:11515): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:10:12:246 PLANIFICADOR/(11509:11515): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:10:12:247 PLANIFICADOR/(11509:11516): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 16:10:12:247 PLANIFICADOR/(11509:11516): La cola de planificacion, Listos, esta vacía
+[INFO] 16:10:12:247 PLANIFICADOR/(11509:11516): mProc 1: corto -> Ejecucion 
 
-[INFO] 04:37:09:961 PLANIFICADOR/(8404:8411): La cola de planificacion, Bolqueados, esta vacía
-[INFO] 04:39:54:992 PLANIFICADOR/(8515:8515): Se conecto la cpu con pid: -1073745356, en el socket 5
-[INFO] 04:41:59:353 PLANIFICADOR/(8584:8584): Se conecto la cpu con pid: -1073745356, en el socket 5
-[INFO] 04:51:46:886 PLANIFICADOR/(8983:8983): Se conecto la cpu con pid: -1073745356, en el socket 5
-[INFO] 05:20:10:516 PLANIFICADOR/(9776:9818): Colocado el proceso: facil con pid = 1 en la cola de listos
-[INFO] 05:20:10:518 PLANIFICADOR/(9776:9818): mProc 1: facil -> Listos 
+[INFO] 16:10:12:247 PLANIFICADOR/(11509:11516): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:13:31:970 PLANIFICADOR/(11765:11765): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 16:13:37:445 PLANIFICADOR/(11765:11770): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 16:13:37:446 PLANIFICADOR/(11765:11770): mProc 1: corto -> Listos 
 
-[INFO] 05:20:10:518 PLANIFICADOR/(9776:9818): La lista de planificacion, Ejecucion, esta vacía
-[INFO] 05:20:10:519 PLANIFICADOR/(9776:9818): La cola de planificacion, Bolqueados, esta vacía
-[INFO] 05:20:51:302 PLANIFICADOR/(9776:9776): Se conecto la cpu con pid: -1073745356, en el socket 5
-[INFO] 05:20:51:303 PLANIFICADOR/(9776:9819): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
-[INFO] 05:20:51:304 PLANIFICADOR/(9776:9819): La cola de planificacion, Listos, esta vacía
-[INFO] 05:20:51:304 PLANIFICADOR/(9776:9819): mProc 1: facil -> Ejecucion 
+[INFO] 16:13:37:446 PLANIFICADOR/(11765:11770): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:13:37:446 PLANIFICADOR/(11765:11770): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:13:37:448 PLANIFICADOR/(11765:11771): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 16:13:37:449 PLANIFICADOR/(11765:11771): La cola de planificacion, Listos, esta vacía
+[INFO] 16:13:37:449 PLANIFICADOR/(11765:11771): mProc 1: corto -> Ejecucion 
 
-[INFO] 05:20:51:304 PLANIFICADOR/(9776:9819): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:13:37:450 PLANIFICADOR/(11765:11771): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:17:29:995 PLANIFICADOR/(11979:11979): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 16:17:34:895 PLANIFICADOR/(11979:11985): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 16:17:34:896 PLANIFICADOR/(11979:11985): mProc 1: corto -> Listos 
+
+[INFO] 16:17:34:896 PLANIFICADOR/(11979:11985): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:17:34:896 PLANIFICADOR/(11979:11985): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:17:34:897 PLANIFICADOR/(11979:11986): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 16:17:34:897 PLANIFICADOR/(11979:11986): La cola de planificacion, Listos, esta vacía
+[INFO] 16:17:34:898 PLANIFICADOR/(11979:11986): mProc 1: corto -> Ejecucion 
+
+[INFO] 16:17:34:898 PLANIFICADOR/(11979:11986): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:19:45:424 PLANIFICADOR/(11979:11979): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:20:04:854 PLANIFICADOR/(11979:11979): El proceso corto ejecuto la instruccion -iniciar- con valor : true
+[INFO] 16:20:25:338 PLANIFICADOR/(11979:11979): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:20:36:916 PLANIFICADOR/(11979:11979): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:20:36:916 PLANIFICADOR/(11979:11979): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:20:36:917 PLANIFICADOR/(11979:11979): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 16:20:36:917 PLANIFICADOR/(11979:11979): La cola de planificacion, Listos, esta vacía
+[INFO] 16:20:36:917 PLANIFICADOR/(11979:11979): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:20:36:917 PLANIFICADOR/(11979:11979): mProc 1: corto -> Bolqueados 
+
+[INFO] 16:20:37:965 PLANIFICADOR/(11979:12165): mProc corto en entrada-salida de tiempo 1
+[INFO] 16:20:37:965 PLANIFICADOR/(11979:12165): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 16:20:37:965 PLANIFICADOR/(11979:12165): mProc 1: corto -> Listos 
+
+[INFO] 16:20:37:966 PLANIFICADOR/(11979:12165): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:20:37:966 PLANIFICADOR/(11979:12165): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:20:37:966 PLANIFICADOR/(11979:11986): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 16:20:37:968 PLANIFICADOR/(11979:11986): La cola de planificacion, Listos, esta vacía
+[INFO] 16:20:37:968 PLANIFICADOR/(11979:11986): mProc 1: corto -> Ejecucion 
+
+[INFO] 16:20:37:969 PLANIFICADOR/(11979:11986): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:26:04:243 PLANIFICADOR/(12324:12324): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 16:26:14:128 PLANIFICADOR/(12324:12330): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 16:26:14:128 PLANIFICADOR/(12324:12330): mProc 1: corto -> Listos 
+
+[INFO] 16:26:14:129 PLANIFICADOR/(12324:12330): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:26:14:129 PLANIFICADOR/(12324:12330): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:26:14:130 PLANIFICADOR/(12324:12331): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 16:26:14:130 PLANIFICADOR/(12324:12331): La cola de planificacion, Listos, esta vacía
+[INFO] 16:26:14:130 PLANIFICADOR/(12324:12331): mProc 1: corto -> Ejecucion 
+
+[INFO] 16:26:14:131 PLANIFICADOR/(12324:12331): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:27:21:774 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:27:21:775 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -iniciar- con valor : true
+[INFO] 16:27:21:775 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:27:21:775 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:27:21:775 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:27:21:775 PLANIFICADOR/(12324:12324): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 16:27:21:777 PLANIFICADOR/(12324:12324): La cola de planificacion, Listos, esta vacía
+[INFO] 16:27:21:777 PLANIFICADOR/(12324:12324): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:27:21:777 PLANIFICADOR/(12324:12324): mProc 1: corto -> Bolqueados 
+
+[INFO] 16:27:22:819 PLANIFICADOR/(12324:12447): mProc corto en entrada-salida de tiempo 1
+[INFO] 16:27:22:819 PLANIFICADOR/(12324:12447): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 16:27:22:825 PLANIFICADOR/(12324:12447): mProc 1: corto -> Listos 
+
+[INFO] 16:27:22:830 PLANIFICADOR/(12324:12447): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:27:22:831 PLANIFICADOR/(12324:12447): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:27:22:832 PLANIFICADOR/(12324:12331): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 16:27:22:836 PLANIFICADOR/(12324:12331): La cola de planificacion, Listos, esta vacía
+[INFO] 16:27:22:837 PLANIFICADOR/(12324:12331): mProc 1: corto -> Ejecucion 
+
+[INFO] 16:27:22:839 PLANIFICADOR/(12324:12331): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:27:41:989 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:27:41:990 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:27:41:990 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:27:41:990 PLANIFICADOR/(12324:12324): El proceso corto ejecuto la instruccion -finalizar- con valor : true
+[INFO] 16:27:41:990 PLANIFICADOR/(12324:12324): Finalizado el proceso: corto con pid = 0 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 16:39:24:45 PLANIFICADOR/(12660:12660): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 16:39:28:371 PLANIFICADOR/(12660:12668): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 16:39:28:371 PLANIFICADOR/(12660:12668): mProc 1: corto -> Listos 
+
+[INFO] 16:39:28:371 PLANIFICADOR/(12660:12668): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:39:28:371 PLANIFICADOR/(12660:12668): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:39:28:373 PLANIFICADOR/(12660:12669): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 16:39:28:373 PLANIFICADOR/(12660:12669): La cola de planificacion, Listos, esta vacía
+[INFO] 16:39:28:374 PLANIFICADOR/(12660:12669): mProc 1: corto -> Ejecucion 
+
+[INFO] 16:39:28:374 PLANIFICADOR/(12660:12669): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:40:55:406 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:41:01:317 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -iniciar- con valor : true
+[INFO] 16:41:02:472 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:41:04:530 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:41:17:69 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:41:17:70 PLANIFICADOR/(12660:12660): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 16:41:17:70 PLANIFICADOR/(12660:12660): La cola de planificacion, Listos, esta vacía
+[INFO] 16:41:17:70 PLANIFICADOR/(12660:12660): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:41:17:70 PLANIFICADOR/(12660:12660): mProc 1: corto -> Bolqueados 
+
+[INFO] 16:41:18:106 PLANIFICADOR/(12660:12829): mProc corto en entrada-salida de tiempo 1
+[INFO] 16:41:18:107 PLANIFICADOR/(12660:12829): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 16:41:18:113 PLANIFICADOR/(12660:12829): mProc 1: corto -> Listos 
+
+[INFO] 16:41:18:115 PLANIFICADOR/(12660:12829): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:41:18:120 PLANIFICADOR/(12660:12829): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:41:18:128 PLANIFICADOR/(12660:12669): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 16:41:18:130 PLANIFICADOR/(12660:12669): La cola de planificacion, Listos, esta vacía
+[INFO] 16:41:18:131 PLANIFICADOR/(12660:12669): mProc 1: corto -> Ejecucion 
+
+[INFO] 16:41:18:133 PLANIFICADOR/(12660:12669): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:41:31:521 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:41:34:135 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:41:35:893 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:41:38:146 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -finalizar- con valor : true
+[INFO] 16:41:38:147 PLANIFICADOR/(12660:12660): Finalizado el proceso: corto con pid = 0 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 16:42:30:382 PLANIFICADOR/(12660:12668): Colocado el proceso: corto con pid = 2 en la cola de listos
+[INFO] 16:42:30:384 PLANIFICADOR/(12660:12668): mProc 2: corto -> Listos 
+
+[INFO] 16:42:30:385 PLANIFICADOR/(12660:12668): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:42:30:385 PLANIFICADOR/(12660:12668): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:42:30:385 PLANIFICADOR/(12660:12669): Colocado el proceso: corto con pid = 2 en la cola de ejecucion
+[INFO] 16:42:30:386 PLANIFICADOR/(12660:12669): La cola de planificacion, Listos, esta vacía
+[INFO] 16:42:30:386 PLANIFICADOR/(12660:12669): mProc 2: corto -> Ejecucion 
+
+[INFO] 16:42:30:387 PLANIFICADOR/(12660:12669): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:51:08:680 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:51:09:927 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -iniciar- con valor : true
+[INFO] 16:51:11:58 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:51:12:38 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:51:14:69 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:51:14:81 PLANIFICADOR/(12660:12660): Colocado el proceso: corto con pid = 2 en la cola de bloqueados
+[INFO] 16:51:14:85 PLANIFICADOR/(12660:12660): La cola de planificacion, Listos, esta vacía
+[INFO] 16:51:14:85 PLANIFICADOR/(12660:12660): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:51:14:85 PLANIFICADOR/(12660:12660): mProc 2: corto -> Bolqueados 
+
+[INFO] 16:51:15:88 PLANIFICADOR/(12660:12829): mProc corto en entrada-salida de tiempo 1
+[INFO] 16:51:15:90 PLANIFICADOR/(12660:12829): Colocado el proceso: corto con pid = 2 en la cola de listos
+[INFO] 16:51:15:91 PLANIFICADOR/(12660:12829): mProc 2: corto -> Listos 
+
+[INFO] 16:51:15:91 PLANIFICADOR/(12660:12829): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:51:15:91 PLANIFICADOR/(12660:12829): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:51:15:91 PLANIFICADOR/(12660:12669): Colocado el proceso: corto con pid = 2 en la cola de ejecucion
+[INFO] 16:51:15:92 PLANIFICADOR/(12660:12669): La cola de planificacion, Listos, esta vacía
+[INFO] 16:51:15:92 PLANIFICADOR/(12660:12669): mProc 2: corto -> Ejecucion 
+
+[INFO] 16:51:15:92 PLANIFICADOR/(12660:12669): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:51:26:319 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:51:29:605 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:51:32:175 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 16:51:34:721 PLANIFICADOR/(12660:12660): El proceso corto ejecuto la instruccion -finalizar- con valor : true
+[INFO] 16:51:34:732 PLANIFICADOR/(12660:12660): Finalizado el proceso: corto con pid = 0 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 16:54:37:315 PLANIFICADOR/(13169:13169): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 16:54:44:318 PLANIFICADOR/(13169:13175): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 16:54:44:318 PLANIFICADOR/(13169:13175): mProc 1: facil -> Listos 
+
+[INFO] 16:54:44:319 PLANIFICADOR/(13169:13175): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:54:44:319 PLANIFICADOR/(13169:13175): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:54:44:320 PLANIFICADOR/(13169:13176): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 16:54:44:320 PLANIFICADOR/(13169:13176): La cola de planificacion, Listos, esta vacía
+[INFO] 16:54:44:320 PLANIFICADOR/(13169:13176): mProc 1: facil -> Ejecucion 
+
+[INFO] 16:54:44:321 PLANIFICADOR/(13169:13176): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:55:09:483 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 16:55:09:483 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:55:09:483 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:55:09:483 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:55:09:483 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 16:55:09:483 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 16:55:09:484 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 16:55:09:484 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 16:55:09:484 PLANIFICADOR/(13169:13169): Finalizado el proceso: facil con pid = 0 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 16:57:35:302 PLANIFICADOR/(13169:13175): Colocado el proceso: facil con pid = 2 en la cola de listos
+[INFO] 16:57:35:303 PLANIFICADOR/(13169:13175): mProc 2: facil -> Listos 
+
+[INFO] 16:57:35:303 PLANIFICADOR/(13169:13175): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 16:57:35:304 PLANIFICADOR/(13169:13175): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:57:35:304 PLANIFICADOR/(13169:13176): Colocado el proceso: facil con pid = 2 en la cola de ejecucion
+[INFO] 16:57:35:305 PLANIFICADOR/(13169:13176): La cola de planificacion, Listos, esta vacía
+[INFO] 16:57:35:305 PLANIFICADOR/(13169:13176): mProc 2: facil -> Ejecucion 
+
+[INFO] 16:57:35:305 PLANIFICADOR/(13169:13176): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 16:57:59:621 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 16:57:59:621 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:57:59:621 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:57:59:621 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 16:57:59:621 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 16:57:59:621 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 16:57:59:621 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 16:57:59:621 PLANIFICADOR/(13169:13169): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 17:02:56:270 PLANIFICADOR/(13580:13580): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 17:03:08:774 PLANIFICADOR/(13580:13585): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 17:03:08:778 PLANIFICADOR/(13580:13585): mProc 1: facil -> Listos 
+
+[INFO] 17:03:08:778 PLANIFICADOR/(13580:13585): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:03:08:781 PLANIFICADOR/(13580:13585): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:03:08:782 PLANIFICADOR/(13580:13586): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 17:03:08:782 PLANIFICADOR/(13580:13586): La cola de planificacion, Listos, esta vacía
+[INFO] 17:03:08:782 PLANIFICADOR/(13580:13586): mProc 1: facil -> Ejecucion 
+
+[INFO] 17:03:08:782 PLANIFICADOR/(13580:13586): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:03:21:862 PLANIFICADOR/(13580:13580): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 17:03:21:873 PLANIFICADOR/(13580:13580): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:03:21:873 PLANIFICADOR/(13580:13580): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:03:21:874 PLANIFICADOR/(13580:13580): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:03:21:874 PLANIFICADOR/(13580:13580): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:03:21:874 PLANIFICADOR/(13580:13580): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:03:21:874 PLANIFICADOR/(13580:13580): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:03:21:874 PLANIFICADOR/(13580:13580): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 17:03:21:875 PLANIFICADOR/(13580:13580): Finalizado el proceso: facil con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 13.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 17:11:38:366 PLANIFICADOR/(13993:13993): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 17:11:43:460 PLANIFICADOR/(13993:13999): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 17:11:43:460 PLANIFICADOR/(13993:13999): mProc 1: facil -> Listos 
+
+[INFO] 17:11:43:461 PLANIFICADOR/(13993:13999): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:11:43:461 PLANIFICADOR/(13993:13999): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:11:43:462 PLANIFICADOR/(13993:14000): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 17:11:43:462 PLANIFICADOR/(13993:14000): La cola de planificacion, Listos, esta vacía
+[INFO] 17:11:43:463 PLANIFICADOR/(13993:14000): mProc 1: facil -> Ejecucion 
+
+[INFO] 17:11:43:463 PLANIFICADOR/(13993:14000): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:11:50:557 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 17:11:50:559 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:11:50:559 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:11:50:559 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:11:50:559 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:11:50:559 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:11:50:559 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:11:50:559 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 17:11:50:560 PLANIFICADOR/(13993:13993): Finalizado el proceso: facil con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 7.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 7.000000
+
+[INFO] 17:12:17:26 PLANIFICADOR/(13993:13999): Colocado el proceso: facil con pid = 2 en la cola de listos
+[INFO] 17:12:17:28 PLANIFICADOR/(13993:13999): mProc 2: facil -> Listos 
+
+[INFO] 17:12:17:28 PLANIFICADOR/(13993:13999): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:12:17:28 PLANIFICADOR/(13993:13999): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:12:17:29 PLANIFICADOR/(13993:14000): Colocado el proceso: facil con pid = 2 en la cola de ejecucion
+[INFO] 17:12:17:29 PLANIFICADOR/(13993:14000): La cola de planificacion, Listos, esta vacía
+[INFO] 17:12:17:30 PLANIFICADOR/(13993:14000): mProc 2: facil -> Ejecucion 
+
+[INFO] 17:12:17:31 PLANIFICADOR/(13993:14000): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:12:24:142 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 17:12:24:145 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:12:24:145 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:12:24:145 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:12:24:145 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:12:24:146 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:12:24:146 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:12:24:146 PLANIFICADOR/(13993:13993): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 17:12:24:146 PLANIFICADOR/(13993:13993): Finalizado el proceso: facil con pid = 2 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 7.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 7.000000
+
+[INFO] 17:19:48:864 PLANIFICADOR/(14691:14691): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 17:19:55:651 PLANIFICADOR/(14691:14697): Colocado el proceso: io con pid = 1 en la cola de listos
+[INFO] 17:19:55:651 PLANIFICADOR/(14691:14697): mProc 1: io -> Listos 
+
+[INFO] 17:19:55:651 PLANIFICADOR/(14691:14697): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:19:55:651 PLANIFICADOR/(14691:14697): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:19:55:652 PLANIFICADOR/(14691:14698): Colocado el proceso: io con pid = 1 en la cola de ejecucion
+[INFO] 17:19:55:652 PLANIFICADOR/(14691:14698): La cola de planificacion, Listos, esta vacía
+[INFO] 17:19:55:652 PLANIFICADOR/(14691:14698): mProc 1: io -> Ejecucion 
+
+[INFO] 17:19:55:652 PLANIFICADOR/(14691:14698): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:26:37:557 PLANIFICADOR/(14914:14914): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 17:26:45:463 PLANIFICADOR/(14914:14920): Colocado el proceso: io con pid = 1 en la cola de listos
+[INFO] 17:26:45:463 PLANIFICADOR/(14914:14920): mProc 1: io -> Listos 
+
+[INFO] 17:26:45:463 PLANIFICADOR/(14914:14920): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:26:45:463 PLANIFICADOR/(14914:14920): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:26:45:464 PLANIFICADOR/(14914:14921): Colocado el proceso: io con pid = 1 en la cola de ejecucion
+[INFO] 17:26:45:465 PLANIFICADOR/(14914:14921): La cola de planificacion, Listos, esta vacía
+[INFO] 17:26:45:465 PLANIFICADOR/(14914:14921): mProc 1: io -> Ejecucion 
+
+[INFO] 17:26:45:465 PLANIFICADOR/(14914:14921): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:28:54:796 PLANIFICADOR/(15090:15090): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 17:29:07:917 PLANIFICADOR/(15090:15097): Colocado el proceso: nosoy con pid = 1 en la cola de listos
+[INFO] 17:29:07:917 PLANIFICADOR/(15090:15097): mProc 1: nosoy -> Listos 
+
+[INFO] 17:29:07:917 PLANIFICADOR/(15090:15097): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:29:07:917 PLANIFICADOR/(15090:15097): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:29:07:918 PLANIFICADOR/(15090:15098): Colocado el proceso: nosoy con pid = 1 en la cola de ejecucion
+[INFO] 17:29:07:918 PLANIFICADOR/(15090:15098): La cola de planificacion, Listos, esta vacía
+[INFO] 17:29:07:919 PLANIFICADOR/(15090:15098): mProc 1: nosoy -> Ejecucion 
+
+[INFO] 17:29:07:919 PLANIFICADOR/(15090:15098): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): El proceso nosoy ejecuto la instruccion -entrada salida- con valor : true
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): El proceso nosoy ejecuto la instruccion -iniciar- con valor : true
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): Colocado el proceso: nosoy con pid = 1 en la cola de bloqueados
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): La cola de planificacion, Listos, esta vacía
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:29:14:16 PLANIFICADOR/(15090:15090): mProc 1: nosoy -> Bolqueados 
+
+[INFO] 17:29:31:80 PLANIFICADOR/(15090:15097): Colocado el proceso: no con pid = 2 en la cola de listos
+[INFO] 17:29:31:80 PLANIFICADOR/(15090:15097): mProc 2: no -> Listos 
+
+[INFO] 17:29:31:80 PLANIFICADOR/(15090:15097): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:29:31:81 PLANIFICADOR/(15090:15097): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:29:31:81 PLANIFICADOR/(15090:15098): Colocado el proceso: no con pid = 2 en la cola de ejecucion
+[INFO] 17:29:31:81 PLANIFICADOR/(15090:15098): La cola de planificacion, Listos, esta vacía
+[INFO] 17:29:31:81 PLANIFICADOR/(15090:15098): mProc 2: no -> Ejecucion 
+
+[INFO] 17:29:31:81 PLANIFICADOR/(15090:15098): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:30:54:441 PLANIFICADOR/(15207:15207): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 17:31:02:96 PLANIFICADOR/(15207:15214): Colocado el proceso: nosoy con pid = 1 en la cola de listos
+[INFO] 17:31:02:96 PLANIFICADOR/(15207:15214): mProc 1: nosoy -> Listos 
+
+[INFO] 17:31:02:96 PLANIFICADOR/(15207:15214): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:31:02:96 PLANIFICADOR/(15207:15214): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:31:02:97 PLANIFICADOR/(15207:15215): Colocado el proceso: nosoy con pid = 1 en la cola de ejecucion
+[INFO] 17:31:02:97 PLANIFICADOR/(15207:15215): La cola de planificacion, Listos, esta vacía
+[INFO] 17:31:02:98 PLANIFICADOR/(15207:15215): mProc 1: nosoy -> Ejecucion 
+
+[INFO] 17:31:02:98 PLANIFICADOR/(15207:15215): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:31:08:155 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -entrada salida- con valor : true
+[INFO] 17:31:08:156 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -iniciar- con valor : true
+[INFO] 17:31:08:156 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:31:08:156 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:31:08:156 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:31:08:156 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:31:08:156 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:31:08:159 PLANIFICADOR/(15207:15207): Colocado el proceso: nosoy con pid = 1 en la cola de bloqueados
+[INFO] 17:31:08:159 PLANIFICADOR/(15207:15207): La cola de planificacion, Listos, esta vacía
+[INFO] 17:31:08:160 PLANIFICADOR/(15207:15207): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:31:08:161 PLANIFICADOR/(15207:15207): mProc 1: nosoy -> Bolqueados 
+
+[INFO] 17:32:08:206 PLANIFICADOR/(15207:15311): mProc nosoy en entrada-salida de tiempo 60
+[INFO] 17:32:08:206 PLANIFICADOR/(15207:15311): Colocado el proceso: nosoy con pid = 1 en la cola de listos
+[INFO] 17:32:08:206 PLANIFICADOR/(15207:15311): mProc 1: nosoy -> Listos 
+
+[INFO] 17:32:08:206 PLANIFICADOR/(15207:15311): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:32:08:206 PLANIFICADOR/(15207:15311): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:32:08:207 PLANIFICADOR/(15207:15215): Colocado el proceso: nosoy con pid = 1 en la cola de ejecucion
+[INFO] 17:32:08:207 PLANIFICADOR/(15207:15215): La cola de planificacion, Listos, esta vacía
+[INFO] 17:32:08:207 PLANIFICADOR/(15207:15215): mProc 1: nosoy -> Ejecucion 
+
+[INFO] 17:32:08:207 PLANIFICADOR/(15207:15215): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:32:08:233 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -finalizar- con valor : true
+[INFO] 17:32:08:234 PLANIFICADOR/(15207:15207): Finalizado el proceso: nosoy con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 66.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 66.000000
+
+[INFO] 17:33:34:381 PLANIFICADOR/(15207:15214): Colocado el proceso: nosoy con pid = 2 en la cola de listos
+[INFO] 17:33:34:383 PLANIFICADOR/(15207:15214): mProc 2: nosoy -> Listos 
+
+[INFO] 17:33:34:383 PLANIFICADOR/(15207:15214): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:33:34:383 PLANIFICADOR/(15207:15214): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:33:34:384 PLANIFICADOR/(15207:15215): Colocado el proceso: nosoy con pid = 2 en la cola de ejecucion
+[INFO] 17:33:34:389 PLANIFICADOR/(15207:15215): La cola de planificacion, Listos, esta vacía
+[INFO] 17:33:34:389 PLANIFICADOR/(15207:15215): mProc 2: nosoy -> Ejecucion 
+
+[INFO] 17:33:34:389 PLANIFICADOR/(15207:15215): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:33:40:434 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -entrada salida- con valor : true
+[INFO] 17:33:40:445 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -iniciar- con valor : true
+[INFO] 17:33:40:445 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:33:40:445 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:33:40:446 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:33:40:446 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:33:40:447 PLANIFICADOR/(15207:15207): El proceso nosoy ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:33:40:447 PLANIFICADOR/(15207:15207): Colocado el proceso: nosoy con pid = 2 en la cola de bloqueados
+[INFO] 17:33:40:448 PLANIFICADOR/(15207:15207): La cola de planificacion, Listos, esta vacía
+[INFO] 17:33:40:448 PLANIFICADOR/(15207:15207): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:33:40:448 PLANIFICADOR/(15207:15207): mProc 2: nosoy -> Bolqueados 
+
+[INFO] 17:33:51:674 PLANIFICADOR/(15207:15214): Colocado el proceso: no con pid = 3 en la cola de listos
+[INFO] 17:33:51:674 PLANIFICADOR/(15207:15214): mProc 3: no -> Listos 
+
+[INFO] 17:33:51:674 PLANIFICADOR/(15207:15214): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:33:51:674 PLANIFICADOR/(15207:15214): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:33:51:675 PLANIFICADOR/(15207:15215): Colocado el proceso: no con pid = 3 en la cola de ejecucion
+[INFO] 17:33:51:676 PLANIFICADOR/(15207:15215): La cola de planificacion, Listos, esta vacía
+[INFO] 17:33:51:676 PLANIFICADOR/(15207:15215): mProc 3: no -> Ejecucion 
+
+[INFO] 17:33:51:676 PLANIFICADOR/(15207:15215): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:35:32:386 PLANIFICADOR/(15402:15402): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 17:35:38:981 PLANIFICADOR/(15402:15408): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 17:35:38:982 PLANIFICADOR/(15402:15408): mProc 1: facil -> Listos 
+
+[INFO] 17:35:38:982 PLANIFICADOR/(15402:15408): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:35:38:982 PLANIFICADOR/(15402:15408): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:35:38:983 PLANIFICADOR/(15402:15409): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 17:35:38:983 PLANIFICADOR/(15402:15409): La cola de planificacion, Listos, esta vacía
+[INFO] 17:35:38:984 PLANIFICADOR/(15402:15409): mProc 1: facil -> Ejecucion 
+
+[INFO] 17:35:38:984 PLANIFICADOR/(15402:15409): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:35:46:70 PLANIFICADOR/(15402:15402): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 17:35:46:71 PLANIFICADOR/(15402:15402): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:35:46:71 PLANIFICADOR/(15402:15402): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:35:46:71 PLANIFICADOR/(15402:15402): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 17:35:46:71 PLANIFICADOR/(15402:15402): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:35:46:71 PLANIFICADOR/(15402:15402): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:35:46:71 PLANIFICADOR/(15402:15402): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 17:35:46:71 PLANIFICADOR/(15402:15402): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 17:35:46:71 PLANIFICADOR/(15402:15402): Finalizado el proceso: facil con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 8.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 8.000000
+
+[INFO] 17:38:05:271 PLANIFICADOR/(15402:15408): Colocado el proceso: facil con pid = 2 en la cola de listos
+[INFO] 17:38:05:273 PLANIFICADOR/(15402:15408): mProc 2: facil -> Listos 
+
+[INFO] 17:38:05:274 PLANIFICADOR/(15402:15408): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 17:38:05:274 PLANIFICADOR/(15402:15408): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 17:38:05:853 PLANIFICADOR/(15402:15409): Colocado el proceso: facil con pid = 2 en la cola de ejecucion
+[INFO] 17:38:05:853 PLANIFICADOR/(15402:15409): La cola de planificacion, Listos, esta vacía
+[INFO] 17:38:05:854 PLANIFICADOR/(15402:15409): mProc 2: facil -> Ejecucion 
+
+[INFO] 17:38:05:854 PLANIFICADOR/(15402:15409): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:09:22:391 PLANIFICADOR/(2446:2446): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 18:10:12:523 PLANIFICADOR/(2446:2451): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 18:10:12:523 PLANIFICADOR/(2446:2451): mProc 1: facil -> Listos 
+
+[INFO] 18:10:12:523 PLANIFICADOR/(2446:2451): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:10:12:524 PLANIFICADOR/(2446:2451): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:10:12:524 PLANIFICADOR/(2446:2452): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 18:10:12:524 PLANIFICADOR/(2446:2452): La cola de planificacion, Listos, esta vacía
+[INFO] 18:10:12:524 PLANIFICADOR/(2446:2452): mProc 1: facil -> Ejecucion 
+
+[INFO] 18:10:12:524 PLANIFICADOR/(2446:2452): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:10:36:632 PLANIFICADOR/(2446:2446): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 18:10:36:632 PLANIFICADOR/(2446:2446): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:10:36:632 PLANIFICADOR/(2446:2446): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:10:36:632 PLANIFICADOR/(2446:2446): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:10:36:632 PLANIFICADOR/(2446:2446): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 18:10:36:632 PLANIFICADOR/(2446:2446): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 18:10:36:632 PLANIFICADOR/(2446:2446): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 18:10:36:633 PLANIFICADOR/(2446:2446): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 18:10:36:633 PLANIFICADOR/(2446:2446): Finalizado el proceso: facil con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 24.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 22.000000
+
+[INFO] 18:10:50:287 PLANIFICADOR/(2446:2451): Colocado el proceso: corto con pid = 2 en la cola de listos
+[INFO] 18:10:50:288 PLANIFICADOR/(2446:2451): mProc 2: corto -> Listos 
+
+[INFO] 18:10:50:288 PLANIFICADOR/(2446:2451): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:10:50:288 PLANIFICADOR/(2446:2451): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:10:50:288 PLANIFICADOR/(2446:2452): Colocado el proceso: corto con pid = 2 en la cola de ejecucion
+[INFO] 18:10:50:289 PLANIFICADOR/(2446:2452): La cola de planificacion, Listos, esta vacía
+[INFO] 18:10:50:289 PLANIFICADOR/(2446:2452): mProc 2: corto -> Ejecucion 
+
+[INFO] 18:10:50:289 PLANIFICADOR/(2446:2452): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:11:09:381 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:11:09:381 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -iniciar- con valor : true
+[INFO] 18:11:09:381 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:11:09:381 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:11:09:382 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:11:09:382 PLANIFICADOR/(2446:2446): Colocado el proceso: corto con pid = 2 en la cola de bloqueados
+[INFO] 18:11:09:382 PLANIFICADOR/(2446:2446): La cola de planificacion, Listos, esta vacía
+[INFO] 18:11:09:382 PLANIFICADOR/(2446:2446): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:11:09:382 PLANIFICADOR/(2446:2446): mProc 2: corto -> Bolqueados 
+
+[INFO] 18:11:10:412 PLANIFICADOR/(2446:2517): mProc corto en entrada-salida de tiempo 1
+[INFO] 18:11:10:413 PLANIFICADOR/(2446:2517): Colocado el proceso: corto con pid = 2 en la cola de listos
+[INFO] 18:11:10:415 PLANIFICADOR/(2446:2517): mProc 2: corto -> Listos 
+
+[INFO] 18:11:10:418 PLANIFICADOR/(2446:2517): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:11:10:419 PLANIFICADOR/(2446:2517): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:11:10:420 PLANIFICADOR/(2446:2452): Colocado el proceso: corto con pid = 2 en la cola de ejecucion
+[INFO] 18:11:10:421 PLANIFICADOR/(2446:2452): La cola de planificacion, Listos, esta vacía
+[INFO] 18:11:10:424 PLANIFICADOR/(2446:2452): mProc 2: corto -> Ejecucion 
+
+[INFO] 18:11:10:425 PLANIFICADOR/(2446:2452): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:11:52:599 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:11:52:599 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:11:52:599 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:11:52:599 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -finalizar- con valor : true
+[INFO] 18:11:52:599 PLANIFICADOR/(2446:2446): Finalizado el proceso: corto con pid = 2 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 62.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 26.000000
+
+[INFO] 18:11:56:0 PLANIFICADOR/(2446:2451): Colocado el proceso: corto con pid = 3 en la cola de listos
+[INFO] 18:11:56:1 PLANIFICADOR/(2446:2451): mProc 3: corto -> Listos 
+
+[INFO] 18:11:56:1 PLANIFICADOR/(2446:2451): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:11:56:1 PLANIFICADOR/(2446:2451): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:11:56:1 PLANIFICADOR/(2446:2452): Colocado el proceso: corto con pid = 3 en la cola de ejecucion
+[INFO] 18:11:56:1 PLANIFICADOR/(2446:2452): La cola de planificacion, Listos, esta vacía
+[INFO] 18:11:56:2 PLANIFICADOR/(2446:2452): mProc 3: corto -> Ejecucion 
+
+[INFO] 18:11:56:2 PLANIFICADOR/(2446:2452): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -iniciar- con valor : true
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -escribir- con valor : true
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): Colocado el proceso: corto con pid = 3 en la cola de bloqueados
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): La cola de planificacion, Listos, esta vacía
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:12:01:64 PLANIFICADOR/(2446:2446): mProc 3: corto -> Bolqueados 
+
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2517): mProc corto en entrada-salida de tiempo 1
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2517): Colocado el proceso: corto con pid = 3 en la cola de listos
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2517): mProc 3: corto -> Listos 
+
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2517): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2517): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2452): Colocado el proceso: corto con pid = 3 en la cola de ejecucion
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2452): La cola de planificacion, Listos, esta vacía
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2452): mProc 3: corto -> Ejecucion 
+
+[INFO] 18:12:02:66 PLANIFICADOR/(2446:2452): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:12:05:143 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:12:05:143 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:12:05:143 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:12:05:143 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -finalizar- con valor : true
+[INFO] 18:12:05:143 PLANIFICADOR/(2446:2446): Finalizado el proceso: corto con pid = 3 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 9.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 9.000000
+
+[INFO] 18:12:33:996 PLANIFICADOR/(2446:2451): Colocado el proceso: corto con pid = 4 en la cola de listos
+[INFO] 18:12:33:996 PLANIFICADOR/(2446:2451): mProc 4: corto -> Listos 
+
+[INFO] 18:12:33:996 PLANIFICADOR/(2446:2451): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:12:33:996 PLANIFICADOR/(2446:2451): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:12:33:997 PLANIFICADOR/(2446:2452): Colocado el proceso: corto con pid = 4 en la cola de ejecucion
+[INFO] 18:12:33:997 PLANIFICADOR/(2446:2452): La cola de planificacion, Listos, esta vacía
+[INFO] 18:12:33:997 PLANIFICADOR/(2446:2452): mProc 4: corto -> Ejecucion 
+
+[INFO] 18:12:33:997 PLANIFICADOR/(2446:2452): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:17:56:207 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:17:56:207 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:17:56:207 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -leer- con valor : true
+[INFO] 18:17:56:207 PLANIFICADOR/(2446:2446): El proceso corto ejecuto la instruccion -finalizar- con valor : true
+[INFO] 18:17:56:207 PLANIFICADOR/(2446:2446): Finalizado el proceso: corto con pid = 4 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 323.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 323.000000
+
+[INFO] 18:19:51:428 PLANIFICADOR/(2613:2613): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 18:20:04:242 PLANIFICADOR/(2613:2620): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 18:20:04:242 PLANIFICADOR/(2613:2620): mProc 1: corto -> Listos 
+
+[INFO] 18:20:04:242 PLANIFICADOR/(2613:2620): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 18:20:04:242 PLANIFICADOR/(2613:2620): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 18:20:04:243 PLANIFICADOR/(2613:2621): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 18:20:04:243 PLANIFICADOR/(2613:2621): La cola de planificacion, Listos, esta vacía
+[INFO] 18:20:04:243 PLANIFICADOR/(2613:2621): mProc 1: corto -> Ejecucion 
+
+[INFO] 18:20:04:244 PLANIFICADOR/(2613:2621): La cola de planificacion, Bolqueados, esta vacía
