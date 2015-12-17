@@ -1,0 +1,13 @@
+[INFO] 18:18:47:978 PAM/(2584:2584): Iniciado el proceso administrador de memoria
+[INFO] 18:18:47:982 PAM/(2584:2584): Levantan las configuraciones
+[INFO] 18:18:47:985 PAM/(2584:2584): Configurado con PUERTO_ESCUCHA: 5001
+[INFO] 18:18:47:987 PAM/(2584:2584): Configurado con IP_SWAP: localhost
+[INFO] 18:18:47:987 PAM/(2584:2584): Configurado con PUERTO_SWAP: 6000
+[INFO] 18:18:47:997 PAM/(2584:2584): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
+[INFO] 18:18:47:998 PAM/(2584:2584): Configurado con CANTIDAD_MARCOS: 20
+[INFO] 18:18:47:998 PAM/(2584:2584): Configurado con TAMANIO_MARCO: 15
+[INFO] 18:18:47:1 PAM/(2584:2584): Configurado con ENTRADAS_TLB: 2
+[INFO] 18:18:47:2 PAM/(2584:2584): Configurado con TLB_HABILITADA: NO
+[INFO] 18:18:47:3 PAM/(2584:2584): Configurado con RETARDO_MEMORIA: 0
+[INFO] 18:18:48:10 PAM/(2584:2584): Configurado con ALGORITMO_REMPLAZO: (null)
+[INFO] 18:18:48:11 PAM/(2584:2584): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
