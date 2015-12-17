@@ -632,7 +632,7 @@ void * ejecutarIngresoConsola() {
 	return NULL;
 }
 
-void despacharProcesosListos(void * data) {
+void * despacharProcesosListos() {
 
 	while (1) {
 
@@ -658,7 +658,7 @@ void despacharProcesosListos(void * data) {
 				getQuantum());
 
 	}
-
+	return NULL;
 }
 
 bool cpuEstaLibre(void * data) {

@@ -108,8 +108,6 @@ nodo_en_ejecucion * removerDeListaDeEjecucion(tipo_pcb *pcb);
 
 void agregarAColaDeBloqueados(nodo_entrada_salida*io);
 
-void cambiarEstadoABloqueado(void* data) ;
-
 void cambiarEstado(tipo_pcb *proceso, int estado);
 
 int setProgramCounter(char *dirProceso);
@@ -135,12 +133,14 @@ void * ejecutarIngresoConsola();
 
 void liberarCpu(int socket);
 
-void despacharProcesosListos(void * data);
+void * despacharProcesosListos();
 
 bool cpuEstaLibre(void * data);
 
-void quitarDeColaBloqueados(nodo_entrada_salida *io);
+nodo_entrada_salida * quitarDeColaBloqueados() ;
 
-void *manejarEntradaSalida(void *data) ;
+nodo_entrada_salida * cambiarEstadoABloqueado(void* data)  ;
+
+void *manejarEntradaSalida() ;
 
 #endif /* PLANIFICADORFUNCTIONS_H_ */
