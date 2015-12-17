@@ -95,10 +95,11 @@ void inicializarColecciones(t_queue * colaListos, t_queue * colaFinalizados,
 }
 
 /* recorro la lissta mostrando los estado de los procesos para la instruccion ps */
-void mostrarEstadoDeLista(t_list *lista, char*estado, t_log * log_planificador) {
+void mostrarEstadoDeLista(t_list *lista, char*estado) {
 	int j;
 	if (list_size(lista) == 0) {
 		printf("La lista de planificacion ,%s, esta vacia\n", estado);
+		log_info(log_planificador,"La lista de planificacion, %s, esta vacía",estado);
 
 	} else {
 
@@ -114,10 +115,11 @@ void mostrarEstadoDeLista(t_list *lista, char*estado, t_log * log_planificador) 
 	}
 }
 
-void mostrarEstadoDeListos(t_queue *cola, char*estado, t_log * log_planificador) {
+void mostrarEstadoDeListos(t_queue *cola, char*estado) {
 	int j;
 	if (queue_size(cola) == 0) {
 		printf("La cola de planificacion ,%s, esta vacia\n", estado);
+		log_info(log_planificador,"La cola de planificacion, %s, esta vacía",estado);
 	} else {
 		for (j = 0; j < queue_size(cola); j++) {
 			tipo_pcb *proceso = list_get(cola->elements, j);
@@ -128,11 +130,11 @@ void mostrarEstadoDeListos(t_queue *cola, char*estado, t_log * log_planificador)
 		}
 	}
 }
-void mostrarEstadoDeBloqueados(t_queue *cola, char*estado,
-		t_log *log_planificador) {
+void mostrarEstadoDeBloqueados(t_queue *cola, char*estado) {
 	int j;
 	if (queue_size(cola) == 0) {
 		printf("La cola de planificacion ,%s, esta vacia\n", estado);
+		log_info(log_planificador,"La cola de planificacion, %s, esta vacía",estado);
 	} else {
 		for (j = 0; j < queue_size(cola); j++) {
 			nodo_en_ejecucion *proceso = list_get(cola->elements, j);
@@ -148,9 +150,9 @@ void mostrarEstadoDeBloqueados(t_queue *cola, char*estado,
 /* cambiar estado del proceso */
 void cambiarEstado(tipo_pcb *proceso, int estado) {
 	proceso->estado = estado;
-	mostrarEstadoDeListos(colaListos, "Listos", log_planificador);
-	mostrarEstadoDeLista(en_ejecucion, "Ejecucion", log_planificador);
-	mostrarEstadoDeBloqueados(entradaSalida, "Bolqueados", log_planificador);
+	mostrarEstadoDeListos(colaListos, "Listos");
+	mostrarEstadoDeLista(en_ejecucion, "Ejecucion");
+	mostrarEstadoDeBloqueados(entradaSalida, "Bolqueados");
 }
 
 /*agrega un proceso a la cola de listos */
@@ -203,7 +205,7 @@ void cambiarAEstadoDeEjecucion(int socketEnEjecucion, int pid_cpu) {
 	procesoEjecutando->proceso = proceso;
 	procesoEjecutando->socket = socketEnEjecucion;
 	procesoEjecutando->pid_cpu = pid_cpu;
-	procesoEjecutando->instrucciones_ejecutadas = 0;
+
 	agregarAListaDeEjecucion(procesoEjecutando);
 
 }
@@ -234,15 +236,15 @@ void agregarAColaDeBloqueados(nodo_entrada_salida*io) {
 	pthread_mutex_unlock(&mutex_bloqueados);
 
 }
-void quitarDeColaBloqueados(nodo_entrada_salida *io){
+void quitarDeColaBloqueados(nodo_entrada_salida *io) {
 
-	bool encontrarIO(void * data){
-		return ((((nodo_entrada_salida*)data)->proceso->id)==io->proceso->id);
+	bool encontrarIO(void * data) {
+		return ((((nodo_entrada_salida*) data)->proceso->id) == io->proceso->id);
 	}
-	nodo_entrada_salida * entradasalida = list_remove_by_condition(entradaSalida, encontrarIO);
+
+	list_remove_by_condition(entradaSalida->elements, encontrarIO);
 
 }
-
 
 /* saca un proceso de la lista de ejecucion y lo coloca en la cola de entrada salida */
 void * cambiarEstadoABloqueado(void* data) {
@@ -262,7 +264,6 @@ void * cambiarEstadoABloqueado(void* data) {
 	log_info(log_planificador, "Se termino la entrada salida del proceso: %s\n",
 			io->proceso->nombrePrograma);
 
-	//TODO removerlo de la cola de bloqueados, pero no popeando, sino con un list-find
 	quitarDeColaBloqueados(io);
 
 	io->proceso->programCounter++;
@@ -272,6 +273,7 @@ void * cambiarEstadoABloqueado(void* data) {
 	sem_post(&cpu_libre);
 
 	agregarEnColaDeListos(io->proceso);
+
 	sem_post(&procesos_listos);
 
 	pthread_exit(NULL);
@@ -332,22 +334,42 @@ rafaga_t * deserializarInstruccion(void * data) {
 	return instruccion;
 }
 
+void ejecutarlogueoInstruccionesEjecutadas(void * data,int cantidadResultados,
+		nodo_en_ejecucion * proceso) {
+	int i;
+	for (i = 0; i > cantidadResultados; i++) {
+		rafaga_t * instruccion = malloc(sizeof(rafaga_t));
+		memcpy(&instruccion->rafagaEjecutada,
+				data + (sizeof(int) * 2) + i * sizeof(int), sizeof(int));
+		i++;
+		memcpy(&instruccion->resultado_rafaga,
+				data + (sizeof(int) * 2) + i * sizeof(int), sizeof(int));
+		loguearRafaga(instruccion, proceso);
+	}
+}
 /*FUNCION QUE INTERPRETA LO RECIBIDO POR ALGUNA CPU*/
 void interpretarInstruccion(int instruccion, int socketCliente) {
 
 	void * data = malloc(sizeof(int) * 4);
 	void * dataIO = malloc(sizeof(int) * 2);
 	int tamanio;
+	int pid;
+	int cantidadResultados;
 	nodo_en_ejecucion * proceso;
 	switch (instruccion) {
 
 	case finalizado:
 
 		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
-		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
+		recv(socketCliente, data, sizeof(int) * 3, MSG_WAITALL);
 
-		rafaga_t * instruccion;
-		instruccion = deserializarInstruccion(data);
+		//rafaga_t * instruccion;
+		//instruccion = deserializarInstruccion(data);
+		rafaga_t *instruccion = malloc(sizeof(rafaga_t));
+
+		memcpy(&instruccion->pid_cpu, data, sizeof(int));
+
+		memcpy(&cantidadResultados, data + sizeof(int), sizeof(int));
 
 		bool encontrar_cpu(void * nodo) {
 			return ((((nodo_en_ejecucion*) nodo)->pid_cpu)
@@ -355,6 +377,9 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		}
 
 		proceso = list_remove_by_condition(en_ejecucion, encontrar_cpu);
+
+		//TODO recivir lista de resultados ejecutados
+		ejecutarlogueoInstruccionesEjecutadas(data,cantidadResultados,proceso);
 
 		agregarAFinalizados(colaFinalizados, proceso, log_planificador);
 
@@ -371,7 +396,12 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
 		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
 
-		rafaga_t * unaInstruccion = deserializarInstruccion(data);
+		//rafaga_t * unaInstruccion = deserializarInstruccion(data);
+		rafaga_t * unaInstruccion = malloc(sizeof(rafaga_t));
+		memcpy(&unaInstruccion->pid_cpu, data, sizeof(int));
+		memcpy(&unaInstruccion->PC, data + sizeof(int), sizeof(int));
+		memcpy(&cantidadResultados, data + (sizeof(int) * 2), sizeof(int));
+
 
 		bool encontrar_cpu_finQuantum(void * nodo) {
 			return ((((nodo_en_ejecucion*) nodo)->pid_cpu)
@@ -381,7 +411,8 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		proceso = list_remove_by_condition(en_ejecucion,
 				encontrar_cpu_finQuantum);
 
-		proceso->proceso->programCounter = proceso->proceso->programCounter + 1;
+		//TODO recivir lista de resultados ejecutados
+		ejecutarlogueoInstruccionesEjecutadas(data,cantidadResultados,proceso);
 
 		agregarEnColaDeListos(proceso->proceso);
 
@@ -394,20 +425,21 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 
 		break;
 
-	case instruccionFinalizada:
+	case fallaEjecucion:
 
-		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
-		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
+//		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
+//		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
 
-		rafaga_t * otraInstruccion = deserializarInstruccion(data);
+		recv(socketCliente, &pid, sizeof(int), MSG_WAITALL);
 
-		proceso = list_find(en_ejecucion, encontrar_cpu);
+		bool encontrar_cpu_falla(void * nodo) {
+			return ((((nodo_en_ejecucion *) nodo)->pid_cpu) == pid);
+		}
 
-		proceso->instrucciones_ejecutadas++;
+		proceso = list_remove_by_condition(en_ejecucion, encontrar_cpu_falla);
 
-		loguearRafaga(otraInstruccion, proceso, log_planificador);
-
-		proceso->proceso->programCounter++;
+		liberarCpu(proceso->socket);
+		sem_post(&cpu_libre);
 
 		free(data);
 		break;
@@ -415,11 +447,15 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 	case entrada_salida:
 
 		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
-		recv(socketCliente, dataIO, sizeof(int) * 2, MSG_WAITALL);
+		recv(socketCliente, dataIO, sizeof(int) * 3, MSG_WAITALL);
 
-		int pid_cpu, tiempoIO;
+		int pid_cpu, tiempoIO, punteroActualizado;
+
 		memcpy(&pid_cpu, dataIO, sizeof(int));
 		memcpy(&tiempoIO, dataIO + sizeof(int), sizeof(int));
+		memcpy(&punteroActualizado, dataIO + (sizeof(int) * 2), sizeof(int));
+		memcpy(&cantidadResultados, dataIO + (sizeof(int) * 3), sizeof(int));
+
 
 		bool encontrar_cpu_io(void * nodo) {
 			nodo_en_ejecucion * nodito = nodo;
@@ -427,6 +463,9 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		}
 
 		proceso = list_find(en_ejecucion, encontrar_cpu_io);
+
+		//TODO recivir lista de resultados ejecutados
+		ejecutarlogueoInstruccionesEjecutadas(dataIO,cantidadResultados,proceso);
 
 		pthread_t hilo;
 
@@ -446,36 +485,39 @@ void agregarAFinalizados(t_queue *finalizados, nodo_en_ejecucion * proceso,
 	double tiempoDeEjecucion = difftime(proceso->proceso->tiempoFinalizacion,
 			proceso->proceso->tiempoComienzo);
 	log_info(log_planificador,
-			"Finalizado el proceso: %s con pid = %d en la cola de Finalizados.\n Su Tiempo de ejecucion es: %f - Su tiempo de espera es: %f\n",
+			"Finalizado el proceso: %s con pid = %d \n Movido a la cola de Finalizados.\n Su Tiempo de ejecucion es: %f - Su tiempo de espera es: %f\n",
 			proceso->proceso->nombrePrograma, tiempoDeEjecucion,
 			proceso->proceso->id, proceso->proceso->tiempoEnReadys);
 }
 /* LOGUEO DE UNA RAFAGA */
-void loguearRafaga(rafaga_t *otraInstruccion, nodo_en_ejecucion * unProceso,
-		t_log * log_planificador) {
-	if (otraInstruccion->resultado_rafaga == 0) {
-		if (otraInstruccion->rafagaEjecutada == 4) {
-			log_info(log_planificador,
-					"El proceso %s ejecuto la instruccion -iniciar- correctamente ",
-					unProceso->proceso->nombrePrograma);
-		} else if (otraInstruccion->rafagaEjecutada == 5) {
-			log_info(log_planificador,
-					"El proceso %s ejecuto la instruccion -leer- correctamente ",
-					unProceso->proceso->nombrePrograma);
-		} else if (otraInstruccion->rafagaEjecutada == 6) {
-			log_info(log_planificador,
-					"El proceso %s ejecuto la instruccion -escribir- correctamente ",
-					unProceso->proceso->nombrePrograma);
-		} else if (otraInstruccion->rafagaEjecutada == 7) {
-			log_info(log_planificador,
-					"El proceso %s ejecuto la instruccion -entrada salida- correctamente ",
-					unProceso->proceso->nombrePrograma);
-		} else if (otraInstruccion->rafagaEjecutada == 8) {
-			log_info(log_planificador,
-					"El proceso %s ejecuto la instruccion -finalizar- correctamente ",
-					unProceso->proceso->nombrePrograma);
-		}
+void loguearRafaga(rafaga_t *otraInstruccion, nodo_en_ejecucion * unProceso) {
+	if (otraInstruccion->rafagaEjecutada == 4) {
+		log_info(log_planificador,
+				"El proceso %s ejecuto la instruccion -iniciar- con valor : %s",
+				unProceso->proceso->nombrePrograma,
+				otraInstruccion->resultado_rafaga ? "true" : "false");
+	} else if (otraInstruccion->rafagaEjecutada == 5) {
+		log_info(log_planificador,
+				"El proceso %s ejecuto la instruccion -leer- con valor : %s",
+				unProceso->proceso->nombrePrograma,
+				otraInstruccion->resultado_rafaga ? "true" : "false");
+	} else if (otraInstruccion->rafagaEjecutada == 6) {
+		log_info(log_planificador,
+				"El proceso %s ejecuto la instruccion -escribir- con valor : %s",
+				unProceso->proceso->nombrePrograma,
+				otraInstruccion->resultado_rafaga ? "true" : "false");
+	} else if (otraInstruccion->rafagaEjecutada == 7) {
+		log_info(log_planificador,
+				"El proceso %s ejecuto la instruccion -entrada salida- con valor : %s",
+				unProceso->proceso->nombrePrograma,
+				otraInstruccion->resultado_rafaga ? "true" : "false");
+	} else if (otraInstruccion->rafagaEjecutada == 8) {
+		log_info(log_planificador,
+				"El proceso %s ejecuto la instruccion -finalizar- con valor : %s",
+				unProceso->proceso->nombrePrograma,
+				otraInstruccion->resultado_rafaga ? "true" : "false");
 	}
+
 }
 /* */
 data_hilo *obtenerDatosHilo(nodo_en_ejecucion *Proceso, int tiempo) {
@@ -537,28 +579,27 @@ void * ejecutarIngresoConsola() {
 				return ((((nodo_en_ejecucion*) nodo)->proceso->id)
 						== pid_a_finalizar);
 			}
-			nodo_en_ejecucion *procesoEnEjecucion = malloc(
-					sizeof(nodo_en_ejecucion));
-			procesoEnEjecucion = list_remove_by_condition(en_ejecucion,
-					encontrar_pid);
+
+			nodo_en_ejecucion *procesoEnEjecucion = list_remove_by_condition(
+					en_ejecucion, encontrar_pid);
 			printf("VAMOS A FINALIZAR AL PROCESO CON PID: %d\n",
 					procesoEnEjecucion->proceso->id);
 			int PC = -1;
 			PC = setProgramCounter(procesoEnEjecucion->proceso->dirProceso);
 
 			procesoEnEjecucion->proceso->programCounter = PC;
+
 			agregarEnColaDeListos(procesoEnEjecucion->proceso);
+
 			sem_post(&procesos_listos);
-			free(procesoEnEjecucion);
 
 			break;
 		case 2:
 			/* ps */
 
-			mostrarEstadoDeLista(en_ejecucion, "Ejecutando", log_planificador);
-			mostrarEstadoDeListos(colaListos, "Listo", log_planificador);
-			mostrarEstadoDeBloqueados(entradaSalida, "Bloqueados",
-					log_planificador);
+			mostrarEstadoDeLista(en_ejecucion, "Ejecutando");
+			mostrarEstadoDeListos(colaListos, "Listo");
+			mostrarEstadoDeBloqueados(entradaSalida, "Bloqueados");
 
 			break;
 		case 3:

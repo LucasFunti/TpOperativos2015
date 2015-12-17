@@ -56,9 +56,7 @@ int main(int argc, char **argv) {
 					socklen_t addrlen = sizeof(addr);
 					int socketCliente = accept(socketEscucha,
 							(struct sockaddr *) &addr, &addrlen);
-					log_info(log_planificador,
-							"Se conecto una cpu en el socket %d",
-							socketCliente);
+
 					t_cpu * nuevaCpu = malloc(sizeof(t_cpu));
 
 					nuevaCpu->socket = socketCliente;
@@ -73,6 +71,7 @@ int main(int argc, char **argv) {
 					recv(socketCliente, &pid_cpu, sizeof(int), 0);
 					nuevaCpu->cpu_id = pid_cpu;
 					sem_post(&cpu_libre);
+					log_info(log_planificador,"Se conecto la cpu con pid: %d, en el socket %d",nuevaCpu->cpu_id,socketCliente);
 					goto llamadaPoll;
 				} else {
 

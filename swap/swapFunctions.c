@@ -6,19 +6,8 @@
  *      Author: utnso
  */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <commons/config.h>
-#include <commons/collections/list.h>
-#include <commons/bitarray.h>
+
 #include "swapFunctions.h"
-#include "libSockets.h"
 
 
 int doesFileExist(const char *filename) {
@@ -29,21 +18,21 @@ int doesFileExist(const char *filename) {
 
 int getSwapPagesAmount(){
 	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	swapConfiguracion = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
 	int pages_amount = config_get_int_value(swapConfiguracion,"CANTIDAD_PAGINAS");
 	return pages_amount;
 }
 
 int getSwapPagesSize(){
 	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	swapConfiguracion = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
 	int page_size = config_get_int_value(swapConfiguracion,"TAMANIO_PAGINA");
 	return page_size;
 }
 
 char* getSwapFileName(){
 	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	swapConfiguracion = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
 	char* file_name = config_get_string_value(swapConfiguracion,"NOMBRE_SWAP");
 	return file_name;
 }
@@ -175,7 +164,7 @@ void freeSpace(char *name,t_list *pages){
 	}
 }
 
-void reserve(char* name, int amount, t_list *pages){
+int reserve(char* name, int amount, t_list *pages){
 	int result = checkSpaceAvailability(amount,pages);
 	if (result>=0){
 		int i;
@@ -184,8 +173,10 @@ void reserve(char* name, int amount, t_list *pages){
 			markPage(i,name,pages);
 		}
 		printf("Paginas reservadas\n");
+		return 0 ;
 	} else {
 		printf("No existe espacio suficiente para el Proceso\n");
+		return -1;
 	}
 }
 
@@ -265,4 +256,63 @@ void imprimir(t_list *list){
 		printf("%d ",newItemPtr->numeroPagina);
 		printf("%s\n",newItemPtr->nombreProceso);
 	}
+}
+
+
+char* getPort() {
+	t_config *swapConfiguracion;
+	swapConfiguracion = config_create(
+			"/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	char * port = config_get_string_value(swapConfiguracion, "PUERTO_ESCUCHA");
+	return port;
+}
+t_data * pedirPaquete(int codigoOp, int tamanio, void * data) {
+
+	t_data * paquete = malloc(sizeof(t_data));
+	paquete->header = malloc(sizeof(t_header));
+
+	paquete->header->codigo_operacion = codigoOp;
+	paquete->header->tamanio_data = tamanio;
+	paquete->data = data;
+
+	return paquete;
+}
+
+char * serializarPaquete(t_data * unPaquete) {
+	void * stream = malloc(sizeof(t_header) + unPaquete->header->tamanio_data);
+
+	memcpy(stream, unPaquete->header, sizeof(t_header));
+	memcpy(stream + sizeof(t_header), unPaquete->data,
+			unPaquete->header->tamanio_data);
+	return stream;
+}
+
+t_data * leer_paquete(int socket) {
+
+	t_data * paquete_entrante = malloc(sizeof(t_data));
+	paquete_entrante->header = malloc(sizeof(t_header));
+
+	recv(socket, &paquete_entrante->header->codigo_operacion, sizeof(int),
+	MSG_WAITALL);
+	recv(socket, &paquete_entrante->header->tamanio_data, sizeof(int),
+	MSG_WAITALL);
+
+	paquete_entrante->data = malloc(paquete_entrante->header->tamanio_data);
+
+	recv(socket, paquete_entrante->data, paquete_entrante->header->tamanio_data,
+	MSG_WAITALL);
+
+	return paquete_entrante;
+
+}
+
+void common_send(int socket, t_data * paquete) {
+	char* buffer;
+	int tamanio_total;
+	buffer = serializarPaquete(paquete);
+	tamanio_total = paquete->header->tamanio_data + sizeof(t_header);
+
+	send(socket, buffer, tamanio_total, MSG_WAITALL);
+
+	free(buffer);
 }

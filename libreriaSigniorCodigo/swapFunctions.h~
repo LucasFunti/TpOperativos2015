@@ -31,6 +31,8 @@ int getSwapPagesSize();
 
 char* getSwapFileName();
 
+char* getPort();
+
 void markPage(int pageNumber,char *processName, t_list *pages);
 
 void writePage(int pageNumber,char *content);

@@ -526,7 +526,7 @@ void enviarPaqueteEntradaSalida(int pidCpu, int tiempoIO, int contadorPrograma,
 	memcpy(buffer + 2 * sizeof(int), &contadorPrograma, sizeof(int));
 	memcpy(buffer + 3 * sizeof(int), &cantidadResultados, sizeof(int));
 
-	int n;
+	int n = 0;
 
 	void copiarResultado(void * data) {
 
@@ -572,7 +572,7 @@ void enviarPaqueteFinQuantum(int idCpu, int contadorPrograma, int socket,
 
 	memcpy(buffer + 2 * sizeof(int), &cantidadResultados, sizeof(int));
 
-	int n;
+	int n = 0;
 
 	void copiarResultado(void * data) {
 
@@ -606,7 +606,7 @@ void enviarPaqueteFinalizar(int pidCpu, int socket,
 
 	memcpy(buffer, &pidCpu, sizeof(int));
 	memcpy(buffer + sizeof(int), &cantidadResultados, sizeof(int));
-	int n;
+	int n = 0;
 
 	void copiarResultado(void * data) {
 
