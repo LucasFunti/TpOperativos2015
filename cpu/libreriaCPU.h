@@ -9,6 +9,7 @@
 #define LIBRERIACPU_H_
 #include <pthread.h>
 #include "../planificador/planificadorFunctions.h"
+#include <stdbool.h>
 
 int porcentajeDeUso[50], instruccionesEjecutadas[50];
 
@@ -43,6 +44,11 @@ typedef struct{
 } t_config_cpu;
 
 typedef struct{
+	int instruccion;
+	bool resultado;
+};
+
+typedef struct{
 	int idHilo;
 	t_log *logger;
 } t_hilo;
@@ -69,7 +75,7 @@ typedef struct{
 	int contador;		// posición actualizada del contador de programa
 	int *data;			// el array de resultados de las ejecuciones de cada instrucción
 	int usoDeCpu;		// porcentaje de CPU utilizada en el ultimo minuto;
-	int causa_finalizacion; // valor que indica el motivo del fin de ejecucion (I/O = 20,error = 21, Quantum = 22, finalizar = 23)
+	int causa_finalizacion; // valor que indica el motivo del fin de ejecucion, o bien que se está enviando un resultado de ejecución (I/O = 20,ráfaga ejecutada = 21, Quantum = 22, finalizar = 23)
 } t_resultadoOperacion;
 
 typedef struct {

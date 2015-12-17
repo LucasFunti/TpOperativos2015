@@ -187,7 +187,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 //		if (estadoDeEjecucion == 1){
 		if (datos->header->codigo_operacion == 1) {
-			resultadoEjecucion = string_from_format("mProc %s - Iniciado correctamente.", idProceso);
+//			resultadoEjecucion = string_from_format("mProc %s - Iniciado correctamente.", idProceso);
 			logearIniciar(datosDelHilo, datos->header->codigo_operacion,
 					idProceso);
 			printf("\n");
@@ -217,13 +217,13 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 					(char *) datos->data);
 			contenidoDePagina = datos->data;
 			printf("\n");
-     		resultadoEjecucion = string_from_format("mProc %s, página %d leída: %s", idProceso, paginas, contenidoDePagina);
+ //    		resultadoEjecucion = string_from_format("mProc %s, página %d leída: %s", idProceso, paginas, contenidoDePagina);
 			resultado = 1;
 		} else {
 			log_info(infoHilo->logger,
 			string_from_format("CPU%s proceso: %s - error de lectura en la página %s",
 			datosDelHilo->idHilo, idProceso, paginas));
-			resultadoEjecucion = string_from_format("mProc %s - error de lectura en la página %s", idProceso, paginas);
+//			resultadoEjecucion = string_from_format("mProc %s - error de lectura en la página %s", idProceso, paginas);
 			printf("\n");
 			resultado = 0;
 			return resultado;
@@ -243,10 +243,10 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 				array[2]);
 		printf("\n");
 		if (datos->header->codigo_operacion == 1) {
-		    resultadoEjecucion = string_from_format("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
+//		    resultadoEjecucion = string_from_format("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
 			resultado = 1;
 		} else {
-			resultadoEjecucion = string_from_format("mProc %s - Error de escritura de página\n", idProceso);
+//			resultadoEjecucion = string_from_format("mProc %s - Error de escritura de página\n", idProceso);
 			resultado = 0;
 			return resultado;
 		}
@@ -261,7 +261,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 		resultado = 1;
 		logearEntradaSalida(datosDelHilo, idProceso, array[1]);
-		resultadoEjecucion = string_from_format("mProc %s - en entrada/salida de tiempo %s\n", idProceso, array[1]);
+//		resultadoEjecucion = string_from_format("mProc %s - en entrada/salida de tiempo %s\n", idProceso, array[1]);
 		printf("\n");
 		resultado = 1;
 
@@ -273,7 +273,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		common_send(serverMemoria, datos);
 		resultado = 1;
 		logearFinalizacion(datosDelHilo, idProceso);
-		resultadoEjecucion = string_from_format("mProc %s - Finalizado.\n", idProceso);
+//		resultadoEjecucion = string_from_format("mProc %s - Finalizado.\n", idProceso);
 		printf("\n");
 		break;
 
