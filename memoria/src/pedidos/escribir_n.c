@@ -15,8 +15,9 @@ bool escribir_n(int pid, int pagina, char * contenido) {
 		return false;
 
 	} else {
-
 		if (!item->presencia) {
+
+			loggearInfo("El elemento no está presente, se trae a memoria");
 
 			page_faults++;
 			swap_leer(pid, pagina);
@@ -43,6 +44,8 @@ bool escribir_n(int pid, int pagina, char * contenido) {
 
 		//Ya está presente
 
+		loggearInfo("El elemento está presente");
+
 		int tamanio_marco = config_get_int_value(memoriaConfig,
 				"TAMANIO_MARCO");
 
@@ -68,7 +71,8 @@ bool escribir_n(int pid, int pagina, char * contenido) {
 		}
 
 		//Escribe en memoria principal, entonces es con retardo
-		retardo(memoriaConfig);
+		loggearInfo("Se escribe el contenido");
+		retardo();
 		memcpy(memoria + tamanio_marco * item->marco, contenido_a_escribir,
 				tamanio_marco);
 
