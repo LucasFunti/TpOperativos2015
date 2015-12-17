@@ -234,6 +234,15 @@ void agregarAColaDeBloqueados(nodo_entrada_salida*io) {
 	pthread_mutex_unlock(&mutex_bloqueados);
 
 }
+void quitarDeColaBloqueados(nodo_entrada_salida *io){
+	bool encontrarIO(void * data){
+		return ((((nodo_entrada_salida*)data)->proceso->id)==io->proceso->id);
+	}
+	nodo_entrada_salida * entradasalida = list_remove_by_condition(entradaSalida.elements, encontrarIO);
+
+}
+
+
 /* saca un proceso de la lista de ejecucion y lo coloca en la cola de entrada salida */
 void * cambiarEstadoABloqueado(void* data) {
 	data_hilo *dataHilo = data;
@@ -253,6 +262,7 @@ void * cambiarEstadoABloqueado(void* data) {
 			io->proceso->nombrePrograma);
 
 	//TODO removerlo de la cola de bloqueados, pero no popeando, sino con un list-find
+	quitarDeColaBloqueados(io);
 
 	io->proceso->programCounter++;
 
