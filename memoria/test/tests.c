@@ -327,28 +327,57 @@ context(test_admin_memoria) {
 
 		}end
 
-	}end
+		it("ejecuta mem.cod") {
 
-	it("ejecuta mem.cod") {
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configAlgoritmoTestFifo");
+			iniciar_marcos();
+			/*
+			 * iniciar 6;
+			 escribir 2 "dos";
+			 leer 2;
+			 escribir 3 "tres";
+			 leer 2;
+			 escribir 1 "uno"
+			 leer 1;
+			 escribir 5 "cinco";
+			 leer 2;
+			 escribir 4 "cuatro";
+			 leer 5;
+			 leer 3;
+			 escribir 2 "dos";
+			 leer 5;
+			 leer 2;
+			 */
+			iniciar_n(1,6);
 
-		iniciar_n(1,5);
+			escribir_n(1,1,"Dos");
+			leer_n(1,1);
 
-		escribir_n(1,0,"Hola");
-		escribir_n(1,1,"Hola");
-		escribir_n(1,2,"Hola");
-		escribir_n(1,3,"Hola");
+			escribir_n(1,2,"Tres");
+			leer_n(1,1);
 
-		should_int(list_size(cola_llegada)) be equal to(3);
+			escribir_n(1,0,"Uno");
+			leer_n(1,0);
 
-		assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,0,false,false);
-		assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,1,true,true);
-		assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,2,true,true);
-		assert_tabla_paginas_item(list_get(tabla_paginas,3),1,3,0,true,true);
+			escribir_n(1,4,"Cinco");
+			leer_n(1,1);
 
-		escribir_n(1,0,"Hola");
+			escribir_n(1,3,"Cuatro");
+			leer_n(1,4);
+			leer_n(1,2);
 
-		assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,1,true,true);
-		assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,1,false,false);
+			escribir_n(1,1,"Dos");
+			leer_n(1,4);
+			leer_n(1,1);
+
+			should_int(page_faults) be equal to(9);
+			should_int(accesos_swap) be equal to(15);
+
+			assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,2,false,true);
+			assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,0,false,true);
+			assert_tabla_paginas_item(list_get(tabla_paginas,4),1,4,1,false,true);
+
+		}end
 
 	}end
 
@@ -363,24 +392,87 @@ context(test_admin_memoria) {
 
 		it("swappea usando lru") {
 
-			iniciar_n(1,3);
+			iniciar_n(1,4);
 
 			t_item * item = list_get(tabla_paginas,0);
 
 			should_int(item->numero_operacion) be equal to(0);
 
 			leer_n(1,0);
+			should_int(item->numero_operacion) be equal to(1);
 
+			leer_n(1,0);
+			leer_n(1,0);
 			should_int(item->numero_operacion) be equal to(3);
-			leer_n(1,0);
-			leer_n(1,0);
-			should_int(item->numero_operacion) be equal to(5);
+
 			escribir_n(1,0,"Hola");
-			should_int(item->numero_operacion) be equal to(6);
+			should_int(item->numero_operacion) be equal to(4);
+
 			leer_n(1,1);
-//			leer_n(1,2);
-//			assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,0,false,false);
-//			assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,0,true,true);
+
+			item = list_get(tabla_paginas,1);
+			should_int(item->numero_operacion) be equal to(5);
+
+			leer_n(1,2);
+
+			leer_n(1,3);
+
+			item = list_get(tabla_paginas,3);
+			should_int(item->numero_operacion) be equal to(7);
+
+			assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,0,false,false);
+
+		}end
+
+		it("ejecuta mem.cod") {
+
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configAlgoritmoTestLRU");
+			iniciar_marcos();
+			/*
+			 * iniciar 6;
+			 escribir 2 "dos";
+			 leer 2;
+			 escribir 3 "tres";
+			 leer 2;
+			 escribir 1 "uno"
+			 leer 1;
+			 escribir 5 "cinco";
+			 leer 2;
+			 escribir 4 "cuatro";
+			 leer 5;
+			 leer 3;
+			 escribir 2 "dos";
+			 leer 5;
+			 leer 2;
+			 */
+			iniciar_n(1,6);
+
+			escribir_n(1,1,"Dos");
+			leer_n(1,1);
+
+			escribir_n(1,2,"Tres");
+			leer_n(1,1);
+
+			escribir_n(1,0,"Uno");
+			leer_n(1,0);
+
+			escribir_n(1,4,"Cinco");
+			leer_n(1,1);
+
+			escribir_n(1,3,"Cuatro");
+			leer_n(1,4);
+			leer_n(1,2);
+
+			escribir_n(1,1,"Dos");
+			leer_n(1,4);
+			leer_n(1,1);
+
+			should_int(page_faults) be equal to(7);
+			should_int(accesos_swap) be equal to(11);
+
+			assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,2,true,true);
+			assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,0,false,true);
+			assert_tabla_paginas_item(list_get(tabla_paginas,4),1,4,1,true,true);
 
 		}end
 

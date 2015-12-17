@@ -18,10 +18,11 @@ int fifo() {
 	list_remove_by_condition(cola_llegada, coincide_pid_y_pagina);
 
 	if (item->modificado) {
-		if (!test) {
-			swap_escribir(pid_matchear, pagina_matchear, item->marco);
-		}
+
+		swap_escribir(pid_matchear, pagina_matchear, item->marco);
+
 		item->modificado = false;
+
 	}
 
 	item->presencia = false;

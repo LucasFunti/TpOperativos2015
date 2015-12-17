@@ -20,7 +20,7 @@ char * contenido_lectura;
 
 bool test;
 
-int pedidos_totales, aciertos_totales;
+int pedidos_totales, aciertos_totales,page_faults,accesos_swap;
 
 t_registro_tlb registroTlb[200];
 

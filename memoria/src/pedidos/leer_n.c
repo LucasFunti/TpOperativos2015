@@ -22,6 +22,12 @@ bool leer_n(int pid, int pagina) {
 
 		if (!item->presencia) {
 
+			//No esta presente
+			page_faults++;
+
+			pid_matchear = item->pid;
+			pagina_matchear = item->pagina;
+
 			int marco = marco_libre(pid);
 
 			if (marco == -1) {
@@ -31,19 +37,22 @@ bool leer_n(int pid, int pagina) {
 
 			} else {
 
-				if (!test) {
-					contenido_lectura = swap_leer(pid, pagina);
-				} else {
-					contenido_lectura = malloc(2);
-					contenido_lectura = "T";
-				}
+				char * contenido_Pagina = swap_leer(pid, pagina);
+
+				retardo(memoriaConfig);
+				memcpy(memoria + tamanio_marco * item->marco, contenido_Pagina,
+						tamanio_marco);
+
+				contenido_lectura = contenido_Pagina;
 
 				item->marco = marco;
 				item->presencia = true;
-				return true;
 				list_add(cola_llegada, item);
+				return true;
 			}
 		} else {
+
+			//Esta presente
 
 			contenido_lectura = malloc(tamanio_marco);
 			retardo(memoriaConfig);

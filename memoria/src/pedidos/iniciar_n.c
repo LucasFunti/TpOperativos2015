@@ -51,10 +51,10 @@ int marco_libre(int pid) {
 
 		if (tiene_marcos_asignados(pid)) {
 
-			//Swappear uno ya existente
+			//Swappea uno que ya tiene
 
 			char * algoritmo = config_get_string_value(memoriaConfig,
-					"ALGORITMO_REMPLAZO");
+					"ALGORITMO_REEMPLAZO");
 
 			if (es_fifo(algoritmo)) {
 				return fifo();
@@ -83,7 +83,7 @@ int marco_libre(int pid) {
 		} else {
 
 			char * algoritmo = config_get_string_value(memoriaConfig,
-					"ALGORITMO_REMPLAZO");
+					"ALGORITMO_REEMPLAZO");
 
 			if (es_fifo(algoritmo)) {
 				return fifo();

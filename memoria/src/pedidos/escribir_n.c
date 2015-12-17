@@ -16,9 +16,10 @@ bool escribir_n(int pid, int pagina, char * contenido) {
 
 	} else {
 
-		item->numero_operacion = get_numero_operacion();
-
 		if (!item->presencia) {
+
+			page_faults++;
+			swap_leer(pid, pagina);
 
 			int marco = marco_libre(pid);
 

@@ -15,7 +15,6 @@ void tabla_paginas_remover_pid(int pid) {
 	while (cantidad_restante) {
 
 		list_remove_by_condition(cola_llegada, coincide_pid);
-		//TODO destruirlo también?
 
 		cantidad_restante--;
 
@@ -48,7 +47,7 @@ t_item * tabla_paginas_aniadir_item(int pid, int pagina, int marco) {
 	nuevo->pagina = pagina;
 	nuevo->marco = marco;
 	nuevo->modificado = false;
-	nuevo->numero_operacion = get_numero_operacion();
+	nuevo->numero_operacion = 0;
 	nuevo->presencia = false;
 	nuevo->uso = 1;
 
@@ -85,9 +84,14 @@ t_item * tabla_paginas_buscar(int pid, int pagina) {
 
 			item_encontrado->presencia = true;
 
-			char * contenido = swap_leer(pid, pagina);
+			accesos_swap++;
 
-			escribir_n(pid, pagina, contenido);
+			if (!test) {
+
+				char * contenido = swap_leer(pid, pagina);
+
+				escribir_n(pid, pagina, contenido);
+			}
 
 			return item_encontrado;
 		}
