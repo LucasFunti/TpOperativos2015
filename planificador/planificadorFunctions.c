@@ -99,7 +99,8 @@ void mostrarEstadoDeLista(t_list *lista, char*estado) {
 	int j;
 	if (list_size(lista) == 0) {
 		printf("La lista de planificacion ,%s, esta vacia\n", estado);
-		log_info(log_planificador,"La lista de planificacion, %s, esta vacía",estado);
+		log_info(log_planificador, "La lista de planificacion, %s, esta vacía",
+				estado);
 
 	} else {
 
@@ -119,7 +120,8 @@ void mostrarEstadoDeListos(t_queue *cola, char*estado) {
 	int j;
 	if (queue_size(cola) == 0) {
 		printf("La cola de planificacion ,%s, esta vacia\n", estado);
-		log_info(log_planificador,"La cola de planificacion, %s, esta vacía",estado);
+		log_info(log_planificador, "La cola de planificacion, %s, esta vacía",
+				estado);
 	} else {
 		for (j = 0; j < queue_size(cola); j++) {
 			tipo_pcb *proceso = list_get(cola->elements, j);
@@ -134,7 +136,8 @@ void mostrarEstadoDeBloqueados(t_queue *cola, char*estado) {
 	int j;
 	if (queue_size(cola) == 0) {
 		printf("La cola de planificacion ,%s, esta vacia\n", estado);
-		log_info(log_planificador,"La cola de planificacion, %s, esta vacía",estado);
+		log_info(log_planificador, "La cola de planificacion, %s, esta vacía",
+				estado);
 	} else {
 		for (j = 0; j < queue_size(cola); j++) {
 			nodo_en_ejecucion *proceso = list_get(cola->elements, j);
@@ -236,49 +239,61 @@ void agregarAColaDeBloqueados(nodo_entrada_salida*io) {
 	pthread_mutex_unlock(&mutex_bloqueados);
 
 }
-void quitarDeColaBloqueados(nodo_entrada_salida *io) {
+nodo_entrada_salida * quitarDeColaBloqueados() {
 
-	bool encontrarIO(void * data) {
-		return ((((nodo_entrada_salida*) data)->proceso->id) == io->proceso->id);
-	}
-
-	list_remove_by_condition(entradaSalida->elements, encontrarIO);
-
+	nodo_entrada_salida * io = queue_pop(entradaSalida);
+	return io;
 }
 
 /* saca un proceso de la lista de ejecucion y lo coloca en la cola de entrada salida */
-void * cambiarEstadoABloqueado(void* data) {
+nodo_entrada_salida * cambiarEstadoABloqueado(void* data) {
 	data_hilo *dataHilo = data;
 
 	nodo_en_ejecucion * proceso = removerDeListaDeEjecucion(dataHilo->pcb);
-
-	nodo_entrada_salida * io = malloc(sizeof(nodo_entrada_salida));
-	io->proceso = proceso->proceso;
-	log_info(log_planificador,
-			"Se creo el hilo para el manejo de entrada salida del programa : %s\n",
-			io->proceso->nombrePrograma);
-	agregarAColaDeBloqueados(io);
-	io->espera = dataHilo->tiempo;
-	sleep(io->espera);
-
-	log_info(log_planificador, "Se termino la entrada salida del proceso: %s\n",
-			io->proceso->nombrePrograma);
-
-	quitarDeColaBloqueados(io);
-
-	io->proceso->programCounter++;
 
 	liberarCpu(proceso->socket);
 
 	sem_post(&cpu_libre);
 
-	agregarEnColaDeListos(io->proceso);
+	nodo_entrada_salida * io = malloc(sizeof(nodo_entrada_salida));
 
-	sem_post(&procesos_listos);
+	io->proceso = proceso->proceso;
 
-	pthread_exit(NULL);
+	io->espera = dataHilo->tiempo;
+
+	agregarAColaDeBloqueados(io);
+
+	sem_post(&input_output);
+
+	return io;
 }
 
+void *manejarEntradaSalida() {
+	while (1) {
+
+		sem_wait(&input_output);
+
+		pthread_mutex_lock(&mutex_entrada_salida);
+
+		nodo_entrada_salida * io = quitarDeColaBloqueados();
+
+		sleep(io->espera);
+
+		log_info(log_planificador,
+				"mProc %s en entrada-salida de tiempo %d",
+				io->proceso->nombrePrograma,io->espera);
+
+		io->proceso->programCounter++;
+
+		pthread_mutex_unlock(&mutex_entrada_salida);
+
+		agregarEnColaDeListos(io->proceso);
+
+		sem_post(&procesos_listos);
+
+	}
+	return NULL;
+}
 /* agarra el proceso y coloca su puntero al final de la ultima instruccion para que
  * la cpu ejecute finalizar y termine el proceso */
 int setProgramCounter(char *dirProceso) {
@@ -334,7 +349,7 @@ rafaga_t * deserializarInstruccion(void * data) {
 	return instruccion;
 }
 
-void ejecutarlogueoInstruccionesEjecutadas(void * data,int cantidadResultados,
+void ejecutarlogueoInstruccionesEjecutadas(void * data, int cantidadResultados,
 		nodo_en_ejecucion * proceso) {
 	int i;
 	for (i = 0; i > cantidadResultados; i++) {
@@ -379,7 +394,8 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		proceso = list_remove_by_condition(en_ejecucion, encontrar_cpu);
 
 		//TODO recivir lista de resultados ejecutados
-		ejecutarlogueoInstruccionesEjecutadas(data,cantidadResultados,proceso);
+		ejecutarlogueoInstruccionesEjecutadas(data, cantidadResultados,
+				proceso);
 
 		agregarAFinalizados(colaFinalizados, proceso, log_planificador);
 
@@ -402,7 +418,6 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		memcpy(&unaInstruccion->PC, data + sizeof(int), sizeof(int));
 		memcpy(&cantidadResultados, data + (sizeof(int) * 2), sizeof(int));
 
-
 		bool encontrar_cpu_finQuantum(void * nodo) {
 			return ((((nodo_en_ejecucion*) nodo)->pid_cpu)
 					== unaInstruccion->pid_cpu);
@@ -412,7 +427,10 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 				encontrar_cpu_finQuantum);
 
 		//TODO recivir lista de resultados ejecutados
-		ejecutarlogueoInstruccionesEjecutadas(data,cantidadResultados,proceso);
+		ejecutarlogueoInstruccionesEjecutadas(data, cantidadResultados,
+				proceso);
+
+		proceso->proceso->programCounter = unaInstruccion->PC;
 
 		agregarEnColaDeListos(proceso->proceso);
 
@@ -456,7 +474,6 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		memcpy(&punteroActualizado, dataIO + (sizeof(int) * 2), sizeof(int));
 		memcpy(&cantidadResultados, dataIO + (sizeof(int) * 3), sizeof(int));
 
-
 		bool encontrar_cpu_io(void * nodo) {
 			nodo_en_ejecucion * nodito = nodo;
 			return nodito->pid_cpu == pid_cpu;
@@ -465,13 +482,16 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		proceso = list_find(en_ejecucion, encontrar_cpu_io);
 
 		//TODO recivir lista de resultados ejecutados
-		ejecutarlogueoInstruccionesEjecutadas(dataIO,cantidadResultados,proceso);
-
-		pthread_t hilo;
+		ejecutarlogueoInstruccionesEjecutadas(dataIO, cantidadResultados,
+				proceso);
 
 		data_hilo * dataHilo = obtenerDatosHilo(proceso, tiempoIO);
 
-		pthread_create(&hilo, NULL, cambiarEstadoABloqueado, dataHilo);
+		cambiarEstadoABloqueado(dataHilo);
+
+		pthread_t hilo;
+
+		pthread_create(&hilo, NULL, manejarEntradaSalida, NULL);
 
 		break;
 	}

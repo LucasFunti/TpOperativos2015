@@ -16,8 +16,10 @@ int main(int argc, char **argv) {
 	pthread_mutex_init(&mutex_ejecucion, NULL);
 	pthread_mutex_init(&mutex_bloqueados, NULL);
 	pthread_mutex_init(&mutex_cpus, NULL);
+	pthread_mutex_init(&mutex_entrada_salida,NULL);
 	sem_init(&procesos_listos, 1, 0);
 	sem_init(&cpu_libre, 1, 0);
+	sem_init(&input_output,1,0);
 
 	char * port = getPuerto();
 

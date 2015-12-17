@@ -108,7 +108,7 @@ nodo_en_ejecucion * removerDeListaDeEjecucion(tipo_pcb *pcb);
 
 void agregarAColaDeBloqueados(nodo_entrada_salida*io);
 
-void * cambiarEstadoABloqueado(void * data);
+void cambiarEstadoABloqueado(void* data) ;
 
 void cambiarEstado(tipo_pcb *proceso, int estado);
 
@@ -140,5 +140,7 @@ void despacharProcesosListos(void * data);
 bool cpuEstaLibre(void * data);
 
 void quitarDeColaBloqueados(nodo_entrada_salida *io);
+
+void *manejarEntradaSalida(void *data) ;
 
 #endif /* PLANIFICADORFUNCTIONS_H_ */
