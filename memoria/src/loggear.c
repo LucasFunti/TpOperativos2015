@@ -28,7 +28,7 @@ void iniciarLogger() {
 	remove("/tp-2015-2c-signiorcodigo/memoria/src/logMemoria");
 
 	logger = log_create("/tp-2015-2c-signiorcodigo/memoria/src/logMemoria",
-			"PAM", false, LOG_LEVEL_DEBUG);
+			"PAM", true, LOG_LEVEL_DEBUG);
 	loggearInfo("Iniciado el proceso administrador de memoria");
 
 }
