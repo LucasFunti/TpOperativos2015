@@ -166,17 +166,15 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 		datos = leer_paquete(serverMemoria);
 
-//		if (estadoDeEjecucion == 1){
-		if (datos->header->codigo_operacion == 1) {
-//			resultadoEjecucion = string_from_format("mProc %s - Iniciado correctamente.", idProceso);
 
-			logearIniciar(datosDelHilo, datos->header->codigo_operacion,
-					idProceso);
+		if (datos->header->codigo_operacion == 1) {
+
+			log_info(datosDelHilo->logger, string_from_format("[CPU%d] mProc %s - Iniciado correctamente.",hilo, idProceso));
+//			logearIniciar(datosDelHilo, datos->header->codigo_operacion, idProceso);
 			printf("\n");
 			resultado = 1;
 		} else {
-			resultadoEjecucion = string_from_format(
-					"mProc %s - Fallo al iniciar\n", idProceso);
+			log_info(datosDelHilo->logger, string_from_format("[CPU%d] mProc %s - Fallo al iniciar",hilo, idProceso));
 			resultado = 0;
 			return resultado;
 		}
@@ -196,9 +194,9 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 		datos = leer_paquete(serverMemoria);
 		if (datos->header->codigo_operacion == 1) {
-			logearLectura(datosDelHilo, idProceso, array[1],
-					(char *) datos->data);
+//			logearLectura(datosDelHilo, idProceso, array[1], (char *) datos->data);
 			contenidoDePagina = datos->data;
+			log_info(datosDelHilo->idHilo, string_from_format("[CPU%d] mProc %s, página %d leída: %s", hilo, idProceso,paginas, contenidoDePagina));
 			printf("\n");
 			//    		resultadoEjecucion = string_from_format("mProc %s, página %d leída: %s", idProceso, paginas, contenidoDePagina);
 			resultado = 1;
@@ -218,13 +216,14 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 	case 6:							//instrucción escribir N contenido
 		array = string_n_split(linea, 3, " ");
 		paginas = atoi(array[1]);
-//		removeChar(textoAEscribir, '"');
+		removeChar(array[2], '"');
 		datos = crearPaqueteEscritura(clave, pid, paginas, array[2]);
-		//tamanio = datos->header->tamanio_data;
 		common_send(serverMemoria, datos);
 		datos = leer_paquete(serverMemoria);
-		logearEscritura(datosDelHilo, idProceso, estadoDeEjecucion, array[1],
-				array[2]);
+
+		log_info(datosDelHilo->logger, string_from_format("[CPU%s] mProc %s - página %d escrita: %s",
+				hilo, idProceso, paginas, array[2]));
+//		logearEscritura(datosDelHilo, idProceso, estadoDeEjecucion, array[1], array[2]);
 		printf("\n");
 		if (datos->header->codigo_operacion == 1) {
 //		    resultadoEjecucion = string_from_format("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
@@ -244,7 +243,8 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		codigo = 20;
 
 		resultado = 1;
-		logearEntradaSalida(datosDelHilo, idProceso, array[1]);
+//		logearEntradaSalida(datosDelHilo, idProceso, array[1]);
+		log_info(datosDelHilo->logger, string_from_format("[CPU%d] mProc %s en entrada-salida de tiempo %s",hilo, idProceso, array[1]));
 //		resultadoEjecucion = string_from_format("mProc %s - en entrada/salida de tiempo %s\n", idProceso, array[1]);
 		printf("\n");
 		resultado = 1;
@@ -257,6 +257,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		common_send(serverMemoria, datos);
 		resultado = 1;
 		logearFinalizacion(datosDelHilo, idProceso);
+		log_info(datosDelHilo->logger, string_from_format("[CPU%d] mProc %s - Finalizado.\n", hilo, idProceso));
 //		resultadoEjecucion = string_from_format("mProc %s - Finalizado.\n", idProceso);
 		printf("\n");
 		break;
@@ -418,6 +419,8 @@ void correrArchivo(void * infoHilo) {
 
 					enviarPaqueteFinalizar(infoCorrer->threadInfo->idHilo,
 							infoCorrer->serverPlanificador, resultados);
+
+					log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 					return;
 
 				case ENTRADASALIDA:
@@ -428,6 +431,7 @@ void correrArchivo(void * infoHilo) {
 							tiempoIO, nInstruccion,
 							infoCorrer->serverPlanificador, resultados);
 
+					log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 					return;
 
 				}
@@ -435,7 +439,8 @@ void correrArchivo(void * infoHilo) {
 			} else if (!fueCorrecta) {
 				enviarPaqueteError(infoCorrer->threadInfo->idHilo,
 						infoCorrer->serverPlanificador);
-
+				log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
+				return;
 			}
 			usleep(retardo * 1000000);
 		}
@@ -471,6 +476,8 @@ void correrArchivo(void * infoHilo) {
 
 					enviarPaqueteFinalizar(infoCorrer->threadInfo->idHilo,
 							infoCorrer->serverPlanificador, resultados);
+
+					log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 					return;
 
 				case ENTRADASALIDA:
@@ -481,6 +488,8 @@ void correrArchivo(void * infoHilo) {
 							tiempoIO, nInstruccion,
 							infoCorrer->serverPlanificador, resultados);
 
+					log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
+
 					return;
 
 				}
@@ -488,6 +497,7 @@ void correrArchivo(void * infoHilo) {
 			} else if (!fueCorrecta) {
 				enviarPaqueteError(infoCorrer->threadInfo->idHilo,
 						infoCorrer->serverPlanificador);
+				log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 				return;
 
 			}
@@ -496,7 +506,10 @@ void correrArchivo(void * infoHilo) {
 		}
 		enviarPaqueteFinQuantum(infoCorrer->threadInfo->idHilo, nInstruccion,
 				infoCorrer->serverPlanificador, resultados);
+		log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
+		return;
 	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -776,10 +789,7 @@ void *iniciarcpu(void *punteroALaInfo) {
 		}
 
 		printf("\n");
-		char *disponible = eventoDeLogeo("liberada la CPU ",
-				threadInfo->idHilo);
-		log_info(threadInfo->logger, disponible);
-//		printf("PC %d liberada y disponible\n", threadInfo->idHilo);
+
 //		status = 0;
 
 	}
@@ -787,7 +797,6 @@ void *iniciarcpu(void *punteroALaInfo) {
 //	close(serverPlanificador);
 //	close(serverMemoria);
 
-	printf("\nejecución exitosa. Finalizando...\n");
 	return NULL;
 
 }
