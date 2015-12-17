@@ -9,6 +9,9 @@ void iniciar_marcos() {
 	aciertos_totales = 0;
 	pedidos_totales = 0;
 
+	accesos_swap = 0;
+	page_faults = 0;
+
 	int contadorAuxiliar;
 	for (contadorAuxiliar = 0; contadorAuxiliar < 200; contadorAuxiliar++) {
 
@@ -17,7 +20,7 @@ void iniciar_marcos() {
 
 	}
 
-	numero_operacion = 0;
+	numero_operacion = 1;
 
 	int cantidad_marcos = config_get_int_value(memoriaConfig,
 			"CANTIDAD_MARCOS");

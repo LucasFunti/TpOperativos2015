@@ -48,13 +48,14 @@ int marco_libre(int pid) {
 	pid_matchear = pid;
 
 	if (marcos_libres() == 0) {
+		//Si no hay marcos disponibles
 
 		if (tiene_marcos_asignados(pid)) {
 
-			//Swappear uno ya existente
+			//Swappea uno que ya tiene
 
 			char * algoritmo = config_get_string_value(memoriaConfig,
-					"ALGORITMO_REMPLAZO");
+					"ALGORITMO_REEMPLAZO");
 
 			if (es_fifo(algoritmo)) {
 				return fifo();
@@ -67,10 +68,14 @@ int marco_libre(int pid) {
 			return clock_m();
 
 		} else {
+
+			//No le puedo dar ninguno, se aborta
+
 			return -1;
 		}
 
 	} else {
+
 		int cantidad_maxima_marcos_proceso = config_get_int_value(memoriaConfig,
 				"MAXIMO_MARCOS_POR_PROCESO");
 
@@ -82,8 +87,10 @@ int marco_libre(int pid) {
 
 		} else {
 
+			//Tiene el maximo y necesita swappear uno existente
+
 			char * algoritmo = config_get_string_value(memoriaConfig,
-					"ALGORITMO_REMPLAZO");
+					"ALGORITMO_REEMPLAZO");
 
 			if (es_fifo(algoritmo)) {
 				return fifo();

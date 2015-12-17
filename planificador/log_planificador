@@ -371,3 +371,458 @@
 [INFO] 03:03:00:343 PLANIFICADOR/(5378:5378): mProc 1: entradasalida -> Ejecucion 
 
 [INFO] 22:32:08:756 PLANIFICADOR/(3607:3607): Se conecto una cpu en el socket 5
+[INFO] 23:28:30:983 PLANIFICADOR/(5277:5277): Se conecto una cpu en el socket 5
+[INFO] 23:33:02:212 PLANIFICADOR/(5431:5431): Se conecto una cpu en el socket 5
+[INFO] 00:48:08:419 PLANIFICADOR/(6752:6752): Se conecto una cpu en el socket 5
+[INFO] 00:49:29:995 PLANIFICADOR/(6796:6796): Se conecto una cpu en el socket 5
+[INFO] 00:53:30:467 PLANIFICADOR/(7034:7034): Se conecto una cpu en el socket 5
+[INFO] 00:55:14:600 PLANIFICADOR/(7115:7115): Se conecto una cpu en el socket 5
+[INFO] 00:57:23:956 PLANIFICADOR/(7243:7243): Se conecto una cpu en el socket 5
+[INFO] 01:00:54:294 PLANIFICADOR/(7394:7394): Se conecto una cpu en el socket 5
+[INFO] 01:01:16:778 PLANIFICADOR/(7394:7394): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 01:01:16:778 PLANIFICADOR/(7394:7394): mProc 1: corto -> Listos 
+
+[INFO] 01:01:16:778 PLANIFICADOR/(7394:7394): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 01:01:16:778 PLANIFICADOR/(7394:7394): mProc 1: corto -> Ejecucion 
+
+[INFO] 01:01:21:808 PLANIFICADOR/(7394:7417): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 01:01:21:808 PLANIFICADOR/(7394:7417): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 01:01:21:808 PLANIFICADOR/(7394:7417): mProc 1: corto -> Bolqueados 
+
+[INFO] 01:02:52:513 PLANIFICADOR/(7463:7463): Se conecto una cpu en el socket 5
+[INFO] 01:02:57:447 PLANIFICADOR/(7463:7463): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 01:02:57:447 PLANIFICADOR/(7463:7463): mProc 1: facil -> Listos 
+
+[INFO] 01:02:57:447 PLANIFICADOR/(7463:7463): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 01:02:57:448 PLANIFICADOR/(7463:7463): mProc 1: facil -> Ejecucion 
+
+[INFO] 01:05:04:564 PLANIFICADOR/(7546:7546): Se conecto una cpu en el socket 5
+[INFO] 01:07:41:924 PLANIFICADOR/(7546:7546): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 01:07:41:924 PLANIFICADOR/(7546:7546): mProc 1: facil -> Listos 
+
+[INFO] 01:09:08:117 PLANIFICADOR/(7546:7546): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 01:09:08:117 PLANIFICADOR/(7546:7546): mProc 1: facil -> Ejecucion 
+
+[INFO] 01:26:50:989 PLANIFICADOR/(7936:7936): Se conecto una cpu en el socket 5
+[INFO] 01:27:09:126 PLANIFICADOR/(7936:7936): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 01:27:09:126 PLANIFICADOR/(7936:7936): mProc 1: facil -> Listos 
+
+[INFO] 01:27:17:650 PLANIFICADOR/(7936:7936): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 01:27:17:650 PLANIFICADOR/(7936:7936): mProc 1: facil -> Ejecucion 
+
+[INFO] 01:29:55:131 PLANIFICADOR/(7936:7936): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 8.000000
+
+[INFO] 01:29:55:953 PLANIFICADOR/(7936:7936): Se cerro la conexión con la cpu 0 en el socket 5
+[INFO] 01:35:01:105 PLANIFICADOR/(8122:8122): Se conecto una cpu en el socket 5
+[INFO] 01:35:07:891 PLANIFICADOR/(8122:8122): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 01:35:07:891 PLANIFICADOR/(8122:8122): mProc 1: facil -> Listos 
+
+[INFO] 01:35:07:893 PLANIFICADOR/(8122:8122): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 01:35:07:893 PLANIFICADOR/(8122:8122): mProc 1: facil -> Ejecucion 
+
+[INFO] 01:35:48:707 PLANIFICADOR/(8122:8122): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 01:35:48:707 PLANIFICADOR/(8122:8122): Se cerro la conexión con la cpu 0 en el socket 5
+[INFO] 01:36:51:671 PLANIFICADOR/(8177:8177): Se conecto una cpu en el socket 5
+[INFO] 01:36:58:119 PLANIFICADOR/(8177:8177): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 01:36:58:119 PLANIFICADOR/(8177:8177): mProc 1: facil -> Listos 
+
+[INFO] 01:36:58:121 PLANIFICADOR/(8177:8177): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 01:36:58:121 PLANIFICADOR/(8177:8177): mProc 1: facil -> Ejecucion 
+
+[INFO] 01:37:07:135 PLANIFICADOR/(8177:8177): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 01:37:07:135 PLANIFICADOR/(8177:8177): Se cerro la conexión con la cpu 0 en el socket 5
+[INFO] 01:41:18:905 PLANIFICADOR/(8296:8296): Se conecto una cpu en el socket 5
+[INFO] 01:41:30:85 PLANIFICADOR/(8296:8296): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 01:41:30:85 PLANIFICADOR/(8296:8296): mProc 1: facil -> Listos 
+
+[INFO] 01:41:30:85 PLANIFICADOR/(8296:8296): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 01:41:30:85 PLANIFICADOR/(8296:8296): mProc 1: facil -> Ejecucion 
+
+[INFO] 01:44:54:791 PLANIFICADOR/(8296:8296): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 01:44:56:140 PLANIFICADOR/(8296:8296): Se cerro la conexión con la cpu 0 en el socket 5
+[INFO] 01:48:22:729 PLANIFICADOR/(8476:8476): Se conecto una cpu en el socket 5
+[INFO] 01:48:32:473 PLANIFICADOR/(8476:8476): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 01:48:32:473 PLANIFICADOR/(8476:8476): mProc 1: facil -> Listos 
+
+[INFO] 01:48:32:473 PLANIFICADOR/(8476:8476): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 01:48:32:473 PLANIFICADOR/(8476:8476): mProc 1: facil -> Ejecucion 
+
+[INFO] 01:48:51:800 PLANIFICADOR/(8476:8476): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 02:00:43:999 PLANIFICADOR/(8811:8811): Se conecto una cpu en el socket 5
+[INFO] 02:00:52:142 PLANIFICADOR/(8811:8812): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 02:00:52:142 PLANIFICADOR/(8811:8812): mProc 1: facil -> Listos 
+
+[INFO] 02:04:23:168 PLANIFICADOR/(8916:8916): Se conecto una cpu en el socket 5
+[INFO] 02:07:37:632 PLANIFICADOR/(9074:9074): Se conecto una cpu en el socket 5
+[INFO] 02:07:56:793 PLANIFICADOR/(9074:9078): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 02:07:56:793 PLANIFICADOR/(9074:9078): mProc 1: facil -> Listos 
+
+[INFO] 02:12:27:453 PLANIFICADOR/(9296:9296): Se conecto una cpu en el socket 5
+[INFO] 02:13:27:897 PLANIFICADOR/(9296:9300): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 02:13:27:897 PLANIFICADOR/(9296:9300): mProc 1: facil -> Listos 
+
+[INFO] 04:20:05:680 PLANIFICADOR/(12299:12299): Se conecto una cpu en el socket 5
+[INFO] 04:21:27:651 PLANIFICADOR/(12299:12304): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:21:27:651 PLANIFICADOR/(12299:12304): mProc 1: facil -> Listos 
+
+[INFO] 04:23:37:837 PLANIFICADOR/(12541:12541): Se conecto una cpu en el socket 5
+[INFO] 04:26:05:507 PLANIFICADOR/(12541:12545): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:26:05:507 PLANIFICADOR/(12541:12545): mProc 1: facil -> Listos 
+
+[INFO] 04:30:11:4 PLANIFICADOR/(12874:12874): Se conecto una cpu en el socket 5
+[INFO] 04:30:25:762 PLANIFICADOR/(12874:12878): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:30:25:762 PLANIFICADOR/(12874:12878): mProc 1: facil -> Listos 
+
+[INFO] 04:33:27:247 PLANIFICADOR/(13023:13023): Se conecto una cpu en el socket 5
+[INFO] 04:33:36:937 PLANIFICADOR/(13023:13027): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:33:36:937 PLANIFICADOR/(13023:13027): mProc 1: facil -> Listos 
+
+[INFO] 04:36:20:800 PLANIFICADOR/(13185:13185): Se conecto una cpu en el socket 5
+[INFO] 04:36:36:878 PLANIFICADOR/(13185:13189): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:36:36:878 PLANIFICADOR/(13185:13189): mProc 1: facil -> Listos 
+
+[INFO] 04:36:49:532 PLANIFICADOR/(13185:13190): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 04:36:49:532 PLANIFICADOR/(13185:13190): mProc 1: facil -> Ejecucion 
+
+[INFO] 04:42:09:719 PLANIFICADOR/(13370:13370): Se conecto una cpu en el socket 5
+[INFO] 04:42:21:746 PLANIFICADOR/(13370:13374): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:42:21:746 PLANIFICADOR/(13370:13374): mProc 1: facil -> Listos 
+
+[INFO] 04:42:56:439 PLANIFICADOR/(13370:13375): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 04:42:56:439 PLANIFICADOR/(13370:13375): mProc 1: facil -> Ejecucion 
+
+[INFO] 04:47:08:156 PLANIFICADOR/(13516:13516): Se conecto una cpu en el socket 5
+[INFO] 04:47:12:632 PLANIFICADOR/(13516:13520): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:47:12:632 PLANIFICADOR/(13516:13520): mProc 1: facil -> Listos 
+
+[INFO] 04:47:12:632 PLANIFICADOR/(13516:13521): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 04:47:12:632 PLANIFICADOR/(13516:13521): mProc 1: facil -> Ejecucion 
+
+[INFO] 04:50:08:359 PLANIFICADOR/(13702:13702): Se conecto una cpu en el socket 5
+[INFO] 04:50:17:672 PLANIFICADOR/(13702:13706): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:50:17:672 PLANIFICADOR/(13702:13706): mProc 1: facil -> Listos 
+
+[INFO] 04:50:17:672 PLANIFICADOR/(13702:13707): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 04:50:17:672 PLANIFICADOR/(13702:13707): mProc 1: facil -> Ejecucion 
+
+[INFO] 04:51:39:104 PLANIFICADOR/(13783:13783): Se conecto una cpu en el socket 5
+[INFO] 04:53:01:24 PLANIFICADOR/(13783:13787): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:53:39:582 PLANIFICADOR/(13783:13787): mProc 1: facil -> Listos 
+
+[INFO] 04:54:07:191 PLANIFICADOR/(13783:13788): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 04:54:07:191 PLANIFICADOR/(13783:13788): mProc 1: facil -> Ejecucion 
+
+[INFO] 04:56:08:432 PLANIFICADOR/(13925:13925): Se conecto una cpu en el socket 5
+[INFO] 04:56:27:723 PLANIFICADOR/(13925:13930): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 04:56:27:723 PLANIFICADOR/(13925:13930): mProc 1: facil -> Listos 
+
+[INFO] 04:56:30:442 PLANIFICADOR/(13925:13931): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 04:56:30:442 PLANIFICADOR/(13925:13931): mProc 1: facil -> Ejecucion 
+
+[INFO] 05:00:30:843 PLANIFICADOR/(14219:14219): Se conecto una cpu en el socket 5
+[INFO] 05:00:39:822 PLANIFICADOR/(14219:14223): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 05:00:39:822 PLANIFICADOR/(14219:14223): mProc 1: facil -> Listos 
+
+[INFO] 05:00:39:822 PLANIFICADOR/(14219:14224): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 05:00:39:822 PLANIFICADOR/(14219:14224): mProc 1: facil -> Ejecucion 
+
+[INFO] 05:02:01:11 PLANIFICADOR/(14219:14219): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 05:02:31:897 PLANIFICADOR/(14219:14223): Colocado el proceso: facil con pid = 2 en la cola de listos
+[INFO] 05:02:31:897 PLANIFICADOR/(14219:14223): mProc 2: facil -> Listos 
+
+[INFO] 05:02:31:897 PLANIFICADOR/(14219:14224): Colocado el proceso: facil con pid = 2 en la cola de ejecucion
+[INFO] 05:02:31:897 PLANIFICADOR/(14219:14224): mProc 2: facil -> Ejecucion 
+
+[INFO] 05:02:52:18 PLANIFICADOR/(14219:14219): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 05:03:40:32 PLANIFICADOR/(14219:14223): Colocado el proceso: corto con pid = 3 en la cola de listos
+[INFO] 05:03:40:32 PLANIFICADOR/(14219:14223): mProc 3: corto -> Listos 
+
+[INFO] 05:03:40:32 PLANIFICADOR/(14219:14224): Colocado el proceso: corto con pid = 3 en la cola de ejecucion
+[INFO] 05:03:40:32 PLANIFICADOR/(14219:14224): mProc 3: corto -> Ejecucion 
+
+[INFO] 05:10:52:861 PLANIFICADOR/(14543:14543): Se conecto una cpu en el socket 5
+[INFO] 05:11:07:192 PLANIFICADOR/(14543:14547): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:11:07:192 PLANIFICADOR/(14543:14547): mProc 1: corto -> Listos 
+
+[INFO] 05:11:07:192 PLANIFICADOR/(14543:14548): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:11:07:192 PLANIFICADOR/(14543:14548): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:18:03:525 PLANIFICADOR/(15077:15077): Se conecto una cpu en el socket 5
+[INFO] 05:18:10:501 PLANIFICADOR/(15077:15081): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:18:10:501 PLANIFICADOR/(15077:15081): mProc 1: corto -> Listos 
+
+[INFO] 05:18:10:501 PLANIFICADOR/(15077:15082): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:18:10:501 PLANIFICADOR/(15077:15082): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:18:15:518 PLANIFICADOR/(15077:15114): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:18:15:518 PLANIFICADOR/(15077:15114): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:18:15:518 PLANIFICADOR/(15077:15114): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:20:31:140 PLANIFICADOR/(15174:15174): Se conecto una cpu en el socket 5
+[INFO] 05:20:38:102 PLANIFICADOR/(15174:15178): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:20:38:102 PLANIFICADOR/(15174:15178): mProc 1: corto -> Listos 
+
+[INFO] 05:20:38:102 PLANIFICADOR/(15174:15179): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:20:38:102 PLANIFICADOR/(15174:15179): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:24:03:45 PLANIFICADOR/(15293:15293): Se conecto una cpu en el socket 5
+[INFO] 05:24:08:296 PLANIFICADOR/(15293:15297): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:24:08:296 PLANIFICADOR/(15293:15297): mProc 1: corto -> Listos 
+
+[INFO] 05:24:08:296 PLANIFICADOR/(15293:15298): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:24:08:296 PLANIFICADOR/(15293:15298): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:24:50:747 PLANIFICADOR/(15293:15339): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:24:50:747 PLANIFICADOR/(15293:15339): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:24:50:747 PLANIFICADOR/(15293:15339): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:25:46:541 PLANIFICADOR/(15382:15382): Se conecto una cpu en el socket 5
+[INFO] 05:25:56:18 PLANIFICADOR/(15382:15386): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:25:56:18 PLANIFICADOR/(15382:15386): mProc 1: corto -> Listos 
+
+[INFO] 05:25:56:18 PLANIFICADOR/(15382:15387): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:25:56:18 PLANIFICADOR/(15382:15387): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:26:10:579 PLANIFICADOR/(15382:15427): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:26:10:579 PLANIFICADOR/(15382:15427): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:26:10:579 PLANIFICADOR/(15382:15427): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:26:40:579 PLANIFICADOR/(15382:15427): Se termino la entrada salida del proceso: corto
+
+[INFO] 05:26:40:579 PLANIFICADOR/(15382:15427): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:26:40:579 PLANIFICADOR/(15382:15427): mProc 1: corto -> Listos 
+
+[INFO] 05:26:40:579 PLANIFICADOR/(15382:15427): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:26:40:579 PLANIFICADOR/(15382:15387): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:26:40:579 PLANIFICADOR/(15382:15387): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:26:40:579 PLANIFICADOR/(15382:15387): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:27:25:552 PLANIFICADOR/(15470:15470): Se conecto una cpu en el socket 5
+[INFO] 05:27:35:52 PLANIFICADOR/(15470:15474): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:27:35:52 PLANIFICADOR/(15470:15474): mProc 1: corto -> Listos 
+
+[INFO] 05:27:35:52 PLANIFICADOR/(15470:15475): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:27:35:52 PLANIFICADOR/(15470:15475): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:27:45:415 PLANIFICADOR/(15470:15529): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:27:45:415 PLANIFICADOR/(15470:15529): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:27:45:415 PLANIFICADOR/(15470:15529): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:28:15:415 PLANIFICADOR/(15470:15529): Se termino la entrada salida del proceso: corto
+
+[INFO] 05:28:15:415 PLANIFICADOR/(15470:15529): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:28:15:415 PLANIFICADOR/(15470:15529): mProc 1: corto -> Listos 
+
+[INFO] 05:28:15:415 PLANIFICADOR/(15470:15529): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:28:15:415 PLANIFICADOR/(15470:15475): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:28:15:415 PLANIFICADOR/(15470:15475): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:28:15:415 PLANIFICADOR/(15470:15475): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:28:25:578 PLANIFICADOR/(15470:15537): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:28:25:578 PLANIFICADOR/(15470:15537): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:28:25:578 PLANIFICADOR/(15470:15537): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:28:25:578 PLANIFICADOR/(15470:15537): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:29:44:168 PLANIFICADOR/(15651:15651): Se conecto una cpu en el socket 5
+[INFO] 05:29:56:114 PLANIFICADOR/(15651:15655): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:29:56:114 PLANIFICADOR/(15651:15655): mProc 1: corto -> Listos 
+
+[INFO] 05:29:56:114 PLANIFICADOR/(15651:15656): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:29:56:114 PLANIFICADOR/(15651:15656): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:30:01:136 PLANIFICADOR/(15651:15688): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:30:01:136 PLANIFICADOR/(15651:15688): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:30:01:136 PLANIFICADOR/(15651:15688): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:02:137 PLANIFICADOR/(15651:15688): Se termino la entrada salida del proceso: corto
+
+[INFO] 05:30:02:137 PLANIFICADOR/(15651:15688): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:30:02:137 PLANIFICADOR/(15651:15688): mProc 1: corto -> Listos 
+
+[INFO] 05:30:02:137 PLANIFICADOR/(15651:15688): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:02:137 PLANIFICADOR/(15651:15656): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:30:02:137 PLANIFICADOR/(15651:15656): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:30:02:137 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:06:157 PLANIFICADOR/(15651:15690): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:30:06:157 PLANIFICADOR/(15651:15690): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:30:06:157 PLANIFICADOR/(15651:15690): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:06:157 PLANIFICADOR/(15651:15690): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15690): Se termino la entrada salida del proceso: corto
+
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15690): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15690): mProc 1: corto -> Listos 
+
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15690): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15690): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15656): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15656): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:07:157 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:10:171 PLANIFICADOR/(15651:15693): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:30:10:171 PLANIFICADOR/(15651:15693): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:30:10:171 PLANIFICADOR/(15651:15693): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:10:171 PLANIFICADOR/(15651:15693): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:10:171 PLANIFICADOR/(15651:15693): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:11:171 PLANIFICADOR/(15651:15693): Se termino la entrada salida del proceso: corto
+
+[INFO] 05:30:11:171 PLANIFICADOR/(15651:15693): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:30:11:171 PLANIFICADOR/(15651:15693): mProc 1: corto -> Listos 
+
+[INFO] 05:30:11:171 PLANIFICADOR/(15651:15693): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:11:171 PLANIFICADOR/(15651:15693): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:11:171 PLANIFICADOR/(15651:15693): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:11:171 PLANIFICADOR/(15651:15656): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:30:11:171 PLANIFICADOR/(15651:15656): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:30:11:172 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:11:172 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:11:172 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:13:186 PLANIFICADOR/(15651:15695): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:30:13:186 PLANIFICADOR/(15651:15695): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:30:13:186 PLANIFICADOR/(15651:15695): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:13:186 PLANIFICADOR/(15651:15695): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:13:186 PLANIFICADOR/(15651:15695): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:13:186 PLANIFICADOR/(15651:15695): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15695): Se termino la entrada salida del proceso: corto
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15695): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15695): mProc 1: corto -> Listos 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15695): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15695): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15695): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15695): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15656): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15656): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:187 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:197 PLANIFICADOR/(15651:15697): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 05:30:14:197 PLANIFICADOR/(15651:15697): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 05:30:14:197 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:197 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:197 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:197 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:14:198 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15697): Se termino la entrada salida del proceso: corto
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15697): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15697): mProc 1: corto -> Listos 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15697): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15656): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15656): mProc 1: corto -> Ejecucion 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:16:198 PLANIFICADOR/(15651:15656): mProc 1: corto -> Bolqueados 
+
+[INFO] 05:30:20:210 PLANIFICADOR/(15651:15651): Finalizado el proceso: corto con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 21:17:35:357 PLANIFICADOR/(10192:10192): Se conecto una cpu en el socket 5
+[INFO] 21:18:16:497 PLANIFICADOR/(10192:10194): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 21:18:16:497 PLANIFICADOR/(10192:10194): mProc 1: facil -> Listos 
+
+[INFO] 21:18:16:497 PLANIFICADOR/(10192:10195): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 21:18:16:497 PLANIFICADOR/(10192:10195): mProc 1: facil -> Ejecucion 
+
+[INFO] 21:18:25:507 PLANIFICADOR/(10192:10192): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 21:27:33:188 PLANIFICADOR/(10385:10385): Se conecto una cpu en el socket 5
+[INFO] 21:27:39:686 PLANIFICADOR/(10385:10387): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 21:27:39:686 PLANIFICADOR/(10385:10387): mProc 1: corto -> Listos 
+
+[INFO] 21:27:39:686 PLANIFICADOR/(10385:10388): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 21:27:39:686 PLANIFICADOR/(10385:10388): mProc 1: corto -> Ejecucion 
+
+[INFO] 21:27:44:695 PLANIFICADOR/(10385:10411): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 21:27:44:696 PLANIFICADOR/(10385:10411): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 21:27:44:696 PLANIFICADOR/(10385:10411): mProc 1: corto -> Bolqueados 
+
+[INFO] 21:27:45:696 PLANIFICADOR/(10385:10411): Se termino la entrada salida del proceso: corto
+

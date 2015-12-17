@@ -1,16 +1,28 @@
-[INFO] 22:31:38:580 PAM/(3594:3594): Iniciado el proceso administrador de memoria
-[INFO] 22:31:38:581 PAM/(3594:3594): Levantan las configuraciones
-[INFO] 22:31:38:581 PAM/(3594:3594): Configurado con PUERTO_ESCUCHA: 5001
-[INFO] 22:31:38:581 PAM/(3594:3594): Configurado con IP_SWAP: localhost
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con PUERTO_SWAP: 6000
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con CANTIDAD_MARCOS: 20
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con TAMANIO_MARCO: 15
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con ENTRADAS_TLB: 2
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con TLB_HABILITADA: NO
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con RETARDO_MEMORIA: 0
-[INFO] 22:31:38:583 PAM/(3594:3594): Configurado con ALGORITMO_REMPLAZO: FIFO
-[INFO] 22:31:38:583 PAM/(3594:3594): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
-[INFO] 22:31:38:584 PAM/(3594:3594): Se escuchan conexiones en el socket 7
-[INFO] 22:32:08:756 PAM/(3594:3594): Se detecto conexión entrante al puerto de escucha
-[INFO] 22:32:08:756 PAM/(3594:3594): Se asigna el socket 8
+[INFO] 21:27:27:753 PAM/(10373:10373): Iniciado el proceso administrador de memoria
+[INFO] 21:27:27:753 PAM/(10373:10373): Levantan las configuraciones
+[INFO] 21:27:27:757 PAM/(10373:10373): Configurado con PUERTO_ESCUCHA: 5001
+[INFO] 21:27:27:757 PAM/(10373:10373): Configurado con IP_SWAP: localhost
+[INFO] 21:27:27:757 PAM/(10373:10373): Configurado con PUERTO_SWAP: 6000
+[INFO] 21:27:27:757 PAM/(10373:10373): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
+[INFO] 21:27:27:757 PAM/(10373:10373): Configurado con CANTIDAD_MARCOS: 20
+[INFO] 21:27:27:757 PAM/(10373:10373): Configurado con TAMANIO_MARCO: 15
+[INFO] 21:27:27:757 PAM/(10373:10373): Configurado con ENTRADAS_TLB: 2
+[INFO] 21:27:27:758 PAM/(10373:10373): Configurado con TLB_HABILITADA: NO
+[INFO] 21:27:27:758 PAM/(10373:10373): Configurado con RETARDO_MEMORIA: 0
+[INFO] 21:27:27:758 PAM/(10373:10373): Configurado con ALGORITMO_REMPLAZO: (null)
+[INFO] 21:27:27:758 PAM/(10373:10373): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
+[INFO] 21:27:27:758 PAM/(10373:10373): Se escuchan conexiones en el socket 7
+[INFO] 21:27:33:188 PAM/(10373:10373): Se detecto conexión entrante al puerto de escucha
+[INFO] 21:27:33:188 PAM/(10373:10373): Se asigna el socket 8
+[INFO] 21:27:39:691 PAM/(10373:10373): Se detecto una conexión existente con un pedido
+[INFO] 21:27:39:691 PAM/(10373:10373): Realizando una operación INICIAR para el socket 8
+[INFO] 21:27:39:691 PAM/(10373:10373): Se inicia el programa 1 con 3 marcos
+[INFO] 21:27:40:692 PAM/(10373:10373): Se detecto una conexión existente con un pedido
+[INFO] 21:27:40:692 PAM/(10373:10373): Realizando una operación ESCRIBIR para el socket 8.
+[INFO] 21:27:40:692 PAM/(10373:10373): Se escribío en la página 0 del pid 1 el texto "Corto".
+[INFO] 21:27:41:693 PAM/(10373:10373): Se detecto una conexión existente con un pedido
+[INFO] 21:27:41:693 PAM/(10373:10373): Realizando una operación ESCRIBIR para el socket 8.
+[INFO] 21:27:41:693 PAM/(10373:10373): Se escribío en la página 1 del pid 1 el texto "Corto".
+[INFO] 21:27:42:693 PAM/(10373:10373): Se detecto una conexión existente con un pedido
+[INFO] 21:27:42:693 PAM/(10373:10373): Realizando una operación ESCRIBIR para el socket 8.
+[INFO] 21:27:42:693 PAM/(10373:10373): Se escribío en la página 2 del pid 1 el texto "Corto".
