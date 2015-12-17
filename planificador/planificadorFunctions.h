@@ -26,7 +26,7 @@ enum estado {
 	bloqueado,
 	finalizado = 23,
 	finquantum = 22,
-	instruccionFinalizada = 21,
+	fallaEjecucion = 21,
 	entrada_salida = 20
 };
 
@@ -68,7 +68,7 @@ typedef struct {
 	int rafagaEjecutada;
 	int pid_cpu;
 	int PC;
-	int resultado_rafaga;
+	bool resultado_rafaga;
 } rafaga_t;
 
 void inicializarMutex(pthread_mutex_t mutex_readys,
@@ -90,12 +90,11 @@ char *getAlgoritmo();
 void inicializarColecciones(t_queue * colaListos, t_queue * colaFinalizados,
 		t_list * listaEjecutando, t_queue * entradaSalida);
 
-void mostrarEstadoDeLista(t_list *lista, char*estado, t_log * log_planificador);
+void mostrarEstadoDeLista(t_list *lista, char*estado);
 
-void mostrarEstadoDeListos(t_queue *cola, char*estado, t_log * log_planificador);
+void mostrarEstadoDeListos(t_queue *cola, char*estado);
 
-void mostrarEstadoDeBloqueados(t_queue *cola, char*estado,
-		t_log * log_planificador);
+void mostrarEstadoDeBloqueados(t_queue *cola, char*estado);
 
 void agregarAListaDeEjecucion(nodo_en_ejecucion *proceso);
 
@@ -109,8 +108,6 @@ nodo_en_ejecucion * removerDeListaDeEjecucion(tipo_pcb *pcb);
 
 void agregarAColaDeBloqueados(nodo_entrada_salida*io);
 
-void * cambiarEstadoABloqueado(void * data);
-
 void cambiarEstado(tipo_pcb *proceso, int estado);
 
 int setProgramCounter(char *dirProceso);
@@ -122,8 +119,10 @@ void interpretarInstruccion(int instruccion, int socketCliente);
 
 data_hilo * obtenerDatosHilo(nodo_en_ejecucion *proceso, int tiempo);
 
-void loguearRafaga(rafaga_t *otraInstruccion, nodo_en_ejecucion * unProceso,
-		t_log * log_planificador);
+void loguearRafaga(rafaga_t *otraInstruccion, nodo_en_ejecucion * unProceso);
+
+void ejecutarlogueoInstruccionesEjecutadas(void * data,int cantidadResultados,
+		nodo_en_ejecucion * proceso);
 
 void agregarAFinalizados(t_queue *finalizados, nodo_en_ejecucion * proceso,
 		t_log *log_planificador);
@@ -134,10 +133,14 @@ void * ejecutarIngresoConsola();
 
 void liberarCpu(int socket);
 
-void despacharProcesosListos(void * data);
+void * despacharProcesosListos();
 
 bool cpuEstaLibre(void * data);
 
-void quitarDeColaBloqueados(nodo_entrada_salida *io);
+nodo_entrada_salida * quitarDeColaBloqueados() ;
+
+nodo_entrada_salida * cambiarEstadoABloqueado(void* data)  ;
+
+void *manejarEntradaSalida() ;
 
 #endif /* PLANIFICADORFUNCTIONS_H_ */

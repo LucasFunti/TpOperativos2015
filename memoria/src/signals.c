@@ -61,6 +61,7 @@ void atender_seniales(int signal) {
 
 void vaciar_tlb() {
 
+	loggearInfo("Comienza el vaciado de la tlb");
 	int cantidad_elementos = list_size(tlb);
 	t_item * item;
 
@@ -75,13 +76,15 @@ void vaciar_tlb() {
 
 void vaciar_tabla_paginas() {
 
+	loggearInfo("Comienza el vaciado de la tabla_paginas");
 	int cantidad_elementos = list_size(tabla_paginas);
 	t_item * item;
 
 	while (cantidad_elementos) {
 
+		retardo();
 		item = list_remove(tabla_paginas, 0);
-		if (item->modificado && !test) {
+		if (item->modificado) {
 			swap_escribir(item->pid, item->pagina, item->marco);
 
 		}
@@ -92,6 +95,8 @@ void vaciar_tabla_paginas() {
 
 void volcar_memoria_principal() {
 
+	loggearInfo("Comienza el volcado");
+
 	int tamanio_marco = config_get_int_value(memoriaConfig, "TAMANIO_MARCO");
 	int cantidad_marcos = config_get_int_value(memoriaConfig,
 			"CANTIDAD_MARCOS");
@@ -100,6 +105,8 @@ void volcar_memoria_principal() {
 
 	int i;
 	for (i = 0; i < cantidad_marcos; i++) {
+
+		retardo();
 
 		char * string = malloc(tamanio_marco);
 		memcpy(string, memoria + tamanio_marco * i, tamanio_marco);

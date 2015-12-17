@@ -3,16 +3,27 @@
 void iniciar_marcos() {
 
 	cola_llegada = list_create();
+	log_info(logger, "Se inició la cola de llegada");
+
 	tlb = list_create();
+	log_info(logger, "Se inició la tlb");
+
 	tabla_paginas = list_create();
+	log_info(logger, "Se inició la tabla de páginas");
 
 	ignorar_proximoAgregar = false;
 
 	aciertos_totales = 0;
 	pedidos_totales = 0;
 
+	log_info(logger,
+			"Se setearon en cero la cantidad de pedidos y aciertos totales");
+
 	accesos_swap = 0;
 	page_faults = 0;
+
+	log_info(logger,
+			"Se setearon en cero la cantidad de page faults y accesos a swap");
 
 	int contadorAuxiliar;
 	for (contadorAuxiliar = 0; contadorAuxiliar < 200; contadorAuxiliar++) {
@@ -21,6 +32,9 @@ void iniciar_marcos() {
 		registroTlb[contadorAuxiliar].pedidos = 0;
 
 	}
+
+	log_info(logger,
+			"Se inició la estructura de aciertos por programa de la tlb");
 
 	numero_operacion = 1;
 
@@ -34,6 +48,8 @@ void iniciar_marcos() {
 	if (memoria == NULL) {
 		exit(EXIT_FAILURE);
 	}
+
+	log_info(logger, "Se reservó el espacio de memoria");
 
 	marcos_disponibles = list_create();
 

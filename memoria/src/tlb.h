@@ -10,6 +10,7 @@
 
 #include <commons/config.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "tabla_paginas.h"
 #include "estructuras.h"
 #include "globals.h"
@@ -33,5 +34,7 @@ t_item * tlb_buscar(int pid, int pagina);
  */
 
 void tlb_agregar_item(t_item * item);
+
+void mostrarTasaTlb(void * data);
 
 #endif /* TLB_H_ */

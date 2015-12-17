@@ -5,17 +5,14 @@ context(test_admin_memoria) {
 	test = true;
 	describe("iniciar_n") {
 
-		remove(
-				"/tp-2015-2c-signiorcodigo/memoria/test/logTest");
-
-		logger =
-		log_create(
-				"/tp-2015-2c-signiorcodigo/memoria/test/logTest",
-				"Test", true, LOG_LEVEL_DEBUG);
-
 		describe("sin tlb") {
 
 			before {
+
+				remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+				logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+						"Test", false, LOG_LEVEL_DEBUG);
 
 				memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 				iniciar_marcos();
@@ -38,6 +35,11 @@ context(test_admin_memoria) {
 		describe("con tlb") {
 
 			before {
+
+				remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+				logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+						"Test", false, LOG_LEVEL_DEBUG);
 
 				memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 				iniciar_marcos();
@@ -88,6 +90,11 @@ context(test_admin_memoria) {
 	describe("escribir_n") {
 
 		before {
+
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
 
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 			iniciar_marcos();
@@ -152,6 +159,14 @@ context(test_admin_memoria) {
 	}end
 
 	describe("leer_n") {
+
+		before {
+
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
+		}end
 
 		it("lee estando en memoria") {
 
@@ -233,6 +248,13 @@ context(test_admin_memoria) {
 
 	describe("señales") {
 
+		before {
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
+		}end
+
 		it("vuelca el contenido de la memoria en un log") {
 
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
@@ -242,7 +264,7 @@ context(test_admin_memoria) {
 
 			printf("\n");
 
-			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/log_test_volcado_memoria", "PAM", true, LOG_LEVEL_DEBUG);
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/log_test_volcado_memoria", "PAM", false, LOG_LEVEL_DEBUG);
 			loggearInfo("Inicio del test");
 
 			iniciar_n(1,2);
@@ -292,6 +314,11 @@ context(test_admin_memoria) {
 	describe("fifo") {
 
 		before {
+
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
 
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionFifo");
 			iniciar_marcos();
@@ -384,6 +411,11 @@ context(test_admin_memoria) {
 	describe("lru") {
 
 		before {
+
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
 
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionLru");
 			iniciar_marcos();
@@ -482,14 +514,13 @@ context(test_admin_memoria) {
 
 		before {
 
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
+
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionClock-M");
 			iniciar_marcos();
-
-		}end
-
-		it("swappea usando clock_m") {
-
-			//TODO
 
 		}end
 

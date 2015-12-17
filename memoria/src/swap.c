@@ -9,6 +9,11 @@
 
 char * swap_leer(int pid, int pagina) {
 
+	log_info(logger,
+			string_from_format(
+					"Se intenta leer el contenido del proceso %d pagina %d al swap",
+					pid, pagina));
+
 	accesos_swap++;
 	if (!test) {
 		void * data = malloc(2 * sizeof(int));
@@ -22,6 +27,9 @@ char * swap_leer(int pid, int pagina) {
 
 		paquete = leer_paquete(socketSwap);
 
+		log_info(logger,
+				string_from_format("El contenido es %d", paquete->data));
+
 		return (char *) paquete->data;
 	} else {
 		char * texto = malloc(2);
@@ -31,6 +39,8 @@ char * swap_leer(int pid, int pagina) {
 }
 
 bool swap_iniciar(int pid, int cantidad_paginas) {
+
+	log_info(logger, "Se le pide iniciar al swap");
 
 	int cantidad = cantidad_paginas;
 
@@ -45,6 +55,11 @@ bool swap_iniciar(int pid, int cantidad_paginas) {
 
 void swap_escribir(int pid, int pagina, int marco) {
 
+	log_info(logger,
+			string_from_format(
+					"Se envia al swap el contenido de la página %d del proceso %d que estaba en el marco %d",
+					pagina, pid, marco));
+
 	if (!test) {
 
 		int tamanio_marco = config_get_int_value(memoriaConfig,
@@ -55,6 +70,7 @@ void swap_escribir(int pid, int pagina, int marco) {
 		memcpy(data, &pid, sizeof(int));
 		memcpy(data + sizeof(int), &pagina, sizeof(int));
 		memcpy(data + 2 * sizeof(int), &tamanio_marco, sizeof(int));
+		retardo();
 		memcpy(data + 3 * sizeof(int), memoria + tamanio_marco * marco,
 				tamanio_marco);
 
