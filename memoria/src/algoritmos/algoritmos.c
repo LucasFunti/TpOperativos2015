@@ -66,6 +66,8 @@ int clock_m() {
 	t_list * marcos_proceso = list_filter(cola_llegada,
 			coincide_pid_y_esta_presente);
 
+
+
 	int maximo_indice_tabla_paginas = list_size(tabla_paginas) - 1;
 
 //	if (elemento_del_puntero_clock_m == NULL) {

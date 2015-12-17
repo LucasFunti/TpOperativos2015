@@ -235,10 +235,11 @@ void agregarAColaDeBloqueados(nodo_entrada_salida*io) {
 
 }
 void quitarDeColaBloqueados(nodo_entrada_salida *io){
+
 	bool encontrarIO(void * data){
 		return ((((nodo_entrada_salida*)data)->proceso->id)==io->proceso->id);
 	}
-	nodo_entrada_salida * entradasalida = list_remove_by_condition(entradaSalida.elements, encontrarIO);
+	nodo_entrada_salida * entradasalida = list_remove_by_condition(entradaSalida, encontrarIO);
 
 }
 

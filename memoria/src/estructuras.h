@@ -37,6 +37,7 @@ typedef struct {
 	int numero_operacion;
 	bool presencia;
 	bool uso;
+	bool puntero;
 } t_item;
 
 /**

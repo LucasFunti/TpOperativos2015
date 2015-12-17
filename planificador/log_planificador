@@ -802,3 +802,27 @@
 [INFO] 05:30:20:210 PLANIFICADOR/(15651:15651): Finalizado el proceso: corto con pid = 0 en la cola de Finalizados.
  Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
 
+[INFO] 21:17:35:357 PLANIFICADOR/(10192:10192): Se conecto una cpu en el socket 5
+[INFO] 21:18:16:497 PLANIFICADOR/(10192:10194): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 21:18:16:497 PLANIFICADOR/(10192:10194): mProc 1: facil -> Listos 
+
+[INFO] 21:18:16:497 PLANIFICADOR/(10192:10195): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 21:18:16:497 PLANIFICADOR/(10192:10195): mProc 1: facil -> Ejecucion 
+
+[INFO] 21:18:25:507 PLANIFICADOR/(10192:10192): Finalizado el proceso: facil con pid = 0 en la cola de Finalizados.
+ Su Tiempo de ejecucion es: 0.000000 - Su tiempo de espera es: 0.000000
+
+[INFO] 21:27:33:188 PLANIFICADOR/(10385:10385): Se conecto una cpu en el socket 5
+[INFO] 21:27:39:686 PLANIFICADOR/(10385:10387): Colocado el proceso: corto con pid = 1 en la cola de listos
+[INFO] 21:27:39:686 PLANIFICADOR/(10385:10387): mProc 1: corto -> Listos 
+
+[INFO] 21:27:39:686 PLANIFICADOR/(10385:10388): Colocado el proceso: corto con pid = 1 en la cola de ejecucion
+[INFO] 21:27:39:686 PLANIFICADOR/(10385:10388): mProc 1: corto -> Ejecucion 
+
+[INFO] 21:27:44:695 PLANIFICADOR/(10385:10411): Se creo el hilo para el manejo de entrada salida del programa : corto
+
+[INFO] 21:27:44:696 PLANIFICADOR/(10385:10411): Colocado el proceso: corto con pid = 1 en la cola de bloqueados
+[INFO] 21:27:44:696 PLANIFICADOR/(10385:10411): mProc 1: corto -> Bolqueados 
+
+[INFO] 21:27:45:696 PLANIFICADOR/(10385:10411): Se termino la entrada salida del proceso: corto
+

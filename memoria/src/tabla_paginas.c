@@ -50,6 +50,7 @@ t_item * tabla_paginas_aniadir_item(int pid, int pagina, int marco) {
 	nuevo->numero_operacion = 0;
 	nuevo->presencia = false;
 	nuevo->uso = 1;
+	nuevo->puntero = false;
 
 	list_add(tabla_paginas, nuevo);
 
