@@ -11,7 +11,6 @@
 #include "../marcos.h"
 #include "../algoritmos/algoritmos.h"
 
-
 /**
  * Te encuentra un marco
  */
@@ -23,6 +22,6 @@ int marco_libre(int pid);
 bool iniciar_n(int pid, int cantidad_paginas);
 void crear_estructura_para_proceso(int pid, int cantidad_paginas);
 
-bool es_fifo(char * algoritmo);
-bool es_lru(char * algoritmo);
-bool es_clock_modificado(char * algoritmo);
+bool es_fifo();
+bool es_lru();
+bool es_clock_modificado();

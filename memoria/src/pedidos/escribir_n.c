@@ -31,7 +31,12 @@ bool escribir_n(int pid, int pagina, char * contenido) {
 
 				item->marco = marco;
 				item->presencia = true;
-				list_add(cola_llegada, item);
+
+				if (ignorar_proximoAgregar) {
+					ignorar_proximoAgregar = false;
+				} else {
+					list_add(cola_llegada, item);
+				}
 			}
 
 		}

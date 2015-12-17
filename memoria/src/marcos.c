@@ -6,6 +6,8 @@ void iniciar_marcos() {
 	tlb = list_create();
 	tabla_paginas = list_create();
 
+	ignorar_proximoAgregar = false;
+
 	aciertos_totales = 0;
 	pedidos_totales = 0;
 

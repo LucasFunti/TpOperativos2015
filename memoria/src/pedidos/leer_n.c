@@ -20,6 +20,9 @@ bool leer_n(int pid, int pagina) {
 
 		item->numero_operacion = get_numero_operacion();
 
+		//TODO preguntar si la lectura cambia el bit de uso
+		item->uso = true;
+
 		if (!item->presencia) {
 
 			//No esta presente
@@ -47,7 +50,13 @@ bool leer_n(int pid, int pagina) {
 
 				item->marco = marco;
 				item->presencia = true;
-				list_add(cola_llegada, item);
+
+				if (ignorar_proximoAgregar) {
+					ignorar_proximoAgregar = false;
+				} else {
+					list_add(cola_llegada, item);
+				}
+
 				return true;
 			}
 		} else {
