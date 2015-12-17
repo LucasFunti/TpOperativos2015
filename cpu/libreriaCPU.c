@@ -33,30 +33,6 @@ int reconocerInstruccion(char *linea) {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* empaquetado para todas las instrucciones salvo la escritura. */
-t_instruccion empaquetar(char *instruccionRecibida, char *paginas) {
-	t_instruccion instruccionEmpaquetada;
-	instruccionEmpaquetada.instruccion = instruccionRecibida;
-	instruccionEmpaquetada.cantidadDePaginas = paginas;
-
-	return instruccionEmpaquetada;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/* empaquetado para la instruccion de escritura. */
-t_instruccionEscritura empaquetarEscritura(char *idProceso, char *paginas,
-		char *texto) {
-	t_instruccionEscritura escrituraEmpaquetada;
-	escrituraEmpaquetada.idProceso = atoi(idProceso);
-	escrituraEmpaquetada.paginas = atoi(paginas);
-	char *textoSinComillas = texto;
-	removeChar(textoSinComillas, '"');
-	escrituraEmpaquetada.textoAEscribir = textoSinComillas;
-
-	return escrituraEmpaquetada;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /* Función para remover un char en concreto de un string (usado para sacar las comillas de la instruccion escribir) */
 void removeChar(char *string, char basura) {
 	char *src, *dst;
@@ -170,6 +146,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 			estadoDeEjecucion, paginas, header, largoString, codigo,
 			codigoRecibido;
 	char *contenidoDePagina;
+	char *resultadoEjecucion = malloc(128);
 	char **array;
 	t_data *datos = malloc(sizeof(t_data));
 	char *paqueteSerializado, textoAEscribir;
@@ -189,15 +166,17 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 		datos = leer_paquete(serverMemoria);
 
-		if (estadoDeEjecucion == 1) {
-//		if (datos->header->codigo_operacion == 1) {
-//			printf("mProc %s - Iniciado correctamente.\n", idProceso);
+//		if (estadoDeEjecucion == 1){
+		if (datos->header->codigo_operacion == 1) {
+//			resultadoEjecucion = string_from_format("mProc %s - Iniciado correctamente.", idProceso);
+
 			logearIniciar(datosDelHilo, datos->header->codigo_operacion,
 					idProceso);
 			printf("\n");
 			resultado = 1;
 		} else {
-//			printf("mProc %s - Fallo al iniciar\n", idProceso);
+			resultadoEjecucion = string_from_format(
+					"mProc %s - Fallo al iniciar\n", idProceso);
 			resultado = 0;
 			return resultado;
 		}
@@ -219,14 +198,16 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		if (datos->header->codigo_operacion == 1) {
 			logearLectura(datosDelHilo, idProceso, array[1],
 					(char *) datos->data);
+			contenidoDePagina = datos->data;
 			printf("\n");
-//			printf("\n%s\n", datos->data);
+			//    		resultadoEjecucion = string_from_format("mProc %s, página %d leída: %s", idProceso, paginas, contenidoDePagina);
 			resultado = 1;
 		} else {
 			log_info(infoHilo->logger,
 					string_from_format(
 							"CPU%s proceso: %s - error de lectura en la página %s",
 							datosDelHilo->idHilo, idProceso, paginas));
+//			resultadoEjecucion = string_from_format("mProc %s - error de lectura en la página %s", idProceso, paginas);
 			printf("\n");
 			resultado = 0;
 			return resultado;
@@ -234,7 +215,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 		break;
 
-	case 6:									//instrucción escribir N contenido
+	case 6:							//instrucción escribir N contenido
 		array = string_n_split(linea, 3, " ");
 		paginas = atoi(array[1]);
 //		removeChar(textoAEscribir, '"');
@@ -246,17 +227,17 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 				array[2]);
 		printf("\n");
 		if (datos->header->codigo_operacion == 1) {
-			//	printf("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
+//		    resultadoEjecucion = string_from_format("mProc %s - página %s escrita: %s\n", idProceso, array[1], array[2]);
 			resultado = 1;
 		} else {
-//			printf("mProc %s - Error de escritura de página\n", idProceso);
+//			resultadoEjecucion = string_from_format("mProc %s - Error de escritura de página\n", idProceso);
 			resultado = 0;
 			return resultado;
 		}
 
 		break;
 
-	case 7:									// instrucción entrada-salida T
+	case 7:								// instrucción entrada-salida T
 		array = string_split(linea, " ");
 		pid = atoi(idProceso);
 		int tiempo = atoi(array[1]);
@@ -264,7 +245,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 		resultado = 1;
 		logearEntradaSalida(datosDelHilo, idProceso, array[1]);
-//		printf("mProc %s - en entrada/salida de tiempo %s\n", idProceso, array[1]);
+//		resultadoEjecucion = string_from_format("mProc %s - en entrada/salida de tiempo %s\n", idProceso, array[1]);
 		printf("\n");
 		resultado = 1;
 
@@ -276,7 +257,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 		common_send(serverMemoria, datos);
 		resultado = 1;
 		logearFinalizacion(datosDelHilo, idProceso);
-//		printf("mProc %s - Finalizado.\n", idProceso);
+//		resultadoEjecucion = string_from_format("mProc %s - Finalizado.\n", idProceso);
 		printf("\n");
 		break;
 
@@ -284,7 +265,7 @@ int ejecutar(char *linea, int serverMemoria, int serverPlanificador,
 
 	return resultado;
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 t_data * pedirPaquete(int codigoOp, int tamanio, void * data) {
 
 	t_data * paquete = malloc(sizeof(t_data));
@@ -376,6 +357,9 @@ void logearFinalizacion(t_hilo *infoHilo, char *idProceso) {
 
 void correrArchivo(void * infoHilo) {
 
+	t_list * instrucciones = list_create();
+	t_list * resultados = list_create();
+
 	t_correr_info * infoCorrer = infoHilo;
 	t_hilo * dataDelHilo = infoCorrer->threadInfo;
 	t_resultadoOperacion resultado;
@@ -383,158 +367,267 @@ void correrArchivo(void * infoHilo) {
 	resultado.idCpu = dataDelHilo->idHilo;
 	int n = infoCorrer->contadorPrograma;
 	int retardo = getRetardo();
-
+	int instruccionesMaximasPorMinuto = 60 / retardo;
+	int tiempoIO;
+	int quantum = infoCorrer->quantum;
 	char* archivoEnStrings = txtAString(infoCorrer->path);
 
 	char **listaInstrucciones = string_split(archivoEnStrings, ";\n");
-	retardo = getRetardo();
-	resultado.maximo = cantidadElementos(listaInstrucciones);
-	resultado.m = 0;
-	resultado.data = malloc(sizeof(int) * resultado.maximo);
-	int instruccionesMaximasPorMinuto = 60 / retardo;
+	int posicionAuxiliar;
 
-	int operacion = reconocerInstruccion(listaInstrucciones[n]);
-	if (infoCorrer->quantum == 0) { // Caso FIFO
-		while ((listaInstrucciones[n] != NULL) && (operacion != 7)) {
+	for (posicionAuxiliar = 0;
+			posicionAuxiliar < cantidadElementos(listaInstrucciones);
+			posicionAuxiliar++) {
 
-			operacion = reconocerInstruccion(listaInstrucciones[n]);
-			resultado.data[resultado.m] = ejecutar(listaInstrucciones[n],
-					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
-					infoCorrer->id, dataDelHilo);
-			if (resultado.data[resultado.m] == 0) {
-
-				resultado.contador = n;
-				resultado.causa_finalizacion = 21;
-				resultado.estado_ultima_instruccion =
-						resultado.data[resultado.m];
-				t_data *paquete = crearPaqueteFinalizar(resultado);
-				common_send(infoCorrer->serverPlanificador, paquete);
-				pthread_exit(NULL);
-			}
-			n++;
-			resultado.m++;
-			instruccionesEjecutadas[dataDelHilo->idHilo]++;
-			porcentajeDeUso[dataDelHilo->idHilo] =
-					((instruccionesEjecutadas[dataDelHilo->idHilo] * 100)
-							/ instruccionesMaximasPorMinuto);
-			usleep(retardo * 1000000);
-
-		}
-		resultado.contador = n;
-		if (operacion == 7) {
-			resultado.causa_finalizacion = 20;
-			char ** array = string_split(listaInstrucciones[n - 1], " ");
-			resultado.tiempoIO = atoi(array[1]);
-			t_data *paquete = crearPaqueteEntradaSalida(resultado);
-			common_send(infoCorrer->serverPlanificador, paquete);
-			n++;
-
-		} else {
-			resultado.causa_finalizacion = 23;
-			resultado.estado_ultima_instruccion = resultado.data[resultado.m];
-			t_data *paquete = crearPaqueteFinalizar(resultado);
-			common_send(infoCorrer->serverPlanificador, paquete);
-			n++;
-		}
-
-	} else if (infoCorrer->quantum != 0) { // Caso Round-Robin
-		int contador = 0;
-		while ((listaInstrucciones[n] != NULL) && (operacion != 7)
-				&& contador < infoCorrer->quantum) {
-
-			operacion = reconocerInstruccion(listaInstrucciones[n]);
-			resultado.data[resultado.m] = ejecutar(listaInstrucciones[n],
-					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
-					infoCorrer->id, dataDelHilo);
-			if (resultado.data[resultado.m] == 0) {
-				resultado.contador = n;
-				resultado.causa_finalizacion = 21;
-				t_data *paquete = crearPaqueteFinalizar(resultado);
-				common_send(infoCorrer->serverPlanificador, paquete);
-				pthread_exit(NULL);
-
-			}
-			n++;
-			resultado.m++;
-			instruccionesEjecutadas[dataDelHilo->idHilo]++;
-			porcentajeDeUso[dataDelHilo->idHilo] =
-					((instruccionesEjecutadas[dataDelHilo->idHilo] * 100)
-							/ instruccionesMaximasPorMinuto);
-			usleep(retardo * 1000000);
-			contador++;
-		}
-
-		resultado.m = resultado.m - 1;
-		resultado.contador = n;
-		if (operacion == 7) {
-			resultado.causa_finalizacion = 20;
-			resultado.estado_ultima_instruccion = 1;
-			char ** array = string_split(listaInstrucciones[n - 1], " ");
-			resultado.tiempoIO = atoi(array[1]);
-			t_data *paquete = crearPaqueteEntradaSalida(resultado);
-			common_send(infoCorrer->serverPlanificador, paquete);
-
-		} else if (contador < infoCorrer->quantum) {
-			resultado.causa_finalizacion = 23;
-			resultado.estado_ultima_instruccion = 1;
-			t_data *paquete = crearPaqueteFinalizar(resultado);
-			common_send(infoCorrer->serverPlanificador, paquete);
-
-		} else {
-			resultado.causa_finalizacion = 22;
-			resultado.estado_ultima_instruccion = 1;
-			t_data *paquete = crearPaqueteFinQuantum(resultado);
-			common_send(infoCorrer->serverPlanificador, paquete);
+		if (listaInstrucciones[posicionAuxiliar] != NULL) {
+			list_add(instrucciones, listaInstrucciones[posicionAuxiliar]);
 		}
 
 	}
-	pthread_exit(NULL);
 
+	int nInstruccion = infoCorrer->contadorPrograma;
+	bool ultimaNoFueIO = true;
+
+	if (quantum == 0) { //fifo
+
+		while (nInstruccion <= list_size(instrucciones) && ultimaNoFueIO) {
+
+			int operacion = reconocerInstruccion(listaInstrucciones[n]);
+			bool fueCorrecta = ejecutar(listaInstrucciones[n],
+					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
+					infoCorrer->id, dataDelHilo);
+
+			t_resultado_ejecucion * resultadoEjecucion = malloc(
+					sizeof(t_resultado_ejecucion));
+
+			resultadoEjecucion->instruccion = operacion;
+			resultadoEjecucion->resultado = fueCorrecta;
+
+			instruccionesEjecutadas[dataDelHilo->idHilo]++;
+			porcentajeDeUso[dataDelHilo->idHilo] =
+					((instruccionesEjecutadas[dataDelHilo->idHilo] * 100)
+							/ instruccionesMaximasPorMinuto);
+
+			if (fueCorrecta) {
+
+				nInstruccion++;
+
+				switch (operacion) {
+
+				case FINALIZAR:
+
+					enviarPaqueteFinalizar(infoCorrer->threadInfo->idHilo,
+							infoCorrer->serverPlanificador, resultados);
+					return;
+
+				case ENTRADASALIDA:
+
+					ultimaNoFueIO = false;
+					tiempoIO = obtenerTiempoIO(listaInstrucciones[n]);
+					enviarPaqueteEntradaSalida(infoCorrer->threadInfo->idHilo,
+							tiempoIO, nInstruccion,
+							infoCorrer->serverPlanificador, resultados);
+
+					return;
+
+				}
+
+			} else if (!fueCorrecta) {
+				enviarPaqueteError(infoCorrer->threadInfo->idHilo,
+						infoCorrer->serverPlanificador);
+
+			}
+			usleep(retardo * 1000000);
+		}
+
+	} else if (quantum != 0) { // Round-Robin
+		int contadorEjecutadas = 0;
+
+		while (nInstruccion <= list_size(instrucciones) && ultimaNoFueIO
+				&& contadorEjecutadas < quantum) {
+			int operacion = reconocerInstruccion(listaInstrucciones[n]);
+			bool fueCorrecta = ejecutar(listaInstrucciones[n],
+					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
+					infoCorrer->id, dataDelHilo);
+
+			t_resultado_ejecucion * resultadoEjecucion = malloc(
+					sizeof(t_resultado_ejecucion));
+
+			resultadoEjecucion->instruccion = operacion;
+			resultadoEjecucion->resultado = fueCorrecta;
+
+			instruccionesEjecutadas[dataDelHilo->idHilo]++;
+			porcentajeDeUso[dataDelHilo->idHilo] =
+					((instruccionesEjecutadas[dataDelHilo->idHilo] * 100)
+							/ instruccionesMaximasPorMinuto);
+
+			if (fueCorrecta) {
+
+				nInstruccion++;
+
+				switch (operacion) {
+
+				case FINALIZAR:
+
+					enviarPaqueteFinalizar(infoCorrer->threadInfo->idHilo,
+							infoCorrer->serverPlanificador, resultados);
+					return;
+
+				case ENTRADASALIDA:
+
+					ultimaNoFueIO = false;
+					tiempoIO = obtenerTiempoIO(listaInstrucciones[n]);
+					enviarPaqueteEntradaSalida(infoCorrer->threadInfo->idHilo,
+							tiempoIO, nInstruccion,
+							infoCorrer->serverPlanificador, resultados);
+
+					return;
+
+				}
+
+			} else if (!fueCorrecta) {
+				enviarPaqueteError(infoCorrer->threadInfo->idHilo,
+						infoCorrer->serverPlanificador);
+				return;
+
+			}
+
+			usleep(retardo * 1000000);
+		}
+		enviarPaqueteFinQuantum(infoCorrer->threadInfo->idHilo, nInstruccion,
+				infoCorrer->serverPlanificador, resultados);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int obtenerTiempoIO(char *instruccion) {
+	int tiempo;
+	char ** array = string_split(instruccion, " ");
+	tiempo = atoi(array[1]);
+
+	return tiempo;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Funciones para la creación de paquetes al finalizar una ejecución (por I/O, error de ejecución,
 // fin de quantum, o instrucción finalizar)
 
-t_data *crearPaqueteEntradaSalida(t_resultadoOperacion resultado) {
+void enviarPaqueteEntradaSalida(int pidCpu, int tiempoIO, int contadorPrograma,
+		int socket, t_list * resultados) {
 
-	void * buffer = malloc(sizeof(int) * 2);
+	int cantidadResultados = list_size(resultados);
 
-	memcpy(buffer, &resultado.idCpu, sizeof(int));
-	memcpy(buffer + sizeof(int), &resultado.tiempoIO, sizeof(int));
+	void * buffer = malloc(
+			4 * sizeof(int)
+					+ cantidadResultados * sizeof(t_resultado_ejecucion));
 
-	t_data * paquete = pedirPaquete(resultado.causa_finalizacion,
-			2 * sizeof(int), buffer);
+	memcpy(buffer, &pidCpu, sizeof(int));
+	memcpy(buffer + sizeof(int), &tiempoIO, sizeof(int));
+	memcpy(buffer + 2 * sizeof(int), &contadorPrograma, sizeof(int));
+	memcpy(buffer + 3 * sizeof(int), &cantidadResultados, sizeof(int));
 
-	return paquete;
+	int n;
+
+	void copiarResultado(void * data) {
+
+		t_resultado_ejecucion * resultado = data;
+
+		memcpy(buffer + 4 * sizeof(int) + n * sizeof(int),
+				resultado->instruccion, sizeof(int));
+		n++;
+
+		memcpy(buffer + 16 + n * 4, &resultado->resultado, sizeof(int));
+		n++;
+
+	}
+
+	list_iterate(resultados, copiarResultado);
+
+	int tamanio = 4 * sizeof(int) + n * sizeof(int);
+
+	t_data * paquete = pedirPaquete(20, tamanio, buffer);
+
+	common_send(socket, paquete);
 }
 
-t_data *crearPaqueteFinQuantum(t_resultadoOperacion resultado) {
-	t_data * paquete = malloc(sizeof(t_data));
-	paquete->header = malloc(sizeof(t_header));
-	int tamanio = (sizeof(int));
-	paquete->data = malloc(tamanio);
-	memcpy(paquete->data, &resultado.idCpu, sizeof(int));
-	paquete->header->codigo_operacion = resultado.causa_finalizacion;
-	paquete->header->tamanio_data = tamanio;
-
-	return paquete;
+void enviarPaqueteError(int idCpu, int socket) {
+	void *buffer = malloc(sizeof(int));
+	int tamanio = sizeof(int);
+	memcpy(buffer, &idCpu, sizeof(int));
+	t_data * paquete = pedirPaquete(21, tamanio, buffer);
+	common_send(socket, paquete);
 }
 
-t_data *crearPaqueteFinalizar(t_resultadoOperacion resultado) {
-	t_data * paquete = malloc(sizeof(t_data));
-	paquete->header = malloc(sizeof(t_header));
-	int tamanio = 4 * sizeof(int);
-	paquete->data = malloc(tamanio);
-	memcpy(paquete->data, &resultado.m, sizeof(int));
-	memcpy(paquete->data + sizeof(int), &resultado.idCpu, sizeof(int));
-	memcpy(paquete->data + 2 * sizeof(int), &resultado.contador, sizeof(int));
-	memcpy(paquete->data + 3 * sizeof(int),
-			&resultado.estado_ultima_instruccion, sizeof(int));
-	paquete->header->codigo_operacion = resultado.causa_finalizacion;
-	paquete->header->tamanio_data = tamanio;
+void enviarPaqueteFinQuantum(int idCpu, int contadorPrograma, int socket,
+		t_list * resultados) {
+	int cantidadResultados = list_size(resultados);
 
-	return paquete;
+	void * buffer = malloc(
+			3 * sizeof(int)
+					+ cantidadResultados * sizeof(t_resultado_ejecucion));
+
+	memcpy(buffer, &idCpu, sizeof(int));
+
+	memcpy(buffer + sizeof(int), &contadorPrograma, sizeof(int));
+
+	memcpy(buffer + 2 * sizeof(int), &cantidadResultados, sizeof(int));
+
+	int n;
+
+	void copiarResultado(void * data) {
+
+		t_resultado_ejecucion * resultado = data;
+
+		memcpy(buffer + 12 + n * 4, &resultado->instruccion, sizeof(int));
+		n++;
+
+		memcpy(buffer + 12 + n * 4, &resultado->resultado, sizeof(bool));
+		n++;
+
+	}
+
+	list_iterate(resultados, copiarResultado);
+
+	int tamanio = 3 * sizeof(int) + n * sizeof(int);
+
+	t_data * paquete = pedirPaquete(22, tamanio, buffer);
+
+	common_send(socket, paquete);
+}
+
+void enviarPaqueteFinalizar(int pidCpu, int socket,
+		t_list * resultados) {
+
+	int cantidadResultados = list_size(resultados);
+
+	void * buffer = malloc(
+			2 * sizeof(int)
+					+ cantidadResultados * sizeof(t_resultado_ejecucion));
+
+	memcpy(buffer, &pidCpu, sizeof(int));
+	memcpy(buffer + sizeof(int), &cantidadResultados, sizeof(int));
+	int n;
+
+	void copiarResultado(void * data) {
+
+		t_resultado_ejecucion * resultado = data;
+
+		memcpy(buffer + 2 * sizeof(int) + n * sizeof(int),
+				resultado->instruccion, sizeof(int));
+		n++;
+
+		memcpy(buffer + 8 + n * 4, &resultado->resultado,sizeof(int));
+		n++;
+
+	}
+
+	list_iterate(resultados, copiarResultado);
+
+	int tamanio = 2 * sizeof(int) + n * sizeof(int);
+
+	t_data * paquete = pedirPaquete(23, tamanio, buffer);
+
+	common_send(socket, paquete);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Función para obtener la cantidad de elementos de un array cuyo último elemento es NULL (para la lista de instrucciones).*/
@@ -619,12 +712,15 @@ void *iniciarcpu(void *punteroALaInfo) {
 
 	serverPlanificador = conectarCliente(ip_Planificador, puerto_Planificador);
 	serverMemoria = conectarCliente(ip_Memoria, puerto_Memoria);
-	send(serverPlanificador, &threadInfo->idHilo, sizeof(int), MSG_WAITALL);
+	send(serverPlanificador, &threadInfo->idHilo, sizeof(int),
+	MSG_WAITALL);
 
 	int status = 1;
 	char *iniciar = eventoDeLogeo("iniciada CPU ", threadInfo->idHilo);
 	printf("\n");
-	log_info(threadInfo->logger, iniciar);
+//	log_info(threadInfo->logger, iniciar);
+	log_info(threadInfo->logger, string_from_format
+			("[CPU%d iniciada y conectada al administrador de memoria", threadInfo->idHilo));
 	printf("\n");
 
 	t_resultadoOperacion resultado;
@@ -633,13 +729,18 @@ void *iniciarcpu(void *punteroALaInfo) {
 
 	while (status != 0) {
 
-		recv(serverPlanificador, &codigoOperacion, sizeof(int), MSG_WAITALL);
+		recv(serverPlanificador, &codigoOperacion, sizeof(int),
+		MSG_WAITALL);
 
 		if (codigoOperacion == 1) {		// caso Correr Archivo
-			recv(serverPlanificador, &programCounter, sizeof(int), MSG_WAITALL);
-			recv(serverPlanificador, &pid, sizeof(int), MSG_WAITALL);
-			recv(serverPlanificador, &quantum, sizeof(int), MSG_WAITALL);
-			recv(serverPlanificador, &tamanio, sizeof(int), MSG_WAITALL);
+			recv(serverPlanificador, &programCounter, sizeof(int),
+			MSG_WAITALL);
+			recv(serverPlanificador, &pid, sizeof(int),
+			MSG_WAITALL);
+			recv(serverPlanificador, &quantum, sizeof(int),
+			MSG_WAITALL);
+			recv(serverPlanificador, &tamanio, sizeof(int),
+			MSG_WAITALL);
 			char * path = malloc(tamanio);
 			recv(serverPlanificador, path, tamanio, MSG_WAITALL);
 			char *rutaDelArchivo = path;
