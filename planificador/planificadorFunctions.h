@@ -128,7 +128,7 @@ void ejecutarlogueoInstruccionesEjecutadas(void * data,int cantidadResultados,
 void agregarAFinalizados(t_queue *finalizados, nodo_en_ejecucion * proceso,
 		t_log *log_planificador);
 
-void peticionPorcentajeUsoCpu(t_list * lista, int codigo);
+void peticionPorcentajeUsoCpu(int codigo);
 
 void * ejecutarIngresoConsola();
 
@@ -140,7 +140,7 @@ bool cpuEstaLibre(void * data);
 
 nodo_entrada_salida * quitarDeColaBloqueados() ;
 
-nodo_entrada_salida * cambiarEstadoABloqueado(void* data)  ;
+void cambiarEstadoABloqueado(void* data)  ;
 
 void *manejarEntradaSalida() ;
 

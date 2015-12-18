@@ -53,7 +53,7 @@ t_item * tlb_buscar(int pid, int pagina) {
 			item_encontrado = tabla_paginas_buscar(pid, pagina);
 
 			if (item_encontrado != NULL) {
-				log_info(logger, "Se agrega el item a la tabla de páginas");
+				log_info(logger, "Agregando el item a la tlb");
 				tlb_agregar_item(item_encontrado);
 			}
 
@@ -62,7 +62,7 @@ t_item * tlb_buscar(int pid, int pagina) {
 		} else {
 
 			// Lo encontró
-			log_info(logger, "No se encontró en la TLB el elemento");
+			log_info(logger, "Se encontró en la TLB el elemento");
 
 			aciertos_totales++;
 
@@ -128,7 +128,7 @@ void * mostrarTasaTlb(void * data) {
 					string_from_format("Cantidad de aciertos tlb totales: %d",
 							aciertos_totales));
 
-			printf("Tasa aciertos %.2f \% \n\n", tasa * 100);
+			printf("Tasa aciertos %.2f %% \n\n", tasa * 100);
 			printf("Cantidad de aciertos tlb totales: %d \n\n",
 					aciertos_totales);
 			printf("Cantidad de pedidos tlb totales: %d \n\n", pedidos_totales);

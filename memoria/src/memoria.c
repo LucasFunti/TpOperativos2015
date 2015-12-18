@@ -84,7 +84,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		log_info(logger,
 				string_from_format(
 						"Se intenta leer la página %d para el proceso %d",
-						cant_paginas, pid));
+						pagina_leer, pid_leer));
 
 		bool exito = leer_n(pid_leer, pagina_leer);
 
@@ -130,7 +130,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 
 		log_info(logger,
 				string_from_format(
-						"Se intenta escribir la página %d para el proceso %d con el contenido %d",
+						"Se intenta escribir la página %d para el proceso %d con el contenido %s",
 						cant_paginas, pid, texto));
 
 		exito = escribir_n(pid_escribir, pagina_escribir, texto);
@@ -202,7 +202,7 @@ void levantarConfiguracion() {
 	char variablesConfiguracion[10][50] = { "PUERTO_ESCUCHA", "IP_SWAP",
 			"PUERTO_SWAP", "MAXIMO_MARCOS_POR_PROCESO", "CANTIDAD_MARCOS",
 			"TAMANIO_MARCO", "ENTRADAS_TLB", "TLB_HABILITADA",
-			"RETARDO_MEMORIA", "ALGORITMO_REMPLAZO" };
+			"RETARDO_MEMORIA", "ALGORITMO_REEMPLAZO" };
 	int i;
 	for (i = 0; i < 10; i++) {
 

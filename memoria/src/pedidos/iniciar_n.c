@@ -65,7 +65,7 @@ int marco_libre(int pid) {
 
 		if (tiene_marcos_asignados(pid)) {
 
-			log_info(logger,
+			loggearInfo(
 					"El proceso ya tiene marcos asignados, se swappea alguno existente");
 
 			//Swappea uno que ya tiene
@@ -91,7 +91,7 @@ int marco_libre(int pid) {
 			return marco;
 
 		} else {
-
+			loggearInfo("No hay marcos disponibles para asignar");
 			//No le puedo dar ninguno, se aborta
 			return -1;
 		}
@@ -99,11 +99,15 @@ int marco_libre(int pid) {
 	} else {
 
 		//Hay marcos libres
+		loggearInfo("Hay marcos disponibles para asignar");
 
 		int cantidad_maxima_marcos_proceso = config_get_int_value(memoriaConfig,
 				"MAXIMO_MARCOS_POR_PROCESO");
 
 		if (marcos_asignados(pid) < cantidad_maxima_marcos_proceso) {
+
+			loggearInfo(
+					"El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo");
 
 			//Le doy un marco nuevo
 
@@ -135,6 +139,8 @@ int marco_libre(int pid) {
 
 		} else {
 
+			loggearInfo(
+					"El proceso ya tiene la cantidad maxima de marcos, se swappea uno existente");
 			//Tiene el maximo y necesita swappear uno existente
 
 			if (es_fifo()) {

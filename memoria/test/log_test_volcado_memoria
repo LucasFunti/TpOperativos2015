@@ -1,31 +1,41 @@
-[INFO] 15:23:01:15 PAM/(25978:25978): Inicio del test
-[INFO] 15:23:01:15 PAM/(25978:25978): El swap tenía lugar para iniciarlo
-[INFO] 15:23:01:15 PAM/(25978:25978): Se añadieron las entradas a la tabla de páginas
-[INFO] 15:23:01:15 PAM/(25978:25978): Se busca en la tlb
-[INFO] 15:23:01:15 PAM/(25978:25978): No se encontró en la tlb el elemento
-[INFO] 15:23:01:15 PAM/(25978:25978): Se busca en la tabla de páginas
-[INFO] 15:23:01:15 PAM/(25978:25978): Acceso a memoria. Zzz...
-[INFO] 15:23:01:15 PAM/(25978:25978): Se encontró el elemento en la tabla de páginas
-[INFO] 15:23:01:15 PAM/(25978:25978): Se agrega el item a la tabla de páginas
-[INFO] 15:23:01:15 PAM/(25978:25978): Se agrega el item nuevo ya que hay entradas disponibles
-[INFO] 15:23:01:15 PAM/(25978:25978): Se intenta leer el contenido del proceso 1 pagina 0 al swap
-[INFO] 15:23:01:15 PAM/(25978:25978): Se busca un marco libre para asignar
-[INFO] 15:23:01:15 PAM/(25978:25978): Acceso a memoria. Zzz...
-[INFO] 15:23:01:15 PAM/(25978:25978): Se busca en la tlb
-[INFO] 15:23:01:15 PAM/(25978:25978): No se encontró en la tlb el elemento
-[INFO] 15:23:01:15 PAM/(25978:25978): Se busca en la tabla de páginas
-[INFO] 15:23:01:15 PAM/(25978:25978): Acceso a memoria. Zzz...
-[INFO] 15:23:01:15 PAM/(25978:25978): Se encontró el elemento en la tabla de páginas
-[INFO] 15:23:01:15 PAM/(25978:25978): Se agrega el item a la tabla de páginas
-[INFO] 15:23:01:15 PAM/(25978:25978): Se agrega el item nuevo ya que hay entradas disponibles
-[INFO] 15:23:01:15 PAM/(25978:25978): Se intenta leer el contenido del proceso 1 pagina 1 al swap
-[INFO] 15:23:01:15 PAM/(25978:25978): Se busca un marco libre para asignar
-[INFO] 15:23:01:15 PAM/(25978:25978): Acceso a memoria. Zzz...
-[INFO] 15:23:01:15 PAM/(25978:25978): Comienza el volcado
-[INFO] 15:23:01:15 PAM/(25978:25978): INICIO DEL CONTENIDO
-[INFO] 15:23:01:15 PAM/(25978:25978): Acceso a memoria. Zzz...
-[INFO] 15:23:01:15 PAM/(25978:25978): En el marco 0 se encuentra Hola
-[INFO] 15:23:01:15 PAM/(25978:25978): Acceso a memoria. Zzz...
-[INFO] 15:23:01:15 PAM/(25978:25978): En el marco 1 se encuentra Chau
-[INFO] 15:23:01:15 PAM/(25978:25978): FIN DEL CONTENIDO
-[INFO] 15:23:01:15 PAM/(25978:25978): Fin del test
+[INFO] 06:56:00:128 PAM/(4912:4912): Inicio del test
+[INFO] 06:56:00:128 PAM/(4912:4912): El swap tiene lugar para iniciarlo
+[INFO] 06:56:00:128 PAM/(4912:4912): Se añadieron las entradas a la tabla de páginas
+[INFO] 06:56:00:128 PAM/(4912:4912): Se busca en la tlb
+[INFO] 06:56:00:128 PAM/(4912:4912): No se encontró en la tlb el elemento
+[INFO] 06:56:00:128 PAM/(4912:4912): Se busca en la tabla de páginas
+[INFO] 06:56:00:128 PAM/(4912:4912): Acceso a memoria. Zzz...
+[INFO] 06:56:00:128 PAM/(4912:4912): Se encontró el elemento en la tabla de páginas
+[INFO] 06:56:00:128 PAM/(4912:4912): Agregando el item a la tlb
+[INFO] 06:56:00:128 PAM/(4912:4912): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 06:56:00:128 PAM/(4912:4912): El elemento no está presente, se trae a memoria
+[INFO] 06:56:00:128 PAM/(4912:4912): Se intenta leer el contenido del proceso 1 pagina 0 al swap
+[INFO] 06:56:00:128 PAM/(4912:4912): Se busca un marco libre para asignar
+[INFO] 06:56:00:128 PAM/(4912:4912): Hay marcos disponibles para asignar
+[INFO] 06:56:00:128 PAM/(4912:4912): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 06:56:00:128 PAM/(4912:4912): El elemento está presente
+[INFO] 06:56:00:128 PAM/(4912:4912): Se escribe el contenido
+[INFO] 06:56:00:128 PAM/(4912:4912): Acceso a memoria. Zzz...
+[INFO] 06:56:00:128 PAM/(4912:4912): Se busca en la tlb
+[INFO] 06:56:00:128 PAM/(4912:4912): No se encontró en la tlb el elemento
+[INFO] 06:56:00:128 PAM/(4912:4912): Se busca en la tabla de páginas
+[INFO] 06:56:00:128 PAM/(4912:4912): Acceso a memoria. Zzz...
+[INFO] 06:56:00:128 PAM/(4912:4912): Se encontró el elemento en la tabla de páginas
+[INFO] 06:56:00:128 PAM/(4912:4912): Agregando el item a la tlb
+[INFO] 06:56:00:128 PAM/(4912:4912): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 06:56:00:128 PAM/(4912:4912): El elemento no está presente, se trae a memoria
+[INFO] 06:56:00:128 PAM/(4912:4912): Se intenta leer el contenido del proceso 1 pagina 1 al swap
+[INFO] 06:56:00:128 PAM/(4912:4912): Se busca un marco libre para asignar
+[INFO] 06:56:00:128 PAM/(4912:4912): Hay marcos disponibles para asignar
+[INFO] 06:56:00:128 PAM/(4912:4912): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 06:56:00:128 PAM/(4912:4912): El elemento está presente
+[INFO] 06:56:00:128 PAM/(4912:4912): Se escribe el contenido
+[INFO] 06:56:00:128 PAM/(4912:4912): Acceso a memoria. Zzz...
+[INFO] 06:56:00:128 PAM/(4912:4912): Comienza el volcado
+[INFO] 06:56:00:128 PAM/(4912:4912): INICIO DEL CONTENIDO
+[INFO] 06:56:00:128 PAM/(4912:4912): Acceso a memoria. Zzz...
+[INFO] 06:56:00:128 PAM/(4912:4912): En el marco 0 se encuentra Hola
+[INFO] 06:56:00:128 PAM/(4912:4912): Acceso a memoria. Zzz...
+[INFO] 06:56:00:128 PAM/(4912:4912): En el marco 1 se encuentra Chau
+[INFO] 06:56:00:128 PAM/(4912:4912): FIN DEL CONTENIDO
+[INFO] 06:56:00:128 PAM/(4912:4912): Fin del test
