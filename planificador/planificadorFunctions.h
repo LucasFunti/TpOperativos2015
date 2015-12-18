@@ -22,8 +22,8 @@
 
 enum estado {
 	listo = 98,
-	ejecucion,
-	bloqueado,
+	ejecucion = 10,
+	bloqueado = 11,
 	finalizado = 23,
 	finquantum = 22,
 	fallaEjecucion = 21,
