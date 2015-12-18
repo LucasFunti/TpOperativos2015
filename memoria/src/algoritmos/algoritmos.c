@@ -18,7 +18,7 @@ int fifo() {
 	log_info(logger,
 			string_from_format(
 					"Se va a remplazar la página %d del proceso %d que ocupa el marco %d",
-					item->pid, item->pagina, item->marco));
+					item->pagina, item->pid, item->marco));
 
 	pagina_matchear = item->pagina;
 

@@ -29,6 +29,8 @@ void atenderConexiones() {
 
 		select(socketMasGrande + 1, &sockets_para_revisar, NULL, NULL, NULL);
 
+		pthread_mutex_lock(&semaforo_memoria);
+
 		int i;
 		for (i = 0; i <= socketMasGrande; i++) {
 			if (FD_ISSET(i, &sockets_para_revisar)) { //Hay actividad
@@ -71,6 +73,7 @@ void atenderConexiones() {
 				}
 			}
 		}
+		pthread_mutex_unlock(&semaforo_memoria);
 	}
 }
 

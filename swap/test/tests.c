@@ -3,6 +3,8 @@
 
 context(pruebas_swap) {
 
+	setSwapConfig("/tp-2015-2c-signiorcodigo/swap/test/swapConfigTest");
+
 	describe("reservar memoria") {
 
 		before {
@@ -51,6 +53,39 @@ context(pruebas_swap) {
 
 	}end
 
+	describe("eliminar un proceso") {
+
+		before {
+
+			setupSwap();
+			setPages();
+
+			//64 Paginas de tamanio 50
+
+		}end
+
+		it("lo elimina de sus índices") {
+
+			reserve(0,10);
+			reserve(1,10);
+
+			freeSpace(0);
+
+			should_int(getProcessReservedSpace(0)) be equal to(0);
+			should_int(getProcessReservedSpace(1)) be equal to(10);
+
+			should_int(getBlankPages()) be equal to(54);
+
+			freeSpace(1);
+
+			should_int(getProcessReservedSpace(0)) be equal to(0);
+			should_int(getProcessReservedSpace(1)) be equal to(0);
+
+			should_int(getBlankPages()) be equal to(64);
+
+		}end
+	}end
+
 	describe("leer datos") {
 
 		before {
@@ -71,136 +106,91 @@ context(pruebas_swap) {
 
 			writePage(10,"Hola!");
 
-			should_char(readProcessPage(0,0)) be equal to("Hola!");
-			should_char(readProcessPage(0,1)) be equal to("Chau!");
-			should_char(readProcessPage(1,0)) be equal to("Hola!");
+			should_string(readProcessPage(0,0)) be equal to("Hola!");
+			should_string(readProcessPage(0,1)) be equal to("Chau!");
+			should_string(readProcessPage(1,0)) be equal to("Hola!");
 
 		}end
 
 	}end
-	/*
 
-	 char* file_name = getSwapFileName();
-	 int pagesAmount = getSwapPagesAmount();
-	 char str[100];
-	 strcpy(str, "/tp-2015-2c-signiorcodigo/swap/Debug/");
-	 strcpy(str, file_name);
-	 t_list *pages = setPages(pagesAmount);
+	describe("escribir datos") {
 
-	 describe("describe_1") {
+		before {
 
-	 it("delete_archivo_swap") {
-	 remove(str);
-	 int result = doesFileExist(str);
-	 should_int(result) be equal to(0);
-	 }end
+			setupSwap();
+			setPages();
+			//64 Paginas de tamanio 50
 
-	 }end
+		}end
 
-	 describe("describe_2") {
+		it("Escribe paginas") {
 
-	 it("creacion_archivo_swap") {
-	 remove(str);
-	 setupSwap();
-	 int result = doesFileExist(str);
-	 should_int(result) be equal to(1);
-	 }end
+			reserve(0,10);
+			reserve(1,10);
 
-	 }end
+			writeProcessPage(0,0,"Hola!");
+			writeProcessPage(0,1,"Chau!");
+			writeProcessPage(0,2,"Hola2!");
 
-	 describe("describe_3") {
+			writeProcessPage(1,2,"JoJoJo!");
 
-	 it("reservar_paginas") {
-	 reserve("prueba",10, pages);
-	 should_int(getProcessReservedSpace("prueba",pages)) be equal to(10);
-	 }end
+			should_string(readProcessPage(0,0)) be equal to("Hola!");
+			should_string(readProcessPage(0,1)) be equal to("Chau!");
+			should_string(readProcessPage(0,2)) be equal to("Hola2!");
 
-	 }end
+			should_string(readProcessPage(1,2)) be equal to("JoJoJo!");
 
-	 describe("describe_4") {
+		}end
 
-	 before {
-	 puts("before 1");
-	 freeSpace("prueba");
-	 }end
+	}end
 
-	 it("reservar_sin_lugar") {
-	 reserve("prueba",50, pages);
-	 reserve("otro",5, pages);
-	 should_int(getProcessReservedSpace("prueba",pages)) be equal to(50);
-	 should_int(getProcessReservedSpace("otro",pages)) be equal to(5);
-	 }end
+	describe("Algoritmo de compactación") {
 
-	 }end
+		before {
 
-	 describe("describe_5") {
+			setupSwap();
+			setPages();
+			//64 Paginas de tamanio 50
 
-	 before {
-	 puts("before 1");
-	 freeSpace("prueba");
-	 freeSpace("otro");
-	 }end
+		}end
 
-	 it("liberar_paginas") {
-	 reserve("prueba",60, pages);
-	 should_int(getProcessReservedSpace("prueba",pages)) be equal to(60);
-	 freeSpace("prueba",pages);
-	 should_int(getProcessReservedSpace("prueba",pages)) be equal to(0);
-	 }end
+		it("compacta los huecos") {
 
-	 }end
+			reserve(0,10);
+			reserve(1,10);
+			reserve(2,10);
+			reserve(3,10);
+			reserve(4,10);
+			reserve(5,10);
 
-	 describe("describe_6") {
+			should_int(getLargestContiguousSpace()) be equal to(4);
 
-	 it("escribir") {
-	 writePage(0,"un texto");
-	 should_string(readPage(0)) be equal to("un texto");
-	 writePage(22,"otro texto");
-	 should_string(readPage(22)) be equal to("otro texto");
-	 }end
+			freeSpace(1);
 
-	 }end
+			should_int(getLargestContiguousSpace()) be equal to(10);
 
-	 describe("describe_7") {
+			freeSpace(3);
 
-	 before {
-	 puts("before 1");
-	 freeSpace("prueba");
-	 freeSpace("otromas");
-	 freeSpace("ultimo");
-	 }end
+			writeProcessPage(0,0,"Hola!");
 
-	 it("cantidad_paginas_libres") {
-	 reserve("prueba",14, pages);
-	 reserve("otromas",15, pages);
-	 reserve("ultimo",17, pages);
-	 should_int(getBlankPages(pages)) be equal to(18);
-	 }end
+			writeProcessPage(2,5,"Hola!");
 
-	 }end
+			writeProcessPage(4,9,"Hola!");
 
-	 describe("describe_8") {
+			freeSpace(5);
 
-	 before {
-	 puts("before 1");
-	 freeSpace("prueba");
-	 freeSpace("otromas");
-	 freeSpace("ultimo");
-	 }end
+			should_int(getLargestContiguousSpace()) be equal to(14);
 
-	 it("compactar") {
-	 reserve("prueba",14, pages);
-	 should_int(getLargestContiguousSpace(pages)) be equal to (50);
-	 reserve("otromas",15, pages);
-	 should_int(getLargestContiguousSpace(pages)) be equal to (35);
-	 reserve("ultimo",17, pages);
-	 should_int(getLargestContiguousSpace(pages)) be equal to (18);
-	 freeSpace("otromas",pages);
-	 should_int(getLargestContiguousSpace(pages)) be equal to (18);
-	 compact(pages);
-	 should_int(getLargestContiguousSpace(pages)) be equal to (33);
-	 }end
+			compact();
 
-	 }end*/
+			should_int(getLargestContiguousSpace()) be equal to(34);
 
+			should_string(readProcessPage(0,0)) be equal to("Hola!");
+			should_string(readProcessPage(2,5)) be equal to("Hola!");
+			should_string(readProcessPage(4,9)) be equal to("Hola!");
+
+		}end
+
+	}end
 }

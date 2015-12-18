@@ -1,10 +1,18 @@
 /*
  * swapFunctions.c
+
  *
  * Created on: 28/9/2015
  * Author: utnso
  */
 #include "swapFunctions.h"
+
+void setSwapConfig(char * path) {
+
+	swapConfig = config_create(path);
+
+}
+
 int doesFileExist(const char *filename) {
 	FILE *fp = fopen(filename, "r");
 	if (fp != NULL)
@@ -12,25 +20,17 @@ int doesFileExist(const char *filename) {
 	return (fp != NULL);
 }
 int getSwapPagesAmount() {
-	t_config *swapConfiguracion;
-	swapConfiguracion = config_create(
-			"/tp-2015-2c-signiorcodigo/swap/swapConfig");
-	int pages_amount = config_get_int_value(swapConfiguracion,
-			"CANTIDAD_PAGINAS");
+	int pages_amount = config_get_int_value(swapConfig, "CANTIDAD_PAGINAS");
 	return pages_amount;
 }
 int getSwapPagesSize() {
-	t_config *swapConfiguracion;
-	swapConfiguracion = config_create(
-			"/tp-2015-2c-signiorcodigo/swap/swapConfig");
-	int page_size = config_get_int_value(swapConfiguracion, "TAMANIO_PAGINA");
+
+	int page_size = config_get_int_value(swapConfig, "TAMANIO_PAGINA");
 	return page_size;
 }
 char* getSwapFileName() {
-	t_config *swapConfiguracion;
-	swapConfiguracion = config_create(
-			"/tp-2015-2c-signiorcodigo/swap/swapConfig");
-	char* file_name = config_get_string_value(swapConfiguracion, "NOMBRE_SWAP");
+
+	char* file_name = config_get_string_value(swapConfig, "NOMBRE_SWAP");
 	return file_name;
 }
 void setupSwap() {
@@ -68,16 +68,25 @@ void markPage(int absolutePageNumber, int pid) {
 
 void writePage(int absolutePageNumber, char *content) {
 
+	retardo();
 	int page_size = getSwapPagesSize();
+
 	char *file_name = getSwapFileName();
+
 	FILE *fp = fopen(file_name, "rb+");
+
 	int position = absolutePageNumber * page_size;
+
 	fseek(fp, position, SEEK_SET);
+
 	fwrite(content, sizeof(char), strlen(content), fp);
+
 	fclose(fp);
 }
 
 char* readPage(int absolutePageNumber) {
+
+	retardo();
 	int page_size = getSwapPagesSize();
 	char *file_name = getSwapFileName();
 	FILE *fp = fopen(file_name, "r");
@@ -87,50 +96,6 @@ char* readPage(int absolutePageNumber) {
 	fgets(page, page_size + 1, fp);
 	return page;
 }
-
-//void evaluateAction(char* action) {
-//	if (strcmp(action, "reservar") == 0) {
-//		printf("Ingrese nombre de Proceso\n");
-//		char *process_name = malloc(sizeof(char) * 15);
-//		scanf("%s", process_name);
-//		printf("Ingrese cantidad de paginas a reservar\n");
-//		int amount_to_reserve;
-//		scanf("%d", &amount_to_reserve);
-//		reserve(process_name, amount_to_reserve, pages);
-//	} else if (strcmp(action, "escribir") == 0) {
-//		printf("Ingrese nombre de Proceso\n");
-//		char *process_name = malloc(sizeof(char) * 15);
-//		scanf("%s", process_name);
-//		int hasReservedPages;
-//		hasReservedPages = getProcessReservedSpace(process_name, pages);
-//		if (hasReservedPages >= 0) {
-//			char *text = "texto de prueba para signior funti";
-//			int start = getProcessFirstPage(process_name, pages);
-//			writePage(start, text);
-//			markPage(start, process_name, pages);
-//		} else {
-//			printf("El proceso no posee páginas reservadas\n");
-//		}
-//	} else if (strcmp(action, "leer") == 0) {
-//		printf("Ingrese pagina de lectura\n");
-//		int pagina_lectura;
-//		scanf("%d", &pagina_lectura);
-//		char *retorno = readPage(pagina_lectura);
-//		printf("%s\n", retorno);
-//	} else if (strcmp(action, "compactar") == 0) {
-//		compact(pages);
-//	} else if (strcmp(action, "liberar") == 0) {
-//		printf("Ingrese nombre de Proceso\n");
-//		char *process_name = malloc(sizeof(char) * 15);
-//		scanf("%s", process_name);
-//		freeSpace(process_name, pages);
-//	} else if (strcmp(action, "imprimir") == 0) {
-//		printf("Paginas\n");
-//		imprimir(pages);
-//	} else {
-//		printf("Accion desconocida\n");
-//	}
-//}
 
 int checkSpaceAvailability(int amount) {
 
@@ -284,15 +249,17 @@ void copyPage(int from, int to) {
 }
 void fillRemainingSpace() {
 
-	int top = getSwapPagesAmount();
+	int top = getSwapPagesAmount() - 1;
 	int i;
-	int from = list_size(pages);
+	int from = list_size(pages) - 1;
 
 	for (i = from; i < top; i++) {
 
-		t_nodo_swap *newItemPtr = list_get(pages, i);
+		t_nodo_swap *newItemPtr = malloc(sizeof(t_nodo_swap));
 		newItemPtr->numeroPagina = i;
 		newItemPtr->pid = -1;
+
+		list_add(pages, newItemPtr);
 
 	}
 }
@@ -327,11 +294,10 @@ int getBlankPages() {
 	return count;
 }
 char* getPort() {
-	t_config *swapConfiguracion;
-	swapConfiguracion = config_create(
-			"/tp-2015-2c-signiorcodigo/swap/swapConfig");
-	char * port = config_get_string_value(swapConfiguracion, "PUERTO_ESCUCHA");
+
+	char * port = config_get_string_value(swapConfig, "PUERTO_ESCUCHA");
 	return port;
+
 }
 t_data * pedirPaquete(int codigoOp, int tamanio, void * data) {
 	t_data * paquete = malloc(sizeof(t_data));
@@ -383,4 +349,16 @@ char * readProcessPage(int pid, int nPage) {
 
 	return readPage(absolutePage);
 
+}
+
+void retardo() {
+
+	int tiempo = config_get_int_value(swapConfig, "RETARDO_SWAP");
+	sleep(tiempo);
+}
+
+void retardoCompactacion() {
+
+	int tiempo = config_get_int_value(swapConfig, "RETARDO_COMPACTACION");
+	sleep(tiempo);
 }

@@ -48,7 +48,8 @@ void atender_seniales(int signal) {
 
 		pthread_mutex_lock(&semaforo_memoria);
 		if (!test) {
-			loggearInfo("Se registró la señal para vaciar la tabla de páginas");
+			loggearInfo(
+					"Se registró la señal para volcar la memoria principal");
 		}
 		volcar_memoria_principal();
 		pthread_mutex_unlock(&semaforo_memoria);
@@ -112,7 +113,7 @@ void volcar_memoria_principal() {
 		memcpy(string, memoria + tamanio_marco * i, tamanio_marco);
 
 		loggearInfo(
-				string_from_format("En el marco %d se encuentra %s", i,
+				string_from_format("En el marco %d se encuentra: %s", i,
 						string));
 
 		free(string);
