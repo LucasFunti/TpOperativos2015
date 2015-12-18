@@ -1,0 +1,161 @@
+[INFO] 14:50:50:877 PLANIFICADOR/(7948:7948): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7949): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7949): mProc 1: facil -> Listos
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7949): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7949): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 1 de la cola de listos
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7950): La cola de planificacion, Listos, esta vacía
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7950): mProc 1: facil -> Ejecucion 
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:50:55:576 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:50:59:619 PLANIFICADOR/(7948:7949): Colocado el proceso: facil con pid = 2 en la cola de listos
+[INFO] 14:50:59:620 PLANIFICADOR/(7948:7949): mProc 2: facil -> Listos
+[INFO] 14:50:59:620 PLANIFICADOR/(7948:7949): mProc 1: facil -> Ejecucion 
+[INFO] 14:50:59:620 PLANIFICADOR/(7948:7949): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:02:542 PLANIFICADOR/(7948:7949): Colocado el proceso: facil con pid = 3 en la cola de listos
+[INFO] 14:51:02:543 PLANIFICADOR/(7948:7949): mProc 2: facil -> Listos
+[INFO] 14:51:02:543 PLANIFICADOR/(7948:7949): mProc 3: facil -> Listos
+[INFO] 14:51:02:543 PLANIFICADOR/(7948:7949): mProc 1: facil -> Ejecucion 
+[INFO] 14:51:02:543 PLANIFICADOR/(7948:7949): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:05:619 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 14:51:05:619 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 14:51:05:619 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : false
+[INFO] 14:51:05:619 PLANIFICADOR/(7948:7948): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 14:51:05:619 PLANIFICADOR/(7948:7948): mProc 2: facil -> Listos
+[INFO] 14:51:05:620 PLANIFICADOR/(7948:7948): mProc 3: facil -> Listos
+[INFO] 14:51:05:620 PLANIFICADOR/(7948:7948): mProc 1: facil -> Listos
+[INFO] 14:51:05:620 PLANIFICADOR/(7948:7948): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 14:51:05:620 PLANIFICADOR/(7948:7948): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:05:620 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por fin de quantum
+[INFO] 14:51:05:621 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 2 de la cola de listos
+[INFO] 14:51:05:621 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 2 en la cola de ejecucion
+[INFO] 14:51:05:621 PLANIFICADOR/(7948:7950): mProc 3: facil -> Listos
+[INFO] 14:51:05:621 PLANIFICADOR/(7948:7950): mProc 1: facil -> Listos
+[INFO] 14:51:05:621 PLANIFICADOR/(7948:7950): mProc 2: facil -> Ejecucion 
+[INFO] 14:51:05:621 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:05:626 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:51:15:709 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 14:51:15:712 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 14:51:15:712 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 14:51:15:712 PLANIFICADOR/(7948:7948): Colocado el proceso: facil con pid = 2 en la cola de listos
+[INFO] 14:51:15:712 PLANIFICADOR/(7948:7948): mProc 3: facil -> Listos
+[INFO] 14:51:15:712 PLANIFICADOR/(7948:7948): mProc 1: facil -> Listos
+[INFO] 14:51:15:712 PLANIFICADOR/(7948:7948): mProc 2: facil -> Listos
+[INFO] 14:51:15:712 PLANIFICADOR/(7948:7948): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 14:51:15:713 PLANIFICADOR/(7948:7948): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:15:713 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por fin de quantum
+[INFO] 14:51:15:713 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 3 de la cola de listos
+[INFO] 14:51:15:713 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 3 en la cola de ejecucion
+[INFO] 14:51:15:713 PLANIFICADOR/(7948:7950): mProc 1: facil -> Listos
+[INFO] 14:51:15:713 PLANIFICADOR/(7948:7950): mProc 2: facil -> Listos
+[INFO] 14:51:15:713 PLANIFICADOR/(7948:7950): mProc 3: facil -> Ejecucion 
+[INFO] 14:51:15:714 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:15:715 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:51:25:847 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -iniciar- con valor : true
+[INFO] 14:51:25:857 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 14:51:25:858 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 14:51:25:858 PLANIFICADOR/(7948:7948): Colocado el proceso: facil con pid = 3 en la cola de listos
+[INFO] 14:51:25:866 PLANIFICADOR/(7948:7948): mProc 1: facil -> Listos
+[INFO] 14:51:25:867 PLANIFICADOR/(7948:7948): mProc 2: facil -> Listos
+[INFO] 14:51:25:867 PLANIFICADOR/(7948:7948): mProc 3: facil -> Listos
+[INFO] 14:51:25:867 PLANIFICADOR/(7948:7948): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 14:51:25:868 PLANIFICADOR/(7948:7948): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:25:868 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por fin de quantum
+[INFO] 14:51:25:869 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 1 de la cola de listos
+[INFO] 14:51:25:873 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 14:51:25:873 PLANIFICADOR/(7948:7950): mProc 2: facil -> Listos
+[INFO] 14:51:25:874 PLANIFICADOR/(7948:7950): mProc 3: facil -> Listos
+[INFO] 14:51:25:878 PLANIFICADOR/(7948:7950): mProc 1: facil -> Ejecucion 
+[INFO] 14:51:25:878 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:25:886 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:51:35:955 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 14:51:35:956 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 14:51:35:956 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 14:51:35:956 PLANIFICADOR/(7948:7948): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 14:51:35:957 PLANIFICADOR/(7948:7948): mProc 2: facil -> Listos
+[INFO] 14:51:35:957 PLANIFICADOR/(7948:7948): mProc 3: facil -> Listos
+[INFO] 14:51:35:957 PLANIFICADOR/(7948:7948): mProc 1: facil -> Listos
+[INFO] 14:51:35:957 PLANIFICADOR/(7948:7948): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 14:51:35:957 PLANIFICADOR/(7948:7948): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:35:957 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por fin de quantum
+[INFO] 14:51:35:958 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 2 de la cola de listos
+[INFO] 14:51:35:958 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 2 en la cola de ejecucion
+[INFO] 14:51:35:958 PLANIFICADOR/(7948:7950): mProc 3: facil -> Listos
+[INFO] 14:51:35:958 PLANIFICADOR/(7948:7950): mProc 1: facil -> Listos
+[INFO] 14:51:35:958 PLANIFICADOR/(7948:7950): mProc 2: facil -> Ejecucion 
+[INFO] 14:51:35:958 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:35:963 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:51:45:989 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): Colocado el proceso: facil con pid = 2 en la cola de listos
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): mProc 3: facil -> Listos
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): mProc 1: facil -> Listos
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): mProc 2: facil -> Listos
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:45:999 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por fin de quantum
+[INFO] 14:51:45:0 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 3 de la cola de listos
+[INFO] 14:51:45:0 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 3 en la cola de ejecucion
+[INFO] 14:51:45:0 PLANIFICADOR/(7948:7950): mProc 1: facil -> Listos
+[INFO] 14:51:45:0 PLANIFICADOR/(7948:7950): mProc 2: facil -> Listos
+[INFO] 14:51:45:0 PLANIFICADOR/(7948:7950): mProc 3: facil -> Ejecucion 
+[INFO] 14:51:45:0 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:46:18 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:51:56:172 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 14:51:56:172 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 14:51:56:173 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 14:51:56:173 PLANIFICADOR/(7948:7948): Colocado el proceso: facil con pid = 3 en la cola de listos
+[INFO] 14:51:56:173 PLANIFICADOR/(7948:7948): mProc 1: facil -> Listos
+[INFO] 14:51:56:173 PLANIFICADOR/(7948:7948): mProc 2: facil -> Listos
+[INFO] 14:51:56:173 PLANIFICADOR/(7948:7948): mProc 3: facil -> Listos
+[INFO] 14:51:56:173 PLANIFICADOR/(7948:7948): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 14:51:56:173 PLANIFICADOR/(7948:7948): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:56:173 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por fin de quantum
+[INFO] 14:51:56:177 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 1 de la cola de listos
+[INFO] 14:51:56:177 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 14:51:56:177 PLANIFICADOR/(7948:7950): mProc 2: facil -> Listos
+[INFO] 14:51:56:177 PLANIFICADOR/(7948:7950): mProc 3: facil -> Listos
+[INFO] 14:51:56:177 PLANIFICADOR/(7948:7950): mProc 1: facil -> Ejecucion 
+[INFO] 14:51:56:177 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:56:182 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:51:59:216 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 14:51:59:216 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 14:51:59:217 PLANIFICADOR/(7948:7948): Finalizado el proceso: facil con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 64.000000 
+ Su tiempo de espera es: 41.000000 
+ Su  tiempo de respuesta es: 10.000000
+
+[INFO] 14:51:59:218 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por finalizacion de proceso
+[INFO] 14:51:59:226 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 2 de la cola de listos
+[INFO] 14:51:59:232 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 2 en la cola de ejecucion
+[INFO] 14:51:59:232 PLANIFICADOR/(7948:7950): mProc 3: facil -> Listos
+[INFO] 14:51:59:232 PLANIFICADOR/(7948:7950): mProc 2: facil -> Ejecucion 
+[INFO] 14:51:59:232 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:51:59:242 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:52:05:264 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : false
+[INFO] 14:52:05:268 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 14:52:05:268 PLANIFICADOR/(7948:7948): Finalizado el proceso: facil con pid = 2 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 66.000000 
+ Su tiempo de espera es: 40.000000 
+ Su  tiempo de respuesta es: 16.000000
+
+[INFO] 14:52:05:268 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por finalizacion de proceso
+[INFO] 14:52:05:276 PLANIFICADOR/(7948:7950): Se removió el proceso: facil con pid = 3 de la cola de listos
+[INFO] 14:52:05:286 PLANIFICADOR/(7948:7950): Colocado el proceso: facil con pid = 3 en la cola de ejecucion
+[INFO] 14:52:05:287 PLANIFICADOR/(7948:7950): La cola de planificacion, Listos, esta vacía
+[INFO] 14:52:05:287 PLANIFICADOR/(7948:7950): mProc 3: facil -> Ejecucion 
+[INFO] 14:52:05:287 PLANIFICADOR/(7948:7950): La cola de planificacion, Bloqueados, esta vacía
+[INFO] 14:52:05:297 PLANIFICADOR/(7948:7950): Se envio el contexto de ejecucion a la cpu con socket asignado número: 5
+[INFO] 14:52:11:361 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 14:52:11:365 PLANIFICADOR/(7948:7948): El proceso facil ejecuto la instruccion -finalizar- con valor : true
+[INFO] 14:52:11:366 PLANIFICADOR/(7948:7948): Finalizado el proceso: facil con pid = 3 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 69.000000 
+ Su tiempo de espera es: 5561156498083445708609643291135707978355440231409435612147717713971907185542094957093560421324078976106453829890421224285099013723339089429139661540962541319844560285308602086850560.000000 
+ Su  tiempo de respuesta es: 486218971.000000
+
+[INFO] 14:52:11:367 PLANIFICADOR/(7948:7948): Se libera la cpu: 0 por finalizacion de proceso

@@ -4,6 +4,7 @@
 #define PACKAGESIZE 32
 
 int main(int argc, char **argv) {
+	remove("/tp-2015-2c-signiorcodigo/planificador/log_planificador");
 	log_planificador = log_create("/tp-2015-2c-signiorcodigo/planificador/log_planificador", "PLANIFICADOR",
 	false, LOG_LEVEL_INFO);
 
@@ -47,10 +48,11 @@ int main(int argc, char **argv) {
 
 	while (enviar) {
 		llamadaPoll: retornoPoll = poll(fileDescriptors, cantfds, -1);
-		printf("retorno del poll = %d\n", retornoPoll);
+
 		if (retornoPoll == -1) {
 			printf("Error en la funcion poll\n");
 		}
+
 		for (fd_index = 0; fd_index < cantfds; fd_index++) {
 			if (fileDescriptors[fd_index].revents & POLLIN) {
 				if (fileDescriptors[fd_index].fd == socketEscucha) {
@@ -62,8 +64,6 @@ int main(int argc, char **argv) {
 
 					t_cpu * nuevaCpu = malloc(sizeof(t_cpu));
 
-					nuevaCpu->socket = socketCliente;
-					nuevaCpu->libre = true;
 
 					list_add(listaCpu, nuevaCpu);
 
@@ -72,11 +72,17 @@ int main(int argc, char **argv) {
 					cantfds++;
 
 					recv(socketCliente, &pid_cpu, sizeof(int), 0);
+
 					nuevaCpu->cpu_id = pid_cpu;
-					sem_post(&cpu_libre);
+					nuevaCpu->socket = socketCliente;
+					nuevaCpu->libre = true;
+
 					log_info(log_planificador,
 							"Se conecto la cpu con pid: %d, en el socket %d",
 							nuevaCpu->cpu_id, socketCliente);
+
+					sem_post(&cpu_libre);
+
 					goto llamadaPoll;
 				} else {
 
@@ -106,7 +112,10 @@ int main(int argc, char **argv) {
 			MSG_WAITALL);
 			recv(socketConActividad, &porcentaje, sizeof(int),
 			MSG_WAITALL);
+
 			printf("Cpu %d: %d\n", pid_cpu, porcentaje);
+
+			log_info(log_planificador,"Cpu %d: %d\n", pid_cpu, porcentaje);
 
 			goto llamadaPoll;
 
