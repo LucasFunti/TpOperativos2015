@@ -640,7 +640,7 @@ int getRetardo() {
 	t_config *cpuConfig;
 	cpuConfig = config_create("/tp-2015-2c-signiorcodigo/cpu/cpuConfig");
 	int retardo = config_get_int_value(cpuConfig, "RETARDO");
-	retardo = retardo * 1000000;
+	retardo = retardo * 1000;
 	return retardo;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
