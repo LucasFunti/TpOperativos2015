@@ -97,9 +97,9 @@ t_data * leer_paquete(int socket);
 
 void common_send(int socket, t_data * paquete);
 
-char * readProcessPage(int pid, int nPage);
+char * readProcessPage(int pid, int nPage, t_log * logger);
 
-void writeProcessPage(int pid, int nPage, char * content);
+void writeProcessPage(int pid, int nPage, char * content, t_log * logger);
 
 void setSwapConfig(char * path);
 

@@ -1,0 +1,314 @@
+[INFO] 14:50:35:763 PAM/(8001:8001): Iniciado el proceso administrador de memoria
+[INFO] 14:50:35:766 PAM/(8001:8001): Levantan las configuraciones
+[INFO] 14:50:35:767 PAM/(8001:8001): Configurado con PUERTO_ESCUCHA: 5001
+[INFO] 14:50:35:768 PAM/(8001:8001): Configurado con IP_SWAP: localhost
+[INFO] 14:50:35:770 PAM/(8001:8001): Configurado con PUERTO_SWAP: 6500
+[INFO] 14:50:35:771 PAM/(8001:8001): Configurado con MAXIMO_MARCOS_POR_PROCESO: 3
+[INFO] 14:50:35:776 PAM/(8001:8001): Configurado con CANTIDAD_MARCOS: 15
+[INFO] 14:50:35:776 PAM/(8001:8001): Configurado con TAMANIO_MARCO: 10
+[INFO] 14:50:35:776 PAM/(8001:8001): Configurado con ENTRADAS_TLB: 10
+[INFO] 14:50:35:777 PAM/(8001:8001): Configurado con TLB_HABILITADA: SI
+[INFO] 14:50:35:777 PAM/(8001:8001): Configurado con RETARDO_MEMORIA: 1
+[INFO] 14:50:35:777 PAM/(8001:8001): Configurado con ALGORITMO_REEMPLAZO: FIFO
+[INFO] 14:50:35:782 PAM/(8001:8001): Se inició la cola de llegada
+[INFO] 14:50:35:784 PAM/(8001:8001): Se inició la tlb
+[INFO] 14:50:35:785 PAM/(8001:8001): Se inició la tabla de páginas
+[INFO] 14:50:35:785 PAM/(8001:8001): Se setearon en cero la cantidad de pedidos y aciertos totales
+[INFO] 14:50:35:785 PAM/(8001:8001): Se setearon en cero la cantidad de page faults y accesos a swap
+[INFO] 14:50:35:789 PAM/(8001:8001): Se inició la estructura de aciertos por programa de la tlb
+[INFO] 14:50:35:789 PAM/(8001:8001): Se reservó el espacio de memoria
+[INFO] 14:50:35:789 PAM/(8001:8001): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
+[INFO] 14:50:35:791 PAM/(8001:8001): Se escuchan conexiones en el socket 22
+[INFO] 14:50:50:875 PAM/(8001:8001): Se detecto conexión entrante al puerto de escucha
+[INFO] 14:50:50:875 PAM/(8001:8001): Se asigna el socket 23
+[INFO] 14:50:55:576 PAM/(8001:8001): Realizando una operación INICIAR para el socket 23
+[INFO] 14:50:55:576 PAM/(8001:8001): Se intenta iniciar el proceso 1 con 3 páginas
+[INFO] 14:50:55:576 PAM/(8001:8001): El swap tiene lugar para iniciarlo
+[INFO] 14:50:55:576 PAM/(8001:8001): Se añadieron las entradas a la tabla de páginas
+[INFO] 14:50:57:585 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:50:57:585 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 1 con el contenido Hola
+[INFO] 14:50:57:586 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:50:57:586 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:50:57:586 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:50:57:586 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:50:58:587 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:50:58:588 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:50:58:588 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:50:58:588 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:50:58:588 PAM/(8001:8001): Se intenta leer el contenido del proceso 1 pagina 0 al swap
+[INFO] 14:50:58:589 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:50:58:589 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:50:58:589 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:50:58:589 PAM/(8001:8001): El elemento está presente
+[INFO] 14:50:58:589 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:50:58:590 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:01:603 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:51:01:605 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 1 con el contenido soy
+[INFO] 14:51:01:605 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:01:605 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:51:01:605 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:51:01:605 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:02:606 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:51:02:606 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:51:02:606 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:51:02:606 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:51:02:606 PAM/(8001:8001): Se intenta leer el contenido del proceso 1 pagina 1 al swap
+[INFO] 14:51:02:606 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:51:02:607 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:51:02:607 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:51:02:607 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:02:607 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:51:02:607 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:05:647 PAM/(8001:8001): Realizando una operación INICIAR para el socket 23
+[INFO] 14:51:05:647 PAM/(8001:8001): Se intenta iniciar el proceso 2 con 3 páginas
+[INFO] 14:51:05:647 PAM/(8001:8001): El swap tiene lugar para iniciarlo
+[INFO] 14:51:05:647 PAM/(8001:8001): Se añadieron las entradas a la tabla de páginas
+[INFO] 14:51:07:661 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:51:07:661 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 2 con el contenido Hola
+[INFO] 14:51:07:662 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:07:662 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:51:07:663 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:51:07:663 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:08:665 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:51:08:666 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:51:08:667 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:51:08:667 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:51:08:667 PAM/(8001:8001): Se intenta leer el contenido del proceso 2 pagina 0 al swap
+[INFO] 14:51:08:667 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:51:08:668 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:51:08:668 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:51:08:668 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:08:669 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:51:08:669 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:11:677 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:51:11:683 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 2 con el contenido soy
+[INFO] 14:51:11:684 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:11:685 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:51:11:685 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:51:11:688 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:12:689 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:51:12:689 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:51:12:689 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:51:12:690 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:51:12:690 PAM/(8001:8001): Se intenta leer el contenido del proceso 2 pagina 1 al swap
+[INFO] 14:51:12:690 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:51:12:690 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:51:12:690 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:51:12:690 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:12:691 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:51:12:691 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:15:720 PAM/(8001:8001): Realizando una operación INICIAR para el socket 23
+[INFO] 14:51:15:720 PAM/(8001:8001): Se intenta iniciar el proceso 3 con 3 páginas
+[INFO] 14:51:15:720 PAM/(8001:8001): El swap tiene lugar para iniciarlo
+[INFO] 14:51:15:720 PAM/(8001:8001): Se añadieron las entradas a la tabla de páginas
+[INFO] 14:51:17:742 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:51:17:750 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 3 con el contenido Hola
+[INFO] 14:51:17:752 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:17:753 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:51:17:757 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:51:17:764 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:18:765 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:51:18:766 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:51:18:766 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:51:18:766 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:51:18:766 PAM/(8001:8001): Se intenta leer el contenido del proceso 3 pagina 0 al swap
+[INFO] 14:51:18:766 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:51:18:766 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:51:18:766 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:51:18:766 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:18:766 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:51:18:766 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:21:783 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:51:21:788 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 3 con el contenido soy
+[INFO] 14:51:21:791 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:21:792 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:51:21:794 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:51:21:795 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:22:797 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:51:22:799 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:51:22:801 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:51:22:802 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:51:22:803 PAM/(8001:8001): Se intenta leer el contenido del proceso 3 pagina 1 al swap
+[INFO] 14:51:22:805 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:51:22:805 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:51:22:807 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:51:22:809 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:22:813 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:51:22:813 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:25:882 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:51:25:882 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 3 con el contenido facil
+[INFO] 14:51:25:882 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:25:882 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:51:25:882 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:51:25:882 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:26:883 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:51:26:886 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:51:26:887 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:51:26:888 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:51:26:888 PAM/(8001:8001): Se intenta leer el contenido del proceso 1 pagina 2 al swap
+[INFO] 14:51:26:888 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:51:26:889 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:51:26:889 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:51:26:889 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:26:890 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:51:26:891 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:29:895 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:51:29:897 PAM/(8001:8001): Se intenta leer la página 0 para el proceso 1
+[INFO] 14:51:29:899 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:29:899 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:51:29:900 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:29:901 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:51:29:903 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:30:908 PAM/(8001:8001): El resultado de la lectura fué Hola
+[INFO] 14:51:32:921 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:51:32:923 PAM/(8001:8001): Se intenta leer la página 1 para el proceso 1
+[INFO] 14:51:32:926 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:32:927 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:51:32:931 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:32:932 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:51:32:933 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:33:939 PAM/(8001:8001): El resultado de la lectura fué soy
+[INFO] 14:51:35:803 PAM/(8001:8002): Tasa aciertos 22.22
+[INFO] 14:51:35:803 PAM/(8001:8002): Cantidad de pedidos tlb totales: 9
+[INFO] 14:51:35:803 PAM/(8001:8002): Cantidad de aciertos tlb totales: 2
+[INFO] 14:51:35:965 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:51:35:965 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 3 con el contenido facil
+[INFO] 14:51:35:965 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:35:965 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:51:35:965 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:51:35:965 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:36:968 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:51:36:968 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:51:36:968 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:51:36:968 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:51:36:968 PAM/(8001:8001): Se intenta leer el contenido del proceso 2 pagina 2 al swap
+[INFO] 14:51:36:968 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:51:36:968 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:51:36:968 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:51:36:968 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:36:968 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:51:36:968 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:39:975 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:51:39:975 PAM/(8001:8001): Se intenta leer la página 0 para el proceso 2
+[INFO] 14:51:39:975 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:39:975 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:51:39:975 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:39:975 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:51:39:975 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:40:976 PAM/(8001:8001): El resultado de la lectura fué Hola
+[INFO] 14:51:42:980 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:51:42:980 PAM/(8001:8001): Se intenta leer la página 1 para el proceso 2
+[INFO] 14:51:42:980 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:42:981 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:51:42:981 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:42:981 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:51:42:981 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:43:982 PAM/(8001:8001): El resultado de la lectura fué soy
+[INFO] 14:51:46:16 PAM/(8001:8001): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 14:51:46:17 PAM/(8001:8001): Se intenta escribir la página 3 para el proceso 3 con el contenido facil
+[INFO] 14:51:46:17 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:46:17 PAM/(8001:8001): No se encontró en la tlb el elemento
+[INFO] 14:51:46:17 PAM/(8001:8001): Se busca en la tabla de páginas
+[INFO] 14:51:46:17 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:47:18 PAM/(8001:8001): Se encontró el elemento en la tabla de páginas
+[INFO] 14:51:47:20 PAM/(8001:8001): Agregando el item a la tlb
+[INFO] 14:51:47:23 PAM/(8001:8001): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 14:51:47:28 PAM/(8001:8001): El elemento no está presente, se trae a memoria
+[INFO] 14:51:47:31 PAM/(8001:8001): Se intenta leer el contenido del proceso 3 pagina 2 al swap
+[INFO] 14:51:47:35 PAM/(8001:8001): Se busca un marco libre para asignar
+[INFO] 14:51:47:38 PAM/(8001:8001): Hay marcos disponibles para asignar
+[INFO] 14:51:47:38 PAM/(8001:8001): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 14:51:47:45 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:47:45 PAM/(8001:8001): Se escribe el contenido
+[INFO] 14:51:47:46 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:50:55 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:51:50:59 PAM/(8001:8001): Se intenta leer la página 0 para el proceso 3
+[INFO] 14:51:50:62 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:50:63 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:51:50:65 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:50:65 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:51:50:69 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:51:101 PAM/(8001:8001): El resultado de la lectura fué Hola
+[INFO] 14:51:53:112 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:51:53:117 PAM/(8001:8001): Se intenta leer la página 1 para el proceso 3
+[INFO] 14:51:53:118 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:53:120 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:51:53:122 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:53:123 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:51:53:146 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:54:152 PAM/(8001:8001): El resultado de la lectura fué soy
+[INFO] 14:51:56:188 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:51:56:188 PAM/(8001:8001): Se intenta leer la página 2 para el proceso 1
+[INFO] 14:51:56:188 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:51:56:188 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:51:56:188 PAM/(8001:8001): El elemento está presente
+[INFO] 14:51:56:188 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:51:56:188 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:51:57:191 PAM/(8001:8001): El resultado de la lectura fué facil
+[INFO] 14:51:59:201 PAM/(8001:8001): Realizando una operación FINALIZAR para el socket 23
+[INFO] 14:51:59:208 PAM/(8001:8001): Se finaliza el proceso 1. El mismo tuvo 3 aciertos sobre 6 pedidos a la tlb
+[INFO] 14:51:59:211 PAM/(8001:8001): Se remueven los elementos de la tlb
+[INFO] 14:51:59:212 PAM/(8001:8001): Se remueven los elementos de la tabla de páginas
+[INFO] 14:51:59:212 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:00:216 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:01:222 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:02:225 PAM/(8001:8001): Se finalizó el pid 1
+[INFO] 14:52:02:227 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:52:02:227 PAM/(8001:8001): Se intenta leer la página 2 para el proceso 2
+[INFO] 14:52:02:228 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:52:02:232 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:52:02:233 PAM/(8001:8001): El elemento está presente
+[INFO] 14:52:02:233 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:52:02:236 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:03:240 PAM/(8001:8001): El resultado de la lectura fué facil
+[INFO] 14:52:05:250 PAM/(8001:8001): Realizando una operación FINALIZAR para el socket 23
+[INFO] 14:52:05:253 PAM/(8001:8001): Se finaliza el proceso 2. El mismo tuvo 3 aciertos sobre 6 pedidos a la tlb
+[INFO] 14:52:05:257 PAM/(8001:8001): Se remueven los elementos de la tlb
+[INFO] 14:52:05:260 PAM/(8001:8001): Se remueven los elementos de la tabla de páginas
+[INFO] 14:52:05:269 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:06:290 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:07:295 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:08:302 PAM/(8001:8001): Se finalizó el pid 2
+[INFO] 14:52:08:307 PAM/(8001:8001): Realizando una operación LEER para el socket 23
+[INFO] 14:52:08:313 PAM/(8001:8001): Se intenta leer la página 2 para el proceso 3
+[INFO] 14:52:08:314 PAM/(8001:8001): Se busca en la tlb
+[INFO] 14:52:08:319 PAM/(8001:8001): Se encontró en la TLB el elemento
+[INFO] 14:52:08:322 PAM/(8001:8001): El elemento está presente
+[INFO] 14:52:08:322 PAM/(8001:8001): Accediendo al contenido existente
+[INFO] 14:52:08:325 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:09:332 PAM/(8001:8001): El resultado de la lectura fué facil
+[INFO] 14:52:11:348 PAM/(8001:8001): Realizando una operación FINALIZAR para el socket 23
+[INFO] 14:52:11:352 PAM/(8001:8001): Se finaliza el proceso 3. El mismo tuvo 3 aciertos sobre 6 pedidos a la tlb
+[INFO] 14:52:11:352 PAM/(8001:8001): Se remueven los elementos de la tlb
+[INFO] 14:52:11:353 PAM/(8001:8001): Se remueven los elementos de la tabla de páginas
+[INFO] 14:52:11:353 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:12:355 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:13:361 PAM/(8001:8001): Acceso a memoria. Zzz...
+[INFO] 14:52:14:370 PAM/(8001:8001): Se finalizó el pid 3
+[INFO] 14:52:35:805 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 14:52:35:812 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 14:52:35:825 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9
+[INFO] 14:53:35:830 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 14:53:35:831 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 14:53:35:832 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9
+[INFO] 14:54:35:843 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 14:54:35:851 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 14:54:35:859 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9
+[INFO] 14:55:35:862 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 14:55:35:863 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 14:55:35:863 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9
+[INFO] 14:56:35:864 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 14:56:35:864 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 14:56:35:864 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9
+[INFO] 14:57:35:865 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 14:57:35:866 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 14:57:35:866 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9
+[INFO] 14:58:35:868 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 14:58:35:869 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 14:58:35:869 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9
+[INFO] 14:59:35:871 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 14:59:35:871 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 14:59:35:871 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9
+[INFO] 15:00:35:877 PAM/(8001:8002): Tasa aciertos 50.00
+[INFO] 15:00:35:881 PAM/(8001:8002): Cantidad de pedidos tlb totales: 18
+[INFO] 15:00:35:881 PAM/(8001:8002): Cantidad de aciertos tlb totales: 9

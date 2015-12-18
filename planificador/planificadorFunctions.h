@@ -22,8 +22,8 @@
 
 enum estado {
 	listo = 98,
-	ejecucion,
-	bloqueado,
+	ejecucion = 10,
+	bloqueado = 11,
 	finalizado = 23,
 	finquantum = 22,
 	fallaEjecucion = 21,
@@ -91,11 +91,11 @@ char *getAlgoritmo();
 void inicializarColecciones(t_queue * colaListos, t_queue * colaFinalizados,
 		t_list * listaEjecutando, t_queue * entradaSalida);
 
-void mostrarEstadoDeLista(t_list *lista, char*estado);
+void mostrarEstadoDeLista(char*estado,int codigo);
 
-void mostrarEstadoDeListos(t_queue *cola, char*estado);
+void mostrarEstadoDeListos(char*estado,int codigo);
 
-void mostrarEstadoDeBloqueados(t_queue *cola, char*estado);
+void mostrarEstadoDeBloqueados(char*estado,int codigo);
 
 void agregarAListaDeEjecucion(nodo_en_ejecucion *proceso);
 

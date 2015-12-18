@@ -23,5 +23,5 @@
 #include "swapFunctions.h"
 
 t_list * pages;
-
+t_log * log_swap;
 #endif /* SWAP_H_ */
