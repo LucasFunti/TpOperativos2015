@@ -17,7 +17,11 @@
 #define FINALIZAR 8
 
 int main(int argc, char **argv) {
-	t_log * log_swap = log_create("log_swap", "SWAP", true, LOG_LEVEL_INFO);
+
+	t_log * log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/log_swap",
+			"SWAP", true, LOG_LEVEL_INFO);
+
+	swapConfig = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
 
 	int socketEscucha, socketMemoria;
 
@@ -43,132 +47,123 @@ int main(int argc, char **argv) {
 	} else {
 
 		log_info(log_swap, "Falla en la conexion con la memoria");
+
 		exit(EXIT_FAILURE);
 	}
 
 	char* file_name = getSwapFileName();
+
 	char str[100];
+
 	strcpy(str, "/tp-2015-2c-signiorcodigo/swap/Debug/");
+
 	strcpy(str, file_name);
+
 	int result = doesFileExist(str);
+
 	if (!result) {
+
 		setupSwap();
+
 	} else {
+
 		printf("El archivo de Swap ya existe. Continuamos...\n");
+
 	}
-	setupSwap();
-/*
-	int pagesAmount = getSwapPagesAmount();
-	t_list *pages = setPages(pagesAmount);
+
+	setPages();
+
+	t_data * paquete;
 
 	while (1) {
-		t_data * paquete = leer_paquete(socketMemoria);
 
-		int cantidad, pid, pagina, tamanio;
+		paquete = leer_paquete(socketMemoria);
 
 		switch (paquete->header->codigo_operacion) {
 
-		case INICIAR:
-			memcpy(&cantidad, paquete->data, sizeof(int));
-			//TODO faltaria el pid del proceso
-			//reserve(process_name,cantidad, pages);
+		case LEER: {
 
-			break;
-		case LEER:
-			memcpy(&pid, paquete->data, sizeof(int));
-			memcpy(&pagina, paquete->data + sizeof(int), sizeof(int));
-			//me parece que faltaria algo en esa funcion porque lee una pagina pero no en base a la del proceso
-			readPage(pagina);
-			break;
-		case ESCRIBIR:
-			memcpy(&pid, paquete->data, sizeof(int));
-			memcpy(&pagina, paquete->data + sizeof(int), sizeof(int));
-			memcpy(&tamanio, paquete->data + (sizeof(int) * 2), sizeof(int));
-			char * texto = malloc(tamanio);
-			memcpy(texto, paquete->data + (sizeof(int) * 3), tamanio);
+			int pid, page;
 
-			int hasReservedPages;
-			hasReservedPages = getProcessReservedSpace(pid, pages);
-			if (hasReservedPages >= 0) {
-				int start = getProcessFirstPage(pid, pages);
-				writePage(start, texto);
-				markPage(start, pid, pages);
-			} else {
-				printf("El proceso no posee páginas reservadas\n");
-			}
-			break;
-		case FINALIZAR:
+			memcpy(&pid, paquete->data, sizeof(int));
+			memcpy(&page, paquete->data + sizeof(int), sizeof(int));
+
+			char * content = readProcessPage(pid, page);
+
+			paquete = pedirPaquete(LEER, getSwapPagesSize(), content);
+
+			common_send(socketMemoria, paquete);
+
 			break;
 		}
-	}*/
-//	char* file_name = getSwapFileName();
-//	int pagesAmount = getSwapPagesAmount();
-//	char str[100];
-//	strcpy(str,"/tp-2015-2c-signiorcodigo/swap/Debug/");
-//	strcpy(str,file_name);
-//	int result = doesFileExist( str);
-//	if(!result) {
-//		setupSwap();
-//	} else {
-//	    printf("El archivo de Swap ya existe. Continuamos...\n");
-//	}
-//	t_list *pages = setPages(pagesAmount);
-//	printf("Ingrese Accion\n");
-//	char *action = malloc(sizeof(char)*15);
-//	scanf ("%s",action);
-//	while(strcmp(action,"exit")!=0){
-//		evaluateAction(action, pages);
-//		printf("Ingrese Accion\n");
-//		scanf ("%s",action);
-//	}
 
-//	t_nodo_swap* item = NULL;
-//	for (i = 0; i < top ; i++){
-//		item = (t_nodo_swap*) list_get(pages,i);
-//		printf("el valor es %d \n",item->numeroPagina);
-//		printf("%d\n",i);
-//	}
+		case ESCRIBIR: {
 
-//
-//
-//	int socketCliente;
-//	socketCliente = conectarServidor("localhost", puerto, BACKLOG);
-//	char package[PACKAGESIZE];
-//	int status = 1;
-//
-//
-//	printf("Cliente conectado. Esperando mensajes:\n");
-//
-//	while (status != 0) {
-//		status = recv(socketCliente, (void*) package, PACKAGESIZE, 0);
-//				if (status != 0) {
-//
-//			int instruccion;
-//			instruccion = reconocerInstruccion();
-//			switch (instruccion) {
-//				case 4:/*iniciar*/
-//				/* corroborar espacio disponible en el archivo-(funcion)*/
-//				break;
-//				case 5:/*leer*/
-//				/*Buscar proceso en el archivo (funcion) */
-//				/* Si existe - devolver contenido de la pagina n solicitada (funcion) */
-//				break;
-//				case 6:/*escribir*/
-//				break;
-//				case 7:/*entrada salida*/
-//				break;
-//				case 8:/*finalizar*/
-//				/*Buscar proceso en el archivo (funcion) */
-//				/* si existe liberarlo de memoria */
-//				break;
-//			}
-//			printf("Mensaje Recibido\n %s", package);
-//		}
-//
-//	}
-//
-//	close(socketCliente);
-//	list_destroy(pages);
+			int pid, page;
+			char * content = malloc(getSwapPagesSize());
+
+			memcpy(&pid, paquete->data, sizeof(int));
+			memcpy(&page, paquete->data + sizeof(int), sizeof(int));
+			memcpy(content, paquete->data + 2 * sizeof(int),
+					getSwapPagesSize());
+
+			writeProcessPage(pid, page, content);
+
+			break;
+		}
+
+		case INICIAR: {
+
+			int pid, pagesAmount;
+
+			memcpy(&pid, paquete->data, sizeof(int));
+			memcpy(&pagesAmount, paquete->data + sizeof(int), sizeof(int));
+
+			int blank_pages = getBlankPages();
+			int success;
+
+			if (blank_pages >= pagesAmount) {
+				success = reserve(pid, pagesAmount);
+
+				if (success == -1) {
+					compact();
+					success = reserve(pid, pagesAmount);
+				}
+			}
+
+			if (success == -1) {
+
+				paquete = pedirPaquete(0, sizeof(int), &pid);
+
+			} else {
+
+				paquete = pedirPaquete(1, sizeof(int), &pid);
+			}
+
+			common_send(socketMemoria, paquete);
+
+			break;
+		}
+
+		case FINALIZAR: {
+
+			int pid;
+
+			memcpy(&pid, paquete->data, sizeof(int));
+
+			freeSpace(pid);
+
+			break;
+		}
+
+		default: {
+
+			break;
+		}
+
+		}
+
+	}
+
 	return 0;
 }
-

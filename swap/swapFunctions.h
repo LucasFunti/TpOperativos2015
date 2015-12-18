@@ -21,6 +21,8 @@
 #include <signiorCodigo/libSockets.h>
 #include "swap.h"
 
+t_config * swapConfig;
+
 //Estructuras
 
 typedef struct {
@@ -98,5 +100,10 @@ void common_send(int socket, t_data * paquete);
 char * readProcessPage(int pid, int nPage);
 
 void writeProcessPage(int pid, int nPage, char * content);
+
+void setSwapConfig(char * path);
+
+void retardo();
+void retardoCompactacion();
 
 #endif /* SWAPFUNCTIONS_H_ */

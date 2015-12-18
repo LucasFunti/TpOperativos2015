@@ -15,7 +15,9 @@ char * swap_leer(int pid, int pagina) {
 					pid, pagina));
 
 	accesos_swap++;
+
 	if (!test) {
+
 		void * data = malloc(2 * sizeof(int));
 
 		memcpy(data, &pid, sizeof(int));
@@ -28,7 +30,7 @@ char * swap_leer(int pid, int pagina) {
 		paquete = leer_paquete(socketSwap);
 
 		log_info(logger,
-				string_from_format("El contenido es %d", paquete->data));
+				string_from_format("El contenido es %s", paquete->data));
 
 		return (char *) paquete->data;
 	} else {
@@ -44,7 +46,13 @@ bool swap_iniciar(int pid, int cantidad_paginas) {
 
 	int cantidad = cantidad_paginas;
 
-	t_data * paquete = pedirPaquete(INICIAR, sizeof(int), &cantidad);
+	void * buffer = malloc(sizeof(int) * 2);
+
+	memcpy(buffer, &pid, sizeof(int));
+	memcpy(buffer + sizeof(int), &cantidad, sizeof(int));
+
+	t_data * paquete = pedirPaquete(INICIAR, 2 * sizeof(int), buffer);
+
 	common_send(socketSwap, paquete);
 
 	paquete = leer_paquete(socketSwap);
@@ -65,17 +73,17 @@ void swap_escribir(int pid, int pagina, int marco) {
 		int tamanio_marco = config_get_int_value(memoriaConfig,
 				"TAMANIO_MARCO");
 
-		void * data = malloc(3 * sizeof(int) + tamanio_marco);
+		void * data = malloc(2 * sizeof(int) + tamanio_marco);
 
 		memcpy(data, &pid, sizeof(int));
 		memcpy(data + sizeof(int), &pagina, sizeof(int));
-		memcpy(data + 2 * sizeof(int), &tamanio_marco, sizeof(int));
+
 		retardo();
-		memcpy(data + 3 * sizeof(int), memoria + tamanio_marco * marco,
+		memcpy(data + 2 * sizeof(int), memoria + tamanio_marco * marco,
 				tamanio_marco);
 
 		common_send(socketSwap,
-				pedirPaquete(ESCRIBIR, 3 * sizeof(int) + tamanio_marco, data));
+				pedirPaquete(ESCRIBIR, 2 * sizeof(int) + tamanio_marco, data));
 
 	}
 	accesos_swap++;

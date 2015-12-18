@@ -1007,3 +1007,438 @@
  Su tiempo de espera es: 0.000000 
  Su  tiempo de respuesta es: 8.000000
 
+[INFO] 05:45:33:104 PLANIFICADOR/(12463:12463): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 05:45:41:884 PLANIFICADOR/(12463:12466): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 05:45:41:884 PLANIFICADOR/(12463:12466): mProc 1: facil -> Listos 
+
+[INFO] 05:45:41:884 PLANIFICADOR/(12463:12466): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 05:45:41:884 PLANIFICADOR/(12463:12466): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 05:45:41:884 PLANIFICADOR/(12463:12467): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 05:45:41:884 PLANIFICADOR/(12463:12467): La cola de planificacion, Listos, esta vacía
+[INFO] 05:45:41:884 PLANIFICADOR/(12463:12467): mProc 1: facil -> Ejecucion 
+
+[INFO] 05:45:41:884 PLANIFICADOR/(12463:12467): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 05:45:48:897 PLANIFICADOR/(12463:12463): El proceso facil ejecuto la instruccion -iniciar- con valor : false
+[INFO] 05:45:48:897 PLANIFICADOR/(12463:12463): El proceso facil ejecuto la instruccion -escribir- con valor : false
+[INFO] 05:45:48:897 PLANIFICADOR/(12463:12463): El proceso facil ejecuto la instruccion -escribir- con valor : false
+[INFO] 05:45:48:897 PLANIFICADOR/(12463:12463): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 05:45:48:897 PLANIFICADOR/(12463:12463): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 05:45:48:897 PLANIFICADOR/(12463:12463): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 05:45:48:897 PLANIFICADOR/(12463:12463): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 05:45:48:897 PLANIFICADOR/(12463:12463): Finalizado el proceso: facil con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 7.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 7.000000
+
+[INFO] 06:12:34:610 PLANIFICADOR/(13806:13806): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:13:05:296 PLANIFICADOR/(13806:13808): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:13:05:296 PLANIFICADOR/(13806:13808): mProc 1: mem -> Listos 
+
+[INFO] 06:13:05:296 PLANIFICADOR/(13806:13808): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:13:05:296 PLANIFICADOR/(13806:13808): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:13:05:296 PLANIFICADOR/(13806:13809): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:13:05:296 PLANIFICADOR/(13806:13809): La cola de planificacion, Listos, esta vacía
+[INFO] 06:13:05:296 PLANIFICADOR/(13806:13809): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:13:05:296 PLANIFICADOR/(13806:13809): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:14:37:704 PLANIFICADOR/(14033:14033): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:15:16:259 PLANIFICADOR/(14209:14209): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:15:22:553 PLANIFICADOR/(14209:14213): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:15:22:553 PLANIFICADOR/(14209:14213): mProc 1: mem -> Listos 
+
+[INFO] 06:15:22:553 PLANIFICADOR/(14209:14213): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:15:22:553 PLANIFICADOR/(14209:14213): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:15:31:208 PLANIFICADOR/(14209:14214): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:15:31:208 PLANIFICADOR/(14209:14214): La cola de planificacion, Listos, esta vacía
+[INFO] 06:15:31:208 PLANIFICADOR/(14209:14214): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:15:31:208 PLANIFICADOR/(14209:14214): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:18:01:51 PLANIFICADOR/(14389:14389): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:18:06:694 PLANIFICADOR/(14389:14393): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:18:06:694 PLANIFICADOR/(14389:14393): mProc 1: mem -> Listos 
+
+[INFO] 06:18:06:694 PLANIFICADOR/(14389:14393): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:18:06:694 PLANIFICADOR/(14389:14393): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:18:06:694 PLANIFICADOR/(14389:14394): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:18:06:694 PLANIFICADOR/(14389:14394): La cola de planificacion, Listos, esta vacía
+[INFO] 06:18:06:694 PLANIFICADOR/(14389:14394): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:18:06:694 PLANIFICADOR/(14389:14394): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:21:18:617 PLANIFICADOR/(14631:14631): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:21:22:885 PLANIFICADOR/(14631:14635): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:21:22:885 PLANIFICADOR/(14631:14635): mProc 1: mem -> Listos 
+
+[INFO] 06:21:22:885 PLANIFICADOR/(14631:14635): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:21:22:885 PLANIFICADOR/(14631:14635): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:21:22:885 PLANIFICADOR/(14631:14636): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:21:22:885 PLANIFICADOR/(14631:14636): La cola de planificacion, Listos, esta vacía
+[INFO] 06:21:22:885 PLANIFICADOR/(14631:14636): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:21:22:885 PLANIFICADOR/(14631:14636): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:28:26:755 PLANIFICADOR/(15004:15004): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:29:08:712 PLANIFICADOR/(15004:15008): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:29:08:712 PLANIFICADOR/(15004:15008): mProc 1: mem -> Listos 
+
+[INFO] 06:29:08:712 PLANIFICADOR/(15004:15008): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:29:08:712 PLANIFICADOR/(15004:15008): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:29:08:712 PLANIFICADOR/(15004:15009): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:29:08:712 PLANIFICADOR/(15004:15009): La cola de planificacion, Listos, esta vacía
+[INFO] 06:29:08:712 PLANIFICADOR/(15004:15009): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:29:08:712 PLANIFICADOR/(15004:15009): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:41:02:904 PLANIFICADOR/(15401:15401): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:41:08:468 PLANIFICADOR/(15401:15405): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:41:08:468 PLANIFICADOR/(15401:15405): mProc 1: mem -> Listos 
+
+[INFO] 06:41:08:468 PLANIFICADOR/(15401:15405): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:41:08:468 PLANIFICADOR/(15401:15405): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:41:08:468 PLANIFICADOR/(15401:15406): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:41:08:468 PLANIFICADOR/(15401:15406): La cola de planificacion, Listos, esta vacía
+[INFO] 06:41:08:468 PLANIFICADOR/(15401:15406): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:41:08:468 PLANIFICADOR/(15401:15406): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:44:46:904 PLANIFICADOR/(15682:15682): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:44:52:617 PLANIFICADOR/(15682:15685): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:44:52:617 PLANIFICADOR/(15682:15685): mProc 1: mem -> Listos 
+
+[INFO] 06:44:52:617 PLANIFICADOR/(15682:15685): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:44:52:617 PLANIFICADOR/(15682:15685): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:44:52:617 PLANIFICADOR/(15682:15686): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:44:52:617 PLANIFICADOR/(15682:15686): La cola de planificacion, Listos, esta vacía
+[INFO] 06:44:52:617 PLANIFICADOR/(15682:15686): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:44:52:617 PLANIFICADOR/(15682:15686): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:47:11:4 PLANIFICADOR/(15924:15924): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:47:18:366 PLANIFICADOR/(15924:15928): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:47:18:366 PLANIFICADOR/(15924:15928): mProc 1: mem -> Listos 
+
+[INFO] 06:47:18:366 PLANIFICADOR/(15924:15928): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:47:18:366 PLANIFICADOR/(15924:15928): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:47:18:366 PLANIFICADOR/(15924:15929): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:47:18:366 PLANIFICADOR/(15924:15929): La cola de planificacion, Listos, esta vacía
+[INFO] 06:47:18:366 PLANIFICADOR/(15924:15929): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:47:18:366 PLANIFICADOR/(15924:15929): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:54:13:61 PLANIFICADOR/(16125:16125): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:54:17:595 PLANIFICADOR/(16125:16126): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:54:17:595 PLANIFICADOR/(16125:16126): mProc 1: mem -> Listos 
+
+[INFO] 06:54:17:595 PLANIFICADOR/(16125:16126): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:54:17:595 PLANIFICADOR/(16125:16126): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:54:17:595 PLANIFICADOR/(16125:16127): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:54:17:595 PLANIFICADOR/(16125:16127): La cola de planificacion, Listos, esta vacía
+[INFO] 06:54:17:595 PLANIFICADOR/(16125:16127): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:54:17:595 PLANIFICADOR/(16125:16127): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:55:47:24 PLANIFICADOR/(16237:16237): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:55:54:971 PLANIFICADOR/(16237:16240): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:55:54:971 PLANIFICADOR/(16237:16240): mProc 1: mem -> Listos 
+
+[INFO] 06:55:54:971 PLANIFICADOR/(16237:16240): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:55:54:971 PLANIFICADOR/(16237:16240): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:55:54:971 PLANIFICADOR/(16237:16241): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:55:54:971 PLANIFICADOR/(16237:16241): La cola de planificacion, Listos, esta vacía
+[INFO] 06:55:54:971 PLANIFICADOR/(16237:16241): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:55:54:971 PLANIFICADOR/(16237:16241): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:57:46:995 PLANIFICADOR/(16378:16378): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 06:58:26:820 PLANIFICADOR/(16378:16382): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 06:58:26:820 PLANIFICADOR/(16378:16382): mProc 1: mem -> Listos 
+
+[INFO] 06:58:26:820 PLANIFICADOR/(16378:16382): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 06:58:26:820 PLANIFICADOR/(16378:16382): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 06:58:26:820 PLANIFICADOR/(16378:16383): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 06:58:26:820 PLANIFICADOR/(16378:16383): La cola de planificacion, Listos, esta vacía
+[INFO] 06:58:26:820 PLANIFICADOR/(16378:16383): mProc 1: mem -> Ejecucion 
+
+[INFO] 06:58:26:820 PLANIFICADOR/(16378:16383): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:04:21:895 PLANIFICADOR/(16550:16550): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 07:04:32:941 PLANIFICADOR/(16550:16551): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 07:04:32:941 PLANIFICADOR/(16550:16551): mProc 1: mem -> Listos 
+
+[INFO] 07:04:32:941 PLANIFICADOR/(16550:16551): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:04:32:942 PLANIFICADOR/(16550:16551): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:04:32:942 PLANIFICADOR/(16550:16552): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 07:04:32:942 PLANIFICADOR/(16550:16552): La cola de planificacion, Listos, esta vacía
+[INFO] 07:04:32:942 PLANIFICADOR/(16550:16552): mProc 1: mem -> Ejecucion 
+
+[INFO] 07:04:32:942 PLANIFICADOR/(16550:16552): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:08:21:803 PLANIFICADOR/(16728:16728): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 07:08:31:491 PLANIFICADOR/(16728:16732): Colocado el proceso: facil con pid = 1 en la cola de listos
+[INFO] 07:08:31:491 PLANIFICADOR/(16728:16732): mProc 1: facil -> Listos 
+
+[INFO] 07:08:31:491 PLANIFICADOR/(16728:16732): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:08:31:491 PLANIFICADOR/(16728:16732): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:08:31:491 PLANIFICADOR/(16728:16733): Colocado el proceso: facil con pid = 1 en la cola de ejecucion
+[INFO] 07:08:31:491 PLANIFICADOR/(16728:16733): La cola de planificacion, Listos, esta vacía
+[INFO] 07:08:31:491 PLANIFICADOR/(16728:16733): mProc 1: facil -> Ejecucion 
+
+[INFO] 07:08:31:491 PLANIFICADOR/(16728:16733): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:08:38:498 PLANIFICADOR/(16728:16728): El proceso facil ejecuto la instruccion -iniciar- con valor : false
+[INFO] 07:08:38:498 PLANIFICADOR/(16728:16728): El proceso facil ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:08:38:498 PLANIFICADOR/(16728:16728): El proceso facil ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:08:38:498 PLANIFICADOR/(16728:16728): El proceso facil ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:08:38:498 PLANIFICADOR/(16728:16728): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 07:08:38:498 PLANIFICADOR/(16728:16728): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 07:08:38:498 PLANIFICADOR/(16728:16728): El proceso facil ejecuto la instruccion -leer- con valor : true
+[INFO] 07:08:38:498 PLANIFICADOR/(16728:16728): Finalizado el proceso: facil con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 7.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 7.000000
+
+[INFO] 07:09:17:509 PLANIFICADOR/(16728:16732): Colocado el proceso: mem con pid = 2 en la cola de listos
+[INFO] 07:09:17:509 PLANIFICADOR/(16728:16732): mProc 2: mem -> Listos 
+
+[INFO] 07:09:17:509 PLANIFICADOR/(16728:16732): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:09:17:509 PLANIFICADOR/(16728:16732): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:09:17:509 PLANIFICADOR/(16728:16733): Colocado el proceso: mem con pid = 2 en la cola de ejecucion
+[INFO] 07:09:17:509 PLANIFICADOR/(16728:16733): La cola de planificacion, Listos, esta vacía
+[INFO] 07:09:17:509 PLANIFICADOR/(16728:16733): mProc 2: mem -> Ejecucion 
+
+[INFO] 07:09:17:509 PLANIFICADOR/(16728:16733): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:16:47:551 PLANIFICADOR/(17008:17008): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 07:17:56:648 PLANIFICADOR/(17131:17131): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 07:18:04:65 PLANIFICADOR/(17131:17134): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 07:18:04:66 PLANIFICADOR/(17131:17134): mProc 1: mem -> Listos 
+
+[INFO] 07:18:04:66 PLANIFICADOR/(17131:17134): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:18:04:66 PLANIFICADOR/(17131:17134): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:18:04:66 PLANIFICADOR/(17131:17135): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 07:18:04:66 PLANIFICADOR/(17131:17135): La cola de planificacion, Listos, esta vacía
+[INFO] 07:18:04:66 PLANIFICADOR/(17131:17135): mProc 1: mem -> Ejecucion 
+
+[INFO] 07:18:04:66 PLANIFICADOR/(17131:17135): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -iniciar- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): El proceso mem ejecuto la instruccion -entrada salida- con valor : true
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): Colocado el proceso: mem con pid = 1 en la cola de bloqueados
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): La cola de planificacion, Listos, esta vacía
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:18:19:165 PLANIFICADOR/(17131:17131): mProc 1: mem -> Bolqueados 
+
+[INFO] 07:18:39:165 PLANIFICADOR/(17131:17136): mProc mem en entrada-salida de tiempo 20
+[INFO] 07:18:39:165 PLANIFICADOR/(17131:17136): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 07:18:39:165 PLANIFICADOR/(17131:17136): mProc 1: mem -> Listos 
+
+[INFO] 07:18:39:165 PLANIFICADOR/(17131:17136): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:18:39:165 PLANIFICADOR/(17131:17136): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:18:39:165 PLANIFICADOR/(17131:17135): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 07:18:39:165 PLANIFICADOR/(17131:17135): La cola de planificacion, Listos, esta vacía
+[INFO] 07:18:39:165 PLANIFICADOR/(17131:17135): mProc 1: mem -> Ejecucion 
+
+[INFO] 07:18:39:166 PLANIFICADOR/(17131:17135): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:18:39:167 PLANIFICADOR/(17131:17131): Finalizado el proceso: mem con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 35.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 35.000000
+
+[INFO] 07:23:36:783 PLANIFICADOR/(17424:17424): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 07:24:22:195 PLANIFICADOR/(17424:17425): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 07:24:22:195 PLANIFICADOR/(17424:17425): mProc 1: mem -> Listos 
+
+[INFO] 07:24:22:196 PLANIFICADOR/(17424:17425): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:24:22:196 PLANIFICADOR/(17424:17425): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:24:22:196 PLANIFICADOR/(17424:17426): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 07:24:22:196 PLANIFICADOR/(17424:17426): La cola de planificacion, Listos, esta vacía
+[INFO] 07:24:22:196 PLANIFICADOR/(17424:17426): mProc 1: mem -> Ejecucion 
+
+[INFO] 07:24:22:196 PLANIFICADOR/(17424:17426): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -iniciar- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): El proceso mem ejecuto la instruccion -entrada salida- con valor : true
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): Colocado el proceso: mem con pid = 1 en la cola de bloqueados
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): La cola de planificacion, Listos, esta vacía
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:24:37:293 PLANIFICADOR/(17424:17424): mProc 1: mem -> Bolqueados 
+
+[INFO] 07:24:57:293 PLANIFICADOR/(17424:17427): mProc mem en entrada-salida de tiempo 20
+[INFO] 07:24:57:293 PLANIFICADOR/(17424:17427): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 07:24:57:294 PLANIFICADOR/(17424:17427): mProc 1: mem -> Listos 
+
+[INFO] 07:24:57:294 PLANIFICADOR/(17424:17427): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:24:57:294 PLANIFICADOR/(17424:17427): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:24:57:294 PLANIFICADOR/(17424:17426): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 07:24:57:294 PLANIFICADOR/(17424:17426): La cola de planificacion, Listos, esta vacía
+[INFO] 07:24:57:294 PLANIFICADOR/(17424:17426): mProc 1: mem -> Ejecucion 
+
+[INFO] 07:24:57:294 PLANIFICADOR/(17424:17426): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:24:57:295 PLANIFICADOR/(17424:17424): Finalizado el proceso: mem con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 35.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 35.000000
+
+[INFO] 07:25:43:723 PLANIFICADOR/(17424:17425): Colocado el proceso: mem con pid = 2 en la cola de listos
+[INFO] 07:25:43:723 PLANIFICADOR/(17424:17425): mProc 2: mem -> Listos 
+
+[INFO] 07:25:43:723 PLANIFICADOR/(17424:17425): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:25:43:723 PLANIFICADOR/(17424:17425): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:25:43:723 PLANIFICADOR/(17424:17426): Colocado el proceso: mem con pid = 2 en la cola de ejecucion
+[INFO] 07:25:43:723 PLANIFICADOR/(17424:17426): La cola de planificacion, Listos, esta vacía
+[INFO] 07:25:43:723 PLANIFICADOR/(17424:17426): mProc 2: mem -> Ejecucion 
+
+[INFO] 07:25:43:723 PLANIFICADOR/(17424:17426): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:27:48:20 PLANIFICADOR/(17703:17703): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 07:28:06:860 PLANIFICADOR/(17703:17707): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 07:28:06:860 PLANIFICADOR/(17703:17707): mProc 1: mem -> Listos 
+
+[INFO] 07:28:06:860 PLANIFICADOR/(17703:17707): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:28:06:860 PLANIFICADOR/(17703:17707): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:28:06:860 PLANIFICADOR/(17703:17708): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 07:28:06:860 PLANIFICADOR/(17703:17708): La cola de planificacion, Listos, esta vacía
+[INFO] 07:28:06:860 PLANIFICADOR/(17703:17708): mProc 1: mem -> Ejecucion 
+
+[INFO] 07:28:06:860 PLANIFICADOR/(17703:17708): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -iniciar- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -entrada salida- con valor : true
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): Colocado el proceso: mem con pid = 1 en la cola de bloqueados
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): La cola de planificacion, Listos, esta vacía
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:28:21:952 PLANIFICADOR/(17703:17703): mProc 1: mem -> Bolqueados 
+
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17709): mProc mem en entrada-salida de tiempo 20
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17709): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17709): mProc 1: mem -> Listos 
+
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17709): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17709): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17708): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17708): La cola de planificacion, Listos, esta vacía
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17708): mProc 1: mem -> Ejecucion 
+
+[INFO] 07:28:41:953 PLANIFICADOR/(17703:17708): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:28:41:955 PLANIFICADOR/(17703:17703): Finalizado el proceso: mem con pid = 1 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 35.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 35.000000
+
+[INFO] 07:30:44:712 PLANIFICADOR/(17703:17707): Colocado el proceso: mem con pid = 2 en la cola de listos
+[INFO] 07:30:44:712 PLANIFICADOR/(17703:17707): mProc 2: mem -> Listos 
+
+[INFO] 07:30:44:712 PLANIFICADOR/(17703:17707): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:30:44:712 PLANIFICADOR/(17703:17707): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:30:44:712 PLANIFICADOR/(17703:17708): Colocado el proceso: mem con pid = 2 en la cola de ejecucion
+[INFO] 07:30:44:712 PLANIFICADOR/(17703:17708): La cola de planificacion, Listos, esta vacía
+[INFO] 07:30:44:712 PLANIFICADOR/(17703:17708): mProc 2: mem -> Ejecucion 
+
+[INFO] 07:30:44:712 PLANIFICADOR/(17703:17708): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -iniciar- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : false
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : false
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -escribir- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -leer- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): El proceso mem ejecuto la instruccion -entrada salida- con valor : true
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): Colocado el proceso: mem con pid = 2 en la cola de bloqueados
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): La cola de planificacion, Listos, esta vacía
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:30:59:804 PLANIFICADOR/(17703:17703): mProc 2: mem -> Bolqueados 
+
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17709): mProc mem en entrada-salida de tiempo 20
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17709): Colocado el proceso: mem con pid = 2 en la cola de listos
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17709): mProc 2: mem -> Listos 
+
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17709): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17709): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17708): Colocado el proceso: mem con pid = 2 en la cola de ejecucion
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17708): La cola de planificacion, Listos, esta vacía
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17708): mProc 2: mem -> Ejecucion 
+
+[INFO] 07:31:19:804 PLANIFICADOR/(17703:17708): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:31:19:807 PLANIFICADOR/(17703:17703): Finalizado el proceso: mem con pid = 2 
+ Movido a la cola de Finalizados.
+ Su Tiempo de ejecucion es: 35.000000 
+ Su tiempo de espera es: 0.000000 
+ Su  tiempo de respuesta es: 35.000000
+
+[INFO] 07:31:33:404 PLANIFICADOR/(17703:17707): Colocado el proceso: mem con pid = 3 en la cola de listos
+[INFO] 07:31:33:404 PLANIFICADOR/(17703:17707): mProc 3: mem -> Listos 
+
+[INFO] 07:31:33:404 PLANIFICADOR/(17703:17707): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:31:33:404 PLANIFICADOR/(17703:17707): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:31:33:404 PLANIFICADOR/(17703:17708): Colocado el proceso: mem con pid = 3 en la cola de ejecucion
+[INFO] 07:31:33:404 PLANIFICADOR/(17703:17708): La cola de planificacion, Listos, esta vacía
+[INFO] 07:31:33:404 PLANIFICADOR/(17703:17708): mProc 3: mem -> Ejecucion 
+
+[INFO] 07:31:33:404 PLANIFICADOR/(17703:17708): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:41:12:660 PLANIFICADOR/(18444:18444): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 07:41:44:398 PLANIFICADOR/(18444:18448): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 07:41:44:398 PLANIFICADOR/(18444:18448): mProc 1: mem -> Listos 
+
+[INFO] 07:41:44:398 PLANIFICADOR/(18444:18448): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 07:41:44:398 PLANIFICADOR/(18444:18448): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 07:41:44:398 PLANIFICADOR/(18444:18449): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 07:41:44:398 PLANIFICADOR/(18444:18449): La cola de planificacion, Listos, esta vacía
+[INFO] 07:41:44:398 PLANIFICADOR/(18444:18449): mProc 1: mem -> Ejecucion 
+
+[INFO] 07:41:44:398 PLANIFICADOR/(18444:18449): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 13:52:32:345 PLANIFICADOR/(18742:18742): Se conecto la cpu con pid: 0, en el socket 5
+[INFO] 13:53:04:140 PLANIFICADOR/(18742:18747): Colocado el proceso: mem con pid = 1 en la cola de listos
+[INFO] 13:53:04:140 PLANIFICADOR/(18742:18747): mProc 1: mem -> Listos 
+
+[INFO] 13:53:04:140 PLANIFICADOR/(18742:18747): La lista de planificacion, Ejecucion, esta vacía
+[INFO] 13:53:04:140 PLANIFICADOR/(18742:18747): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 13:53:04:140 PLANIFICADOR/(18742:18748): Colocado el proceso: mem con pid = 1 en la cola de ejecucion
+[INFO] 13:53:04:140 PLANIFICADOR/(18742:18748): La cola de planificacion, Listos, esta vacía
+[INFO] 13:53:04:140 PLANIFICADOR/(18742:18748): mProc 1: mem -> Ejecucion 
+
+[INFO] 13:53:04:140 PLANIFICADOR/(18742:18748): La cola de planificacion, Bolqueados, esta vacía
+[INFO] 14:03:08:789 PLANIFICADOR/(18742:18747): Colocado el proceso: corto con pid = 2 en la cola de listos
+[INFO] 14:03:08:789 PLANIFICADOR/(18742:18747): mProc 2: corto -> Listos 
+
+[INFO] 14:03:08:789 PLANIFICADOR/(18742:18747): mProc 1: mem -> Ejecucion 
+
+[INFO] 14:03:08:789 PLANIFICADOR/(18742:18747): La cola de planificacion, Bolqueados, esta vacía

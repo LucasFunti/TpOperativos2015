@@ -7,16 +7,14 @@
 
 int main() {
 
-	test = true;
+	test = false;
 
 	iniciarLogger();
 	levantarConfiguracion();
 	iniciar_marcos();
 	registrarSeniales();
 
-	if (!test) {
-		conectarseAlSwap();
-	}
+	conectarseAlSwap();
 
 	//Inicio el semáforo que blockea todas las operaciones de la memoria
 	pthread_mutex_init(&semaforo_memoria, NULL);
@@ -28,8 +26,6 @@ int main() {
 }
 
 void atenderConexion(int socket, fd_set sockets_activos) {
-
-	pthread_mutex_lock(&semaforo_memoria);
 
 	t_data * data_entrante = leer_paquete(socket);
 
@@ -131,7 +127,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		log_info(logger,
 				string_from_format(
 						"Se intenta escribir la página %d para el proceso %d con el contenido %s",
-						cant_paginas, pid, texto));
+						pagina_escribir, pid_escribir, texto));
 
 		exito = escribir_n(pid_escribir, pagina_escribir, texto);
 
@@ -187,8 +183,6 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 
 	}
 	free(data_entrante);
-
-	pthread_mutex_unlock(&semaforo_memoria);
 
 }
 
