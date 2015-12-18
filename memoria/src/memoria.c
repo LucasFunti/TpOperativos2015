@@ -5,34 +5,26 @@
  */
 #include "memoria.h"
 
-
 int main() {
 
 	test = true;
 
 	iniciarLogger();
 	levantarConfiguracion();
-	iniciar_marcos(memoriaConfig);
+	iniciar_marcos();
 	registrarSeniales();
 
-	//conectarseAlSwap();
-
-	iniciarEstructuras();
+	if (!test) {
+		conectarseAlSwap();
+	}
 
 	//Inicio el semáforo que blockea todas las operaciones de la memoria
 	pthread_mutex_init(&semaforo_memoria, NULL);
+	pthread_create(&hiloMostrarTasa, NULL, mostrarTasaTlb, NULL);
 
 	atenderConexiones();
 
 	return 1;
-}
-
-void iniciarEstructuras() {
-
-	tlb = list_create();
-	tabla_paginas = list_create();
-	numero_operacion = 0;
-
 }
 
 void atenderConexion(int socket, fd_set sockets_activos) {
@@ -55,25 +47,22 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid, data_entrante->data, sizeof(int));
 		memcpy(&cant_paginas, data_entrante->data + sizeof(int), sizeof(int));
 
-		//El false indica que no es un test
+		log_info(logger,
+				string_from_format(
+						"Se intenta iniciar el proceso %d con %d páginas", pid,
+						cant_paginas));
 
 		bool exito1 = iniciar_n(pid, cant_paginas);
 
 		t_data * paquete;
 
-		if (exito1) {
+		if (!exito1) {
 
-			log_info(logger,
-					string_from_format("Se inicia el programa %d con %d marcos",
-							pid, cant_paginas));
-
-		} else {
-
-			log_info(logger, "No se pudo iniciar el programa pedido");
+			log_warning(logger, "No se pudo iniciar el programa pedido");
 
 		}
 
-		//Data basura le mando, total no tengo nada que mandar
+		//Le mando basura como data, ya que lo que le importa es el numeroOperacion
 		paquete = pedirPaquete(exito1, sizeof(int), &pid);
 		common_send(socket, paquete);
 
@@ -92,22 +81,26 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		memcpy(&pid_leer, data_entrante->data, sizeof(int));
 		memcpy(&pagina_leer, data_entrante->data + sizeof(int), sizeof(int));
 
+		log_info(logger,
+				string_from_format(
+						"Se intenta leer la página %d para el proceso %d",
+						pagina_leer, pid_leer));
+
 		bool exito = leer_n(pid_leer, pagina_leer);
 
-		if (exito) {
-
-			log_info(logger,
-					string_from_format("Leer el pid %d y página %d retorna %s.",
-							pid_leer, pagina_leer, contenido_lectura));
-		} else {
-			log_info(logger,
+		if (!exito) {
+			log_warning(logger,
 					string_from_format(
 							"No se disponian marcos para el proceso %d, se finaliza.",
 							pid_leer));
+			finalizar(pid);
 
 			contenido_lectura = NULL;
-
 		}
+
+		log_info(logger,
+				string_from_format("El resultado de la lectura fué %s",
+						contenido_lectura));
 
 		int tamanio_marco = config_get_int_value(memoriaConfig,
 				"TAMANIO_MARCO");
@@ -135,24 +128,22 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		char * texto = malloc(tamanio_texto);
 		memcpy(texto, data_entrante->data + 3 * sizeof(int), tamanio_texto);
 
+		log_info(logger,
+				string_from_format(
+						"Se intenta escribir la página %d para el proceso %d con el contenido %s",
+						cant_paginas, pid, texto));
+
 		exito = escribir_n(pid_escribir, pagina_escribir, texto);
 
-		if (exito) {
-			log_info(logger,
+		if (!exito) {
+			log_warning(logger,
 					string_from_format(
-							"Se escribío en la página %d del pid %d el texto %s.",
-							pagina_escribir, pid_escribir, texto));
-			paquete = pedirPaquete(1, 4, &exito);
-
-		} else {
-			log_error(logger,
-					string_from_format(
-							"No se disponian marcos para el proceso %d, se finaliza.",
-							pid_escribir));
-			paquete = pedirPaquete(0, 4, &exito);
+							"No se disponian marcos para el proceso %d, se finaliza",
+							pid_leer));
 			finalizar(pid);
 		}
 
+		paquete = pedirPaquete(exito, 4, &exito);
 		common_send(socket, paquete);
 
 		break;
@@ -168,7 +159,6 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 
 		memcpy(&pid_para_finalizar, data_entrante->data, sizeof(int));
 
-		//False porque no es test
 		finalizar(pid_para_finalizar);
 
 		log_info(logger,
@@ -197,6 +187,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 
 	}
 	free(data_entrante);
+
 	pthread_mutex_unlock(&semaforo_memoria);
 
 }
@@ -211,7 +202,7 @@ void levantarConfiguracion() {
 	char variablesConfiguracion[10][50] = { "PUERTO_ESCUCHA", "IP_SWAP",
 			"PUERTO_SWAP", "MAXIMO_MARCOS_POR_PROCESO", "CANTIDAD_MARCOS",
 			"TAMANIO_MARCO", "ENTRADAS_TLB", "TLB_HABILITADA",
-			"RETARDO_MEMORIA", "ALGORITMO_REMPLAZO" };
+			"RETARDO_MEMORIA", "ALGORITMO_REEMPLAZO" };
 	int i;
 	for (i = 0; i < 10; i++) {
 

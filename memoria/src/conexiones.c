@@ -11,7 +11,7 @@ void atenderConexiones() {
 	socketEscucha = setup_listen("localhost",
 			config_get_string_value(memoriaConfig, "PUERTO_ESCUCHA"));
 
-	listen(socketEscucha, 15);
+	listen(socketEscucha, 1024);
 
 	loggearInfo(
 			string_from_format("Se escuchan conexiones en el socket %d",
@@ -66,20 +66,8 @@ void atenderConexiones() {
 					// La actividad es en un puerto de escucha (tenemos que atender su pedido)
 				} else {
 
-					void * auxiliar_peek = malloc(sizeof(int));
+					atenderConexion(i, sockets_activos);
 
-					//El flag MSG_PEEK sirve para que no saque la data del socket, simplemente la copia
-					int cantidad_recibida = recv(i, auxiliar_peek, sizeof(int),
-					MSG_PEEK);
-
-					//Si es cero, significa que no había nada nuevo
-					if (cantidad_recibida > 0) {
-						loggearInfo(
-								string_from_format(
-										"Se detecto una conexión existente con un pedido"));
-						atenderConexion(i, sockets_activos);
-					}
-					free(auxiliar_peek);
 				}
 			}
 		}
@@ -143,6 +131,7 @@ int setup_listen(char* IP, char* Port) {
 }
 
 int connect_to(char *IP, char* Port) {
+
 	struct addrinfo* serverInfo = common_setup(IP, Port);
 	if (serverInfo == NULL) {
 		return -1;

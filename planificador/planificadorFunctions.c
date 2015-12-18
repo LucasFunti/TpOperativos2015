@@ -81,7 +81,7 @@ int getQuantum() {
 	t_config *planificador_config;
 	planificador_config = config_create(
 			"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
-	int quantum = config_get_int_value(planificador_config, "PUERTO_ESCUCHA");
+	int quantum = config_get_int_value(planificador_config, "QUANTUM");
 	return quantum;
 }
 
@@ -155,7 +155,7 @@ void cambiarEstado(tipo_pcb *proceso, int estado) {
 	proceso->estado = estado;
 	mostrarEstadoDeListos(colaListos, "Listos");
 	mostrarEstadoDeLista(en_ejecucion, "Ejecucion");
-	mostrarEstadoDeBloqueados(entradaSalida, "Bolqueados");
+	mostrarEstadoDeBloqueados(entradaSalida, "Bloqueados");
 }
 
 /*agrega un proceso a la cola de listos */
@@ -177,7 +177,8 @@ tipo_pcb * removerDeColaDeListos() {
 	pthread_mutex_lock(&mutex_readys);
 	proceso = queue_pop(colaListos);
 	time_t horaActual = time(NULL);
-	proceso->tiempoEnReadys = difftime(horaActual, proceso->tiempoIngreso);
+	proceso->tiempoEnReadys = proceso->tiempoEnReadys
+			+ difftime(horaActual, proceso->tiempoIngreso);
 	pthread_mutex_unlock(&mutex_readys);
 	return proceso;
 
@@ -237,6 +238,7 @@ void agregarAColaDeBloqueados(nodo_entrada_salida*io) {
 			io->proceso->nombrePrograma, io->proceso->id);
 	cambiarEstado(io->proceso, bloqueado);
 	pthread_mutex_unlock(&mutex_bloqueados);
+	sem_post(&input_output);
 
 }
 nodo_entrada_salida * quitarDeColaBloqueados() {
@@ -246,7 +248,8 @@ nodo_entrada_salida * quitarDeColaBloqueados() {
 }
 
 /* saca un proceso de la lista de ejecucion y lo coloca en la cola de entrada salida */
-nodo_entrada_salida * cambiarEstadoABloqueado(void* data) {
+void cambiarEstadoABloqueado(void* data) {
+
 	data_hilo *dataHilo = data;
 
 	nodo_en_ejecucion * proceso = removerDeListaDeEjecucion(dataHilo->pcb);
@@ -262,13 +265,9 @@ nodo_entrada_salida * cambiarEstadoABloqueado(void* data) {
 	io->espera = dataHilo->tiempo;
 
 	agregarAColaDeBloqueados(io);
-
-	sem_post(&input_output);
-
-	return io;
 }
 
-void *manejarEntradaSalida() {
+void * manejarEntradaSalida() {
 	while (1) {
 
 		sem_wait(&input_output);
@@ -277,19 +276,18 @@ void *manejarEntradaSalida() {
 
 		nodo_entrada_salida * io = quitarDeColaBloqueados();
 
+		pthread_mutex_unlock(&mutex_entrada_salida);
+
 		sleep(io->espera);
 
-		log_info(log_planificador,
-				"mProc %s en entrada-salida de tiempo %d",
-				io->proceso->nombrePrograma,io->espera);
-
-		io->proceso->programCounter++;
-
-		pthread_mutex_unlock(&mutex_entrada_salida);
+		log_info(log_planificador, "mProc %s en entrada-salida de tiempo %d",
+				io->proceso->nombrePrograma, io->espera);
 
 		agregarEnColaDeListos(io->proceso);
 
 		sem_post(&procesos_listos);
+
+//		sem_post(&input_output);
 
 	}
 	return NULL;
@@ -351,21 +349,27 @@ rafaga_t * deserializarInstruccion(void * data) {
 
 void ejecutarlogueoInstruccionesEjecutadas(void * data, int cantidadResultados,
 		nodo_en_ejecucion * proceso) {
+
 	int i;
-	for (i = 0; i > cantidadResultados; i++) {
+	for (i = 0; i < cantidadResultados; i++) {
+
 		rafaga_t * instruccion = malloc(sizeof(rafaga_t));
-		memcpy(&instruccion->rafagaEjecutada,
-				data + (sizeof(int) * 2) + i * sizeof(int), sizeof(int));
-		i++;
+
+		memcpy(&instruccion->rafagaEjecutada, data + i * 2 * (sizeof(int)),
+				sizeof(int));
+
 		memcpy(&instruccion->resultado_rafaga,
-				data + (sizeof(int) * 2) + i * sizeof(int), sizeof(int));
+				data + i + sizeof(int) * 2 * (sizeof(int)), sizeof(int));
+
 		loguearRafaga(instruccion, proceso);
+
+		free(instruccion);
+
 	}
 }
 /*FUNCION QUE INTERPRETA LO RECIBIDO POR ALGUNA CPU*/
 void interpretarInstruccion(int instruccion, int socketCliente) {
 
-	void * data = malloc(sizeof(int) * 4);
 	void * dataIO = malloc(sizeof(int) * 2);
 	int tamanio;
 	int pid;
@@ -376,7 +380,8 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 	case finalizado:
 
 		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
-		recv(socketCliente, data, sizeof(int) * 3, MSG_WAITALL);
+		void * data = malloc(tamanio);
+		recv(socketCliente, data, tamanio, MSG_WAITALL);
 
 		//rafaga_t * instruccion;
 		//instruccion = deserializarInstruccion(data);
@@ -393,7 +398,8 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 
 		proceso = list_remove_by_condition(en_ejecucion, encontrar_cpu);
 
-		//TODO recivir lista de resultados ejecutados
+		proceso->proceso->tiempoRespuesta = time(NULL);
+
 		ejecutarlogueoInstruccionesEjecutadas(data, cantidadResultados,
 				proceso);
 
@@ -410,7 +416,8 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 	case finquantum:
 
 		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
-		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
+		data = malloc(tamanio);
+		recv(socketCliente, data, tamanio, MSG_WAITALL);
 
 		//rafaga_t * unaInstruccion = deserializarInstruccion(data);
 		rafaga_t * unaInstruccion = malloc(sizeof(rafaga_t));
@@ -426,7 +433,8 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		proceso = list_remove_by_condition(en_ejecucion,
 				encontrar_cpu_finQuantum);
 
-		//TODO recivir lista de resultados ejecutados
+		proceso->proceso->tiempoRespuesta = time(NULL);
+
 		ejecutarlogueoInstruccionesEjecutadas(data, cantidadResultados,
 				proceso);
 
@@ -437,6 +445,7 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		liberarCpu(proceso->socket);
 
 		sem_post(&cpu_libre);
+
 		sem_post(&procesos_listos);
 
 		free(data);
@@ -456,23 +465,29 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 
 		proceso = list_remove_by_condition(en_ejecucion, encontrar_cpu_falla);
 
+		proceso->proceso->tiempoRespuesta = time(NULL);
+
 		liberarCpu(proceso->socket);
+
 		sem_post(&cpu_libre);
 
-		free(data);
+
 		break;
 
 	case entrada_salida:
 
 		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
-		recv(socketCliente, dataIO, sizeof(int) * 3, MSG_WAITALL);
+
+		dataIO = malloc(tamanio - 4 * sizeof(int));
 
 		int pid_cpu, tiempoIO, punteroActualizado;
 
-		memcpy(&pid_cpu, dataIO, sizeof(int));
-		memcpy(&tiempoIO, dataIO + sizeof(int), sizeof(int));
-		memcpy(&punteroActualizado, dataIO + (sizeof(int) * 2), sizeof(int));
-		memcpy(&cantidadResultados, dataIO + (sizeof(int) * 3), sizeof(int));
+		recv(socketCliente, &pid_cpu, sizeof(int), MSG_WAITALL);
+		recv(socketCliente, &tiempoIO, sizeof(int), MSG_WAITALL);
+		recv(socketCliente, &punteroActualizado, sizeof(int), MSG_WAITALL);
+		recv(socketCliente, &cantidadResultados, sizeof(int), MSG_WAITALL);
+
+		recv(socketCliente, dataIO, tamanio - 4 * (sizeof(int)), MSG_WAITALL);
 
 		bool encontrar_cpu_io(void * nodo) {
 			nodo_en_ejecucion * nodito = nodo;
@@ -480,18 +495,14 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 		}
 
 		proceso = list_find(en_ejecucion, encontrar_cpu_io);
+		proceso->proceso->tiempoRespuesta = time(NULL);
 
-		//TODO recivir lista de resultados ejecutados
 		ejecutarlogueoInstruccionesEjecutadas(dataIO, cantidadResultados,
 				proceso);
-
+		proceso->proceso->programCounter = punteroActualizado;
 		data_hilo * dataHilo = obtenerDatosHilo(proceso, tiempoIO);
 
 		cambiarEstadoABloqueado(dataHilo);
-
-		pthread_t hilo;
-
-		pthread_create(&hilo, NULL, manejarEntradaSalida, NULL);
 
 		break;
 	}
@@ -504,10 +515,13 @@ void agregarAFinalizados(t_queue *finalizados, nodo_en_ejecucion * proceso,
 	proceso->proceso->tiempoFinalizacion = time(NULL);
 	double tiempoDeEjecucion = difftime(proceso->proceso->tiempoFinalizacion,
 			proceso->proceso->tiempoComienzo);
+	double tiempoRespuesta = difftime(proceso->proceso->tiempoRespuesta,
+			proceso->proceso->tiempoComienzo);
 	log_info(log_planificador,
-			"Finalizado el proceso: %s con pid = %d \n Movido a la cola de Finalizados.\n Su Tiempo de ejecucion es: %f - Su tiempo de espera es: %f\n",
-			proceso->proceso->nombrePrograma, tiempoDeEjecucion,
-			proceso->proceso->id, proceso->proceso->tiempoEnReadys);
+			"Finalizado el proceso: %s con pid = %d \n Movido a la cola de Finalizados.\n Su Tiempo de ejecucion es: %f \n Su tiempo de espera es: %f \n Su  tiempo de respuesta es: %f\n",
+			proceso->proceso->nombrePrograma, proceso->proceso->id,
+			tiempoDeEjecucion, proceso->proceso->tiempoEnReadys,
+			tiempoRespuesta);
 }
 /* LOGUEO DE UNA RAFAGA */
 void loguearRafaga(rafaga_t *otraInstruccion, nodo_en_ejecucion * unProceso) {
@@ -547,18 +561,11 @@ data_hilo *obtenerDatosHilo(nodo_en_ejecucion *Proceso, int tiempo) {
 	return dataHilo;
 }
 /* FUNCION QUE ENVIA MSJ A LA CPU PARA AVERIGUAR SU PORCENTAJE */
-void peticionPorcentajeUsoCpu(t_list * lista, int codigo) {
+void peticionPorcentajeUsoCpu(int codigo) {
 	int j;
-	if (list_size(lista) == 0) {
-		printf("No hay procesos en ejecución\n");
-
-	} else {
-
-		for (j = 0; j < list_size(lista); j++) {
-			nodo_en_ejecucion *procesoEnEjecucion = list_get(lista, j);
-			send(procesoEnEjecucion->socket, &codigo, sizeof(int), MSG_WAITALL);
-		}
-
+	for (j = 0; j < list_size(listaCpu); j++) {
+		t_cpu *unaCpu = list_get(listaCpu, j);
+		send(unaCpu->socket, &codigo, sizeof(int), MSG_WAITALL);
 	}
 }
 
@@ -600,19 +607,17 @@ void * ejecutarIngresoConsola() {
 						== pid_a_finalizar);
 			}
 
-			nodo_en_ejecucion *procesoEnEjecucion = list_remove_by_condition(
-					en_ejecucion, encontrar_pid);
+			nodo_en_ejecucion *procesoEnEjecucion = list_find(en_ejecucion, encontrar_pid);
+			if(procesoEnEjecucion == NULL){
+				log_info(log_planificador,"El proceso a finalizar con pid: %d, no se encuentra en la cola de ejecucion");
+			}else{
 			printf("VAMOS A FINALIZAR AL PROCESO CON PID: %d\n",
 					procesoEnEjecucion->proceso->id);
-			int PC = -1;
-			PC = setProgramCounter(procesoEnEjecucion->proceso->dirProceso);
 
-			procesoEnEjecucion->proceso->programCounter = PC;
+			int codigo = 99;
 
-			agregarEnColaDeListos(procesoEnEjecucion->proceso);
-
-			sem_post(&procesos_listos);
-
+			send(procesoEnEjecucion->socket,&codigo,sizeof(int),MSG_WAITALL);
+			}
 			break;
 		case 2:
 			/* ps */
@@ -624,7 +629,7 @@ void * ejecutarIngresoConsola() {
 			break;
 		case 3:
 			/* cpu */
-			peticionPorcentajeUsoCpu(en_ejecucion, 3);
+			peticionPorcentajeUsoCpu(3);
 			break;
 		}
 
@@ -632,7 +637,7 @@ void * ejecutarIngresoConsola() {
 	return NULL;
 }
 
-void * despacharProcesosListos() {
+void *despacharProcesosListos() {
 
 	while (1) {
 
@@ -656,9 +661,10 @@ void * despacharProcesosListos() {
 		enviarContextoEjecucion(cpuLibre->socket, 1, procesoEjecutando->proceso,
 				procesoEjecutando->proceso->dirProceso, getAlgoritmo(),
 				getQuantum());
+		cpuLibre->libre = false;
 
 	}
-	return NULL;
+
 }
 
 bool cpuEstaLibre(void * data) {

@@ -8,10 +8,17 @@
 
 int fifo() {
 
+	log_info(logger, "Se utiliza el algoritmo fifo");
+
 	t_list * marcos_proceso = list_filter(cola_llegada,
 			coincide_pid_y_esta_presente);
 
 	t_item * item = list_remove(marcos_proceso, 0);
+
+	log_info(logger,
+			string_from_format(
+					"Se va a remplazar la página %d del proceso %d que ocupa el marco %d",
+					item->pid, item->pagina, item->marco));
 
 	pagina_matchear = item->pagina;
 
@@ -34,12 +41,19 @@ int fifo() {
 
 int lru() {
 
+	log_info(logger, "Se utiliza el algoritmo lru");
+
 	t_list * marcos_proceso = list_filter(cola_llegada,
 			coincide_pid_y_esta_presente);
 
 	list_sort(marcos_proceso, comparador_primero_menor_n_operacion);
 
 	t_item * item = list_get(marcos_proceso, 0);
+
+	log_info(logger,
+			string_from_format(
+					"La victima es la pagina %d con el marco %d con el numero de operacion %d",
+					item->pagina, item->marco, item->numero_operacion));
 
 	pagina_matchear = item->pagina;
 
@@ -62,6 +76,8 @@ int get_numero_operacion() {
 }
 
 int clock_m() {
+
+	log_info(logger, "Se utiliza el algoritmo clock_modificado");
 
 	ignorar_proximoAgregar = true;
 
@@ -103,6 +119,12 @@ int clock_m() {
 
 	}
 
+	t_item * puntero = list_get(listaAuxiliar, 0);
+
+	loggearInfo(
+			string_from_format("El puntero es la página %d con el marco %d",
+					puntero->pagina, puntero->marco));
+
 	//Ya tengo la lista auxiliar armada
 
 	posicion = -1;
@@ -116,10 +138,16 @@ int clock_m() {
 
 	t_item * victima;
 
+	loggearInfo("Se busca victima con USO falso y MODIFICADO falso");
+
 	comenzarDeNuevo: victima = list_find(listaAuxiliar,
 			buscar_uso_cero_modificado_cero);
 
 	if (victima != NULL) {
+
+		loggearInfo(
+				string_from_format("Se encontro victima, pagina %d, marco %d",
+						victima->pagina, victima->marco));
 
 		victima->presencia = false;
 
@@ -156,6 +184,8 @@ int clock_m() {
 		return victima->marco;
 	}
 
+	loggearInfo("No se encontró victima");
+
 	posicion = -1;
 
 	bool buscar_uso_cero_modificado_uno_cambiando_uso(void * data) {
@@ -170,10 +200,17 @@ int clock_m() {
 		return false;
 	}
 
+	loggearInfo(
+			"Se busca victima con USO falso y MODIFICADO true, cambiando USO a falso");
+
 	victima = list_find(listaAuxiliar,
 			buscar_uso_cero_modificado_uno_cambiando_uso);
 
 	if (victima != NULL) {
+
+		loggearInfo(
+				string_from_format("Se encontro victima, pagina %d, marco %d",
+						victima->pagina, victima->marco));
 
 		swap_escribir(victima->pid, victima->pagina, victima->marco);
 
