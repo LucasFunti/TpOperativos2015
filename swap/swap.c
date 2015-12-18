@@ -9,25 +9,12 @@
  *      Author: utnso
  */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <commons/config.h>
-#include <commons/collections/list.h>
-#include <commons/bitarray.h>
-#include <signiorCodigo/libSockets.h>
-#include "swapFunctions.h"
+#include "swap.h"
 
 #define INICIAR 4
 #define LEER 5
 #define ESCRIBIR 6
 #define FINALIZAR 8
-
-
 
 int main(int argc, char **argv) {
 	t_log * log_swap = log_create("log_swap", "SWAP", true, LOG_LEVEL_INFO);
@@ -37,8 +24,6 @@ int main(int argc, char **argv) {
 	char * puerto = getPort();
 
 	socketEscucha = setup_listen("localhost", puerto);
-
-	listen(socketEscucha,1024);
 
 	socketMemoria = esperarConexionEntrante(socketEscucha, 1024, log_swap);
 
@@ -61,14 +46,25 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
+	char* file_name = getSwapFileName();
+	char str[100];
+	strcpy(str, "/tp-2015-2c-signiorcodigo/swap/Debug/");
+	strcpy(str, file_name);
+	int result = doesFileExist(str);
+	if (!result) {
+		setupSwap();
+	} else {
+		printf("El archivo de Swap ya existe. Continuamos...\n");
+	}
 	setupSwap();
+/*
 	int pagesAmount = getSwapPagesAmount();
 	t_list *pages = setPages(pagesAmount);
 
 	while (1) {
 		t_data * paquete = leer_paquete(socketMemoria);
 
-		int cantidad,pid,pagina,tamanio;
+		int cantidad, pid, pagina, tamanio;
 
 		switch (paquete->header->codigo_operacion) {
 
@@ -79,24 +75,24 @@ int main(int argc, char **argv) {
 
 			break;
 		case LEER:
-			memcpy(&pid,paquete->data,sizeof(int));
-			memcpy(&pagina,paquete->data + sizeof(int),sizeof(int));
+			memcpy(&pid, paquete->data, sizeof(int));
+			memcpy(&pagina, paquete->data + sizeof(int), sizeof(int));
 			//me parece que faltaria algo en esa funcion porque lee una pagina pero no en base a la del proceso
 			readPage(pagina);
 			break;
 		case ESCRIBIR:
-			memcpy(&pid,paquete->data,sizeof(int));
-			memcpy(&pagina,paquete->data + sizeof(int),sizeof(int));
-			memcpy(&tamanio,paquete->data + (sizeof(int) * 2),sizeof(int));
+			memcpy(&pid, paquete->data, sizeof(int));
+			memcpy(&pagina, paquete->data + sizeof(int), sizeof(int));
+			memcpy(&tamanio, paquete->data + (sizeof(int) * 2), sizeof(int));
 			char * texto = malloc(tamanio);
-			memcpy(texto,paquete->data + (sizeof(int)*3),tamanio);
+			memcpy(texto, paquete->data + (sizeof(int) * 3), tamanio);
 
 			int hasReservedPages;
-			hasReservedPages = checkProcessSpace(pid, pages);
-			if (hasReservedPages>=0){
-				int start = checkProcessSpace(pid,pages);
-				writePage(start,texto);
-				markPage(start,pid,pages);
+			hasReservedPages = getProcessReservedSpace(pid, pages);
+			if (hasReservedPages >= 0) {
+				int start = getProcessFirstPage(pid, pages);
+				writePage(start, texto);
+				markPage(start, pid, pages);
 			} else {
 				printf("El proceso no posee páginas reservadas\n");
 			}
@@ -104,7 +100,7 @@ int main(int argc, char **argv) {
 		case FINALIZAR:
 			break;
 		}
-	}
+	}*/
 //	char* file_name = getSwapFileName();
 //	int pagesAmount = getSwapPagesAmount();
 //	char str[100];
