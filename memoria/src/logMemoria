@@ -1,13 +1,122 @@
-[INFO] 18:18:47:978 PAM/(2584:2584): Iniciado el proceso administrador de memoria
-[INFO] 18:18:47:982 PAM/(2584:2584): Levantan las configuraciones
-[INFO] 18:18:47:985 PAM/(2584:2584): Configurado con PUERTO_ESCUCHA: 5001
-[INFO] 18:18:47:987 PAM/(2584:2584): Configurado con IP_SWAP: localhost
-[INFO] 18:18:47:987 PAM/(2584:2584): Configurado con PUERTO_SWAP: 6000
-[INFO] 18:18:47:997 PAM/(2584:2584): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
-[INFO] 18:18:47:998 PAM/(2584:2584): Configurado con CANTIDAD_MARCOS: 20
-[INFO] 18:18:47:998 PAM/(2584:2584): Configurado con TAMANIO_MARCO: 15
-[INFO] 18:18:47:1 PAM/(2584:2584): Configurado con ENTRADAS_TLB: 2
-[INFO] 18:18:47:2 PAM/(2584:2584): Configurado con TLB_HABILITADA: NO
-[INFO] 18:18:47:3 PAM/(2584:2584): Configurado con RETARDO_MEMORIA: 0
-[INFO] 18:18:48:10 PAM/(2584:2584): Configurado con ALGORITMO_REMPLAZO: (null)
-[INFO] 18:18:48:11 PAM/(2584:2584): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
+[INFO] 21:58:14:765 PAM/(6051:6051): Iniciado el proceso administrador de memoria
+[INFO] 21:58:14:766 PAM/(6051:6051): Levantan las configuraciones
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con PUERTO_ESCUCHA: 5001
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con IP_SWAP: localhost
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con PUERTO_SWAP: 6000
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con MAXIMO_MARCOS_POR_PROCESO: 20
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con CANTIDAD_MARCOS: 20
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con TAMANIO_MARCO: 15
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con ENTRADAS_TLB: 2
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con TLB_HABILITADA: SI
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con RETARDO_MEMORIA: 0
+[INFO] 21:58:14:766 PAM/(6051:6051): Configurado con ALGORITMO_REEMPLAZO: FIFO
+[INFO] 21:58:14:766 PAM/(6051:6051): Se inició la cola de llegada
+[INFO] 21:58:14:766 PAM/(6051:6051): Se inició la tlb
+[INFO] 21:58:14:767 PAM/(6051:6051): Se inició la tabla de páginas
+[INFO] 21:58:14:767 PAM/(6051:6051): Se setearon en cero la cantidad de pedidos y aciertos totales
+[INFO] 21:58:14:767 PAM/(6051:6051): Se setearon en cero la cantidad de page faults y accesos a swap
+[INFO] 21:58:14:767 PAM/(6051:6051): Se inició la estructura de aciertos por programa de la tlb
+[INFO] 21:58:14:767 PAM/(6051:6051): Se reservó el espacio de memoria
+[INFO] 21:58:14:767 PAM/(6051:6051): Ya se atiende la señal SIGUSR1 (10), SIGUSR2 (12) y SIGPOLL (29) 
+[INFO] 21:58:14:768 PAM/(6051:6051): Se escuchan conexiones en el socket 22
+[INFO] 21:58:18:675 PAM/(6051:6051): Se detecto conexión entrante al puerto de escucha
+[INFO] 21:58:18:675 PAM/(6051:6051): Se asigna el socket 23
+[INFO] 21:58:23:464 PAM/(6051:6051): Realizando una operación INICIAR para el socket 23
+[INFO] 21:58:23:464 PAM/(6051:6051): Se intenta iniciar el proceso 1 con 3 páginas
+[INFO] 21:58:23:464 PAM/(6051:6051): El swap tiene lugar para iniciarlo
+[INFO] 21:58:23:464 PAM/(6051:6051): Se añadieron las entradas a la tabla de páginas
+[INFO] 21:58:24:465 PAM/(6051:6051): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 21:58:24:465 PAM/(6051:6051): Se intenta escribir la página 3 para el proceso 1 con el contenido "Corto"
+[INFO] 21:58:24:465 PAM/(6051:6051): Se busca en la tlb
+[INFO] 21:58:24:465 PAM/(6051:6051): No se encontró en la tlb el elemento
+[INFO] 21:58:24:465 PAM/(6051:6051): Se busca en la tabla de páginas
+[INFO] 21:58:24:465 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:24:465 PAM/(6051:6051): Se encontró el elemento en la tabla de páginas
+[INFO] 21:58:24:465 PAM/(6051:6051): Agregando el item a la tlb
+[INFO] 21:58:24:465 PAM/(6051:6051): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 21:58:24:465 PAM/(6051:6051): El elemento no está presente, se trae a memoria
+[INFO] 21:58:24:465 PAM/(6051:6051): Se intenta leer el contenido del proceso 1 pagina 0 al swap
+[INFO] 21:58:24:465 PAM/(6051:6051): Se busca un marco libre para asignar
+[INFO] 21:58:24:465 PAM/(6051:6051): Hay marcos disponibles para asignar
+[INFO] 21:58:24:465 PAM/(6051:6051): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 21:58:24:465 PAM/(6051:6051): El elemento está presente
+[INFO] 21:58:24:465 PAM/(6051:6051): Se escribe el contenido
+[INFO] 21:58:24:465 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:25:466 PAM/(6051:6051): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 21:58:25:466 PAM/(6051:6051): Se intenta escribir la página 3 para el proceso 1 con el contenido "Corto"
+[INFO] 21:58:25:466 PAM/(6051:6051): Se busca en la tlb
+[INFO] 21:58:25:466 PAM/(6051:6051): No se encontró en la tlb el elemento
+[INFO] 21:58:25:466 PAM/(6051:6051): Se busca en la tabla de páginas
+[INFO] 21:58:25:466 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:25:466 PAM/(6051:6051): Se encontró el elemento en la tabla de páginas
+[INFO] 21:58:25:466 PAM/(6051:6051): Agregando el item a la tlb
+[INFO] 21:58:25:466 PAM/(6051:6051): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 21:58:25:466 PAM/(6051:6051): El elemento no está presente, se trae a memoria
+[INFO] 21:58:25:466 PAM/(6051:6051): Se intenta leer el contenido del proceso 1 pagina 1 al swap
+[INFO] 21:58:25:466 PAM/(6051:6051): Se busca un marco libre para asignar
+[INFO] 21:58:25:466 PAM/(6051:6051): Hay marcos disponibles para asignar
+[INFO] 21:58:25:466 PAM/(6051:6051): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 21:58:25:466 PAM/(6051:6051): El elemento está presente
+[INFO] 21:58:25:466 PAM/(6051:6051): Se escribe el contenido
+[INFO] 21:58:25:466 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:26:466 PAM/(6051:6051): Realizando una operación ESCRIBIR para el socket 23.
+[INFO] 21:58:26:466 PAM/(6051:6051): Se intenta escribir la página 3 para el proceso 1 con el contenido "Corto"
+[INFO] 21:58:26:466 PAM/(6051:6051): Se busca en la tlb
+[INFO] 21:58:26:466 PAM/(6051:6051): No se encontró en la tlb el elemento
+[INFO] 21:58:26:466 PAM/(6051:6051): Se busca en la tabla de páginas
+[INFO] 21:58:26:466 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:26:466 PAM/(6051:6051): Se encontró el elemento en la tabla de páginas
+[INFO] 21:58:26:466 PAM/(6051:6051): Agregando el item a la tlb
+[INFO] 21:58:26:466 PAM/(6051:6051): Se agrega el item nuevo ya que hay entradas disponibles
+[INFO] 21:58:26:466 PAM/(6051:6051): El elemento no está presente, se trae a memoria
+[INFO] 21:58:26:466 PAM/(6051:6051): Se intenta leer el contenido del proceso 1 pagina 2 al swap
+[INFO] 21:58:26:466 PAM/(6051:6051): Se busca un marco libre para asignar
+[INFO] 21:58:26:466 PAM/(6051:6051): Hay marcos disponibles para asignar
+[INFO] 21:58:26:466 PAM/(6051:6051): El proceso tiene menos marcos que la cantidad maxima, se le da uno nuevo
+[INFO] 21:58:26:466 PAM/(6051:6051): El elemento está presente
+[INFO] 21:58:26:466 PAM/(6051:6051): Se escribe el contenido
+[INFO] 21:58:26:467 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:28:469 PAM/(6051:6051): Realizando una operación LEER para el socket 23
+[INFO] 21:58:28:469 PAM/(6051:6051): Se intenta leer la página 0 para el proceso 1
+[INFO] 21:58:28:469 PAM/(6051:6051): Se busca en la tlb
+[INFO] 21:58:28:469 PAM/(6051:6051): No se encontró en la TLB el elemento
+[INFO] 21:58:28:469 PAM/(6051:6051): El elemento está presente
+[INFO] 21:58:28:469 PAM/(6051:6051): Accediendo al contenido existente
+[INFO] 21:58:28:469 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:28:469 PAM/(6051:6051): El resultado de la lectura fué "Corto"
+[INFO] 21:58:29:469 PAM/(6051:6051): Realizando una operación LEER para el socket 23
+[INFO] 21:58:29:470 PAM/(6051:6051): Se intenta leer la página 1 para el proceso 1
+[INFO] 21:58:29:470 PAM/(6051:6051): Se busca en la tlb
+[INFO] 21:58:29:470 PAM/(6051:6051): No se encontró en la TLB el elemento
+[INFO] 21:58:29:470 PAM/(6051:6051): El elemento está presente
+[INFO] 21:58:29:470 PAM/(6051:6051): Accediendo al contenido existente
+[INFO] 21:58:29:470 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:29:470 PAM/(6051:6051): El resultado de la lectura fué "Corto"
+[INFO] 21:58:30:470 PAM/(6051:6051): Realizando una operación LEER para el socket 23
+[INFO] 21:58:30:470 PAM/(6051:6051): Se intenta leer la página 2 para el proceso 1
+[INFO] 21:58:30:470 PAM/(6051:6051): Se busca en la tlb
+[INFO] 21:58:30:470 PAM/(6051:6051): No se encontró en la TLB el elemento
+[INFO] 21:58:30:470 PAM/(6051:6051): El elemento está presente
+[INFO] 21:58:30:470 PAM/(6051:6051): Accediendo al contenido existente
+[INFO] 21:58:30:470 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:30:470 PAM/(6051:6051): El resultado de la lectura fué "Corto"
+[INFO] 21:58:31:470 PAM/(6051:6051): Realizando una operación FINALIZAR para el socket 23
+[INFO] 21:58:31:471 PAM/(6051:6051): Se finaliza el proceso 1. El mismo tuvo 3 aciertos sobre 6 pedidos a la tlb
+[INFO] 21:58:31:471 PAM/(6051:6051): Se remueven los elementos de la tlb
+[INFO] 21:58:31:471 PAM/(6051:6051): Se remueven los elementos de la tabla de páginas
+[INFO] 21:58:31:471 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:31:471 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:31:471 PAM/(6051:6051): Acceso a memoria. Zzz...
+[INFO] 21:58:31:471 PAM/(6051:6051): Se finalizó el pid 1
+[INFO] 21:59:14:770 PAM/(6051:6056): Tasa aciertos 50.00
+[INFO] 21:59:14:770 PAM/(6051:6056): Cantidad de pedidos tlb totales: 6
+[INFO] 21:59:14:770 PAM/(6051:6056): Cantidad de aciertos tlb totales: 3
+[INFO] 22:00:14:770 PAM/(6051:6056): Tasa aciertos 50.00
+[INFO] 22:00:14:770 PAM/(6051:6056): Cantidad de pedidos tlb totales: 6
+[INFO] 22:00:14:770 PAM/(6051:6056): Cantidad de aciertos tlb totales: 3
+[INFO] 22:01:14:771 PAM/(6051:6056): Tasa aciertos 50.00
+[INFO] 22:01:14:771 PAM/(6051:6056): Cantidad de pedidos tlb totales: 6
+[INFO] 22:01:14:771 PAM/(6051:6056): Cantidad de aciertos tlb totales: 3
+[INFO] 22:02:14:775 PAM/(6051:6056): Tasa aciertos 50.00
+[INFO] 22:02:14:775 PAM/(6051:6056): Cantidad de pedidos tlb totales: 6
+[INFO] 22:02:14:775 PAM/(6051:6056): Cantidad de aciertos tlb totales: 3
