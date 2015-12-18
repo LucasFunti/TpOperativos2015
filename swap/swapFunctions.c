@@ -69,11 +69,17 @@ void markPage(int absolutePageNumber, int pid) {
 void writePage(int absolutePageNumber, char *content) {
 
 	int page_size = getSwapPagesSize();
+
 	char *file_name = getSwapFileName();
+
 	FILE *fp = fopen(file_name, "rb+");
+
 	int position = absolutePageNumber * page_size;
+
 	fseek(fp, position, SEEK_SET);
+
 	fwrite(content, sizeof(char), strlen(content), fp);
+
 	fclose(fp);
 }
 
@@ -284,15 +290,17 @@ void copyPage(int from, int to) {
 }
 void fillRemainingSpace() {
 
-	int top = getSwapPagesAmount();
+	int top = getSwapPagesAmount() - 1;
 	int i;
-	int from = list_size(pages);
+	int from = list_size(pages) - 1;
 
 	for (i = from; i < top; i++) {
 
-		t_nodo_swap *newItemPtr = list_get(pages, i);
+		t_nodo_swap *newItemPtr = malloc(sizeof(t_nodo_swap));
 		newItemPtr->numeroPagina = i;
 		newItemPtr->pid = -1;
+
+		list_add(pages, newItemPtr);
 
 	}
 }

@@ -51,6 +51,39 @@ context(pruebas_swap) {
 
 	}end
 
+	describe("eliminar un proceso") {
+
+		before {
+
+			setupSwap();
+			setPages();
+
+			//64 Paginas de tamanio 50
+
+		}end
+
+		it("lo elimina de sus índices") {
+
+			reserve(0,10);
+			reserve(1,10);
+
+			freeSpace(0);
+
+			should_int(getProcessReservedSpace(0)) be equal to(0);
+			should_int(getProcessReservedSpace(1)) be equal to(10);
+
+			should_int(getBlankPages()) be equal to(54);
+
+			freeSpace(1);
+
+			should_int(getProcessReservedSpace(0)) be equal to(0);
+			should_int(getProcessReservedSpace(1)) be equal to(0);
+
+			should_int(getBlankPages()) be equal to(64);
+
+		}end
+	}end
+
 	describe("leer datos") {
 
 		before {
@@ -71,9 +104,89 @@ context(pruebas_swap) {
 
 			writePage(10,"Hola!");
 
-			should_char(readProcessPage(0,0)) be equal to("Hola!");
-			should_char(readProcessPage(0,1)) be equal to("Chau!");
-			should_char(readProcessPage(1,0)) be equal to("Hola!");
+			should_string(readProcessPage(0,0)) be equal to("Hola!");
+			should_string(readProcessPage(0,1)) be equal to("Chau!");
+			should_string(readProcessPage(1,0)) be equal to("Hola!");
+
+		}end
+
+	}end
+
+	describe("escribir datos") {
+
+		before {
+
+			setupSwap();
+			setPages();
+			//64 Paginas de tamanio 50
+
+		}end
+
+		it("Escribe paginas") {
+
+			reserve(0,10);
+			reserve(1,10);
+
+			writeProcessPage(0,0,"Hola!");
+			writeProcessPage(0,1,"Chau!");
+			writeProcessPage(0,2,"Hola2!");
+
+			writeProcessPage(1,2,"JoJoJo!");
+
+			should_string(readProcessPage(0,0)) be equal to("Hola!");
+			should_string(readProcessPage(0,1)) be equal to("Chau!");
+			should_string(readProcessPage(0,2)) be equal to("Hola2!");
+
+			should_string(readProcessPage(1,2)) be equal to("JoJoJo!");
+
+		}end
+
+	}end
+
+	describe("Algoritmo de compactación") {
+
+		before {
+
+			setupSwap();
+			setPages();
+			//64 Paginas de tamanio 50
+
+		}end
+
+		it("compacta los huecos") {
+
+			reserve(0,10);
+			reserve(1,10);
+			reserve(2,10);
+			reserve(3,10);
+			reserve(4,10);
+			reserve(5,10);
+
+			should_int(getLargestContiguousSpace()) be equal to(4);
+
+			freeSpace(1);
+
+			should_int(getLargestContiguousSpace()) be equal to(10);
+
+			freeSpace(3);
+
+			writeProcessPage(0,0,"Hola!");
+
+			writeProcessPage(2,5,"Hola!");
+
+			writeProcessPage(4,9,"Hola!");
+
+			freeSpace(5);
+
+			should_int(getLargestContiguousSpace()) be equal to(14);
+
+			compact();
+
+			should_int(getLargestContiguousSpace()) be equal to(34);
+
+			should_string(readProcessPage(0,0)) be equal to("Hola!");
+			should_string(readProcessPage(2,5)) be equal to("Hola!");
+			should_string(readProcessPage(4,9)) be equal to("Hola!");
 
 		}end
 
