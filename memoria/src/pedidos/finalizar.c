@@ -13,7 +13,7 @@ void finalizar(int pid) {
 					"Se finaliza el proceso %d. El mismo tuvo %d aciertos sobre %d pedidos a la tlb",
 					pid, registroTlb[pid].aciertos, registroTlb[pid].pedidos));
 
-	if (tlb_habilitada(memoriaConfig)) {
+	if (tlb_habilitada()) {
 
 		tlb_remover_pid(pid);
 

@@ -20,23 +20,31 @@ void atenderConexiones() {
 	int socketMasGrande = socketEscucha;
 
 	FD_ZERO(&sockets_activos);
+
 	FD_SET(socketEscucha, &sockets_activos);
-	FD_SET(socketSwap, &sockets_activos);
+	//FD_SET(socketSwap, &sockets_activos);
 
 	while (1) {
 
-		sockets_para_revisar = sockets_activos;
+		labelSelect: sockets_para_revisar = sockets_activos;
 
-		select(socketMasGrande + 1, &sockets_para_revisar, NULL, NULL, NULL);
+		int resultadoSelect = select(socketMasGrande + 1, &sockets_para_revisar,
+		NULL, NULL, NULL);
+
+		if (resultadoSelect == -1) {
+			goto labelSelect;
+		}
 
 		pthread_mutex_lock(&semaforo_memoria);
 
 		int i;
 		for (i = 0; i <= socketMasGrande; i++) {
-			if (FD_ISSET(i, &sockets_para_revisar)) { //Hay actividad
 
-				// La actividad es en el puerto de escucha (osea es conexión nueva)
+			if (FD_ISSET(i, &sockets_para_revisar)) {
+				//Hay actividad
+
 				if (i == socketEscucha) {
+					// La actividad es en el puerto de escucha (osea es conexión nueva)
 
 					loggearInfo(
 							string_from_format(
@@ -58,15 +66,17 @@ void atenderConexiones() {
 								string_from_format("Se asigna el socket %d",
 										socket_nueva_conexion));
 
-						FD_SET(socket_nueva_conexion, &sockets_activos); // Lo añadimos al set de los sockets activos
+						// Lo añadimos al set de los sockets activos
+						FD_SET(socket_nueva_conexion, &sockets_activos);
 
 						if (socket_nueva_conexion > socketMasGrande) {
 							socketMasGrande = socket_nueva_conexion;
 						}
 
 					}
-					// La actividad es en un puerto de escucha (tenemos que atender su pedido)
 				} else {
+
+					// La actividad es en un puerto de cpu (tenemos que atender su pedido)
 
 					atenderConexion(i, sockets_activos);
 

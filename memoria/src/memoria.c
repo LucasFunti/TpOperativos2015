@@ -33,7 +33,7 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 
 	case INICIAR:
 
-		log_info(logger,
+		loggearInfo(
 				string_from_format(
 						"Realizando una operación INICIAR para el socket %d",
 						socket));
