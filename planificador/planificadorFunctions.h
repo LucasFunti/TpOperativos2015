@@ -140,7 +140,7 @@ bool cpuEstaLibre(void * data);
 
 nodo_entrada_salida * quitarDeColaBloqueados() ;
 
-nodo_entrada_salida * cambiarEstadoABloqueado(void* data)  ;
+void cambiarEstadoABloqueado(void* data)  ;
 
 void *manejarEntradaSalida() ;
 

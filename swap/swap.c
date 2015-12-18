@@ -19,8 +19,8 @@
 #include <commons/config.h>
 #include <commons/collections/list.h>
 #include <commons/bitarray.h>
-#include "swapFunctions.h"
 #include <signiorCodigo/libSockets.h>
+#include "swapFunctions.h"
 
 #define INICIAR 4
 #define LEER 5
@@ -37,6 +37,8 @@ int main(int argc, char **argv) {
 	char * puerto = getPort();
 
 	socketEscucha = setup_listen("localhost", puerto);
+
+	listen(socketEscucha,1024);
 
 	socketMemoria = esperarConexionEntrante(socketEscucha, 1024, log_swap);
 

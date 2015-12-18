@@ -16,10 +16,10 @@ int main(int argc, char **argv) {
 	pthread_mutex_init(&mutex_ejecucion, NULL);
 	pthread_mutex_init(&mutex_bloqueados, NULL);
 	pthread_mutex_init(&mutex_cpus, NULL);
-	pthread_mutex_init(&mutex_entrada_salida,NULL);
+	pthread_mutex_init(&mutex_entrada_salida, NULL);
 	sem_init(&procesos_listos, 1, 0);
 	sem_init(&cpu_libre, 1, 0);
-	sem_init(&input_output,1,0);
+	sem_init(&input_output, 1, 0);
 
 	char * port = getPuerto();
 
@@ -40,9 +40,10 @@ int main(int argc, char **argv) {
 	int socketConActividad;
 	int posiblePorcentaje;
 
-	pthread_t hiloConsola, hiloDespachadorListos;
+	pthread_t hiloConsola, hiloDespachadorListos, hiloIO;
 	pthread_create(&hiloConsola, NULL, ejecutarIngresoConsola, NULL);
 	pthread_create(&hiloDespachadorListos, NULL, despacharProcesosListos, NULL);
+	pthread_create(&hiloIO, NULL, manejarEntradaSalida, NULL);
 
 	while (enviar) {
 		llamadaPoll: retornoPoll = poll(fileDescriptors, cantfds, -1);
@@ -73,7 +74,9 @@ int main(int argc, char **argv) {
 					recv(socketCliente, &pid_cpu, sizeof(int), 0);
 					nuevaCpu->cpu_id = pid_cpu;
 					sem_post(&cpu_libre);
-					log_info(log_planificador,"Se conecto la cpu con pid: %d, en el socket %d",nuevaCpu->cpu_id,socketCliente);
+					log_info(log_planificador,
+							"Se conecto la cpu con pid: %d, en el socket %d",
+							nuevaCpu->cpu_id, socketCliente);
 					goto llamadaPoll;
 				} else {
 

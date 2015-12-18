@@ -783,6 +783,7 @@ void *iniciarcpu(void *punteroALaInfo) {
 		char *disponible = eventoDeLogeo("liberada la CPU ",
 				threadInfo->idHilo);
 		log_info(threadInfo->logger, disponible);
+
 //		printf("PC %d liberada y disponible\n", threadInfo->idHilo);
 //		status = 0;
 
