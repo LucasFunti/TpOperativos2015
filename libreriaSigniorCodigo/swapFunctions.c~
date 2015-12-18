@@ -29,23 +29,30 @@ int doesFileExist(const char *filename) {
 
 int getSwapPagesAmount(){
 	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	swapConfiguracion = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
 	int pages_amount = config_get_int_value(swapConfiguracion,"CANTIDAD_PAGINAS");
 	return pages_amount;
 }
 
 int getSwapPagesSize(){
 	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	swapConfiguracion = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
 	int page_size = config_get_int_value(swapConfiguracion,"TAMANIO_PAGINA");
 	return page_size;
 }
 
 char* getSwapFileName(){
 	t_config *swapConfiguracion;
-	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	swapConfiguracion = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
 	char* file_name = config_get_string_value(swapConfiguracion,"NOMBRE_SWAP");
 	return file_name;
+}
+
+char* getPort(){
+	t_config *swapConfiguracion;
+	swapConfiguracion = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
+	char * port = config_get_string_value(swapConfiguracion,"PUERTO_ESCUCHA");
+	return port;
 }
 
 void setupSwap(){

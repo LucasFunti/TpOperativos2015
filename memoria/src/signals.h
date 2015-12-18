@@ -11,7 +11,7 @@
 #include "loggear.h"
 #include "conexiones.h"
 
-void vaciar_tabla_paginas();
+void vaciar_memoria_principal();
 void vaciar_tlb();
 void volcar_memoria_principal();
 

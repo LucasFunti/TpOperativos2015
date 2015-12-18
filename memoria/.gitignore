@@ -36,8 +36,8 @@
 /Debug
 .cproject
 .project
-src/logMemoria
-test/logTest
-log_test_volcado_memoria
+/src/logMemoria
+/test/logTest
+/test/log_test_volcado_memoria
 
 

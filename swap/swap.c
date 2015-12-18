@@ -9,113 +9,182 @@
  *      Author: utnso
  */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <commons/config.h>
-#include <commons/collections/list.h>
-#include <commons/bitarray.h>
-#include <signiorCodigo/swapFunctions.h>
-#include <signiorCodigo/libSockets.h>
+#include "swap.h"
 
-#define BACKLOG 5
-#define PACKAGESIZE 32
-
-
-int reconocerInstruccion() {
-	return 0;
-}
-
+#define INICIAR 4
+#define LEER 5
+#define ESCRIBIR 6
+#define FINALIZAR 8
 
 int main(int argc, char **argv) {
 
-	char* file_name = getSwapFileName();
-	int pagesAmount = getSwapPagesAmount();
-	char str[100];
-	strcpy(str,"/home/utnso/git/tp-2015-2c-signiorcodigo/swap/Debug/");
-	strcpy(str,file_name);
-	int result = doesFileExist( str);
-	if(!result) {
-		setupSwap();
+	log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/log_swap", "SWAP",
+			true, LOG_LEVEL_INFO);
+
+	swapConfig = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
+
+	int socketEscucha, socketMemoria;
+
+	char * puerto = getPort();
+
+	socketEscucha = setup_listen("localhost", puerto);
+
+	socketMemoria = esperarConexionEntrante(socketEscucha, 1024, log_swap);
+
+	t_data * paqueteInicio = leer_paquete(socketMemoria);
+
+	if (paqueteInicio->header->codigo_operacion == 1) {
+
+		int datonulo = 0;
+
+		paqueteInicio = pedirPaquete(2, sizeof(int), &datonulo);
+
+		common_send(socketMemoria, paqueteInicio);
+
+		log_info(log_swap, "Conectado con la memoria en el socket: %d",
+				socketMemoria);
+
 	} else {
-	    printf("El archivo de Swap ya existe. Continuamos...\n");
-	}
-	t_list *pages = setPages(pagesAmount);
-	printf("Ingrese Accion\n");
-	char *action = malloc(sizeof(char)*15);
-	scanf ("%s",action);
-	while(strcmp(action,"exit")!=0){
-		evaluateAction(action, pages);
-		printf("Ingrese Accion\n");
-		scanf ("%s",action);
+
+		log_info(log_swap, "Falla en la conexion con la memoria");
+
+		exit(EXIT_FAILURE);
 	}
 
+	char* file_name = getSwapFileName();
 
+	char str[100];
 
-//	t_nodo_swap* item = NULL;
-//	for (i = 0; i < top ; i++){
-//		item = (t_nodo_swap*) list_get(pages,i);
-//		printf("el valor es %d \n",item->numeroPagina);
-//		printf("%d\n",i);
-//	}
-//	char * puerto;
-//	char * nombreSwap;
-//	int cantidadPaginas;
-//	int tamanioPagina;
-//	int retardoSwap;
-//	int retardoCompactacion;
-//	t_config *swapConfiguracion;
-//	swapConfiguracion = config_create("/home/utnso/git/tp-2015-2c-signiorcodigo/swap/swapConfig");
-//	puerto = config_get_string_value(swapConfiguracion,"PUERTO_ESCUCHA");
-//	nombreSwap = config_get_string_value(swapConfiguracion,"NOMBRE_SWAP");
-//	cantidadPaginas = config_get_int_value(swapConfiguracion,"CANTIDAD_PAGINAS");
-//	tamanioPagina = config_get_int_value(swapConfiguracion,"TAMANIO_PAGINA");
-//	retardoSwap = config_get_int_value(swapConfiguracion,"RETARDO_SWAP");
-//	retardoCompactacion = config_get_int_value(swapConfiguracion,"RETARDO_COMPACTACION");
-//
-//
-//	int socketCliente;
-//	socketCliente = conectarServidor("localhost", puerto, BACKLOG);
-//	char package[PACKAGESIZE];
-//	int status = 1;
-//
-//
-//	printf("Cliente conectado. Esperando mensajes:\n");
-//
-//	while (status != 0) {
-//		status = recv(socketCliente, (void*) package, PACKAGESIZE, 0);
-//				if (status != 0) {
-//
-//			int instruccion;
-//			instruccion = reconocerInstruccion();
-//			switch (instruccion) {
-//				case 4:/*iniciar*/
-//				/* corroborar espacio disponible en el archivo-(funcion)*/
-//				break;
-//				case 5:/*leer*/
-//				/*Buscar proceso en el archivo (funcion) */
-//				/* Si existe - devolver contenido de la pagina n solicitada (funcion) */
-//				break;
-//				case 6:/*escribir*/
-//				break;
-//				case 7:/*entrada salida*/
-//				break;
-//				case 8:/*finalizar*/
-//				/*Buscar proceso en el archivo (funcion) */
-//				/* si existe liberarlo de memoria */
-//				break;
-//			}
-//			printf("Mensaje Recibido\n %s", package);
-//		}
-//
-//	}
-//
-//	close(socketCliente);
-	list_destroy(pages);
+	strcpy(str, "/tp-2015-2c-signiorcodigo/swap/Debug/");
+
+	strcpy(str, file_name);
+
+	int result = doesFileExist(str);
+
+	if (!result) {
+
+		setupSwap();
+
+	} else {
+
+		printf("El archivo de Swap ya existe. Continuamos...\n");
+
+	}
+
+	setPages();
+
+	t_data * paquete;
+
+	while (1) {
+
+		paquete = leer_paquete(socketMemoria);
+
+		switch (paquete->header->codigo_operacion) {
+
+		case LEER: {
+
+			int pid, page;
+
+			memcpy(&pid, paquete->data, sizeof(int));
+			memcpy(&page, paquete->data + sizeof(int), sizeof(int));
+
+			char * content = readProcessPage(pid, page);
+
+			paquete = pedirPaquete(LEER, getSwapPagesSize(), content);
+
+			common_send(socketMemoria, paquete);
+
+			break;
+		}
+
+		case ESCRIBIR: {
+
+			int pid, page;
+			char * content = malloc(getSwapPagesSize());
+
+			memcpy(&pid, paquete->data, sizeof(int));
+			memcpy(&page, paquete->data + sizeof(int), sizeof(int));
+			memcpy(content, paquete->data + 2 * sizeof(int),
+					getSwapPagesSize());
+
+			writeProcessPage(pid, page, content);
+
+			break;
+		}
+
+		case INICIAR: {
+
+			int pid, pagesAmount;
+
+			memcpy(&pid, paquete->data, sizeof(int));
+			memcpy(&pagesAmount, paquete->data + sizeof(int), sizeof(int));
+
+			int blank_pages = getBlankPages();
+			int success;
+
+			if (blank_pages >= pagesAmount) {
+				success = reserve(pid, pagesAmount);
+
+				if (success == -1) {
+					compact();
+					success = reserve(pid, pagesAmount);
+				}
+			}
+
+			if (success == -1) {
+
+				paquete = pedirPaquete(0, sizeof(int), &pid);
+				log_info(log_swap,
+						"No se pudo reservar las paginas solicitadas para el proceso con pid: %d",
+						pid);
+
+			} else {
+
+				paquete = pedirPaquete(1, sizeof(int), &pid);
+				int absolutePage = getProcessFirstPage(pid) + pagesAmount;
+
+				int byteInicial = absolutePage * getSwapPagesSize();
+
+				log_info(log_swap,
+						string_from_format(
+								"Proceso mProc asignado, su PID es: %d, N° de byte inicial: %d, y tamaño en bytes: %d"),
+						pid, byteInicial, pagesAmount * getSwapPagesSize());
+
+			}
+
+			common_send(socketMemoria, paquete);
+
+			break;
+		}
+
+		case FINALIZAR: {
+
+			int pid;
+
+			memcpy(&pid, paquete->data, sizeof(int));
+
+			freeSpace(pid);
+			int absolutePage = getProcessFirstPage(pid)
+					+ getProcessReservedSpace(pid);
+
+			int byteInicial = absolutePage * getSwapPagesSize();
+
+			log_info(log_swap,
+					"Proceso con pid: %d liberado, su byte inicial es: %d, y el tamaño liberado es:%d",
+					pid, byteInicial,
+					getProcessReservedSpace(pid) * getSwapPagesSize());
+
+			break;
+		}
+
+		default: {
+
+			break;
+		}
+
+		}
+
+	}
+
 	return 0;
 }
-

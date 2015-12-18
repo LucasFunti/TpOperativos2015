@@ -8,6 +8,7 @@
 
 void retardo() {
 
+	log_info(logger, "Acceso a memoria. Zzz...");
 	sleep(config_get_int_value(memoriaConfig, "RETARDO_MEMORIA"));
 
 }

@@ -1,8 +1,8 @@
 /*
  * signals.c
  *
- *  Created on: 4/11/2015
- *      Author: utnso
+ * Created on: 4/11/2015
+ * Author: utnso
  */
 #include "signals.h"
 
@@ -37,9 +37,10 @@ void atender_seniales(int signal) {
 	case SIGUSR2:
 		pthread_mutex_lock(&semaforo_memoria);
 		if (!test) {
-			loggearInfo("Se registró la señal para vaciar la tabla de páginas");
+			loggearInfo(
+					"Se registró la señal para vaciar la memoria principal");
 		}
-		vaciar_tabla_paginas();
+		vaciar_memoria_principal();
 		pthread_mutex_unlock(&semaforo_memoria);
 
 		break;
@@ -48,7 +49,7 @@ void atender_seniales(int signal) {
 
 		pthread_mutex_lock(&semaforo_memoria);
 		if (!test) {
-			loggearInfo("Se registró la señal para vaciar la tabla de páginas");
+			loggearInfo("Se registró la señal para volcar la tabla de páginas");
 		}
 		volcar_memoria_principal();
 		pthread_mutex_unlock(&semaforo_memoria);
@@ -61,36 +62,44 @@ void atender_seniales(int signal) {
 
 void vaciar_tlb() {
 
+	loggearInfo("Comienza el vaciado de la tlb");
 	int cantidad_elementos = list_size(tlb);
-	t_item * item;
 
-	while (cantidad_elementos) {
+	list_clean(tlb);
 
-		item = list_remove(tlb, 0);
-
-		cantidad_elementos--;
-	}
+	loggearInfo("Se termina el vaciado de la tlb");
 
 }
 
-void vaciar_tabla_paginas() {
+void vaciar_memoria_principal() {
 
+	loggearInfo("Comienza el vaciado de la memoria principal");
 	int cantidad_elementos = list_size(tabla_paginas);
-	t_item * item;
 
-	while (cantidad_elementos) {
+	void iterador_para_vaciar(void * data) {
 
-		item = list_remove(tabla_paginas, 0);
-		if (item->modificado && !test) {
+		retardo();
+		loggearInfo("Se vaciando un item");
+
+		t_item * item = data;
+		item->presencia = false;
+		if (item->modificado) {
+			loggearInfo("Estaba modificado");
 			swap_escribir(item->pid, item->pagina, item->marco);
-
+			item->modificado = false;
+		} else {
+			loggearInfo("No estaba modificado");
 		}
-		cantidad_elementos--;
+		item->numero_operacion = get_numero_operacion();
 
 	}
+
+	list_iterate(tabla_paginas, iterador_para_vaciar);
 }
 
 void volcar_memoria_principal() {
+
+	loggearInfo("Comienza el volcado");
 
 	int tamanio_marco = config_get_int_value(memoriaConfig, "TAMANIO_MARCO");
 	int cantidad_marcos = config_get_int_value(memoriaConfig,
@@ -100,6 +109,8 @@ void volcar_memoria_principal() {
 
 	int i;
 	for (i = 0; i < cantidad_marcos; i++) {
+
+		retardo();
 
 		char * string = malloc(tamanio_marco);
 		memcpy(string, memoria + tamanio_marco * i, tamanio_marco);

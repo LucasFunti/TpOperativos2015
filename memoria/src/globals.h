@@ -14,13 +14,14 @@
 #include <stdbool.h>
 #include "estructuras.h"
 
-int numero_operacion,pid_matchear,pagina_matchear;
+int numero_operacion, pid_matchear, pagina_matchear, posicionVictima;
+bool ignorar_proximoAgregar;
 
 char * contenido_lectura;
 
 bool test;
 
-int pedidos_totales, aciertos_totales;
+int pedidos_totales, aciertos_totales, page_faults, accesos_swap;
 
 t_registro_tlb registroTlb[200];
 

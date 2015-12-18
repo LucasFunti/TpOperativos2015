@@ -8,6 +8,8 @@
 
 void tabla_paginas_remover_pid(int pid) {
 
+	loggearInfo("Se remueven los elementos de la tabla de páginas");
+
 	pid_matchear = pid;
 
 	int cantidad_restante = list_count_satisfying(cola_llegada, coincide_pid);
@@ -15,7 +17,6 @@ void tabla_paginas_remover_pid(int pid) {
 	while (cantidad_restante) {
 
 		list_remove_by_condition(cola_llegada, coincide_pid);
-		//TODO destruirlo también?
 
 		cantidad_restante--;
 
@@ -26,7 +27,7 @@ void tabla_paginas_remover_pid(int pid) {
 	while (cantidad_restante) {
 
 		//Esta accediendo a la tabla de páginas, va retardo
-		retardo(memoriaConfig);
+		retardo();
 
 		list_remove_and_destroy_by_condition(tabla_paginas,
 				coincide_pid_y_libera_marcos, free);
@@ -48,9 +49,10 @@ t_item * tabla_paginas_aniadir_item(int pid, int pagina, int marco) {
 	nuevo->pagina = pagina;
 	nuevo->marco = marco;
 	nuevo->modificado = false;
-	nuevo->numero_operacion = get_numero_operacion();
+	nuevo->numero_operacion = 0;
 	nuevo->presencia = false;
 	nuevo->uso = 1;
+	nuevo->puntero = false;
 
 	list_add(tabla_paginas, nuevo);
 
@@ -59,8 +61,10 @@ t_item * tabla_paginas_aniadir_item(int pid, int pagina, int marco) {
 
 t_item * tabla_paginas_buscar(int pid, int pagina) {
 
-//Busca en la tabla_paginas, usa retardo
-	retardo(memoriaConfig);
+	log_info(logger, "Se busca en la tabla de páginas");
+
+	//Busca en la tabla_paginas, usa retardo
+	retardo();
 
 	pid_matchear = pid;
 	pagina_matchear = pagina;
@@ -69,31 +73,49 @@ t_item * tabla_paginas_buscar(int pid, int pagina) {
 
 	if (item_encontrado == NULL) {
 
-		int tamanio_marco = config_get_int_value(memoriaConfig,
-				"TAMANIO_MARCO");
+		log_info(logger, "No se encontró el elemento en la tabla de páginas");
 
 		int marco_a_asignar = marco_libre(pid);
 
 		if (marco_a_asignar == FALLO_MARCO) {
 
+			log_info(logger, "No se le pudo asignar marcos");
+
 			return NULL;
 
 		} else {
+
+			log_info(logger,
+					string_from_format("Se le asigna el marco %d",
+							marco_a_asignar));
 
 			item_encontrado = tabla_paginas_aniadir_item(pid, pagina,
 					marco_a_asignar);
 
 			item_encontrado->presencia = true;
 
+			accesos_swap++;
+
 			char * contenido = swap_leer(pid, pagina);
 
-			escribir_n(pid, pagina, contenido);
+			log_info(logger, "Se escribe en memoria el contenido");
+
+			int tamanio_marco = config_get_int_value(memoriaConfig,
+					"TAMANIO_MARCO");
+
+			retardo(memoriaConfig);
+			memcpy(memoria + tamanio_marco * item_encontrado->marco, contenido,
+					tamanio_marco);
+
+			free(contenido);
 
 			return item_encontrado;
 		}
 	}
 
 	else {
+
+		log_info(logger, "Se encontró el elemento en la tabla de páginas");
 
 		return item_encontrado;
 

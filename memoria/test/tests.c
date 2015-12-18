@@ -5,17 +5,14 @@ context(test_admin_memoria) {
 	test = true;
 	describe("iniciar_n") {
 
-		remove(
-				"/tp-2015-2c-signiorcodigo/memoria/test/logTest");
-
-		logger =
-		log_create(
-				"/tp-2015-2c-signiorcodigo/memoria/test/logTest",
-				"Test", true, LOG_LEVEL_DEBUG);
-
 		describe("sin tlb") {
 
 			before {
+
+				remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+				logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+						"Test", false, LOG_LEVEL_DEBUG);
 
 				memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 				iniciar_marcos();
@@ -38,6 +35,11 @@ context(test_admin_memoria) {
 		describe("con tlb") {
 
 			before {
+
+				remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+				logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+						"Test", false, LOG_LEVEL_DEBUG);
 
 				memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
 				iniciar_marcos();
@@ -88,6 +90,11 @@ context(test_admin_memoria) {
 	describe("escribir_n") {
 
 		before {
+
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
 
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionSinTlb");
 			iniciar_marcos();
@@ -152,6 +159,14 @@ context(test_admin_memoria) {
 	}end
 
 	describe("leer_n") {
+
+		before {
+
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
+		}end
 
 		it("lee estando en memoria") {
 
@@ -233,6 +248,13 @@ context(test_admin_memoria) {
 
 	describe("señales") {
 
+		before {
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
+		}end
+
 		it("vuelca el contenido de la memoria en un log") {
 
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionConTlb");
@@ -242,7 +264,7 @@ context(test_admin_memoria) {
 
 			printf("\n");
 
-			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/log_test_volcado_memoria", "PAM", true, LOG_LEVEL_DEBUG);
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/log_test_volcado_memoria", "PAM", false, LOG_LEVEL_DEBUG);
 			loggearInfo("Inicio del test");
 
 			iniciar_n(1,2);
@@ -281,7 +303,7 @@ context(test_admin_memoria) {
 
 			iniciar_n(1,2);
 
-			vaciar_tabla_paginas();
+			vaciar_memoria_principal();
 
 			should_int(list_size(tlb)) be equal to(0);
 			should_int(list_size(tabla_paginas)) be equal to(0);
@@ -292,6 +314,11 @@ context(test_admin_memoria) {
 	describe("fifo") {
 
 		before {
+
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
 
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionFifo");
 			iniciar_marcos();
@@ -327,34 +354,68 @@ context(test_admin_memoria) {
 
 		}end
 
-	}end
+		it("ejecuta mem.cod") {
 
-	it("ejecuta mem.cod") {
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configAlgoritmoTestFifo");
+			iniciar_marcos();
+			/*
+			 * iniciar 6;
+			 escribir 2 "dos";
+			 leer 2;
+			 escribir 3 "tres";
+			 leer 2;
+			 escribir 1 "uno"
+			 leer 1;
+			 escribir 5 "cinco";
+			 leer 2;
+			 escribir 4 "cuatro";
+			 leer 5;
+			 leer 3;
+			 escribir 2 "dos";
+			 leer 5;
+			 leer 2;
+			 */
+			iniciar_n(1,6);
 
-		iniciar_n(1,5);
+			escribir_n(1,1,"Dos");
+			leer_n(1,1);
 
-		escribir_n(1,0,"Hola");
-		escribir_n(1,1,"Hola");
-		escribir_n(1,2,"Hola");
-		escribir_n(1,3,"Hola");
+			escribir_n(1,2,"Tres");
+			leer_n(1,1);
 
-		should_int(list_size(cola_llegada)) be equal to(3);
+			escribir_n(1,0,"Uno");
+			leer_n(1,0);
 
-		assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,0,false,false);
-		assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,1,true,true);
-		assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,2,true,true);
-		assert_tabla_paginas_item(list_get(tabla_paginas,3),1,3,0,true,true);
+			escribir_n(1,4,"Cinco");
+			leer_n(1,1);
 
-		escribir_n(1,0,"Hola");
+			escribir_n(1,3,"Cuatro");
+			leer_n(1,4);
+			leer_n(1,2);
 
-		assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,1,true,true);
-		assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,1,false,false);
+			escribir_n(1,1,"Dos");
+			leer_n(1,4);
+			leer_n(1,1);
+
+			should_int(page_faults) be equal to(9);
+			should_int(accesos_swap) be equal to(15);
+
+			assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,2,false,true);
+			assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,0,false,true);
+			assert_tabla_paginas_item(list_get(tabla_paginas,4),1,4,1,false,true);
+
+		}end
 
 	}end
 
 	describe("lru") {
 
 		before {
+
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
 
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionLru");
 			iniciar_marcos();
@@ -363,24 +424,87 @@ context(test_admin_memoria) {
 
 		it("swappea usando lru") {
 
-			iniciar_n(1,3);
+			iniciar_n(1,4);
 
 			t_item * item = list_get(tabla_paginas,0);
 
 			should_int(item->numero_operacion) be equal to(0);
 
 			leer_n(1,0);
+			should_int(item->numero_operacion) be equal to(1);
 
+			leer_n(1,0);
+			leer_n(1,0);
 			should_int(item->numero_operacion) be equal to(3);
-			leer_n(1,0);
-			leer_n(1,0);
-			should_int(item->numero_operacion) be equal to(5);
+
 			escribir_n(1,0,"Hola");
-			should_int(item->numero_operacion) be equal to(6);
+			should_int(item->numero_operacion) be equal to(4);
+
 			leer_n(1,1);
-//			leer_n(1,2);
-//			assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,0,false,false);
-//			assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,0,true,true);
+
+			item = list_get(tabla_paginas,1);
+			should_int(item->numero_operacion) be equal to(5);
+
+			leer_n(1,2);
+
+			leer_n(1,3);
+
+			item = list_get(tabla_paginas,3);
+			should_int(item->numero_operacion) be equal to(7);
+
+			assert_tabla_paginas_item(list_get(tabla_paginas,0),1,0,0,false,false);
+
+		}end
+
+		it("ejecuta mem.cod") {
+
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configAlgoritmoTestLRU");
+			iniciar_marcos();
+			/*
+			 * iniciar 6;
+			 escribir 2 "dos";
+			 leer 2;
+			 escribir 3 "tres";
+			 leer 2;
+			 escribir 1 "uno"
+			 leer 1;
+			 escribir 5 "cinco";
+			 leer 2;
+			 escribir 4 "cuatro";
+			 leer 5;
+			 leer 3;
+			 escribir 2 "dos";
+			 leer 5;
+			 leer 2;
+			 */
+			iniciar_n(1,6);
+
+			escribir_n(1,1,"Dos");
+			leer_n(1,1);
+
+			escribir_n(1,2,"Tres");
+			leer_n(1,1);
+
+			escribir_n(1,0,"Uno");
+			leer_n(1,0);
+
+			escribir_n(1,4,"Cinco");
+			leer_n(1,1);
+
+			escribir_n(1,3,"Cuatro");
+			leer_n(1,4);
+			leer_n(1,2);
+
+			escribir_n(1,1,"Dos");
+			leer_n(1,4);
+			leer_n(1,1);
+
+			should_int(page_faults) be equal to(7);
+			should_int(accesos_swap) be equal to(11);
+
+			assert_tabla_paginas_item(list_get(tabla_paginas,1),1,1,2,true,true);
+			assert_tabla_paginas_item(list_get(tabla_paginas,2),1,2,0,false,true);
+			assert_tabla_paginas_item(list_get(tabla_paginas,4),1,4,1,true,true);
 
 		}end
 
@@ -390,36 +514,76 @@ context(test_admin_memoria) {
 
 		before {
 
+			remove("/tp-2015-2c-signiorcodigo/memoria/test/logTest");
+
+			logger = log_create("/tp-2015-2c-signiorcodigo/memoria/test/logTest",
+					"Test", false, LOG_LEVEL_DEBUG);
+
 			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configuracionClock-M");
 			iniciar_marcos();
 
 		}end
 
-		it("swappea usando clock_m") {
+		it("ejecuta mem.cod") {
 
-			iniciar_n(1,2);
-			iniciar_n(2,1);
-			iniciar_n(3,2);
-			//Aloja uno y desaloja el marco cero que era del proceso 1 pagina 1
-			//El puntero pasó al segundo elemento ( p1 pag 2)
+			memoriaConfig= config_create("/tp-2015-2c-signiorcodigo/memoria/test/configAlgoritmoClockM");
+			iniciar_marcos();
 
-			t_item * item = list_get(tabla_paginas,4);
+			/*
+			 * iniciar 6;
+			 escribir 2 "dos";
+			 leer 2;
+			 escribir 3 "tres";
+			 leer 2;
+			 escribir 1 "uno"
+			 leer 1;
+			 escribir 5 "cinco";
+			 leer 2;
+			 escribir 4 "cuatro";
+			 leer 5;
+			 leer 3;
+			 escribir 2 "dos";
+			 leer 5;
+			 leer 2;
+			 */
 
-			assert_tabla_paginas_item(item, 3, 2, 0, false,true);
+			iniciar_n(1,6);
 
-			item = list_get(tabla_paginas,0);
+			escribir_n(1,1,"Dos");
+			leer_n(1,1);
 
-			assert_tabla_paginas_item(item, 1, 1, 0, false,false);
+			escribir_n(1,2,"Tres");
+			leer_n(1,1);
 
-			iniciar_n(4,2);
-			//Para la pagina 1 desaloja al segundo elemento (p1 pag2). El puntero pasa a ser el tercer elemento
-			item = list_get(tabla_paginas,5);
+			escribir_n(1,0,"Uno");
+			leer_n(1,0);
 
-			assert_tabla_paginas_item(item, 4, 1, 1, false,true);
+			escribir_n(1,4,"Cinco");
+			leer_n(1,1);
 
-			item = list_get(tabla_paginas,6);
+			escribir_n(1,3,"Cuatro");
+			leer_n(1,4);
+			leer_n(1,2);
 
-			assert_tabla_paginas_item(item, 4, 2, 2, false,true);
+			escribir_n(1,1,"Dos");
+			leer_n(1,4);
+			leer_n(1,1);
+
+			should_int(page_faults) be equal to(8);
+			should_int(accesos_swap) be equal to(12);
+
+			t_item * item = list_get(tabla_paginas,1);
+
+			should_bool(item->modificado) be equal to(true);
+			should_bool(item->uso) be equal to(true);
+
+			item = list_get(tabla_paginas,2);
+			should_bool(item->modificado) be equal to(false);
+			should_bool(item->uso) be equal to(true);
+
+			item = list_get(tabla_paginas,4);
+			should_bool(item->modificado) be equal to(true);
+			should_bool(item->uso) be equal to(true);
 
 		}end
 

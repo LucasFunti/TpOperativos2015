@@ -25,7 +25,7 @@
 
 pthread_mutex_t semaforo_memoria;
 
-void iniciarEstructuras();
+pthread_t hiloMostrarTasa;
 
 void atenderConexion(int socket, fd_set sockets_activos);
 

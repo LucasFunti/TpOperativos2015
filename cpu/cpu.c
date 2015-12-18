@@ -2,7 +2,6 @@
  * cpu.c *
  */
 
-
 #include "cpu.h"
 
 #define BACKLOG 5
@@ -12,8 +11,14 @@ int porcentajeDeUso[50], instruccionesEjecutadas[50];
 
 int main(int argc, char **argv) {
 
-
 // Defino la función que va a manejar los contadores
+
+	void iniciarFlags(){
+		int i;
+		for (i = 0; i <= 50; i++) {
+			hayQueFinalizar[i] = false;
+		}
+	}
 
 	void resetearContadores() {
 		int i;
@@ -33,10 +38,13 @@ int main(int argc, char **argv) {
 // Inicio las variables iniciales
 	int i;
 	int cantHilos = getHilos();
-
+	resetearContadores();
 	pthread_t hilos[cantHilos], hiloContador;
+	iniciarFlags();
 
-	t_log *log_cpu = log_create("log_cpu", "CPU", true, LOG_LEVEL_INFO);
+	remove("/tp-2015-2c-signiorcodigo/cpu/log_cpu");
+	t_log *log_cpu = log_create("/tp-2015-2c-signiorcodigo/cpu/log_cpu", "CPU",
+			true, LOG_LEVEL_INFO);
 	t_hilo *infoHilo;
 
 // Creo el hilo que gestiona el contador

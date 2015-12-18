@@ -13,14 +13,24 @@ bool leer_n(int pid, int pagina) {
 	t_item * item = tlb_buscar(pid, pagina);
 
 	if (item == NULL) {
-
+		//Fallo de marco, aborta el proceso
 		return false;
 
 	} else {
 
 		item->numero_operacion = get_numero_operacion();
 
+		item->uso = true;
+
 		if (!item->presencia) {
+
+			loggearInfo("El elemento no está presente, se trae a memoria");
+
+			//No esta presente
+			page_faults++;
+
+			pid_matchear = item->pid;
+			pagina_matchear = item->pagina;
 
 			int marco = marco_libre(pid);
 
@@ -31,22 +41,36 @@ bool leer_n(int pid, int pagina) {
 
 			} else {
 
-				if (!test) {
-					contenido_lectura = swap_leer(pid, pagina);
-				} else {
-					contenido_lectura = malloc(2);
-					contenido_lectura = "T";
-				}
+				char * contenido_Pagina = swap_leer(pid, pagina);
+
+				loggearInfo("Escribiendo contenido del swap");
+
+				retardo();
+				memcpy(memoria + tamanio_marco * item->marco, contenido_Pagina,
+						tamanio_marco);
+
+				contenido_lectura = contenido_Pagina;
 
 				item->marco = marco;
 				item->presencia = true;
+
+				if (ignorar_proximoAgregar) {
+					ignorar_proximoAgregar = false;
+				} else {
+					list_add(cola_llegada, item);
+				}
+
 				return true;
-				list_add(cola_llegada, item);
 			}
 		} else {
 
+			loggearInfo("El elemento está presente");
+			//Esta presente
+
 			contenido_lectura = malloc(tamanio_marco);
-			retardo(memoriaConfig);
+
+			loggearInfo("Accediendo al contenido existente");
+			retardo();
 
 			memcpy(contenido_lectura, memoria + item->marco * tamanio_marco,
 					tamanio_marco);

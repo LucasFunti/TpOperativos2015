@@ -11,7 +11,7 @@ void atenderConexiones() {
 	socketEscucha = setup_listen("localhost",
 			config_get_string_value(memoriaConfig, "PUERTO_ESCUCHA"));
 
-	listen(socketEscucha, 15);
+	listen(socketEscucha, 1024);
 
 	loggearInfo(
 			string_from_format("Se escuchan conexiones en el socket %d",
@@ -20,21 +20,31 @@ void atenderConexiones() {
 	int socketMasGrande = socketEscucha;
 
 	FD_ZERO(&sockets_activos);
+
 	FD_SET(socketEscucha, &sockets_activos);
-	FD_SET(socketSwap, &sockets_activos);
+	//FD_SET(socketSwap, &sockets_activos);
 
 	while (1) {
 
-		sockets_para_revisar = sockets_activos;
+		labelSelect: sockets_para_revisar = sockets_activos;
 
-		select(socketMasGrande + 1, &sockets_para_revisar, NULL, NULL, NULL);
+		int resultadoSelect = select(socketMasGrande + 1, &sockets_para_revisar,
+		NULL, NULL, NULL);
+
+		if (resultadoSelect == -1) {
+			goto labelSelect;
+		}
+
+		pthread_mutex_lock(&semaforo_memoria);
 
 		int i;
 		for (i = 0; i <= socketMasGrande; i++) {
-			if (FD_ISSET(i, &sockets_para_revisar)) { //Hay actividad
 
-				// La actividad es en el puerto de escucha (osea es conexión nueva)
+			if (FD_ISSET(i, &sockets_para_revisar)) {
+				//Hay actividad
+
 				if (i == socketEscucha) {
+					// La actividad es en el puerto de escucha (osea es conexión nueva)
 
 					loggearInfo(
 							string_from_format(
@@ -56,33 +66,24 @@ void atenderConexiones() {
 								string_from_format("Se asigna el socket %d",
 										socket_nueva_conexion));
 
-						FD_SET(socket_nueva_conexion, &sockets_activos); // Lo añadimos al set de los sockets activos
+						// Lo añadimos al set de los sockets activos
+						FD_SET(socket_nueva_conexion, &sockets_activos);
 
 						if (socket_nueva_conexion > socketMasGrande) {
 							socketMasGrande = socket_nueva_conexion;
 						}
 
 					}
-					// La actividad es en un puerto de escucha (tenemos que atender su pedido)
 				} else {
 
-					void * auxiliar_peek = malloc(sizeof(int));
+					// La actividad es en un puerto de cpu (tenemos que atender su pedido)
 
-					//El flag MSG_PEEK sirve para que no saque la data del socket, simplemente la copia
-					int cantidad_recibida = recv(i, auxiliar_peek, sizeof(int),
-					MSG_PEEK);
+					atenderConexion(i, sockets_activos);
 
-					//Si es cero, significa que no había nada nuevo
-					if (cantidad_recibida > 0) {
-						loggearInfo(
-								string_from_format(
-										"Se detecto una conexión existente con un pedido"));
-						atenderConexion(i, sockets_activos);
-					}
-					free(auxiliar_peek);
 				}
 			}
 		}
+		pthread_mutex_unlock(&semaforo_memoria);
 	}
 }
 
@@ -143,6 +144,7 @@ int setup_listen(char* IP, char* Port) {
 }
 
 int connect_to(char *IP, char* Port) {
+
 	struct addrinfo* serverInfo = common_setup(IP, Port);
 	if (serverInfo == NULL) {
 		return -1;

@@ -1,0 +1,152 @@
+[INFO] 17:20:24:863 SWAP/(21679:21679): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:20:24:863 SWAP/(21679:21679): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:20:24:863 SWAP/(21679:21679): [mProc 1] Solicitud de lectura en la página 0. Byte inicial: 150,tamaño: 20, contenido: Hola!
+[INFO] 17:20:24:865 SWAP/(21679:21679): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:20:24:865 SWAP/(21679:21679): [mProc 0] solicitud de escritura en la página 1.byte inicial: 15, tamanio: 20, contenido a escribir: Chau!
+[INFO] 17:20:24:866 SWAP/(21679:21679): [mProc 0] solicitud de escritura en la página 2.byte inicial: 30, tamanio: 24, contenido a escribir: Hola2!
+[INFO] 17:20:24:866 SWAP/(21679:21679): [mProc 1] solicitud de escritura en la página 2.byte inicial: 180, tamanio: 28, contenido a escribir: JoJoJo!
+[INFO] 17:20:24:866 SWAP/(21679:21679): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:20:24:866 SWAP/(21679:21679): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:20:24:866 SWAP/(21679:21679): [mProc 0] Solicitud de lectura en la página 2. Byte inicial: 30,tamaño: 24, contenido: Hola2!
+[INFO] 17:20:24:866 SWAP/(21679:21679): [mProc 1] Solicitud de lectura en la página 2. Byte inicial: 180,tamaño: 28, contenido: JoJoJo!
+[INFO] 17:20:24:868 SWAP/(21679:21679): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:20:24:868 SWAP/(21679:21679): [mProc 2] solicitud de escritura en la página 5.byte inicial: 375, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:20:24:868 SWAP/(21679:21679): [mProc 4] solicitud de escritura en la página 9.byte inicial: 735, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:20:24:868 SWAP/(21679:21679): Iniciando compactación
+[INFO] 17:20:24:869 SWAP/(21679:21679): Finalizada la compactación
+[INFO] 17:20:24:869 SWAP/(21679:21679): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:20:24:869 SWAP/(21679:21679): [mProc 2] Solicitud de lectura en la página 5. Byte inicial: 225,tamaño: 20, contenido: Hola!
+[INFO] 17:20:24:869 SWAP/(21679:21679): [mProc 4] Solicitud de lectura en la página 9. Byte inicial: 435,tamaño: 20, contenido: Hola!
+[INFO] 17:21:31:957 SWAP/(21778:21778): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:21:31:957 SWAP/(21778:21778): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:21:31:957 SWAP/(21778:21778): [mProc 1] Solicitud de lectura en la página 0. Byte inicial: 150,tamaño: 20, contenido: Hola!
+[INFO] 17:21:31:961 SWAP/(21778:21778): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:21:31:961 SWAP/(21778:21778): [mProc 0] solicitud de escritura en la página 1.byte inicial: 15, tamanio: 20, contenido a escribir: Chau!
+[INFO] 17:21:31:961 SWAP/(21778:21778): [mProc 0] solicitud de escritura en la página 2.byte inicial: 30, tamanio: 24, contenido a escribir: Hola2!
+[INFO] 17:21:31:962 SWAP/(21778:21778): [mProc 1] solicitud de escritura en la página 2.byte inicial: 180, tamanio: 28, contenido a escribir: JoJoJo!
+[INFO] 17:21:31:962 SWAP/(21778:21778): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:21:31:962 SWAP/(21778:21778): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:21:31:962 SWAP/(21778:21778): [mProc 0] Solicitud de lectura en la página 2. Byte inicial: 30,tamaño: 24, contenido: Hola2!
+[INFO] 17:21:31:962 SWAP/(21778:21778): [mProc 1] Solicitud de lectura en la página 2. Byte inicial: 180,tamaño: 28, contenido: JoJoJo!
+[INFO] 17:21:31:966 SWAP/(21778:21778): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:21:31:967 SWAP/(21778:21778): [mProc 2] solicitud de escritura en la página 5.byte inicial: 375, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:21:31:967 SWAP/(21778:21778): [mProc 4] solicitud de escritura en la página 9.byte inicial: 735, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:21:31:967 SWAP/(21778:21778): Iniciando compactación
+[INFO] 17:21:31:967 SWAP/(21778:21778): Finalizada la compactación
+[INFO] 17:21:31:967 SWAP/(21778:21778): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:21:31:967 SWAP/(21778:21778): [mProc 2] Solicitud de lectura en la página 5. Byte inicial: 225,tamaño: 20, contenido: Hola!
+[INFO] 17:21:31:967 SWAP/(21778:21778): [mProc 4] Solicitud de lectura en la página 9. Byte inicial: 435,tamaño: 20, contenido: Hola!
+[INFO] 17:22:59:357 SWAP/(21925:21925): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:22:59:357 SWAP/(21925:21925): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:22:59:357 SWAP/(21925:21925): [mProc 1] Solicitud de lectura en la página 0. Byte inicial: 150,tamaño: 20, contenido: Hola!
+[INFO] 17:22:59:362 SWAP/(21925:21925): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:22:59:362 SWAP/(21925:21925): [mProc 0] solicitud de escritura en la página 1.byte inicial: 15, tamanio: 20, contenido a escribir: Chau!
+[INFO] 17:22:59:362 SWAP/(21925:21925): [mProc 0] solicitud de escritura en la página 2.byte inicial: 30, tamanio: 24, contenido a escribir: Hola2!
+[INFO] 17:22:59:362 SWAP/(21925:21925): [mProc 1] solicitud de escritura en la página 2.byte inicial: 180, tamanio: 28, contenido a escribir: JoJoJo!
+[INFO] 17:22:59:362 SWAP/(21925:21925): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:22:59:362 SWAP/(21925:21925): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:22:59:362 SWAP/(21925:21925): [mProc 0] Solicitud de lectura en la página 2. Byte inicial: 30,tamaño: 24, contenido: Hola2!
+[INFO] 17:22:59:362 SWAP/(21925:21925): [mProc 1] Solicitud de lectura en la página 2. Byte inicial: 180,tamaño: 28, contenido: JoJoJo!
+[INFO] 17:22:59:366 SWAP/(21925:21925): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:22:59:366 SWAP/(21925:21925): [mProc 2] solicitud de escritura en la página 5.byte inicial: 375, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:22:59:366 SWAP/(21925:21925): [mProc 4] solicitud de escritura en la página 9.byte inicial: 735, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:22:59:366 SWAP/(21925:21925): Iniciando compactación
+[INFO] 17:22:59:366 SWAP/(21925:21925): Finalizada la compactación
+[INFO] 17:22:59:368 SWAP/(21925:21925): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:22:59:368 SWAP/(21925:21925): [mProc 2] Solicitud de lectura en la página 5. Byte inicial: 225,tamaño: 20, contenido: Hola!
+[INFO] 17:22:59:368 SWAP/(21925:21925): [mProc 4] Solicitud de lectura en la página 9. Byte inicial: 435,tamaño: 20, contenido: Hola!
+[INFO] 17:24:45:926 SWAP/(22033:22033): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:24:45:927 SWAP/(22033:22033): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:24:45:927 SWAP/(22033:22033): [mProc 1] Solicitud de lectura en la página 0. Byte inicial: 150,tamaño: 20, contenido: Hola!
+[INFO] 17:24:45:934 SWAP/(22033:22033): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:24:45:934 SWAP/(22033:22033): [mProc 0] solicitud de escritura en la página 1.byte inicial: 15, tamanio: 20, contenido a escribir: Chau!
+[INFO] 17:24:45:934 SWAP/(22033:22033): [mProc 0] solicitud de escritura en la página 2.byte inicial: 30, tamanio: 24, contenido a escribir: Hola2!
+[INFO] 17:24:45:934 SWAP/(22033:22033): [mProc 1] solicitud de escritura en la página 2.byte inicial: 180, tamanio: 28, contenido a escribir: JoJoJo!
+[INFO] 17:24:45:934 SWAP/(22033:22033): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:24:45:934 SWAP/(22033:22033): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:24:45:935 SWAP/(22033:22033): [mProc 0] Solicitud de lectura en la página 2. Byte inicial: 30,tamaño: 24, contenido: Hola2!
+[INFO] 17:24:45:935 SWAP/(22033:22033): [mProc 1] Solicitud de lectura en la página 2. Byte inicial: 180,tamaño: 28, contenido: JoJoJo!
+[INFO] 17:24:45:946 SWAP/(22033:22033): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:24:45:946 SWAP/(22033:22033): [mProc 2] solicitud de escritura en la página 5.byte inicial: 375, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:24:45:946 SWAP/(22033:22033): [mProc 4] solicitud de escritura en la página 9.byte inicial: 735, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:24:45:946 SWAP/(22033:22033): Iniciando compactación
+[INFO] 17:24:45:947 SWAP/(22033:22033): Finalizada la compactación
+[INFO] 17:24:45:947 SWAP/(22033:22033): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:24:45:947 SWAP/(22033:22033): [mProc 2] Solicitud de lectura en la página 5. Byte inicial: 225,tamaño: 20, contenido: Hola!
+[INFO] 17:24:45:947 SWAP/(22033:22033): [mProc 4] Solicitud de lectura en la página 9. Byte inicial: 435,tamaño: 20, contenido: Hola!
+[INFO] 17:28:10:486 SWAP/(22234:22234): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:28:10:486 SWAP/(22234:22234): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:28:10:486 SWAP/(22234:22234): [mProc 1] Solicitud de lectura en la página 0. Byte inicial: 150,tamaño: 20, contenido: Hola!
+[INFO] 17:28:10:488 SWAP/(22234:22234): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:28:10:488 SWAP/(22234:22234): [mProc 0] solicitud de escritura en la página 1.byte inicial: 15, tamanio: 20, contenido a escribir: Chau!
+[INFO] 17:28:10:488 SWAP/(22234:22234): [mProc 0] solicitud de escritura en la página 2.byte inicial: 30, tamanio: 24, contenido a escribir: Hola2!
+[INFO] 17:28:10:488 SWAP/(22234:22234): [mProc 1] solicitud de escritura en la página 2.byte inicial: 180, tamanio: 28, contenido a escribir: JoJoJo!
+[INFO] 17:28:10:488 SWAP/(22234:22234): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:28:10:488 SWAP/(22234:22234): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:28:10:488 SWAP/(22234:22234): [mProc 0] Solicitud de lectura en la página 2. Byte inicial: 30,tamaño: 24, contenido: Hola2!
+[INFO] 17:28:10:488 SWAP/(22234:22234): [mProc 1] Solicitud de lectura en la página 2. Byte inicial: 180,tamaño: 28, contenido: JoJoJo!
+[INFO] 17:28:10:493 SWAP/(22234:22234): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:28:10:493 SWAP/(22234:22234): [mProc 2] solicitud de escritura en la página 5.byte inicial: 375, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:28:10:493 SWAP/(22234:22234): [mProc 4] solicitud de escritura en la página 9.byte inicial: 735, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:28:10:493 SWAP/(22234:22234): Iniciando compactación
+[INFO] 17:28:10:494 SWAP/(22234:22234): Finalizada la compactación
+[INFO] 17:28:10:494 SWAP/(22234:22234): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:28:10:494 SWAP/(22234:22234): [mProc 2] Solicitud de lectura en la página 5. Byte inicial: 225,tamaño: 20, contenido: Hola!
+[INFO] 17:28:10:494 SWAP/(22234:22234): [mProc 4] Solicitud de lectura en la página 9. Byte inicial: 435,tamaño: 20, contenido: Hola!
+[INFO] 17:54:48:516 SWAP/(22627:22627): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:54:48:516 SWAP/(22627:22627): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:54:48:516 SWAP/(22627:22627): [mProc 1] Solicitud de lectura en la página 0. Byte inicial: 150,tamaño: 20, contenido: Hola!
+[INFO] 17:54:48:523 SWAP/(22627:22627): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:54:48:523 SWAP/(22627:22627): [mProc 0] solicitud de escritura en la página 1.byte inicial: 15, tamanio: 20, contenido a escribir: Chau!
+[INFO] 17:54:48:523 SWAP/(22627:22627): [mProc 0] solicitud de escritura en la página 2.byte inicial: 30, tamanio: 24, contenido a escribir: Hola2!
+[INFO] 17:54:48:523 SWAP/(22627:22627): [mProc 1] solicitud de escritura en la página 2.byte inicial: 180, tamanio: 28, contenido a escribir: JoJoJo!
+[INFO] 17:54:48:523 SWAP/(22627:22627): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:54:48:524 SWAP/(22627:22627): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:54:48:524 SWAP/(22627:22627): [mProc 0] Solicitud de lectura en la página 2. Byte inicial: 30,tamaño: 24, contenido: Hola2!
+[INFO] 17:54:48:524 SWAP/(22627:22627): [mProc 1] Solicitud de lectura en la página 2. Byte inicial: 180,tamaño: 28, contenido: JoJoJo!
+[INFO] 17:54:48:544 SWAP/(22627:22627): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:54:48:544 SWAP/(22627:22627): [mProc 2] solicitud de escritura en la página 5.byte inicial: 375, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:54:48:544 SWAP/(22627:22627): [mProc 4] solicitud de escritura en la página 9.byte inicial: 735, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:54:48:544 SWAP/(22627:22627): Iniciando compactación
+[INFO] 17:54:48:545 SWAP/(22627:22627): Finalizada la compactación
+[INFO] 17:54:48:545 SWAP/(22627:22627): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:54:48:545 SWAP/(22627:22627): [mProc 2] Solicitud de lectura en la página 5. Byte inicial: 225,tamaño: 20, contenido: Hola!
+[INFO] 17:54:48:545 SWAP/(22627:22627): [mProc 4] Solicitud de lectura en la página 9. Byte inicial: 435,tamaño: 20, contenido: Hola!
+[INFO] 17:55:20:731 SWAP/(22661:22661): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:55:20:732 SWAP/(22661:22661): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:55:20:732 SWAP/(22661:22661): [mProc 1] Solicitud de lectura en la página 0. Byte inicial: 150,tamaño: 20, contenido: Hola!
+[INFO] 17:55:20:739 SWAP/(22661:22661): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:55:20:739 SWAP/(22661:22661): [mProc 0] solicitud de escritura en la página 1.byte inicial: 15, tamanio: 20, contenido a escribir: Chau!
+[INFO] 17:55:20:739 SWAP/(22661:22661): [mProc 0] solicitud de escritura en la página 2.byte inicial: 30, tamanio: 24, contenido a escribir: Hola2!
+[INFO] 17:55:20:740 SWAP/(22661:22661): [mProc 1] solicitud de escritura en la página 2.byte inicial: 180, tamanio: 28, contenido a escribir: JoJoJo!
+[INFO] 17:55:20:740 SWAP/(22661:22661): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:55:20:740 SWAP/(22661:22661): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:55:20:740 SWAP/(22661:22661): [mProc 0] Solicitud de lectura en la página 2. Byte inicial: 30,tamaño: 24, contenido: Hola2!
+[INFO] 17:55:20:740 SWAP/(22661:22661): [mProc 1] Solicitud de lectura en la página 2. Byte inicial: 180,tamaño: 28, contenido: JoJoJo!
+[INFO] 17:55:20:755 SWAP/(22661:22661): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:55:20:755 SWAP/(22661:22661): [mProc 2] solicitud de escritura en la página 5.byte inicial: 375, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:55:20:755 SWAP/(22661:22661): [mProc 4] solicitud de escritura en la página 9.byte inicial: 735, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:55:20:755 SWAP/(22661:22661): Iniciando compactación
+[INFO] 17:55:20:756 SWAP/(22661:22661): Finalizada la compactación
+[INFO] 17:55:20:756 SWAP/(22661:22661): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:55:20:756 SWAP/(22661:22661): [mProc 2] Solicitud de lectura en la página 5. Byte inicial: 225,tamaño: 20, contenido: Hola!
+[INFO] 17:55:20:757 SWAP/(22661:22661): [mProc 4] Solicitud de lectura en la página 9. Byte inicial: 435,tamaño: 20, contenido: Hola!
+[INFO] 17:58:39:976 SWAP/(23076:23076): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:58:39:976 SWAP/(23076:23076): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:58:39:976 SWAP/(23076:23076): [mProc 1] Solicitud de lectura en la página 0. Byte inicial: 150,tamaño: 20, contenido: Hola!
+[INFO] 17:58:39:980 SWAP/(23076:23076): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:58:39:980 SWAP/(23076:23076): [mProc 0] solicitud de escritura en la página 1.byte inicial: 15, tamanio: 20, contenido a escribir: Chau!
+[INFO] 17:58:39:980 SWAP/(23076:23076): [mProc 0] solicitud de escritura en la página 2.byte inicial: 30, tamanio: 24, contenido a escribir: Hola2!
+[INFO] 17:58:39:980 SWAP/(23076:23076): [mProc 1] solicitud de escritura en la página 2.byte inicial: 180, tamanio: 28, contenido a escribir: JoJoJo!
+[INFO] 17:58:39:981 SWAP/(23076:23076): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:58:39:981 SWAP/(23076:23076): [mProc 0] Solicitud de lectura en la página 1. Byte inicial: 15,tamaño: 20, contenido: Chau!
+[INFO] 17:58:39:981 SWAP/(23076:23076): [mProc 0] Solicitud de lectura en la página 2. Byte inicial: 30,tamaño: 24, contenido: Hola2!
+[INFO] 17:58:39:981 SWAP/(23076:23076): [mProc 1] Solicitud de lectura en la página 2. Byte inicial: 180,tamaño: 28, contenido: JoJoJo!
+[INFO] 17:58:39:985 SWAP/(23076:23076): [mProc 0] solicitud de escritura en la página 0.byte inicial: 0, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:58:39:985 SWAP/(23076:23076): [mProc 2] solicitud de escritura en la página 5.byte inicial: 375, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:58:39:985 SWAP/(23076:23076): [mProc 4] solicitud de escritura en la página 9.byte inicial: 735, tamanio: 20, contenido a escribir: Hola!
+[INFO] 17:58:39:985 SWAP/(23076:23076): Iniciando compactación
+[INFO] 17:58:39:986 SWAP/(23076:23076): Finalizada la compactación
+[INFO] 17:58:39:986 SWAP/(23076:23076): [mProc 0] Solicitud de lectura en la página 0. Byte inicial: 0,tamaño: 20, contenido: Hola!
+[INFO] 17:58:39:986 SWAP/(23076:23076): [mProc 2] Solicitud de lectura en la página 5. Byte inicial: 225,tamaño: 20, contenido: Hola!
+[INFO] 17:58:39:986 SWAP/(23076:23076): [mProc 4] Solicitud de lectura en la página 9. Byte inicial: 435,tamaño: 20, contenido: Hola!
