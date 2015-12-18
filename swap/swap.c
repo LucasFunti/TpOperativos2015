@@ -18,8 +18,8 @@
 
 int main(int argc, char **argv) {
 
-	log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/log_swap",
-			"SWAP", true, LOG_LEVEL_INFO);
+	log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/log_swap", "SWAP",
+			true, LOG_LEVEL_INFO);
 
 	swapConfig = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
 
@@ -88,7 +88,7 @@ int main(int argc, char **argv) {
 			memcpy(&pid, paquete->data, sizeof(int));
 			memcpy(&page, paquete->data + sizeof(int), sizeof(int));
 
-			char * content = readProcessPage(pid, page, log_swap);
+			char * content = readProcessPage(pid, page);
 
 			paquete = pedirPaquete(LEER, getSwapPagesSize(), content);
 
@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
 			memcpy(content, paquete->data + 2 * sizeof(int),
 					getSwapPagesSize());
 
-			writeProcessPage(pid, page, content, log_swap);
+			writeProcessPage(pid, page, content);
 
 			break;
 		}
@@ -134,7 +134,9 @@ int main(int argc, char **argv) {
 			if (success == -1) {
 
 				paquete = pedirPaquete(0, sizeof(int), &pid);
-				log_info(log_swap,"No se pudo reservar las paginas solicitadas para el proceso con pid: %d",pid);
+				log_info(log_swap,
+						"No se pudo reservar las paginas solicitadas para el proceso con pid: %d",
+						pid);
 
 			} else {
 
@@ -155,32 +157,34 @@ int main(int argc, char **argv) {
 			break;
 		}
 
-		case FINALIZAR:
-		{
+		case FINALIZAR: {
 
 			int pid;
 
 			memcpy(&pid, paquete->data, sizeof(int));
 
 			freeSpace(pid);
-			int absolutePage = getProcessFirstPage(pid) + getProcessReservedSpace(pid);
+			int absolutePage = getProcessFirstPage(pid)
+					+ getProcessReservedSpace(pid);
 
 			int byteInicial = absolutePage * getSwapPagesSize();
 
-			log_info(log_swap,"Proceso con pid: %d liberado, su byte inicial es: %d, y el tamaño liberado es:%d",pid,byteInicial,getProcessReservedSpace(pid)*getSwapPagesSize());
+			log_info(log_swap,
+					"Proceso con pid: %d liberado, su byte inicial es: %d, y el tamaño liberado es:%d",
+					pid, byteInicial,
+					getProcessReservedSpace(pid) * getSwapPagesSize());
 
 			break;
 		}
 
-		default:
-		{
+		default: {
 
 			break;
+		}
+
 		}
 
 	}
 
-}
-
-return 0;
+	return 0;
 }

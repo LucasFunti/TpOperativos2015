@@ -36,6 +36,8 @@ char* getSwapFileName() {
 void setupSwap() {
 //Traigo datos del archivo de configuracion de Swap y creo un archivo
 //con las especificaciones de configuracion con /0
+	log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/test/test_log_swap",
+			"SWAP", true, LOG_LEVEL_INFO);
 	int pages_amount = getSwapPagesAmount();
 	int page_size = getSwapPagesSize();
 	char *file_name = getSwapFileName();
@@ -211,7 +213,7 @@ int getProcessReservedSpace(int pid) {
 //Usando 2 listas voy copiando las posiciones en las listas
 
 void compact() {
-	log_info(log_swap,"Iniciando compactación");
+	log_info(log_swap, "Iniciando compactación");
 	int i;
 	int top = getSwapPagesAmount();
 	t_nodo_swap *newItemPtr;
@@ -240,7 +242,7 @@ void compact() {
 	pages = sortedPages;
 
 	fillRemainingSpace();
-	log_info(log_swap,"Finalizada la compactación");
+	log_info(log_swap, "Finalizada la compactación");
 }
 //Leo una pagina y luego la muevo a la posicion deseada
 void copyPage(int from, int to) {
@@ -337,7 +339,7 @@ void common_send(int socket, t_data * paquete) {
 	free(buffer);
 }
 
-void writeProcessPage(int pid, int nPage, char * content, t_log * logger) {
+void writeProcessPage(int pid, int nPage, char * content) {
 
 	int absolutePage = getProcessFirstPage(pid) + nPage;
 
@@ -345,15 +347,17 @@ void writeProcessPage(int pid, int nPage, char * content, t_log * logger) {
 
 	int tamanio = strlen(content) * sizeof(int);
 
-	log_info(logger, string_from_format("[mProc %d] solicitud de escritura en la página %d."
-			"byte inicial: %d, tamanio: %d, contenido a escribir: %s", pid, nPage, byteInicial,
-			tamanio, content));
+	log_info(log_swap,
+			string_from_format(
+					"[mProc %d] solicitud de escritura en la página %d."
+							"byte inicial: %d, tamanio: %d, contenido a escribir: %s",
+					pid, nPage, byteInicial, tamanio, content));
 
 	writePage(absolutePage, content);
 
 }
 
-char * readProcessPage(int pid, int nPage, t_log * logger) {
+char * readProcessPage(int pid, int nPage) {
 
 	int absolutePage = getProcessFirstPage(pid) + nPage;
 
@@ -361,8 +365,11 @@ char * readProcessPage(int pid, int nPage, t_log * logger) {
 
 	int tamanio = strlen(readPage(absolutePage)) * sizeof(int);
 
-	log_info(logger, string_from_format("[mProc %d] Solicitud de lectura en la página %d. Byte inicial: %d,"
-			"tamaño: %d, contenido: %s", pid, nPage, byteInicial, tamanio, readPage(absolutePage)));
+	log_info(log_swap,
+			string_from_format(
+					"[mProc %d] Solicitud de lectura en la página %d. Byte inicial: %d,"
+							"tamaño: %d, contenido: %s", pid, nPage,
+					byteInicial, tamanio, readPage(absolutePage)));
 
 	return readPage(absolutePage);
 
