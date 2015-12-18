@@ -4,7 +4,7 @@
 #define PACKAGESIZE 32
 
 int main(int argc, char **argv) {
-	log_planificador = log_create("log_planificador", "PLANIFICADOR",
+	log_planificador = log_create("/tp-2015-2c-signiorcodigo/planificador/log_planificador", "PLANIFICADOR",
 	false, LOG_LEVEL_INFO);
 
 	colaListos = queue_create();
@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 	int socketEscucha, retornoPoll;
 	int fd_index = 0;
 
-	struct pollfd fileDescriptors[4];
+	struct pollfd fileDescriptors[100];
 	int cantfds = 0;
 	socketEscucha = setup_listen("localhost", port);
 	listen(socketEscucha, 1024);

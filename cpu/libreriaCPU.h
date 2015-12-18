@@ -33,6 +33,8 @@
 
 int porcentajeDeUso[50], instruccionesEjecutadas[50];
 
+bool hayQueFinalizar[50];
+
 typedef struct {
 	int codigo_operacion;
 	int tamanio_data;

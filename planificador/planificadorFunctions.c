@@ -81,7 +81,7 @@ int getQuantum() {
 	t_config *planificador_config;
 	planificador_config = config_create(
 			"/tp-2015-2c-signiorcodigo/planificador/planificadorConfig");
-	int quantum = config_get_int_value(planificador_config, "PUERTO_ESCUCHA");
+	int quantum = config_get_int_value(planificador_config, "QUANTUM");
 	return quantum;
 }
 
@@ -155,7 +155,7 @@ void cambiarEstado(tipo_pcb *proceso, int estado) {
 	proceso->estado = estado;
 	mostrarEstadoDeListos(colaListos, "Listos");
 	mostrarEstadoDeLista(en_ejecucion, "Ejecucion");
-	mostrarEstadoDeBloqueados(entradaSalida, "Bolqueados");
+	mostrarEstadoDeBloqueados(entradaSalida, "Bloqueados");
 }
 
 /*agrega un proceso a la cola de listos */
@@ -416,7 +416,8 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 	case finquantum:
 
 		recv(socketCliente, &tamanio, sizeof(int), MSG_WAITALL);
-		recv(socketCliente, data, sizeof(int) * 4, MSG_WAITALL);
+		data = malloc(tamanio);
+		recv(socketCliente, data, tamanio, MSG_WAITALL);
 
 		//rafaga_t * unaInstruccion = deserializarInstruccion(data);
 		rafaga_t * unaInstruccion = malloc(sizeof(rafaga_t));
@@ -470,7 +471,7 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 
 		sem_post(&cpu_libre);
 
-		free(data);
+
 		break;
 
 	case entrada_salida:
@@ -560,18 +561,11 @@ data_hilo *obtenerDatosHilo(nodo_en_ejecucion *Proceso, int tiempo) {
 	return dataHilo;
 }
 /* FUNCION QUE ENVIA MSJ A LA CPU PARA AVERIGUAR SU PORCENTAJE */
-void peticionPorcentajeUsoCpu(t_list * lista, int codigo) {
+void peticionPorcentajeUsoCpu(int codigo) {
 	int j;
-	if (list_size(lista) == 0) {
-		printf("No hay procesos en ejecución\n");
-
-	} else {
-
-		for (j = 0; j < list_size(lista); j++) {
-			nodo_en_ejecucion *procesoEnEjecucion = list_get(lista, j);
-			send(procesoEnEjecucion->socket, &codigo, sizeof(int), MSG_WAITALL);
-		}
-
+	for (j = 0; j < list_size(listaCpu); j++) {
+		t_cpu *unaCpu = list_get(listaCpu, j);
+		send(unaCpu->socket, &codigo, sizeof(int), MSG_WAITALL);
 	}
 }
 
@@ -613,19 +607,17 @@ void * ejecutarIngresoConsola() {
 						== pid_a_finalizar);
 			}
 
-			nodo_en_ejecucion *procesoEnEjecucion = list_remove_by_condition(
-					en_ejecucion, encontrar_pid);
+			nodo_en_ejecucion *procesoEnEjecucion = list_find(en_ejecucion, encontrar_pid);
+			if(procesoEnEjecucion == NULL){
+				log_info(log_planificador,"El proceso a finalizar con pid: %d, no se encuentra en la cola de ejecucion");
+			}else{
 			printf("VAMOS A FINALIZAR AL PROCESO CON PID: %d\n",
 					procesoEnEjecucion->proceso->id);
-			int PC = -1;
-			PC = setProgramCounter(procesoEnEjecucion->proceso->dirProceso);
 
-			procesoEnEjecucion->proceso->programCounter = PC;
+			int codigo = 99;
 
-			agregarEnColaDeListos(procesoEnEjecucion->proceso);
-
-			sem_post(&procesos_listos);
-
+			send(procesoEnEjecucion->socket,&codigo,sizeof(int),MSG_WAITALL);
+			}
 			break;
 		case 2:
 			/* ps */
@@ -637,7 +629,7 @@ void * ejecutarIngresoConsola() {
 			break;
 		case 3:
 			/* cpu */
-			peticionPorcentajeUsoCpu(en_ejecucion, 3);
+			peticionPorcentajeUsoCpu(3);
 			break;
 		}
 
@@ -669,6 +661,7 @@ void *despacharProcesosListos() {
 		enviarContextoEjecucion(cpuLibre->socket, 1, procesoEjecutando->proceso,
 				procesoEjecutando->proceso->dirProceso, getAlgoritmo(),
 				getQuantum());
+		cpuLibre->libre = false;
 
 	}
 
