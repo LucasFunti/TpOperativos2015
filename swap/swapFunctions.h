@@ -18,14 +18,14 @@
 #include <unistd.h>
 #include <commons/config.h>
 #include <commons/collections/list.h>
-#include <commons/bitarray.h>
 #include <signiorCodigo/libSockets.h>
+#include "swap.h"
 
 //Estructuras
 
 typedef struct {
 	int numeroPagina;
-	char *nombreProceso;
+	int pid;
 } t_nodo_swap;
 
 typedef struct {
@@ -43,12 +43,11 @@ typedef struct {
 
 //Metodos
 
-
 void setupSwap();
 
 int doesFileExist(const char *filename);
 
-t_list* setPages(int pagesAmount);
+void setPages();
 
 int getSwapPagesAmount();
 
@@ -56,29 +55,35 @@ int getSwapPagesSize();
 
 char* getSwapFileName();
 
-void markPage(int pageNumber,char *processName, t_list *pages);
+void markPage(int pageNumber, int pid);
 
-void writePage(int pageNumber,char *content);
+void writePage(int absolutePageNumber, char *content);
+
+int getBlankPages();
+
+int getLargestContiguousSpace();
 
 char* readPage(int pageNumber);
 
-void evaluateAction(char* action, t_list *pages);
+void evaluateAction(char* action);
 
-int reserve(char* name, int amount, t_list *pages);
+int reserve(int pid, int amount);
 
-int checkProcessSpace(char* name, t_list *pages);
+int getProcessFirstPage(int pid);
 
-int checkSpaceAvailability(int amount, t_list *page);
+int getProcessReservedSpace(int pid);
 
-void freeSpace(char *name,t_list *pages);
+int checkSpaceAvailability(int amount);
 
-void compact(t_list *pages);
+void freeSpace(int pid);
 
-void fillRemainingSpace(t_list *list, int from);
+void compact();
+
+void fillRemainingSpace();
 
 void copyPage(int from, int to);
 
-void imprimir(t_list *list);
+void imprimir();
 
 char* getPort();
 
@@ -88,7 +93,10 @@ char * serializarPaquete(t_data * unPaquete);
 
 t_data * leer_paquete(int socket);
 
-void common_send(int socket, t_data * paquete) ;
+void common_send(int socket, t_data * paquete);
 
+char * readProcessPage(int pid, int nPage);
+
+void writeProcessPage(int pid, int nPage, char * content);
 
 #endif /* SWAPFUNCTIONS_H_ */
