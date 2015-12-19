@@ -33,6 +33,7 @@ void atenderConexiones() {
 
 		if (resultadoSelect == -1) {
 			goto labelSelect;
+
 		}
 
 		pthread_mutex_lock(&semaforo_memoria);
@@ -199,25 +200,29 @@ void common_send(int socket, t_data * paquete) {
 
 void conectarseAlSwap() {
 
-	socketSwap = connect_to(config_get_string_value(memoriaConfig, "IP_SWAP"),
-			config_get_string_value(memoriaConfig, "PUERTO_SWAP"));
+	if (!test) {
 
-	int null_data = 0;
+		socketSwap = connect_to(
+				config_get_string_value(memoriaConfig, "IP_SWAP"),
+				config_get_string_value(memoriaConfig, "PUERTO_SWAP"));
 
-	t_data * paquete = pedirPaquete(1, sizeof(int), &null_data);
+		int null_data = 0;
 
-	common_send(socketSwap, paquete);
+		t_data * paquete = pedirPaquete(1, sizeof(int), &null_data);
 
-	paquete = leer_paquete(socketSwap);
+		common_send(socketSwap, paquete);
 
-	if (paquete->header->codigo_operacion == 2) {
-		loggearInfo(
-				string_from_format(
-						"Conexión con el swap exitosa, se le registra el socket %d",
-						socketSwap));
-	} else {
-		loggearError("No se pudo encontral al swap, se cierra todo");
-		exit(EXIT_FAILURE);
+		paquete = leer_paquete(socketSwap);
+
+		if (paquete->header->codigo_operacion == 2) {
+			loggearInfo(
+					string_from_format(
+							"Conexión con el swap exitosa, se le registra el socket %d",
+							socketSwap));
+		} else {
+			loggearError("No se pudo encontral al swap, se cierra todo");
+			exit(EXIT_FAILURE);
+		}
 	}
 
 }

@@ -8,8 +8,19 @@
 
 void registrarSeniales() {
 
-	signal(SIGUSR1, atender_seniales);
-	signal(SIGUSR2, atender_seniales);
+	struct sigaction sa;
+
+	sa.sa_handler = atender_seniales;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+
+	if (sigaction(SIGUSR1, &sa, NULL) == -1) {
+		loggearInfo("No se pudo registrar la señal");
+		exit(-1);
+	}
+
+	//signal(SIGUSR1, atender_seniales);
+	//signal(SIGUSR2, atender_seniales);
 	signal(SIGPOLL, atender_seniales);
 	loggearInfo(
 			string_from_format(

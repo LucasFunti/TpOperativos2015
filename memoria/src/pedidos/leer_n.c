@@ -41,6 +41,10 @@ bool leer_n(int pid, int pagina) {
 
 			} else {
 
+				log_info(logger,
+						"Se le asigna el marco %d al proceso %d a la página %d",
+						marco, pid, pagina);
+
 				char * contenido_Pagina = swap_leer(pid, pagina);
 
 				loggearInfo("Escribiendo contenido del swap");

@@ -7,7 +7,7 @@
 
 int main() {
 
-	test = false;
+	test = true;
 
 	iniciarLogger();
 	levantarConfiguracion();
@@ -160,6 +160,9 @@ void atenderConexion(int socket, fd_set sockets_activos) {
 		log_info(logger,
 				string_from_format("Se finalizó el pid %d",
 						pid_para_finalizar));
+
+		log_info(logger, "Page faults: %d", page_faults);
+		log_info(logger, "Accesos swap: %d", accesos_swap);
 
 		break;
 

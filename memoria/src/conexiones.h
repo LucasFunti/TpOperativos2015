@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <commons/string.h>
+#include <errno.h>
 #include "globals.h"
 #include "loggear.h"
 #include "memoria.h"

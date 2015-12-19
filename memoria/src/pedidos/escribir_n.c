@@ -29,7 +29,9 @@ bool escribir_n(int pid, int pagina, char * contenido) {
 				return false;
 
 			} else {
-
+				log_info(logger,
+						"Se le asigna el marco %d al proceso %d a la página %d",
+						marco, pid, pagina);
 				item->marco = marco;
 				item->presencia = true;
 
