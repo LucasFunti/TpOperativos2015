@@ -47,8 +47,6 @@ typedef struct {
 
 void setupSwap();
 
-int doesFileExist(const char *filename);
-
 void setPages();
 
 int getSwapPagesAmount();
