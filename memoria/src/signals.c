@@ -8,9 +8,41 @@
 
 void registrarSeniales() {
 
-	signal(SIGUSR1, atender_seniales);
-	signal(SIGUSR2, atender_seniales);
-	signal(SIGPOLL, atender_seniales);
+	struct sigaction sa;
+
+	sa.sa_handler = atender_seniales;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+
+	if (sigaction(SIGUSR1, &sa, NULL) == -1) {
+		perror("sigaction");
+		exit(1);
+	}
+
+	struct sigaction sb;
+
+	sb.sa_handler = atender_seniales;
+	sb.sa_flags = SA_RESTART;
+	sigemptyset(&sb.sa_mask);
+
+	if (sigaction(SIGUSR2, &sb, NULL) == -1) {
+		perror("sigaction");
+		exit(1);
+	}
+
+	struct sigaction sc;
+
+	sc.sa_handler = atender_seniales;
+	sc.sa_flags = SA_RESTART;
+	sigemptyset(&sc.sa_mask);
+
+	if (sigaction(SIGPOLL, &sc, NULL) == -1) {
+		perror("sigaction");
+		exit(1);
+	}
+
+//	signal(SIGUSR2, atender_seniales);
+//	signal(SIGPOLL, atender_seniales);
 	loggearInfo(
 			string_from_format(
 					"Ya se atiende la señal SIGUSR1 (%d), SIGUSR2 (%d) y SIGPOLL (%d) ",
@@ -25,8 +57,8 @@ void atender_seniales(int signal) {
 	case SIGUSR1:
 
 		pthread_mutex_lock(&semaforo_memoria);
-		if (!test) {
 
+		if (!test) {
 			loggearInfo("Se registró la señal para vaciar la TLB");
 		}
 		vaciar_tlb();

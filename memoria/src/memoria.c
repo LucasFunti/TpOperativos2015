@@ -7,7 +7,7 @@
 
 int main() {
 
-	test = false;
+	test = true;
 
 	iniciarLogger();
 	levantarConfiguracion();
