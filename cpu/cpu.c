@@ -15,40 +15,31 @@ int main(int argc, char **argv) {
 
 	void iniciarFlags(){
 		int i;
-		for (i = 0; i <= 50; i++) {
+		for (i = 0; i < 50; i++) {
 			hayQueFinalizar[i] = false;
 		}
 	}
 
-	void resetearContadores() {
+	void iniciarTiempos(){
 		int i;
-		for (i = 0; i <= 50; i++) {
-			porcentajeDeUso[i] = 0;
-			instruccionesEjecutadas[i] = 0;
-		}
-	}
-
-	void funcionResetearContadores() {
-		while (1) {
-			sleep(60);
-			resetearContadores();
+		for (i = 0; i < 50; i++){
+			uso_cpu[i] = list_create();
 		}
 	}
 
 // Inicio las variables iniciales
 	int i;
 	int cantHilos = getHilos();
-	resetearContadores();
-	pthread_t hilos[cantHilos], hiloContador;
+	pthread_t hilos[cantHilos];
 	iniciarFlags();
+	iniciarTiempos();
 
 	remove("/tp-2015-2c-signiorcodigo/cpu/log_cpu");
 	t_log *log_cpu = log_create("/tp-2015-2c-signiorcodigo/cpu/log_cpu", "CPU",
 			true, LOG_LEVEL_INFO);
 	t_hilo *infoHilo;
 
-// Creo el hilo que gestiona el contador
-	pthread_create(&hiloContador, NULL, funcionResetearContadores, NULL);
+
 
 // Creo las instancias de CPU
 	for (i = 0; i < cantHilos; i++) {
@@ -60,7 +51,6 @@ int main(int argc, char **argv) {
 	for (i = 0; i < cantHilos; i++) {
 		pthread_join(hilos[i], NULL);
 	};
-	pthread_join(hiloContador, NULL);
 
 	/*	printf("ingrese la accion a testear, o escriba 'ayuda' para ver comandos disponibles:\n");
 	 char *accion = malloc(sizeof(char) * 32);

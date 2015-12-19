@@ -11,6 +11,7 @@
 #include <commons/string.h>
 #include <commons/config.h>
 #include <commons/log.h>
+#include <commons/collections/list.h>
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -34,6 +35,15 @@
 int porcentajeDeUso[50], instruccionesEjecutadas[50];
 
 bool hayQueFinalizar[50];
+
+typedef struct{
+	time_t tiempoInicial;
+	time_t tiempoFinal;
+	double tiempoOcupado;
+
+}t_tiempoDeUso;
+
+t_list *uso_cpu[50];
 
 typedef struct {
 	int codigo_operacion;

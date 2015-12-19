@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
 			recv(socketConActividad, &porcentaje, sizeof(int),
 			MSG_WAITALL);
 
-			printf("Cpu %d: %d\n", pid_cpu, porcentaje);
+			printf("Cpu %d: %d%%\n", pid_cpu, porcentaje);
 
 			log_info(log_planificador,"Cpu %d: %d\n", pid_cpu, porcentaje);
 

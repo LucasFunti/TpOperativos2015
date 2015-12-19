@@ -359,8 +359,6 @@ int setProgramCounter(char *dirProceso) {
 		if (j == ';') {
 			pc++;
 		} else if (j == 'f') {
-
-			pc++;
 			return pc;
 			break;
 		}
@@ -510,6 +508,7 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 
 	case fallaEjecucion:
 
+		recv(socketCliente,&pid,sizeof(int),MSG_WAITALL);
 		recv(socketCliente, &pid, sizeof(int), MSG_WAITALL);
 
 		bool encontrar_cpu_falla(void * nodo) {
@@ -524,7 +523,7 @@ void interpretarInstruccion(int instruccion, int socketCliente) {
 
 		liberarCpu(proceso->socket);
 
-		log_info(log_planificador,"Se libera la cpu: %d por falla de ejecucion",proceso->pid_cpu);
+		log_info(log_planificador,"Se libera la cpu: %d por falla de ejecucion del proceso %d",proceso->pid_cpu,proceso->proceso->id);
 
 		sem_post(&cpu_libre);
 
@@ -631,7 +630,7 @@ void peticionPorcentajeUsoCpu(int codigo) {
 }
 
 void * ejecutarIngresoConsola() {
-	int pid_a_finalizar = -1;
+	int pid_a_finalizar = -2;
 	while (1) {
 
 		codigoOperacion = reconocerIdentificador();
@@ -667,8 +666,33 @@ void * ejecutarIngresoConsola() {
 			}
 
 			nodo_en_ejecucion *procesoEnEjecucion = list_find(en_ejecucion, encontrar_pid);
+
 			if(procesoEnEjecucion == NULL){
 				log_info(log_planificador,"El proceso a finalizar con pid: %d, no se encuentra en la cola de ejecucion");
+				bool encontrar_pid_bloqueado(void * nodo){
+					return ((((nodo_entrada_salida *)nodo)->proceso->id) == pid_a_finalizar);
+				}
+				int pc;
+				nodo_entrada_salida *procesoBloqueado = list_remove_by_condition(entradaSalida->elements,encontrar_pid_bloqueado);
+				if(procesoBloqueado == NULL){
+					bool encontrar_Listo (void * nodo){
+						return ((((tipo_pcb *)nodo)->id) == pid_a_finalizar);
+					}
+					tipo_pcb *procesoListo = list_find(colaListos->elements,encontrar_Listo);
+					pc = setProgramCounter(procesoListo->dirProceso);
+					procesoListo->programCounter = pc;
+					log_info(log_planificador,"Al proceso %d se le actualizo el PC para que se finalice en la proxima instruccion",procesoListo->id);
+				}else{
+					log_info(log_planificador,"El pid solicitado no existe en las colas de planificacion");
+				}
+
+				pc = setProgramCounter(procesoBloqueado->proceso->dirProceso);
+
+				procesoBloqueado->proceso->programCounter = pc;
+				log_info(log_planificador,"El proceso %d se lo coloca en la cola de listos con el PC actualizado para que finalice");
+				agregarEnColaDeListos(procesoBloqueado->proceso);
+
+				sem_post(&procesos_listos);
 			}else{
 
 			log_info(log_planificador,"Se ejecuta la instruccion Finalizar PID sobre el proceso con pid: %d",procesoEnEjecucion->proceso->id);

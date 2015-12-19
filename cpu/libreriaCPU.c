@@ -289,12 +289,15 @@ void correrArchivo(void * infoHilo) {
 
 	t_correr_info * infoCorrer = infoHilo;
 	t_hilo * dataDelHilo = infoCorrer->threadInfo;
+
+
+
 	t_resultadoOperacion resultado;
 	resultado.idProceso = atoi(infoCorrer->id);
 	resultado.idCpu = dataDelHilo->idHilo;
 	int n = infoCorrer->contadorPrograma;
 	int retardo = getRetardo();
-	int instruccionesMaximasPorMinuto = 60 / (retardo / 1000000);
+
 	int tiempoIO;
 	int quantum = infoCorrer->quantum;
 	char* archivoEnStrings = txtAString(infoCorrer->path);
@@ -319,14 +322,14 @@ void correrArchivo(void * infoHilo) {
 
 		while (nInstruccion <= list_size(instrucciones) && ultimaNoFueIO) {
 
-			if(hayQueFinalizar[dataDelHilo->idHilo] == true){
-				nInstruccion = list_size(instrucciones) - 1;
-				hayQueFinalizar[dataDelHilo->idHilo] = false;
-			}
+
 			int operacion = reconocerInstruccion(listaInstrucciones[nInstruccion]);
 			bool fueCorrecta = ejecutar(listaInstrucciones[nInstruccion],
 					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
 					infoCorrer->id, dataDelHilo);
+			time_t *tiempo = malloc(sizeof(time_t));
+			*tiempo = time(NULL);
+			list_add(uso_cpu[dataDelHilo->idHilo], tiempo);
 
 			t_resultado_ejecucion * resultadoEjecucion = malloc(
 					sizeof(t_resultado_ejecucion));
@@ -335,10 +338,6 @@ void correrArchivo(void * infoHilo) {
 			resultadoEjecucion->resultado = fueCorrecta;
 
 			list_add(resultados,resultadoEjecucion);
-			instruccionesEjecutadas[dataDelHilo->idHilo]++;
-			porcentajeDeUso[dataDelHilo->idHilo] =
-					((instruccionesEjecutadas[dataDelHilo->idHilo] * 100)
-							/ instruccionesMaximasPorMinuto);
 
 			if (fueCorrecta) {
 
@@ -353,7 +352,7 @@ void correrArchivo(void * infoHilo) {
 
 					log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 					printf("\n");
-					return;
+					goto terminar;
 
 				case ENTRADASALIDA:
 
@@ -365,7 +364,7 @@ void correrArchivo(void * infoHilo) {
 
 					log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 					printf("\n");
-					return;
+					goto terminar;
 
 				}
 
@@ -374,17 +373,16 @@ void correrArchivo(void * infoHilo) {
 						infoCorrer->serverPlanificador);
 				log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 				printf("\n");
-				return;
+				goto terminar;
 			}
 			usleep(retardo);
+			if(hayQueFinalizar[dataDelHilo->idHilo] == true){
+							nInstruccion = list_size(instrucciones) - 1;
+							hayQueFinalizar[dataDelHilo->idHilo] = false;
+						}
 		}
 
 	} else if (quantum != 0) { // Round-Robin
-
-		if(hayQueFinalizar[dataDelHilo->idHilo] == true){
-				nInstruccion = list_size(instrucciones) - 1;
-				hayQueFinalizar[dataDelHilo->idHilo] = false;
-			}
 
 		while (nInstruccion <= list_size(instrucciones) && ultimaNoFueIO
 				&& contadorEjecutadas < quantum) {
@@ -392,6 +390,9 @@ void correrArchivo(void * infoHilo) {
 			bool fueCorrecta = ejecutar(listaInstrucciones[nInstruccion],
 					infoCorrer->serverMemoria, infoCorrer->serverPlanificador,
 					infoCorrer->id, dataDelHilo);
+			time_t *tiempo = malloc(sizeof(time_t));
+			*tiempo = time(NULL);
+			list_add(uso_cpu[dataDelHilo->idHilo], tiempo);
 
 			t_resultado_ejecucion * resultadoEjecucion = malloc(
 					sizeof(t_resultado_ejecucion));
@@ -401,11 +402,6 @@ void correrArchivo(void * infoHilo) {
 
 			list_add(resultados,resultadoEjecucion);
 
-
-			instruccionesEjecutadas[dataDelHilo->idHilo]++;
-			porcentajeDeUso[dataDelHilo->idHilo] =
-					((instruccionesEjecutadas[dataDelHilo->idHilo] * 100)
-							/ instruccionesMaximasPorMinuto);
 
 			if (fueCorrecta) {
 
@@ -420,7 +416,7 @@ void correrArchivo(void * infoHilo) {
 
 					log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 					printf("\n");
-					return;
+					goto terminar;
 
 				case ENTRADASALIDA:
 
@@ -432,7 +428,7 @@ void correrArchivo(void * infoHilo) {
 
 					log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 					printf("\n");
-					return;
+					goto terminar;
 
 				}
 
@@ -441,18 +437,27 @@ void correrArchivo(void * infoHilo) {
 						infoCorrer->serverPlanificador);
 				log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 				printf("\n");
-				return;
+				goto terminar;
 
 			}
 			contadorEjecutadas ++;
 			usleep(retardo);
+
+			if(hayQueFinalizar[dataDelHilo->idHilo] == true){
+					nInstruccion = list_size(instrucciones) - 1;
+					hayQueFinalizar[dataDelHilo->idHilo] = false;
+				}
 		}
 		enviarPaqueteFinQuantum(infoCorrer->threadInfo->idHilo, nInstruccion,
 				infoCorrer->serverPlanificador, resultados);
 		log_info(dataDelHilo->logger, string_from_format("[CPU%d] liberada y disponible!", dataDelHilo->idHilo));
 		printf("\n");
-		return;
+		goto terminar;
 	}
+
+	terminar:
+
+	return;
 
 }
 
@@ -723,8 +728,25 @@ void *iniciarcpu(void *punteroALaInfo) {
 			pthread_create(&hiloEjecucion, NULL, correrArchivo, infoCorrer);
 
 		} else if (codigoOperacion == 3) { // caso Consumo de CPU
+			time_t tiempoActual = time(NULL);
+
 			int id = threadInfo->idHilo;
-			int consumoActual = porcentajeDeUso[id];
+
+			bool ultimoMinuto(void *data){
+				time_t *tiempo = data;
+				return (difftime(tiempoActual, *tiempo) <= 60);
+			}
+			int cantidad_instrucciones_ultimo_minuto = list_count_satisfying(uso_cpu[id],ultimoMinuto);
+			int retardoEnSegundos = getRetardo()/1000000;
+			int cantidad_maxima_instrucciones = (float)60 / (float)retardoEnSegundos;
+			int consumoActual;
+			if(cantidad_instrucciones_ultimo_minuto == 0){
+				consumoActual = 0;
+			}
+			else{
+				consumoActual = ((float)cantidad_instrucciones_ultimo_minuto * (float)100) / (float)cantidad_maxima_instrucciones;
+			}
+
 			t_data *paqueteConsumo = crearPaqueteConsumo(id, consumoActual);
 			common_send(serverPlanificador, paqueteConsumo);
 
@@ -798,18 +820,3 @@ char *logeoDeEjecucion(char *mensaje, char *ruta, int contador, char *idProceso)
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void funcionResetearContadores() {
-	while (1) {
-		sleep(60);
-		resetearContadores();
-	}
-}
-
-void resetearContadores() {
-	int i;
-	for (i = 0; i <= 50; i++) {
-		porcentajeDeUso[i] = 0;
-		instruccionesEjecutadas[i] = 0;
-	}
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
