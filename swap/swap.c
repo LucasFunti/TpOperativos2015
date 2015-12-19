@@ -18,10 +18,13 @@
 
 int main(int argc, char **argv) {
 
-	log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/log_swap", "SWAP",
-			true, LOG_LEVEL_INFO);
+	remove("/tp-2015-2c-signiorcodigo/swap/log_swap");
 
 	swapConfig = config_create("/tp-2015-2c-signiorcodigo/swap/swapConfig");
+
+	setupSwap();
+
+	setPages();
 
 	int socketEscucha, socketMemoria;
 
@@ -50,28 +53,6 @@ int main(int argc, char **argv) {
 
 		exit(EXIT_FAILURE);
 	}
-
-	char* file_name = getSwapFileName();
-
-	char str[100];
-
-	strcpy(str, "/tp-2015-2c-signiorcodigo/swap/Debug/");
-
-	strcpy(str, file_name);
-
-	int result = doesFileExist(str);
-
-	if (!result) {
-
-		setupSwap();
-
-	} else {
-
-		printf("El archivo de Swap ya existe. Continuamos...\n");
-
-	}
-
-	setPages();
 
 	t_data * paquete;
 
@@ -129,7 +110,10 @@ int main(int argc, char **argv) {
 					compact();
 					success = reserve(pid, pagesAmount);
 				}
+			}else{
+				success = -1;
 			}
+
 
 			if (success == -1) {
 
@@ -141,14 +125,15 @@ int main(int argc, char **argv) {
 			} else {
 
 				paquete = pedirPaquete(1, sizeof(int), &pid);
-				int absolutePage = getProcessFirstPage(pid) + pagesAmount;
+				int absolutePage = getProcessFirstPage(pid);
 
 				int byteInicial = absolutePage * getSwapPagesSize();
 
+				int size = pagesAmount * getSwapPagesSize();
+
 				log_info(log_swap,
-						string_from_format(
-								"Proceso mProc asignado, su PID es: %d, N° de byte inicial: %d, y tamaño en bytes: %d"),
-						pid, byteInicial, pagesAmount * getSwapPagesSize());
+						"Se inicia el proceso %d en el byte %d con tamanio %d",
+						pid, byteInicial, size);
 
 			}
 
@@ -163,16 +148,16 @@ int main(int argc, char **argv) {
 
 			memcpy(&pid, paquete->data, sizeof(int));
 
-			freeSpace(pid);
-			int absolutePage = getProcessFirstPage(pid)
-					+ getProcessReservedSpace(pid);
+			int processSpace = getProcessReservedSpace(pid)
+					* getSwapPagesSize();
 
-			int byteInicial = absolutePage * getSwapPagesSize();
+			int byteInicial = getProcessFirstPage(pid) * getSwapPagesSize();
+
+			freeSpace(pid);
 
 			log_info(log_swap,
-					"Proceso con pid: %d liberado, su byte inicial es: %d, y el tamaño liberado es:%d",
-					pid, byteInicial,
-					getProcessReservedSpace(pid) * getSwapPagesSize());
+					"Proceso %d liberado. N° de byte inicial: %d, y tamaño en bytes: %d",
+					pid, byteInicial, processSpace);
 
 			break;
 		}

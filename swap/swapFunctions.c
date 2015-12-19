@@ -13,12 +13,6 @@ void setSwapConfig(char * path) {
 
 }
 
-int doesFileExist(const char *filename) {
-	FILE *fp = fopen(filename, "r");
-	if (fp != NULL)
-		fclose(fp);
-	return (fp != NULL);
-}
 int getSwapPagesAmount() {
 	int pages_amount = config_get_int_value(swapConfig, "CANTIDAD_PAGINAS");
 	return pages_amount;
@@ -36,13 +30,15 @@ char* getSwapFileName() {
 void setupSwap() {
 //Traigo datos del archivo de configuracion de Swap y creo un archivo
 //con las especificaciones de configuracion con /0
-	log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/test/test_log_swap",
-			"SWAP", true, LOG_LEVEL_INFO);
+
+	log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/log_swap", "SWAP",
+			true, LOG_LEVEL_INFO);
 	int pages_amount = getSwapPagesAmount();
 	int page_size = getSwapPagesSize();
 	char *file_name = getSwapFileName();
 	char command[100];
 	int total = pages_amount * page_size;
+	remove(file_name);
 	sprintf(command, "dd if=/dev/zero of=%s bs=%d count=1", file_name, total);
 	system(command);
 //printf("Archivo de swap creado bajo el nombre %s\n",file_name );
@@ -158,6 +154,7 @@ void freeSpace(int pid) {
 	for (i = 0; i < top; i++) {
 		t_nodo_swap *newItemPtr = (t_nodo_swap*) list_get(pages, i);
 		if (newItemPtr->pid == pid) {
+			log_info(log_swap, "Eliminando una página del proceso %d", pid);
 			newItemPtr->pid = -1;
 		}
 	}
