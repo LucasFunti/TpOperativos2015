@@ -306,7 +306,7 @@ context(test_admin_memoria) {
 			vaciar_memoria_principal();
 
 			should_int(list_size(tlb)) be equal to(0);
-			should_int(list_size(tabla_paginas)) be equal to(0);
+			should_int(list_size(tabla_paginas)) be equal to(2);
 		}end
 
 	}end

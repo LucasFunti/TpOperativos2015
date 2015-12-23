@@ -14,3 +14,4 @@ escribir 1 "IO B";
 leer 1;
 entrada-salida 5;
 finalizar;
+

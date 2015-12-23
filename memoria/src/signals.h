@@ -10,10 +10,11 @@
 #include <signal.h>
 #include "loggear.h"
 #include "conexiones.h"
+#include <pthread.h>
 
-void vaciar_memoria_principal();
-void vaciar_tlb();
-void volcar_memoria_principal();
+void * vaciar_memoria_principal(void * data);
+void * vaciar_tlb(void * data);
+void * volcar_memoria_principal(void * data);
 
 void atender_seniales(int signal);
 

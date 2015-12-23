@@ -20,13 +20,11 @@ int fifo() {
 					"Se va a remplazar la página %d del proceso %d que ocupa el marco %d",
 					item->pagina, item->pid, item->marco));
 
-	pagina_matchear = item->pagina;
-
-	list_remove_by_condition(cola_llegada, coincide_pid_y_pagina);
+	list_remove(cola_llegada, 0);
 
 	if (item->modificado) {
 
-		swap_escribir(pid_matchear, pagina_matchear, item->marco);
+		swap_escribir(item->pid, item->pagina, item->marco);
 
 		item->modificado = false;
 

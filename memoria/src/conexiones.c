@@ -97,13 +97,13 @@ t_data * leer_paquete(int socket) {
 	label: resultado = recv(socket, &paquete_entrante->header->codigo_operacion,
 			sizeof(int),
 			MSG_WAITALL);
-	if (resultado == -1) {
+	if (resultado != 4) {
 		goto label;
 	}
 	label2: resultado = recv(socket, &paquete_entrante->header->tamanio_data,
 			sizeof(int),
 			MSG_WAITALL);
-	if (resultado == -1) {
+	if (resultado != 4) {
 		goto label2;
 	}
 
@@ -112,7 +112,7 @@ t_data * leer_paquete(int socket) {
 	label3: resultado = recv(socket, paquete_entrante->data,
 			paquete_entrante->header->tamanio_data,
 			MSG_WAITALL);
-	if (resultado == -1) {
+	if (resultado != paquete_entrante->header->tamanio_data) {
 		goto label3;
 	}
 
@@ -206,7 +206,12 @@ void common_send(int socket, t_data * paquete) {
 	buffer = serializar(paquete);
 	tamanio_total = paquete->header->tamanio_data + sizeof(t_header);
 
-	send(socket, buffer, tamanio_total, MSG_WAITALL);
+	int resultado;
+	labelSend: resultado = send(socket, buffer, tamanio_total, MSG_WAITALL);
+
+	if(resultado!= tamanio_total){
+		goto labelSend;
+	}
 
 	free(buffer);
 }

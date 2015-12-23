@@ -32,7 +32,7 @@ void setupSwap() {
 //con las especificaciones de configuracion con /0
 
 	log_swap = log_create("/tp-2015-2c-signiorcodigo/swap/log_swap", "SWAP",
-			true, LOG_LEVEL_INFO);
+	true, LOG_LEVEL_INFO);
 	int pages_amount = getSwapPagesAmount();
 	int page_size = getSwapPagesSize();
 	char *file_name = getSwapFileName();
@@ -318,13 +318,26 @@ char * serializarPaquete(t_data * unPaquete) {
 t_data * leer_paquete(int socket) {
 	t_data * paquete_entrante = malloc(sizeof(t_data));
 	paquete_entrante->header = malloc(sizeof(t_header));
-	recv(socket, &paquete_entrante->header->codigo_operacion, sizeof(int),
-	MSG_WAITALL);
-	recv(socket, &paquete_entrante->header->tamanio_data, sizeof(int),
-	MSG_WAITALL);
+	int resultado;
+	label1: resultado = recv(socket,
+			&paquete_entrante->header->codigo_operacion, sizeof(int),
+			MSG_WAITALL);
+	if (resultado != 4) {
+		goto label1;
+	}
+	label2: resultado = recv(socket, &paquete_entrante->header->tamanio_data,
+			sizeof(int),
+			MSG_WAITALL);
+	if (resultado != 4) {
+		goto label2;
+	}
 	paquete_entrante->data = malloc(paquete_entrante->header->tamanio_data);
-	recv(socket, paquete_entrante->data, paquete_entrante->header->tamanio_data,
-	MSG_WAITALL);
+	label3: resultado = recv(socket, paquete_entrante->data,
+			paquete_entrante->header->tamanio_data,
+			MSG_WAITALL);
+	if (resultado != paquete_entrante->header->tamanio_data) {
+		goto label3;
+	}
 	return paquete_entrante;
 }
 void common_send(int socket, t_data * paquete) {
@@ -332,7 +345,11 @@ void common_send(int socket, t_data * paquete) {
 	int tamanio_total;
 	buffer = serializarPaquete(paquete);
 	tamanio_total = paquete->header->tamanio_data + sizeof(t_header);
-	send(socket, buffer, tamanio_total, MSG_WAITALL);
+	int resultado;
+	label: resultado = send(socket, buffer, tamanio_total, MSG_WAITALL);
+	if(resultado != tamanio_total){
+		goto label;
+	}
 	free(buffer);
 }
 

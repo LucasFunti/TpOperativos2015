@@ -13,6 +13,7 @@
 #include <commons/log.h>
 #include <commons/collections/list.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>

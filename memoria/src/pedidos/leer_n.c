@@ -50,7 +50,7 @@ bool leer_n(int pid, int pagina) {
 				loggearInfo("Escribiendo contenido del swap");
 
 				retardo();
-				memcpy(memoria + tamanio_marco * item->marco, contenido_Pagina,
+				memcpy(memoria + tamanio_marco * marco, contenido_Pagina,
 						tamanio_marco);
 
 				contenido_lectura = contenido_Pagina;
